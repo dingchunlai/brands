@@ -1,0 +1,15 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 模板编辑页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+<% if @tagged_brand %>
+  <% form_for template_admin_brand_path(@brand) do %>
+      选择模板 <%= select_tag :brand_template, options_for_select(BRAND_TEMPLATES, @tagged_brand.template)  %>
+      <%= hidden_field_tag :tag_id, @tag.TAGID %>
+      <%= submit_tag "保存" %>
+  <% end %>
+<% end %>

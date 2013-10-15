@@ -1,0 +1,70 @@
+        <div class="b_pln_sidetxt b_pln_sidetxt01">
+          <table width="217" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><label class="b_text_score f_r">得分：<span><%= @brand_rating.score %></span></label>
+                <h5>和家网口碑排行参与</h5></td>
+            </tr>
+          </table>
+          <%  
+            rating_max = [@brand_rating.good, @brand_rating.soso, @brand_rating.bad].max
+            good_persent, soso_persent, bad_persent =
+            if rating_max < 100 
+              [@brand_rating.good, @brand_rating.soso, @brand_rating.bad]
+            else
+              [@brand_rating.good, @brand_rating.soso, @brand_rating.bad].map { |n| 
+              (100.0 * n / rating_max).round
+            }   
+            end 
+          %>  
+          <table width="217" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td height="107" align="center" valign="bottom"><span class="b_cylinder_g" style="height:<%= good_persent%>px;"></span></td>
+              <td height="107" align="center" valign="bottom"><span class="b_cylinder_n" style="height:<%= soso_persent%>px;"></span></td>
+              <td height="107" align="center" valign="bottom"><span class="b_cylinder_b" style="height:<%= bad_persent%>px;"></span></td>
+            </tr>
+            <tr>
+              <td height="24" align="center" id="good_rate_count"><%= @brand_rating.good %>票</td>
+              <td height="24" align="center" id="soso_rate_count"><%= @brand_rating.soso %>票</td>
+              <td height="24" align="center" id="bad_rate_count"><%= @brand_rating.bad  %>票</td>
+            </tr>
+          </table>
+          <div class="b_pln_koubbtn">
+            <% [['推 荐', 'good'], ['中 立', 'soso'], ['不推荐', 'bad']].each do |text, item| %>
+                <input type="button" value="<%= text %>"  class="b_cylinder_btn btn-rate" data-remote="<%= pinpai_rate_path(:permalink => @brand.permalink, :item => item, :subdomain => false)%>" />
+           <% end %>
+          </div>
+        </div>
+        <div class="b_right_text b_right_text02">
+          <table width="217" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><h5>对本品牌详细评分</h5></td>
+            </tr>
+          </table>
+          <table width="237" border="0" cellspacing="0" cellpadding="0" class="b_cylinder_m">
+            <tr>
+              <td align="right">质量：</td>
+              <td width="130"><%= rating_bar_for @brand_rating, :quality %></td>
+              <td width="55"><%= rating_buttons_for @brand, :quality %></td>
+            </tr>
+            <tr>
+              <td align="right">售后：</td>
+              <td width="130"><%= rating_bar_for @brand_rating, :service %></td>
+              <td width="55"><%= rating_buttons_for @brand, :service %></td>
+            </tr>
+            <tr>
+              <td align="right">口碑：</td>
+              <td width="130"><%= rating_bar_for @brand_rating, :reputation %></td>
+              <td width="55"><%= rating_buttons_for @brand, :reputation %></td>
+            </tr>
+            <tr>
+              <td align="right">性价比：</td>
+              <td width="130"><%= rating_bar_for @brand_rating, :cost %></td>
+              <td width="55"><%= rating_buttons_for @brand, :cost %></td>
+            </tr>
+            <tr>
+              <td align="right">知名度：</td>
+              <td width="130"><%= rating_bar_for @brand_rating, :known %></td>
+              <td width="55"><%= rating_buttons_for @brand, :known %></td>
+            </tr>
+          </table>
+        </div> 

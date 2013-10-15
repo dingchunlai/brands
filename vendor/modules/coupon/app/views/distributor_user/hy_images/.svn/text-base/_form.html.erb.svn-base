@@ -1,0 +1,25 @@
+<h3 id="cancel_edit" style="width: 60px; cursor: pointer; padding: 10px; background-color: orange; color: white">取消<%= @image.new_record? ? "创建" : "编辑"%></h3>
+<% remote_form_for @image, :url => (@image.new_record? ? distributor_user_hy_images_path : distributor_user_hy_image_path(@image)), :html => { :id => "hy_upload_pic_form", 'data-uploadurl' => cloud_fs_upload_path('image') } do |f| %>
+    <tr>
+        <td>
+          <img id="image_thumb" width="110" height="110" alt="图片预览" />
+          <span id="image_upload_button"></span><div id="upload_notice"></div>
+           <%= f.label :name %><%= f.text_field :name, :size => 20, :maxlength => 30 %><strong>*</strong>
+           <%= f.hidden_field :image_url %>
+           <%= f.hidden_field "pic_type", :value => @img_type %>
+           <%= f.submit '提交' %>
+        </td>
+    </tr>
+    <br />
+    <span id="hy_upform_error_msg" style="color:red;"></span>
+<% end %>
+<script src="http://js.51hejia.net/js/brands/uploadify/hy_images_upload.js?<%=Time.now.to_i%>" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+    <% if @image.new_record? %>
+        $("#image_thumb")._hySetImage("http://js.51hejia.com/img/nil.gif");
+    <% else %>
+        $("#image_thumb")._hySetImage("<%= cloud_fs_domain("image") + @image.image_url %>");
+    <% end %>
+});
+</script>

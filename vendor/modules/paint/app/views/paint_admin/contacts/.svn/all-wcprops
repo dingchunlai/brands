@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/444/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts
+END
+_sub_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts/_sub_menu.html.erb
+END
+_edit_info.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts/_edit_info.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/444/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/contacts/new.html.erb
+END

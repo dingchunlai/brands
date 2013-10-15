@@ -1,0 +1,7 @@
+<%= menu 'Dashboard',
+         ["#{Coupon.human_name}列表", distributor_user_coupons_path],
+         ["创建#{Coupon.human_name}", new_distributor_user_coupon_path],
+         ["#{Distributor::Shop.human_name}列表", distributor_user_shops_path],
+         ["修改密码", changepwd_distributor_user_dashboards_path]
+
+%>

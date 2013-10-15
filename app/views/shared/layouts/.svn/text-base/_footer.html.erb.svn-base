@@ -1,0 +1,5 @@
+<% if controller.controller_name != "index" %>
+  <%= render :partial => 'shared/layouts/friend_links', :object => friend_links if defined?(friend_links) && !friend_links.blank? -%>
+<% end %>
+<%= render_shared_footer %>
+<%= yield :html_body_end %>

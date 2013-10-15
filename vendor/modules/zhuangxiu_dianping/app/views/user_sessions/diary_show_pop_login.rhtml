@@ -1,0 +1,245 @@
+<style type="text/css" media="screen">
+  .signup_input{width:100px;}
+	.dafenbox, .dafenbox div{
+		margin:0;
+	}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  jQuery(document).ready(function($) {
+
+
+    // 设置一些初始数据
+    var red="#f00" // 红色边框和姿态
+    var green="#0c0" // 绿色边框和字体
+    var blue="#09f" //蓝色
+    //设置通过验证和未通过验证的样式
+    jQuery.fn.setBlue=function(){
+      tip=$(this).next();
+      if(tip.css("color")!=red){
+        tip.css("color",blue);
+      }
+    };
+    jQuery.fn.setRed=function(message){
+      // $(this).css("border-color",red);
+      $tip=$(this).next();
+      $tip.css("color",red);
+      $tip.text(message);
+      $tip.addClass("errorFlag");
+      //   alert($("form .errorFlag").length);
+    };
+    jQuery.fn.setGreen=function(){
+      $tip=$(this).next();
+      //   $(this).css("border-color",green);
+      $tip.css("color",green);
+      $tip.html("<img src='/images/right.gif'>");
+      $tip.removeClass("errorFlag");
+    };
+    //开始验证输入的用户名
+    $("input").focus(function(){
+      $(this).setBlue();
+    });
+    $('#signup_username').blur(function(){
+      var login_length=$(this).val().length;
+      if(login_length<=1 || login_length>=14){
+        $(this).setRed("用户名为2-14位");
+      }
+      else{
+        $.getJSON("/user/validate_username?username="+$(this).val(),
+        function(data) {
+          if (data["result"] == 0) {
+            $('#signup_username').setRed("已占用");
+          }else{
+            $('#signup_username').setGreen();;
+          }
+        });
+      };
+    });
+
+    //开始验证密码长度
+    $("#signup_password").blur(function() {
+      var password_length=$(this).val().length;
+      if(  password_length <6 ||  password_length>16 ){
+        $(this).setRed("密码长度应为6-16");
+      }else{
+        $(this).setGreen();
+      }
+    });
+
+    //开始验证EMAIL
+    $("#user_email").blur(function() {
+      if( this.value=="" || this.value!="" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value) ){
+        $(this).setRed("格式错误");
+      }else{
+        $.getJSON("/user/validate_email?email="+$(this).val(),
+        function(data) {
+          if (data["result"] == 0) {
+            $('#user_email').setRed("已占用");
+          }else{
+            $('#user_email').setGreen();;
+          }
+        });
+      };
+    });
+
+    //开始验证密码确认
+    $("#signup_password_confirm").blur(function() {
+      var password=$("#signup_password").val()
+      var password_confirmation=$(this).val()
+      if(  password != password_confirmation || password_confirmation.length==0 ){
+        $(this).setRed("两次密码不同");
+      }else{
+        $(this).setGreen();
+      }
+    });
+
+    $('#signup_form').submit(function() {
+      //		$("form :input").trigger('blur');
+      var numError=$("form .errorFlag").length;
+      if(numError>0){
+
+      }else{
+					
+        $.ajax({
+          url: '/user/reg_save',
+          type: 'POST',
+          dataType: 'json',
+          data: $(this).serialize(),
+          success: function(data) {
+
+            if (data["result"] == 1) {
+              alert("您已注册成功，请登录")
+              $("#sign_submit").attr("disabled","disabled");
+              $.fancybox.close();
+            }else{
+              alert("验证码不正确,请重新输入");
+            };
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            //called when there is an error
+          }
+        });
+      };
+      return false;
+    });
+
+    /**************************************************************************************/
+    $('#login_form').submit(function(){
+      if($('#user_name').val().length <= 0){
+        alert('请输入用户名');
+      }else if($('#password').val().length <= 0){
+        alert('请输入密码');
+      }else{
+        $("#login_submit").attr("disabled","disabled");
+        $.ajax({
+          type: "POST",
+          url: "/sessions/user_login",
+          dataType: "script",
+          data: jQuery(this).serialize(),
+          success: function(data){
+            $('#login_submit').removeAttr("disabled");
+            if(data == 'error'){
+              alert('用户名或密码错误!');
+              $("#password").val("");
+            }else if(data == "freeze"){
+              alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+              $("#password").val("");
+            }else{
+              $("#login").css("display","none");
+              $('#ajaxLoginForm').attr("data-current-user",data);
+            }
+          }
+        })
+      }
+      return false;
+    });
+
+
+
+    $('#under_login_submit').live("click",function(){
+      if($('#under_user_name').val().length <= 0){
+        alert('请输入用户名');
+      }else if($('#under_password').val().length <= 0){
+        alert('请输入密码');
+      }else{
+        $("#under_login_submit").attr("disabled","disabled");
+        $.ajax({
+          type: "POST",
+          url: "/user_sessions/user_login",
+          dataType: "script",
+          data: $("#under_login_form").serialize(),
+          success: function(data){
+            $('#under_login_submit').removeAttr("disabled");
+            if(data == 'error'){
+              alert('用户名或密码错误!');
+              $("#under_password").val("");
+            }else if(data == "freeze"){
+              alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+              $("#under_password").val("");
+            }else{
+              $('#ajaxLoginForm').attr("data-current-user","data")
+              $("#login").css("display","none");
+              $("#remark_button").html("<input type='submit' value='留言提交' id='pt_submit'  class='gsl_wyly_btn'  />");
+              $.fancybox.close();
+              window.location.reload();
+
+            }
+          }
+        })
+      }
+      return false;
+    });
+
+  });
+
+</script>
+
+<div  class="dafenbox denglzhuc" style="width:600px;margin:10px 0">
+  <table width="600" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="255" valign="top"><h3>已有和家帐号 </h3>
+        <form action="" id="under_login_form" method="post">
+          <ul>
+            <li>用&nbsp;户&nbsp;名：
+              <input id="under_user_name" name="user_name" type="text" style="width:100px" /><em></em>
+            </li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：
+              <input id="under_password" name="password" type="password" style="width:100px" />
+            </li>
+            <li>
+              <input name="self_login" id="_self_login" type="checkbox" value="0" style="vertical-align:middle;" />
+			              自动登录</li>
+            <li style="padding:10px;text-align:center;">
+              <input id="under_login_submit" type="submit" value="登录" class="gsl_wyly_btn" />
+            </li>
+          </ul>
+        </form></td>
+      <td width="1" bgcolor="#cccccc"></td>
+      <td width="325"><h3>注册和家帐号</h3>
+        <form action="/user/reg_save" method="post" id="signup_form">
+          <ul style="width:300px;">
+            <li>用&nbsp;户&nbsp;名：
+              <input id="signup_username" name="username" type="text" class="signup_input"/> <em></em>
+            </li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：
+              <input id= "signup_password" name="userpassword" type="password"  class="signup_input"/> <em></em>
+            </li>
+            <li>重复密码：
+              <input id= "signup_password_confirm" name="userpasswordconfirm" type="password"  class="signup_input"/> <em></em>
+            </li>
+            <li>&nbsp;E-mail&nbsp;：
+              <input id="user_email" name="userbbsemail" type="text"  class="signup_input"/> <em></em>
+            </li>
+            <li>验&nbsp;证&nbsp;码：
+              <input type="text" size="5"  name="image_code" />
+              <img id="image_code_area" src="/user/get_image_code" width="50" height="20" style="vertical-align:middle;" onclick="document.getElementById('image_code_area').src = '/user/get_image_code?' + Math.random();">
+
+            </li>
+            <li style="padding-top:10px;text-align:center;">
+              <input id="sign_submit" type="submit" value="点击注册" class="gsl_wyly_btn" />
+            </li>
+          </ul>
+        </form></td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,14 @@
+<div class="zxdp2010_cur margin10">
+  <h3><%= assort_title(@model,@style,@price,@user_city_code) %><%= name %>10</h3>
+  <div class="zxdp2010_txt zxdp2010_txttop zxdp2010_kbtop">
+    <dl>
+      <% firms.each do |firm| %>
+        <dd>
+          <% firm_price = firm.price.to_i != 0 ? ([12117].include?(@user_city_code.to_i) ? DecoFirm::NINBO_PRICE[firm.price.to_i] : DecoFirm::PRICE[firm.price.to_i]) : '暂无信息' %>
+          <span class="f_r"><%= firm_price %></span><a href="<%= firm_url(:id => firm.id,:trailing_slash => "/") %>" target="_blank"><%= firm.name_abbr %></a>
+          <% if firm.is_promoted %>&nbsp;<img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_icon1.gif"/><% end %>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

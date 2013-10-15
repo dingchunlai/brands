@@ -1,0 +1,54 @@
+<% muqi_first = @api_article[0]%>
+<% qiangmian_first = @api_article[1]%>
+<% muqiqi =  hejia_promotion_items(PAINT_HOME_ARTICLE_MQQ, :attributes => ['title','url'],:limit => 6) %>
+<% qiangmianqi =  hejia_promotion_items(PAINT_HOME_ARTICLE_QMQ, :attributes => ['title','url'],:limit => 6) %>
+<script type="text/javascript">
+jQuery(function($){
+	$(".yg_topcont .yg_topbox:gt(0)").hide();
+	$(".yg_toptab li:first").addClass("yg_topactive");
+	$(".yg_toptab li").mouseover(
+		function(){
+			$(this).addClass("yg_topactive")
+				.siblings().removeClass("yg_topactive");
+			$(".yg_topcont .yg_topbox").eq($(this).index())
+				.siblings().hide().end().show();
+				}
+								)
+				});
+</script>
+<ul class="yg_toptab">
+<li>木器漆</li>
+<li>墙面漆</li>
+</ul>
+<div class="yg_topcont">
+<div class="yg_topbox">
+	<div class="yg_more"><a href="/木器漆/articles" target="_blank" title="更多">更多&gt;&gt;</a></div>
+  <div class="yg_gstj_txt clearfix">
+    <div class="yg_gstjimg f_l"><a href="<%= get_article_url(muqi_first.url) %>" target="_blank" title="<%= muqi_first.title %>"><img src="<%= get_api_img_url(muqi_first.image_url) %>" /></a></div>
+    <div class="yg_gstjtxt f_r">
+      <h4><a href="<%= get_article_url(muqi_first.url) %>" target="_blank" title="<%= muqi_first.title %>"><%= muqi_first.title %></a></h4>
+      <p><%=truncate(muqi_first.description,:length => 130 ,:omission => '')%><a href="<%= get_article_url(muqi_first.url) %>" target="_blank">【详细】</a></p>
+      <ul class="clearfix">
+      <% muqiqi.each do |muqi|%>
+        <li>·<a href="<%= get_article_url(muqi.url) %>" target="_blank" title="<%= muqi.title %>"><%= muqi.title %></a></li>
+      <% end %>
+	  </ul>
+    </div>
+  </div>
+</div>
+<div class="yg_topbox">
+	<div class="yg_more"><a href="/墙面漆/articles" target="_blank" title="更多">更多&gt;&gt;</a></div>
+  <div class="yg_gstj_txt clearfix">
+    <div class="yg_gstjimg f_l"><a href="<%= get_article_url(qiangmian_first.url) %>" target="_blank" title="<%= qiangmian_first.title %>"><img src="<%= get_api_img_url(qiangmian_first.image_url) %>" /></a></div>
+    <div class="yg_gstjtxt f_r">
+      <h4><a href="<%= get_article_url(qiangmian_first.url) %>" target="_blank" title="<%= qiangmian_first.title %>"><%= qiangmian_first.title %></a></h4>
+      <p><%=truncate(qiangmian_first.description,:length => 130 ,:omission => '')%><a href="<%= get_article_url(qiangmian_first.url) %>" target="_blank">【详细】</a></p>
+      <ul class="clearfix">
+        <% qiangmianqi.each do |qiangmian|%>
+		<li>·<a href="<%= get_article_url(qiangmian.url) %>" target="_blank" title="<%= qiangmian.title %>"><%= qiangmian.title %></a></li>
+		<% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

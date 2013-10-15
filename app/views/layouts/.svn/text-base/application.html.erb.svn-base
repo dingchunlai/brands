@@ -1,0 +1,206 @@
+
+  <%
+  set_page_meta_data '品牌', @tag.TAGNAME, @brand.name_zh
+  content_for :html_head do
+  %>
+    <%= javascript_include_tag jquery_resource(:version => '1.4') %>
+    <%= javascript_include_tag 'brand_rating' %>
+  <% end %>
+  <% content_for :banner_ad do %>
+    <%=
+    ad = @promotion_items['首页']['页头广告']
+    promotion_image_tag ad if ad
+  %>
+  <% end %>
+  <%= render :partial => 'shared/layouts/header' %>
+  <% current_menu = 'class="b_menu_current"' %>
+
+  <div class="b_width960 margin10 clearfix">
+    <div class="b_menu_gz">
+      <h3>
+        <label class="f_r"><strong><%= @tag.TAGNAME %></strong> 品牌近期关注榜第<span><%=@brand.last_month_rank(@tag.TAGID)%></span>名</label>
+        <%= @brand.name_zh %> 口碑评价
+        <em>目前共有<span><%=@brand.pv(@tag.TAGID)%></span>人关注 [上月共有<span><%=@brand.last_month_pv(@tag.TAGID)%></span>人关注]</em>
+      </h3>
+      <ul class="b_menu">
+        <li id="num1" <%= current_menu if controller.action_name == 'show' %>>
+          <%= link_to "<strong>品牌首页</strong>", show_pinpai_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num2" <%= current_menu if controller.action_name == 'info' %>>
+          <%= link_to "<strong>品牌信息</strong>", pinpai_info_path(:subdomain => false, :permalink => @brand.permalink) %>
+        </li>
+        <li id="num3" <%= current_menu if controller.action_name == 'articles' %>>
+          <%= link_to "<strong>品牌评测导购</strong>", pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num4" <%= current_menu if controller.action_name == 'productions' || controller.action_name == 'production'%>>
+          <%= link_to "<strong>产品信息</strong>", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <%if @brand.documents && @brand.documents.size > 0 %>
+          <li id="num5" <%= current_menu if controller.action_name == 'documents' %>>
+            <%= link_to "<strong>资料下载</strong>", pinpai_documents_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+          </li>
+        <%end%>
+  <%# 恶心的立邦暂时不需要品牌专区 %>
+        <% if @brand.permalink != 'nippon' && @brand.permalink != 'primyonline' %>
+          <li id="num6" >
+            <%= link_to_feature @brand, "<strong>品牌专区</strong>" %>
+          </li>
+        <% end %>
+        <%unless (tuku_zhuanqu_url=LINK_URLS['图库专区'][params[:permalink]]).blank?%>
+          <li id="num7" >
+            <%= link_to "<strong>图库专区</strong>", tuku_zhuanqu_url, :target=>"_blank" %>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+
+  <div class="b_width960 clearfix margin10">
+    <div class="b_width680 f_l">
+      <%= yield %>
+    </div>
+    <div class="b_width270 f_r margin10">
+      <h3 class="b_right_tit"><%= @brand.name_zh %>品牌口碑</h3>
+      <div class="b_right_text b_right_text01">
+        <table width="217" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><label class="b_text_score f_r">得分：<span><%= @brand_rating.score %></span></label>
+              <h5>和家网口碑排行参与</h5></td>
+          </tr>
+        </table>
+        <%
+        rating_max = [@brand_rating.good, @brand_rating.soso, @brand_rating.bad].max
+        good_persent, soso_persent, bad_persent =
+          if rating_max < 100
+          [@brand_rating.good, @brand_rating.soso, @brand_rating.bad]
+        else
+          [@brand_rating.good, @brand_rating.soso, @brand_rating.bad].map { |n|
+            (100.0 * n / rating_max).round
+          }
+        end
+      %>
+        <table width="217" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="107" align="center" valign="bottom"><span class="b_cylinder_g" style="height:<%= good_persent%>px;"></span></td>
+            <td height="107" align="center" valign="bottom"><span class="b_cylinder_n" style="height:<%= soso_persent%>px;"></span></td>
+            <td height="107" align="center" valign="bottom"><span class="b_cylinder_b" style="height:<%= bad_persent%>px;"></span></td>
+          </tr>
+          <tr>
+            <td height="24" align="center" id="good_rate_count"><%= @brand_rating.good %>票</td>
+            <td height="24" align="center" id="soso_rate_count"><%= @brand_rating.soso %>票</td>
+            <td height="24" align="center" id="bad_rate_count"><%= @brand_rating.bad  %>票</td>
+          </tr>
+          <tr>
+            <% [['推 荐', 'good'], ['中 立', 'soso'], ['不推荐', 'bad']].each do |text, item| %>
+              <td height="36" align="center"><input type="button" value="<%= text %>"  class="b_cylinder_btn btn-rate" data-remote="<%= pinpai_rate_path(:permalink => @brand.permalink, :item => item, :subdomain => false)%>" /></td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+      <div class="b_right_text b_right_text02">
+        <table width="217" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><h5>对本品牌详细评分</h5></td>
+          </tr>
+        </table>
+        <table width="237" border="0" cellspacing="0" cellpadding="0" class="b_cylinder_m">
+          <tr>
+            <td align="right">质量：</td>
+            <td width="130"><%= rating_bar_for @brand_rating, :quality %></td>
+            <td width="55"><%= rating_buttons_for @brand, :quality %></td>
+          </tr>
+          <tr>
+            <td align="right">售后：</td>
+            <td width="130"><%= rating_bar_for @brand_rating, :service %></td>
+            <td width="55"><%= rating_buttons_for @brand, :service %></td>
+          </tr>
+          <tr>
+            <td align="right">口碑：</td>
+            <td width="130"><%= rating_bar_for @brand_rating, :reputation %></td>
+            <td width="55"><%= rating_buttons_for @brand, :reputation %></td>
+          </tr>
+          <tr>
+            <td align="right">性价比：</td>
+            <td width="130"><%= rating_bar_for @brand_rating, :cost %></td>
+            <td width="55"><%= rating_buttons_for @brand, :cost %></td>
+          </tr>
+          <tr>
+            <td align="right">知名度：</td>
+            <td width="130"><%= rating_bar_for @brand_rating, :known %></td>
+            <td width="55"><%= rating_buttons_for @brand, :known %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="b_ad02">
+        <%=
+        item = hejia_promotion_items(API_PROMOTION_MAPPING['品类'][@tag.TAGNAME]['品牌宽幅广告1'], :attributes => ['url', 'image_url', 'title'], :limit => 1).first
+        promotion_image_tag item if item
+      %>
+      </div>
+      <% unless (brands = get_anther_brand(@tag.id,@brand)).blank? %>
+        <h3 class="b_right_tit">您可能感兴趣的其他品牌</h3>
+        <div class="b_right_text b_right_text03 clearfix">
+          <ul>
+            <% brands.each do |brand|-%>
+              <li><%=link_to brand.name_zh, show_pinpai_path(brand.permalink, :subdomain => false, :trailing_slash => true),:target => "_blank" %></li>
+            <%end -%>
+          </ul>
+        </div>
+      <% end %>
+      <h3 class="b_right_tit">
+        <span class="b_r_titmore f_r"><%=link_to ">>更多", "http://z.shanghai.51hejia.com/zhuangxiugushi", :target=>"_blank" %>
+        </span><%= @brand.name_zh %>相关装修日记
+      </h3>
+      <% diaries = DecorationDiary.latest_ten_diaries_for_brand(@brand) %>
+      <div class="b_right_text b_right_text04">
+        <ul>
+          <% diaries.each do |diary| %>
+            <li><%= link_to_with_title diary.title, diary.url, :truncate => 16, :target => "blank" %></li>
+          <% end %>
+          <!--<li class="b_more"></li>-->
+        </ul>
+      </div>
+      <% articles = get_atricle_by_category_brand(@brand.name_zh) %>
+      <%if articles && articles.size > 0 %>
+        <h3 class="b_right_tit">
+        <span class="b_r_titmore f_r"><%= link_to_feature @brand, ">>更多" %>
+        </span><%= @brand.name_zh %>资讯
+        </h3>
+        <div class="b_right_text b_right_text04">
+          <ul>
+            <% articles.each do |article| %>
+              <li><%=link_to_with_title article.title, article.url, :truncate => 15, :target=>"_blank" %></li>
+            <%end%>
+          </ul>
+        </div>
+      <%end%>
+      <div class="b_ad02">
+        <%=
+        item = hejia_promotion_items(API_PROMOTION_MAPPING['品类'][@tag.TAGNAME]['品牌宽幅广告2'], :attributes => ['url', 'image_url', 'title'], :limit => 1).first
+        promotion_image_tag item if item
+      %>
+      </div>
+      <% if @browsed_productions %>
+        <h3 class="b_right_tit">浏览过的产品</h3>
+        <div class="b_right_text b_right_text05">
+          <ul>
+            <% @browsed_productions.each do |product| %>
+              <li>
+                <% path = pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id) %>
+                <%= link_to image_tag(product.master_picture.public_filename), path, :target => '_blank' %>
+                <%= link_to product.name, path, :target => '_blank' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% if flash[:notice] %>
+    <div id="notice_info" style="display:none">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+    
+  <%= render :partial => 'shared/layouts/footer' %>
+

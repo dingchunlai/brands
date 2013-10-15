@@ -1,0 +1,9 @@
+CREATE TABLE paint_log(
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    person_id INT(11) ,
+    item_type varchar(255),
+    item_id int(11),
+    created_at DATETIME DEFAULT NULL,
+    updated_at DATETIME DEFAULT NULL ,
+    PRIMARY KEY (id)
+)

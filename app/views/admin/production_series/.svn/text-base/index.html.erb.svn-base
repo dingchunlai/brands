@@ -1,0 +1,32 @@
+<div class="toolbar">
+  <ul class="horizontal">
+    <li class="last"><%= link_to '新增产品系列',  new_admin_chanpin_xilie_path %></li>
+  </ul>
+  <div class="clear"/>
+</div>
+<%= paginate_content = will_paginate @production_serieses %>
+<table>
+  <caption>产品列表</caption>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>所属品牌</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @production_serieses.each do |production_series| %>
+      <tr>
+        <td><%=production_series.name%></td>
+        <td><%=production_series.brand.name_zh%></td>
+        <td>
+          <ul class="horizontal">
+            <li><%= link_to '编辑', edit_admin_chanpin_xilie_path(production_series) %></li>
+            <li class="last"><%= link_to '删除', admin_chanpin_xilie_path(production_series), :confirm => "确定删除“#{production_series.name}”吗？", :method => :delete %></li>
+          </ul>
+        </td>
+      </tr>
+		<%end%>	
+  </tbody>
+</table>
+<%= paginate_content %>

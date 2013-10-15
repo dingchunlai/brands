@@ -1,0 +1,78 @@
+<% cache "dianping:newmenu2011:#{@user_city_code}:#{controller.controller_name}", :expires_in => 5.minutes  do %>
+<div class="width960" style="overflow:hidden">
+  <div class="zxdp2011_header clearfix">
+    <div class="zxdp2011_logo f_l"><a href="http://www.51hejia.com/" target="_self"><img src="http://js.51hejia.com/img/zxdpimg/zxdp2011new_logo.jpg" /></a></div>
+    <script type="text/javascript" src="http://js.51hejia.com/js/chrome.js"></script>
+
+    <ul class="zxdp2011_topmenu f_l">
+      <li><strong><a href="http://www.51hejia.com/" target="_blank">首页</a></strong></li>
+      <li class="zxdp2011_zxcom zxdp2011_topmenucur"><span id="city"><strong><a rel="dropmenu0" href="http://z.51hejia.com/" target="_blank">找装修公司</a> </strong>
+        <div id="dropmenu0" class="zxdp2011_citydiv"><a href="http://z.shanghai.51hejia.com/" target="_blank" >上海</a><a href="http://z.suzhou.51hejia.com/" target="_blank" >苏州</a><a href="http://z.wuxi.51hejia.com/" target="_blank" >无锡</a><a href="http://z.ningbo.51hejia.com/" target="_blank" >宁波</a><a href="http://z.hangzhou.51hejia.com/" target="_blank" >杭州</a></div>
+        <script type="text/javascript">cssdropdown.startchrome("city")</script>
+
+        </span></li>
+      <li class="zxdp2011_zxdjq"><span id="city1"><strong><a rel="dropmenu1" href="http://youhui.51hejia.com" target="_blank">建材·现金券</a> </strong>
+        <div id="dropmenu1" class="zxdp2011_citydiv"><a href="http://shanghai.youhui.51hejia.com/" target="_blank" >上海</a><a href="http://nanjing.youhui.51hejia.com/" target="_blank" >南京</a><a href="http://ningbo.youhui.51hejia.com/" target="_blank" >宁波</a></div>
+        <script type="text/javascript">cssdropdown.startchrome("city1")</script>
+        </span></li>
+      <li><strong><a href="http://www.51hejia.com/jushang/" target="_blank">家居时尚</a></strong></li>
+
+      <li><strong><a href="http://tuku.51hejia.com/" target="_blank">图库</a></strong></li>
+      <li><strong><a href="http://wb.51hejia.com/" target="_blank">问答</a></strong></li>
+      <li class="zxdp2011_login">
+        <script type="text/javascript" src="http://js.51hejia.com/js/login_area.js?20100203"></script>
+        <iframe name="hideiframe_loginout" width="0" height="0" id="hideiframe_loginout" style="display: none;"></iframe>
+      </li>
+      <li class="zxdp2011_citytab"> <span id="city2">
+
+        <label><%= CITIES[@user_city_code.to_i] %><a rel="dropmenu2">[城市切换]</a></label>
+        <div id="dropmenu2" class="zxdp2011_citydiv"><a href="http://z.shanghai.51hejia.com/" target="_blank" >上海</a><a href="http://z.suzhou.51hejia.com/" target="_blank" >苏州</a><a href="http://z.wuxi.51hejia.com/" target="_blank" >无锡</a><a href="http://z.ningbo.51hejia.com/" target="_blank" >宁波</a><a href="http://z.hangzhou.51hejia.com/" target="_blank" >杭州</a></div>
+        <script type="text/javascript">cssdropdown.startchrome("city2")</script>
+        </span> </li>
+
+    </ul>
+    <div class="zxdp2011_submenu f_l">
+      <ul class="f_l">
+        <li><%= link_to "#{ CITIES[@user_city_code.to_i]}首页",'/' %></li>
+        <li><%= link_to "装修公司列表",firms_url(:trailing_slash => "/") %></li>
+        <li><%= link_to '装修日记',decoration_diaries_url(:trailing_slash => "/") %></li>
+        <li><%= link_to '案例图片',cases_url(:trailing_slash => "/") %></li>
+
+        <li><%= link_to '促销优惠',coupons_url(:trailing_slash => "/") %></li>
+        <li><%= link_to('口碑排行',top_url) if [11910,12117,12301].include? @user_city_code.to_i %></li>
+        <li><%= link_to '装修监理','http://zt.51hejia.com/zhuanti/laotian/index.html',:target =>"_blank" if @user_city_code.to_i == 11910 %></li>
+      </ul>
+    </div>
+  </div>
+  <div class="width960 clearfix">
+    <div class="zxdp2010_daphang f_l"><%= link_to "#{CITIES[@user_city_code.to_i]}装修点评", "http://z.#{TAGURLS[@user_city_code.to_i]}.51hejia.com/",:target =>'_blank' %> &gt;  案例图片</div>
+
+    <div class="zxdp2011_search f_r">
+      <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr>
+            <td><span>热搜公司：</span></td>
+            <td><div style="width:280px; overflow:hidden;">
+                <div id="cont_m_5" style="float:left;">
+                      <%
+                      hejia_promotion_items(ZHUANGXIU_DIANPING_INDEX_PROMOTED[TAGURLS[@user_city_code.to_i]]['热搜'], :attributes => ['title','url'],:limit =>24).each do |item|
+                      %>
+                        <%= link_to item.title, item.url, :target => '_blank', :title => item.title %>
+                      <% end %>
+                </div>
+
+              </div></td>
+            <td><form method="get" action="<%= firms_path %>">
+                <input type="text" name="keyword">
+                <input type="submit" class="zxdp2011_searchbtn" value=" " name="提交">
+              </form></td>
+          </tr>
+        </tbody>
+      </table>
+      <script src="http://js.51hejia.com/js/txt_auto.js" type="text/javascript"></script>
+
+    </div>
+  </div>
+</div>
+<!--header_code_end-->
+<% end %>

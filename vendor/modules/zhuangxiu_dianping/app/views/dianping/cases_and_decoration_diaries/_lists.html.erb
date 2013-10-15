@@ -1,0 +1,10 @@
+<ul class="margin10 clearfix">
+	<% @lists.each do |list|%>
+		<% if list.item_type == "DecorationDiary"%>
+			<%= render :partial => 'diary' ,:locals => {:diary_id => list.item_id} %>
+		<% elsif list.item_type == "HejiaCase" %>
+			<%= render :partial => 'cases' ,:locals => {:case_id => list.item_id}  %>
+		<% end %>
+	<% end %>
+</ul>
+<%= will_paginate @lists%>

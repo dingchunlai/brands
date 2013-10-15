@@ -1,0 +1,46 @@
+<% title "【油漆工】案例列表_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<script>
+  $(document).ready(function(){
+	$('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+  });
+</script>
+<%= render :partial => '/shared/top_location', :locals => { :location => (link_to "#{@paint_worker.USERBBSNAME}的主页" ,paint_worker_admin_path,:target => '_self'), :location_end => "案例列表" }%>
+<div class="width960 margin10 clearfix"> 
+  <div class="yg_web_l f_l">
+  	<%= render :partial => '/shared/front_admin_left'%>
+  </div>
+  <div class="yg_web_r f_r"> 
+    <div class="yg_web_rbox margin10"> 
+      <div><%=render :partial => '/shared/front_admin_top', :locals => { :top_name => "案例列表" }%></div> 
+      <div class="yg_web_anlilist"> 
+        <% form_tag delete_paint_cases_path, :method => "post" do%>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+          <tr class="yg_web_anlilisttit"> 
+            <td width="20"><input name="" id="select_all" type="checkbox" value="" /></td> 
+            <td>案例标题</td> 
+            <td>案例状态</td> 
+            <td>发布时间</td> 
+            <td class="yg_web_anlibtn"><input name="" type="submit" value="删除" class="yg_web_anlibtn02" /></td> 
+          </tr>
+		  <% @my_cases.each_with_index do |c, index| %> 
+		  <% case_status = get_case_link(c)%>
+          <tr> 
+            <td><input name="cases_ids[]" type="checkbox" value="<%= c.id%>" class="check_box" /></td> 
+            <td><a href="<%= case_status[:url] %>" target="_blank"><%= c.title %></a></td> 
+            <td><%= case_status[:status] %></td> 
+            <td><%= c.created_at.strftime("%Y-%m-%d") %></td> 
+            <td class="yg_web_anlibtn"><%= case_status[:link] %></td> 
+          </tr> 
+         <% end %>
+        </table> 
+		<% end %>
+      </div> 
+      <div class="pagination"><%= will_paginate @my_cases %></div> 
+    </div> 
+  </div> 
+</div> 
+<!--content_code_end--> 

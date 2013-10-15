@@ -1,0 +1,20 @@
+<dl>
+  <dt><%= title %>TOP10</dt>
+  <% 
+    firms.each do |firm| 
+      unless firm.blank?
+  %>
+    <dd>
+      <% if firm.is_promoted %>
+        <img src="http://js.51hejia.com/img/zxdpimg/icon_tuijian.gif" alt="推荐">
+      <% else %>
+        <span class="f_r"><%= firm.praise %></span>
+      <% end %>
+      <a href="<%= firm_url(firm) %>" target="_blank"><%= firm.name_abbr %></a>
+    </dd>
+  <% 
+      end
+    end 
+  %>
+</dl>
+<div class="zxdp2010_koubgspm"><a href="<%= more_url %>" target="_blank" class="f_r">查看<%= title %>公司排名&gt;&gt;</a></div>

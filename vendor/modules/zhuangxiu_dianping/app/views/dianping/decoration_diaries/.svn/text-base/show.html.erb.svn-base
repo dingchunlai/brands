@@ -1,0 +1,7 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:日记终端页") %>
+<% @title = html_metadata.title % { :decoration_diary_name => @diary.title} %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords % {:decoration_diary_name => @diary.title} %>
+<% firm_sub_menu %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > #{link_to '装修日志',firm_decoration_diaries_url(:firm_id => @firm.id)}" %>
+<%= render :partial => "case_and_diary" %>

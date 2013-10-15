@@ -1,0 +1,6 @@
+<% if flash %>
+<% style_class = flash[:notice] ? "notice" : "error" %>
+<div class="flash <%= classtyle_classs %> clearfix">
+	<%= flash[:notice] || flash[:error]%>
+</div>
+<% end %>

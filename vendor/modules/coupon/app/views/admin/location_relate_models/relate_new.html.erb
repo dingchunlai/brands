@@ -1,0 +1,31 @@
+<script>
+  $(document).ready(function(){
+    $('.select_all').click(function() {
+      var this_class = $(this).attr("data_class_name");
+      $('.'+this_class).attr("checked",$(this).attr("checked"));
+    });
+    $('.relate_form').submit(function(){
+      $.post($(this).attr('action'), $(this).serialize(), function(data){
+        alert("添加成功");
+      }, 'json');
+      return false;
+    });
+  });
+</script>
+<ul>
+  <% @cfm.each_with_index do |c,index| %>
+    <li style="border-bottom:1px dotted #dcdcdc;padding:5px 0;">
+      <% form_for @location_relate_model ,:url => create_all_admin_location_relate_models_path ,:html => {:class => "relate_form"} do |f| %>
+        <p>模块:<%= check_box_tag(:model_check,1,(@province.location_relate_model.get_relate_for_model(c).size == 0 ? false : true) )%><%= c %></p>
+        <p>同时关联该省的所有城市:<%=check_box_tag "" ,"" ,false,:class => "select_all",:data_class_name => "relate_cities_#{index}" %>全选</p>
+        <p><% @province.cities.each do |city| %>
+            <%= check_box_tag "relate_cities[]",city.id ,(city.location_relate_model.get_relate_for_model(c).size == 0 ? false : true),:class => "relate_cities_#{index}" %><%= city.name%>
+          <% end %>
+        </p>
+        <%= f.hidden_field :resource_id ,:value => @location_id %>
+        <%= f.hidden_field :model_name , :value => c %>
+        <%= f.submit "提交(#{c})模块关联"%>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

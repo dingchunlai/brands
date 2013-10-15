@@ -1,0 +1,25 @@
+<% if (factories = @firm.firm_newest_factories).count > 0 %>
+  <div class="zxdp2011_mfcg margin10">
+    <h3><%= link_to "有哪些免费工地可以参观...(更多)", firm_factories_url(:firm_id => @firm.id), :target => "_blank" %></h3>
+    <ul>
+      <li>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="tit">
+            <td>在建工地</td>
+            <td width="65">户型</td>
+            <td width="75">开工时间</td>
+            <td width="61"></td>
+          </tr>
+          <% factories.each do |factory|%>
+            <tr class="txt">
+              <td><div><%= factory.NAME %></div></td>
+              <td><%= factory.FANGXING ? factory.FANGXING : '— — —' %></td>
+              <td><%= factory.STARTENABLE.to_date if factory.STARTENABLE %></td>
+              <td><%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id),:class => "fancy_box gsl_zjgd_btn" %></td>
+            </tr>
+          <% end -%>
+        </table>
+      </li>
+    </ul>
+  </div>
+<% end %>

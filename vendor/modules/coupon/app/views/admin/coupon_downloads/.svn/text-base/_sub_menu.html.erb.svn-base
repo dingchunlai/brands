@@ -1,0 +1,14 @@
+<%
+  nu = []
+  nu << "#{Coupon.human_name}管理"
+  nu << ["#{Coupon.human_name}列表", admin_coupons_path] if(can?(:read, Coupon) || can?(:read_owned_coupons, :coupons))
+  nu << ["数据统计", data_admin_coupons_path] if can?(:data, Coupon)
+  nu << ["排序", sort_admin_coupons_path] if can?(:sort, Coupon)
+  nu << ["投诉管理", admin_complaints_path] if can?(:read, Complaint)
+  nu << ["设置说明", set_admin_coupons_path] if can?(:set, Coupon)
+  nu << ["添加#{Coupon.human_name}", new_admin_coupon_path] if can?(:create, Coupon)
+  nu << ["#{OfferCoupon.human_name}管理", admin_offer_coupons_path] if can?(:read, OfferCoupon)
+  nu << ["抵用券手机下载统计", stat_admin_coupon_downloads_path] if can?(:stat, CouponDownload)
+%>
+<%= menu *nu %>
+<%#= menu ['Link Here', '#'] %>

@@ -1,0 +1,35 @@
+<%= top_bar :title => '经销商管理页',
+            :button => ['经销商列表', admin_distributors_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['经销商管理', admin_distributors_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>图片</th>
+      <th>类型</th>
+      <th>经销商</th>
+      <th>审核</th>
+    </tr>
+  <% @images.each do |image| %>
+    <tr>
+      <td><%= image.id %></td>
+      <td><%= image.name %></td>
+      <td><%= image_tag cloud_fs_domain("image") + image.image_url, :width => 143, :height => 123 %><%= link_to '查看图片', cloud_fs_domain("image") + image.image_url, :target => "_blank" %></td>
+      <td><%= image.image_type.gsub("Distributor::PictureType::", '') %></td>
+      <td><%= link_to image.distributor_title, admin_distributor_path(:id => image.distributor_id) %></td>
+      <td><%= link_to "通过审核", aduit_admin_hy_image_path(image) %></td>
+    </tr>
+  <% end %>
+  </table>
+  <% unless @images.empty? -%>
+      <%= will_paginate @images, :class => "digg_pagination" -%>
+  <% end -%>
+
+</div>

@@ -1,0 +1,217 @@
+<div class="sidelist clearfix">
+<%= adspace("装修资讯-文章终端页-宽幅1", '', '<div class="margin10"></div>') %>
+
+<style media="screen" type="text/css">
+    #f2 .seo_tian li.tian {
+        height: 100px;
+        width: 119px;
+        overflow: hidden;
+        margin: 0 5px;
+        text-align: center;
+        float: left;
+        _display: inline;
+    }
+
+    #f2 .sidebox_3 li.tian img {
+        width: 110px;
+        height: 80px;
+    }
+
+    a.WQbaomingbox {
+        font-size: 12px;
+        display: inline;
+        color: #6d0200;
+        width: 84px;
+        height: 20px;
+        padding: 2px 5px 5px 5px;
+        text-transform: none;
+        background: url(http://js.51hejia.com/img/zhuangxiu1023/sqmf_btn.gif) center no-repeat;
+    }
+
+    a.WQbaomingbox hover: {
+        color: #6d0200;
+        text-transform: none;
+    }
+
+    .tab_jzsb {
+        font-size: 14px;
+        padding-top: 4px;
+        margin-top: 10px;
+        width: 260px;
+        height: 30px;
+        display: block;
+        text-indent: 30px;
+        background: url(http://js.51hejia.com/img/zhuangxiu1023/zd_bg.gif) no-repeat;
+    }
+
+        /*表单样式*/
+    .bmbg2 {
+        display: none;
+        background: #000;
+        opacity: 0.5;
+        filter: alpha(opacity = 50);
+        width: 100%;
+        height: 100%;
+        position: fixed !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        _top: expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+        z-index: 99;
+    }
+
+    .bmform2 {
+        display: none;
+        background: #fff;
+        border: 8px solid #D1D1D1;
+        width: 400px;
+        left: 50%;
+        margin-left: -200px !important;
+        top: 50%;
+        margin-top: -130px !important;
+        margin-top: 0;
+        position: fixed !important;
+        position: absolute;
+        _top: expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+        z-index: 999;
+    }
+
+    .bmform2 table {
+        margin: 10px 0px;
+    }
+
+    .bmform2 td {
+        padding: 6px 5px;
+        color: #333;
+    }
+</style>
+
+<% if @channel == "zhuangxiu" %>
+    <%= render :partial => "articles/detail/jiazhuang_wenzhang" %>
+    <%= render :partial => "articles/detail/jiazhuang_xiaoshuo" %>
+<% end %>
+
+<% cache "articles:#{@channel}:right:diary:#{@city_id}:#{@id}", :expires_in => 5.minutes do %>
+    <%= render :partial => "articles/detail/photo_recommend", :locals => {:page_class => "sidebox_3"} %>
+<% end %>
+
+<%#= render :partial => "articles/detail/zhaobiao" %>
+
+<% cache "articles:#{@channel}:right:case:#{@city_id}:#{@id}", :expires_in => 5.minutes do %>
+    <%= render :partial => "articles/detail/diary_recommend", :locals => {:page_class => "sidebox_3"} %>
+<% end %>
+
+<form id="form1" method="post" action="http://tag.51hejia.com/list/search" target="_blank">
+  <input name="tag_keyword" type="text"/>
+  <a onclick="document.getElementById('form1').submit()"><img src="http://www.51hejia.com/images/zhuangxiu1023/f2_btn.gif" alt=""/></a>
+</form>
+
+<div class="sidebox_n01">
+  <ul>
+    <li class="sidebox_n01_city">
+        <span>
+          <% hejia_promotion_items(55227, :attributes => ['title', 'url', 'text_style_id'], :limit => 5).each do |api| %>
+            <a title="<%= api['title'] %>装修" <%= 'class="sidebox_n01_citycur"' if api['text_style_id'].to_i==2 %> target="_blank" href="<%= api['url'] %>"><%= api['title'] %></a>
+          <% end %>
+          <!-- <a class="sidebox_n01_citycur" title="无锡" target="_blank" href="#">无锡</a> -->
+        </span></li>
+    <li class="sidebox_n01_qt">
+      <a title="装修知识宝典" target="_blank" href="<%= hejia_promotion_items(55228, :attributes => ['url'], :limit => 1)[0]['url'] %>">装修知识宝典</a>
+    </li>
+    <li class="sidebox_n01_qt">
+      <a title="装修遗憾大全" target="_blank" href="<%= hejia_promotion_items(55229, :attributes => ['url'], :limit => 1)[0]['url'] %>">装修遗憾大全</a>
+    </li>
+    <li class="sidebox_n01_qt">
+      <a title="如何选装潢公司" target="_blank" href="<%= hejia_promotion_items(55230, :attributes => ['url'], :limit => 1)[0]['url'] %>">如何选装潢公司</a>
+    </li>
+  </ul>
+</div>
+
+<ul class="sidebox_6">
+  <h2 class="title_s">最新更新</h2>
+  <% if @article and @article.article_sort %>
+      <% articles = @article.newest_articles(8)
+         str = ''
+         articles.each do |article|
+           domain = 'http://www.51hejia.com/'
+           if article.sort_sign == 'zhuangxiu'
+             domain = 'http://d.51hejia.com/'
+           end
+           if article.sort_sign != ''
+             domain = domain + article.sort_sign + '/'
+           end
+           if article.CREATETIME
+             domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/'
+           end
+           domain = domain + article.ID.to_s
+           str = str + '<li><a href='+domain+' target=_blank title="'+article.TITLE+'">' + truncate(article.TITLE, :length => 16, :omission => "") +'</a></li>'
+         end
+      %>
+      <%= str %>
+  <% end %>
+</ul>
+
+<div class="sidebox_n04 sidebox_6">
+  <h2>装修优惠促销</h2>
+
+  <div class="sidebox_n04_waik">
+    <%
+       case @city_id.to_i
+         when 12118
+           items = ActiveRecord::Base.connection.select_all("SELECT distinct de.id FROM 51hejia.deco_events de join 51hejia.deco_events_firms def on de.id=def.event_id join 51hejia.deco_firms df on def.firm_id = df.id where (df.city = 12118 or df.district=12118) and de.starts_at < '#{Time.now.to_s(:db)}' and de.ends_at > '#{Time.now.to_s(:db)}' order by de.is_good desc limit 4")
+         when 12301
+           items = ActiveRecord::Base.connection.select_all("SELECT distinct de.id FROM 51hejia.deco_events de join 51hejia.deco_events_firms def on de.id=def.event_id join 51hejia.deco_firms df on def.firm_id = df.id where (df.city = 12301 or df.district=12301) and de.starts_at < '#{Time.now.to_s(:db)}' and de.ends_at > '#{Time.now.to_s(:db)}' order by de.is_good desc limit 4")
+         when 12122
+           items = ActiveRecord::Base.connection.select_all("SELECT distinct de.id FROM 51hejia.deco_events de join 51hejia.deco_events_firms def on de.id=def.event_id join 51hejia.deco_firms df on def.firm_id = df.id where (df.city = 12122 or df.district=12122) and de.starts_at < '#{Time.now.to_s(:db)}' and de.ends_at > '#{Time.now.to_s(:db)}' order by de.is_good desc limit 4")
+         when 12306
+           items = ActiveRecord::Base.connection.select_all("SELECT distinct de.id FROM 51hejia.deco_events de join 51hejia.deco_events_firms def on de.id=def.event_id join 51hejia.deco_firms df on def.firm_id = df.id where (df.city = 12306 or df.district=12306) and de.starts_at < '#{Time.now.to_s(:db)}' and de.ends_at > '#{Time.now.to_s(:db)}' order by de.is_good desc limit 4")
+         else
+           items = ActiveRecord::Base.connection.select_all("select * from hejia_index.pc_news where catid=52 order by (CASE listorder WHEN 0 THEN 1 ELSE 0 END), listorder asc , inputtime DESC limit 4")
+       end
+    %>
+    <ul>
+      <% items.each do |item| %>
+          <% if [12306,12118,12122,12301].include?(@city_id.to_i) %>
+              <li>
+                <% deco_event = DecoEvent.find(item["id"]) %>
+                <a href="<%= deco_event.url %>" target="_blank"><%= deco_event.title %></a>
+              </li>
+          <% else %>
+              <li>
+                <a href="<%= item['url'] %>" target="_blank"><%= item['title'] %></a>
+              </li>
+          <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<ul class="sidebox_6">
+  <h2><a href="http://www.51hejia.com/huodong" target="_blank" style="color:white">品牌优惠促销</a></h2>
+  <% SalesPromotionEvent.get_events(6).each do |event| %>
+      <li>
+        <%= link_to event.subject, "http://www.51hejia.com/huodong/#{event.id}", :target => '_blank' %>
+      </li>
+  <% end %>
+</ul>
+
+<ul class="sidebox_6">
+  <h2>品牌导购测评</h2>
+  <% Article.daogou_pingce_articles(10).each do |a| %>
+      <li><%= link_to a.TITLE, a.detail_url, :target => '_blank' %></li>
+  <% end %>
+</ul>
+
+<!-- 一周关注Top10 -->
+<%= render_cell :articles, :this_week_top10 %>
+
+<ul class="sidebox_5">
+  <h2>热门专区</h2>
+  <li>
+    <% hejia_promotion_items(54136, :attributes => ['title', 'url'], :limit => 20).each do |result| %>
+        <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+    <% end %>
+  </li>
+</ul>
+
+</div>

@@ -1,0 +1,92 @@
+<script type="text/javascript" language="javascript">
+  $(document).ready(function(){
+    $(".next input[type=image]").click(function(){
+        window.location.href = "/coupon/" + $(this).attr('coupon-id');
+      });
+    $("#login_form").submit(function() {
+      if($("#user_name").val()== ""||$("#user_name").val().length ==0  ){
+        alert("请输入用户名");
+
+      }else if($("#password").val()== ""||$("#password").val().length ==0 ){
+        alert("请输入密码");
+      }else{
+        $("#login_submit").attr("disabled","disabled");
+        $.ajax({
+          type: "POST",
+          url:"/sessions/user_login",
+          dataType:"script",
+          data: jQuery(this).serialize(),
+          success: function(html){
+            $("#login_submit").removeAttr("disabled");
+            if(html == "error"){
+              alert("用户名或密码错误");
+              $("#password").val("");
+            }else if(html == "freeze"){
+              alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+              $("#password").val("");
+            }else{
+              $("#login").css("display","none");
+              $("#cookie_id").val(html);
+              $("#user_id").val(html);
+            }
+          }
+        });
+      };
+      return false;
+    });
+  });
+</script>
+<script type="text/javascript">
+    $(function() {
+      
+    $('.djq_rcurtxt ol').addClass('djq_wenxtx');
+
+    $('form.remark_form').live('submit', function(){
+      var content = $.trim($(this).find('input[type=text], textarea').val());
+      if ($.trim($("#login").html())!=''){
+        alert('请先登录再提交评论！');
+        return false;
+      }
+      if (content == ''){
+        alert('请填写评论内容！');
+        return false;
+      }
+      jQuery.ajax({
+        data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'),
+        dataType:'script', type:'post', url:'/coupon/coupon_remarks'
+      });
+      return false;
+    });
+
+    $('form.remark_form').submit(function(){
+      var content = $.trim($(this).find('input[type=text], textarea').val());
+      if ($.trim($("#login").html())!=''){
+        alert('请先登录再提交评论！');
+        return false;
+      }
+      if (content == ''){
+        alert('请填写评论内容！');
+        return false;
+      }
+      jQuery.ajax({
+        data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'),
+        dataType:'script', type:'post', url:'/coupon/coupon_remarks'
+      });
+      return false;
+    });
+
+    //我要添加回复
+    $('a.reply_button').live('click', function(){
+      $('div.diary_contwbpingl').css('display', 'none');
+      $(this).parent('').parent('').find('div.diary_contwbpingl').css('display', 'block');
+      //('div.diary_contwbpingl').css('display', 'block');
+    });
+
+    $('a.reply_button').click(function(){
+      $('div.diary_contwbpingl').css('display', 'none');
+      $(this).parent('').parent('').find('div.diary_contwbpingl').css('display', 'block');
+    });
+        
+    });
+</script>
+

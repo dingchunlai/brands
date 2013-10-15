@@ -1,0 +1,21 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <% 
+    i = 0
+    @firms_impressions.each do |firm_id| 
+      firm = DecoFirm.find_by_id firm_id
+      unless firm.blank? 
+        break if i == 3
+        i += 1
+  %>
+      <tr>
+        <td height="25"><a href="<%= firm_url(:id => firm.id,:trailing_slash => "/") %>" target="_blank"><%= truncate(strip_tags(firm.name_abbr),:length => 6, :omission => '')%></a></td>
+        <td><a href="<%= firm_url(:id => firm.id,:trailing_slash => "/") %>" target="_blank"><%= firm.price_text %></a></td>
+        <% DecoImpression.charts(firm.id, 3).each_with_index do |r,index|%>
+          <td width="110"><span class="zxdp2010_wyyxcolor0<%= index+1 %>"><%= h truncate(r[:name], 5, '') %></span>(<%= r[:percent] %>)</td>
+        <% end %>
+      </tr>
+  <% 
+    end 
+      end
+  %>
+</table>

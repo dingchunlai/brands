@@ -1,0 +1,36 @@
+<% title "【油漆施工】视频-#{@title}_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_6 %>
+<% description PAINT_DESCRIPTION_6 %>
+<script src="http://js.51hejia.com/js/AC_RunActiveContent.js" type="text/javascript"></script>
+<!--content_code-->
+<%= render :partial => '/shared/top_location', :locals => { :location => "视频-#{@title}", :location_end => nil }%>
+<!--content_code_end-->
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current">
+      <h3><%= @title %></h3>
+    </div>
+    <div class="yg_current yg_smbg">
+      <div class="yg_pxtit yg_video">
+        <script type="text/javascript">
+	AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0','width','100%','height','100%','src',"<%= @video_url %>",'quality','high','pluginspage','http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash','movie',"<%= @video_url %>" ); //end AC code
+</script><noscript><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="100%" height="100%">
+          <param name="movie" value="<%= @video_url %>" />
+          <param name="quality" value="high" />
+          <embed src="<%= @video_url %>" id="video_src" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="100%" height="100%"></embed>
+        </object>
+      </noscript></div>
+    </div>
+  </div>
+	<div class="yg_p1_r f_r">
+         <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

@@ -1,0 +1,25 @@
+<div style="background-color:#f4f4f4;" class="jiaju_wrapper clearfix">
+  <ul class="jiaju_sidebox">
+    <span class="tab_jzsb">业主装修日记连载中</span>
+    <% items = hejia_promotion_items(55744, :attributes => ['title','url','image_url','description'], :limit => 3) %>
+    <% for item in items %>
+      <li>
+        <a title="<%= item['title']%>" target="_blank" href="<%= item['url'] %>">
+          <%= image_tag "http://img.51hejia.com/api#{item.image_url}", :size => "75x75" %>
+        </a>
+      </li>
+    <% end %>
+    <% for item in items %>
+      <li style="width:250px;overflow:hidden; line-height:20px;display:inline-block; border-bottom: 1px dotted #ccc;">
+        <p></p>
+        <h1 style="font-size:14px; font-weight:bold; color:#000;">
+          <a title="<%= item['title']%>" target="_blank" href="<%= item['url'] %>"><%= item['title'] %></a>
+        </h1>
+        <p></p>
+        <p style="text-indent:2em;">
+          <a title="<%= item['description'] %>" target="_blank" href="<%= item['url'] %>"><%= truncate(item['description'], 50) %></a>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</div>

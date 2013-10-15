@@ -1,0 +1,167 @@
+<%= top_bar :title => '业务员管理页',
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['业务员列表', admin_sales_profiles_path]
+            ]
+%>
+<style type="text/css">
+  .contract_item {
+      text-align: left; padding: 5px; border: 1px dotted orange; width: 250px; float: left; overflow: hidden; height: 80px;
+  }
+</style>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>合同分配</th>
+    </tr>
+    <tr>
+      <td>
+        <strong>×</strong> 将<%= select_tag 'from_user', options_for_select(@sales_users.collect{ |u| [u.rname, u.id] }), :id => 'from_user' %>
+        的合同<strong><span style="color: blue;">全部</span></strong>分配给
+        <%= select_tag 'to_user', options_for_select(@sales_users.collect{ |u| [u.rname, u.id] }), :id => 'to_user' %>
+        <input type="button" id="transfer_contracts" value="确认" />
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>部分分配</th>
+    </tr>
+    <% if flash[:notice] %>
+    <tr>
+      <td><div style="color: blue; font-weight: bold;"><%= flash[:notice] %></div></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td>
+        请选择业务员<%= select_tag 'sales_list', options_for_select(@sales_users.collect{ |u| [u.rname, u.id] }.unshift(['请选择', '']), :selected => params[:sales_id].to_i), :id => 'sales_list' %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% unless @contracts.empty? %>
+            <%= will_paginate @contracts %>
+        <% end %>
+      </td>
+    </tr>
+    <% unless @contracts.empty? %>
+    <tr>
+      <td>
+        <% form_for '', :url => save_assign_contracts_admin_sales_profiles_path, :html => { :id => "frm" } do |f| %>
+            <%= hidden_field_tag 'to_sales_id' %>
+            <%= hidden_field_tag 'from_sales_id', params[:sales_id] %>
+        <div id="contracts_by_sales">
+          <% @contracts.each do |contract| %>
+            <div id="contract_<%= contract.id %>" class="contract_item"><font color=green>合　同:</font><%= link_to contract.title, admin_distributor_contract_path(contract.distributor_id, contract.id), :target => "_blank" %>
+            <br />
+            <font color=#336699>经销商:</font><%= link_to contract.distributor.short_title, admin_distributor_path(contract.distributor_id), :target => "_blank", :title => contract.distributor.title %>
+            <br/>
+            <span class="boxes"><%= check_box_tag 'contracts[]', contract.id, false, :id => "contract_#{contract.id}" %></span>
+            </div>
+          <% end %>
+        </div>
+        <% end %>
+      </td>
+    </tr>
+    <% else %>
+        <tr><td>没有合同!</td></tr>
+    <% end %>
+    <tr>
+      <td>
+        <% unless @contracts.empty? %>
+            <%= will_paginate @contracts %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>
+<style type="text/css">
+    .fudongbox {
+        width: 200px;
+        position: fixed;
+        right: 35px;
+        border: 1px solid #fdae49;
+        padding: 0 10px;
+        bottom: 0;
+        z-index: 9;
+        background: #fcf9e6;
+        _position: absolute;
+    }
+
+    .fudongbox h3 {
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .fudongbox li {
+        height: 24px;
+        line-height: 24px;
+    }
+</style>
+<% unless @contracts.empty? %>
+    <div class="fudongbox"><h3>分配操作</h3>
+      <ul>
+        <li class="main_box">全选/取消<%= check_box_tag("main_box[1]", '1', false) %></li>
+        <li>分配给:<%= select_tag 'to_sales_list', options_for_select(@sales_users.collect{ |u| [u.rname, u.id] }.unshift(['请选择', ''])), :id => 'to_sales_list' %>&nbsp;&nbsp;<input type="button" value="分配" id="assign_to_sales"></li>
+      </ul>
+    </div>
+<% end %>
+<script type="text/javascript">
+    //jQuery(function($) {}
+    //$(function() {});
+
+    $(function(){
+        $("#transfer_contracts").click(function(){
+            if ($("#from_user").val() == $("#to_user").val()) { alert('请选择不同的业务员'); return; }
+
+            if (confirm("确认执行分配操作?"))
+            {
+                $.get("/remote/assign_contracts", { from_user : $("#from_user").val(), to_user : $("#to_user").val() }, function(data) {
+                    alert(data);
+                }, "html");
+            }
+        });
+
+        $("#sales_list").change(function(){
+            if ($(this).val() != '') {
+                location.href = '<%= assign_contracts_admin_sales_profiles_path %>?sales_id=' + $(this).val();
+            }
+        });
+
+        $(".main_box input").click(function() {
+            $(".boxes input").attr('checked', $(this).attr('checked'));
+            $(".main_box input").attr('checked', $(this).attr('checked'));
+        });
+
+        $(".boxes input").click(function() {
+            var checked_list = $.grep($(".boxes input"), function(item, index) {
+                return $(item).attr("checked");
+            });
+            $(".main_box input").attr("checked", (checked_list.length == $(".boxes input").length));
+        });
+
+        $("#to_sales_list").change(function(){
+           $("#to_sales_id").attr("value", $("#to_sales_list").val()); 
+        });
+
+        $("#assign_to_sales").click(function(){
+            $("#frm").submit();
+        });
+
+        $("#frm").submit(function(){
+            var checked_list = $.grep($(".boxes input"), function(item, index) {
+                return $(item).attr("checked");
+            });
+            if (checked_list.length == 0) { alert('请选择需要分配的合同!'); return false; }
+            if ($("#to_sales_list").val() == '') { alert('请选择需要分配的业务员!'); return false; }
+
+            return confirm('确认?');
+        });
+    });
+</script>

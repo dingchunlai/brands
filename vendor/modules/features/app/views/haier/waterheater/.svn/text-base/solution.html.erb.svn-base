@@ -1,0 +1,301 @@
+<script type="text/javascript">
+
+$(function() {
+
+ //function enableRating() {
+  $('.q_vote_a').click(function(event) {
+    event.preventDefault();
+    try {
+      var url_and_data = $(this).attr('data-remote').split('?', 2);
+      $.ajax({
+        cache: false,
+        global: false,
+        url: url_and_data[0],
+        data: url_and_data[1],
+        type: 'POST',
+        dataType: 'script',
+        error: function(request, textStatus, error) {
+          alert(request.responseText);
+        },
+        success: function(data, textStatus, request) {
+          if(data == '感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)') {
+              alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+              return false;
+          }
+          if(data == '请确保是否在页面上点击提交!') {
+              alert('请确保是否在页面上点击提交!');
+              return false;
+          }
+          alert('感谢您的参与和家网品牌口碑评价！');
+        }
+      });
+    } catch(e) {
+      //alert(e.name + ' : ' + e.message);
+    }
+    return false;
+  });
+ //}
+ //$(enableRating);
+  //留言
+$("#submitmark").click(function(){
+        if(($("#uname").val().length > 0 && $("#upwd").val().length > 0) || $("#uchecked").attr('checked')) {
+            if($("#ucontent").val().length <= 0) {
+               alert('请输入留言内容!');
+               return false;
+            }else {
+                if($("#uchecked").attr('checked')) {
+                    var uchecking = 1;
+                }else {
+                    var uchecking = '';
+                }
+                $.ajax({
+                    cache: false,
+                    global: false,
+                    url: '<%= haier_waterheater_message_path %>',
+                    data: {uname : $("#uname").val(),upwd : $("#upwd").val(),uchecked : uchecking,ucontent : $("#ucontent").val()},
+                    type: 'POST',
+                    dataType: 'script',
+                    error: function(request, textStatus, error) {
+                      alert('请稍后再提交！');
+                    },
+                    success: function(data, textStatus, request) {
+                      if(data == '请稍后再提交!') {
+                          alert('请稍后再提交!');
+                          return false;
+                      }
+                      if(data == '用户名或密码错误!') {
+                          alert('用户名或密码错误!');
+                          return false;
+                      }
+                      if(data == '请先登录或者匿名发表!') {
+                          alert('请先登录或者匿名发表!');
+                          return false;
+                      }
+                      $("#ucontent").attr('value','');
+                      alert('留言成功!');
+                    }
+                });
+                return false;
+            }
+        }else {
+            alert("请先登录或选择匿名发表!");
+            return false;
+        }
+});
+})
+</script>
+<!--content -->
+<div class="cs">
+	<div class="cs_1"><img src="http://www.51hejia.com/zhuanti/haier201105/images/01.gif" /></div>
+    <div class="cs_2"><img src=" http://www.51hejia.com/zhuanti/haier201105/images/02.gif" /></div>
+    <div class="num"><img src=" http://www.51hejia.com/zhuanti/haier201105/images/num_img.jpg" /><span><%= @follow_people %></span></div>
+    <div class="cs_box">
+        <div class="box_q">
+            <div class="q_top"><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_top.jpg" /></div>
+                <div class="q_content">
+                    <div class="q_box">
+                        <div class="q_box_l">
+                            <div class="q_name">问题一：加热速度慢</div>
+                            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img1.jpg" /></div>
+                            <div class="q_name">加热速度满意度调查</div>
+                            <div class="q_p">从以上对电热水器加热速度的调查上看，如今的电热水器加热速度已经有所改善，36%的用户表示对自家热水器的加热速度非常满意，十几二十分钟就能完成加热。但是还有64%的用户表示不满或勉强接受。其中，9%的用户表示家里热水器加热速度非常慢，需要一个多小时才能加热好；23%的用户表示加热速度有点慢…… <a href="http://www.51hejia.com/xinwen/20110530/662203-8
+" target="_blank">[详细]</a></div>
+                      </div>
+                        <div class="q_box_r">
+                            <div class="q_name_g">方案一：3D极速加热技术</div>
+                            <div><span class="font_g">产品型号：</span>海尔畅享+能热水器3D226H-J1(E)</div>
+                            <div class="q_img"><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img2.jpg" /><p class="font_g">方案特点：</p><p class="q_p">海尔3D速热技术，在出水口采用独特的“高效聚能环”，可以针对流出的水集中加热，单位温升可达13℃左右，有效提高出水速度，避免洗浴前期的过长等待。此外它能够满足多人连续洗澡，同时有多少水就加热多少水，避免造成多余热水的浪费，无论冬夏你都可以享受到开机即洗的惊喜。</p></div>
+                            <div class="q_name_g">您对该案例的看法</div>
+                            <%= render :partial =>'rated',:locals =>{:u_like =>@plan_first_like,:u_nolike =>@plan_first_nolike,:item =>'plan_first'} %>
+                            <div><span class="font_b">解决问题：</span><span class="q_name_g">加热速度慢</span></div>
+                        </div>
+                      </div>
+
+                    <div class="q_box">
+                        <div class="q_box_l">
+                            <div class="q_name">问题二：忽冷忽热</div>
+                            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img3.jpg" /></div>
+                            <div class="q_name">您是否觉得自家的燃气热水器忽冷忽热</div>
+                            <div class="q_p">在对燃气热水器是否忽冷忽热的具体调查中，我们发现，87%的用户发觉自家的热水器会忽冷忽热，可见这个问题的严重性。其中，35%的用户在多个龙头使用时会有忽冷忽热的感受，33%用户觉得水温经常忽冷忽热，19%的用户觉得水温偶尔会忽冷忽热，但不知道是什么原因。总体来看，水温问题也是用户体验……<a href="http://www.51hejia.com/xinwen/20110530/662203-8" target="_blank">[详细]</a></div>
+                      </div>
+                        <div class="q_box_r">
+                            <div class="q_name_g">方案二：±1℃恒温技术</div>
+                            <div><span class="font_g">产品型号：</span>海尔燃气超越JSQ20-SR红(12T)</div>
+                            <div class="q_img"><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img4.jpg" /><p class="font_g">方案特点：</p><p class="q_p">燃气热水器的水温易受水压、气压的双重影响，海尔燃气热水器采用微电脑智能恒温控制系统，当进水、进气压力波动时，可自动感应供水流量，并随之变频调节燃气供给量和风机转速智能实现水温恒定，依据设定温度，偏差控制在±1℃以内，时刻体贴您的肌肤，不再忽冷忽热。</p></div>
+                            <div class="q_name_g">您对该案例的看法</div>
+                            <%= render :partial =>'rated',:locals =>{:u_like =>@plan_second_like,:u_nolike =>@plan_second_nolike,:item =>'plan_second'} %>
+                            <div><span class="font_b">解决问题：</span><span class="q_name_g">忽冷忽热</span></div>
+                        </div>
+                      </div>
+
+                    <div class="q_box">
+                        <div class="q_box_l">
+                            <div class="q_name">问题三：耗电</div>
+                            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img5.jpg" /></div>
+                            <div class="q_name">您家的电热水器耗电吗</div>
+                            <div class="q_p">超过六成的受访者认为自家热水器存在耗电问题，其中27.09%的受访者认为“挺耗电”，34.34%的受访者认为“比较耗电”。由该数据可以看出，电热水器的耗电问题也相当严重。所以，无论是考虑全球节能减排的大环境，还是考虑各个家庭的热水器消费支出，热水器厂商都应该在节能表现上更进一步…… <a href="http://www.51hejia.com/xinwen/20110530/662203-8" target="_blank">[详细]</a></div>
+                      </div>
+                        <div class="q_box_r">
+                            <div class="q_name_g">方案三：阳台式太阳能热水器</div>
+                            <div><span class="font_g">产品型号：</span>海尔平板太阳热水器PJF2-100</div>
+                            <div class="q_img"><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img6.jpg" /><p class="font_g">方案特点：</p><p class="q_p">海尔平板太阳能热水器适合各种非顶楼、接近顶层、高层住宅、或者顶楼面积有限的用户安装使用。它区别于传统太阳能是靠自然压力出水，能承压运行，使热水喷涌而出。此外它的平板集热器易与建筑结合，在生产热水的同时，兼具保温、隔热、遮光、挡风雨等传统屋面的功能。</p></div>
+                            <div class="q_name_g">您对该案例的看法</div>
+                            <%= render :partial =>'rated',:locals =>{:u_like =>@plan_third_like,:u_nolike =>@plan_third_nolike,:item =>'plan_third'} %>
+                            <div><span class="font_b">解决问题：</span><span class="q_name_g">耗电</span></div>
+                        </div>
+                      </div>
+
+                    <div class="q_box">
+                        <div class="q_box_l">
+                            <div class="q_name">问题四：安全性</div>
+                            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img7.jpg" /></div>
+                            <div class="q_name">您是否担心电热水器的安全问题</div>
+                            <div class="q_p">从图表可以看出，电热水器安全问题正越来越受到热水器用户的关注。在本次调查中，有近82%的受访者担心电热水器安全问题，其中，认为“比较担心，对于热水器首先需要考虑安全”的受访者占调查总比重的34.57%，“有点担心，但对大部分电热水器还是有信心”的占36.29%，而“非常担心，并决定不用电热水器…… <a href="http://www.51hejia.com/xinwen/20110530/662203-9" target="_blank">[详细]</a></div>
+                      </div>
+                        <div class="q_box_r">
+                            <div class="q_name_g">方案四：防电墙技术</div>
+                            <div><span class="font_g">产品型号：</span>海尔电热水器ES60H-T1(E)</div>
+                            <div class="q_img"><img src="http://www.51hejia.com/zhuanti/haier201105/images/q_img8.jpg" /><p class="font_g">方案特点：</p><p class="q_p">中国的用电环境存在大量的接地保护不良、线路老化的问题，这些问题引起的地线带电、水漏电等问题，普通热水器的漏电保护装置是不起作用的；海尔防电墙技术，在热水器和人体之间增加了一个很大的电阻，使人体可能承受的电压低于12伏，解决了用电环境不良引起的热水器安全问题。</p></div>
+                            <div class="q_name_g">您对该案例的看法</div>
+                            <%= render :partial =>'rated',:locals =>{:u_like =>@plan_four_like,:u_nolike =>@plan_four_nolike,:item =>'plan_four'} %>
+                            <div><span class="font_b">解决问题：</span><span class="q_name_g">安全性</span></div>
+                        </div>
+                      </div>
+
+
+
+                </div>
+        </div>
+
+
+        <div class="box_p">
+            <div class="p_1">
+                <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_1_img.jpg" /></div>
+                <div><p class="q_name_g">调查背景</p><p class="q_p_g">自1987年热水器概念引入中国至今，热水器在中国的发展已经有二十多年的历史。从刚开始的摸爬滚打，到后面的成长过渡，又到如今的发展壮大，热水器的发展一路高歌猛进，市场规模不断扩大，热水器不仅成为了城市家庭的必需品，近年来也开始深入农村家庭市场。此外，热水器的产品类型也逐步丰富，从最初单一的电热水器到如今的燃气式、电热式、太阳能和热泵式等四大产品类型，整个热水器市场正处于逐步上升的阶段…… <a href="http://www.51hejia.com/xinwen/20110530/662203-1" target="_blank">[详细]</a></p>
+              </div>
+            </div>
+
+            <div class="p_2">
+                <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_2_top.jpg" /></div>
+                <div class="p_2_content">
+                    <ul>
+                        <li>
+                          <div class="q_name"><a href="http://www.51hejia.com/xinwen/20110530/662203-16" target="_blank">1.家电卖场购买热水器更让消费者放心</a></div>
+                            <div><span class="font_g"><strong>描述：</strong></span>将近61%的受访者习惯在家电卖场购买热水器，19%的受访者会在品牌专卖店购买，15%的受访者在建材卖场购买，而通过网络、团购和其他途径购买热水器的消费者比例分别为3%，1%，1%。…… <span class="font_g"><a href="http://www.51hejia.com/xinwen/20110530/662203-16" target="_parent">[详细]</a></span></div>
+                          <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_2_img.jpg" /></div>
+                        </li>
+                        <li class="q_name"><a href="http://www.51hejia.com/xinwen/20110530/662203-18" target="_blank">2.热水器产品最能被消费者接受的价位段为1200～2500元</a></li>
+                      <li class="q_name"><a href="http://www.51hejia.com/xinwen/20110530/662203-17" target="_blank">3.消费者较多信赖知名品牌的产品，认为信誉有保证</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-15" target="_blank"><strong>4</strong>.消费者依赖于从电视和网络上获取信息</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-4" target="_blank"><strong>5</strong>.燃气热水器和电热水器占热水器市场主流</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-7" target="_blank"><strong>6</strong>.售后问题的关注度依然名列前茅</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-12" target="_blank"><strong>7</strong>.水质问题已经开始受消费者</a>关注</li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-13" target="_blank"><strong>8</strong>.近九成用户期待开机零冷水</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-10" target="_blank"><strong>9</strong>.六成消费者对自家热水器的安装效果不满意或觉得有遗憾</a></li>
+                      <li class="font_l"><a href="http://www.51hejia.com/xinwen/20110530/662203-13" target="_blank"><strong>10</strong>.96.21%消费者表示愿意为热水器的环保性能买单，其中加值500元被认为最合理</a></li>
+                  </ul>
+                    <div class="p_2_a"><a href="http://www.51hejia.com/xinwen/20110530/662203-1" target="_blank">&gt;&gt;点击查看详细调查报告</a></div>
+              </div>
+
+                <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_2_end.jpg" /></div>
+                </div>
+
+            <div class="p_3">
+                <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_3_top.jpg" /></div>
+                <div class="p_3_content">
+                    <ul>
+                      <% unless @topics.blank? %>
+                      <%= render :partial =>'wenbadata',:collection =>@topics %>
+                      <% end %>
+                    </ul>
+                </div>
+                <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_2_end.jpg" /></div>
+            </div>
+
+         </div>
+
+    </div>
+
+
+    <div class="cs_3">
+        <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_top.jpg" /></div>
+        <div class="cs_3_content">
+            <ul>
+                <li>
+                    <div class="cs_3_title">余热回收</div>
+                    <div class="cs_3_img">
+                        <div><a href="http://www.51hejia.com/zhuanti/haier201105/yurehuishou.html" target="_blank"><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_img1.jpg" /></a></div>
+                        <div class="q_p">我们使用热水器的时候，流失的热水的同时其实在流失热能，如果有技术可以让流失的这部分热量回收，那是不是很好呢？…… <a href="http://www.51hejia.com/zhuanti/haier201105/yurehuishou.html" target="_blank">[详细]</a></div>
+                  </div>
+                    <div class="q_name_g">您对该技术的看法</div>
+                    <%= render :partial =>'rated',:locals =>{:u_like =>@wasterecovery_like,:u_nolike =>@wasterecovery_nolike,:item =>'wasterecovery'} %>
+                </li>
+                <li>
+                    <div class="cs_3_title">零冷水</div>
+                    <div class="cs_3_img">
+                        <div><a href="http://www.51hejia.com/zhuanti/haier201105/linglengshui.html" target="_blank"><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_img2.jpg" /></a></div>
+                        <div class="q_p">我们使用热水器时都要先放一段冷水，之后才有热水出来，这样不仅影响洗浴心情，而且浪费时间、浪费水资源，如果有一项……<a href="http://www.51hejia.com/zhuanti/haier201105/linglengshui.html" target="_blank">[详细]</a></div>
+                  </div>
+                    <div class="q_name_g">您对该技术的看法</div>
+                    <%= render :partial =>'rated',:locals =>{:u_like =>@zerowater_like,:u_nolike =>@zerowater_nolike,:item =>'zerowater'} %>
+                </li>
+                <li>
+                    <div class="cs_3_title">阳台式太阳能</div>
+                    <div class="cs_3_img">
+                        <div><a href="http://www.51hejia.com/zhuanti/haier201105/taiyangneng.html" target="_blank"><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_img3.jpg" /></a></div>
+                        <div class="q_p">太阳能热水器之所以未能普及，主要的原因之一是如今的太阳能热水器还不能进行全楼段的安装。如果热水器厂商可以……<a href="http://www.51hejia.com/zhuanti/haier201105/taiyangneng.html" target="_blank">[详细]</a></div>
+                  </div>
+                    <div class="q_name_g">您对该技术的看法</div>
+                    <%= render :partial =>'rated',:locals =>{:u_like =>@solarenergy_like,:u_nolike =>@solarenergy_nolike,:item =>'solarenergy'} %>
+                </li>
+                <li>
+                    <div class="cs_3_title">软水解决方案</div>
+                    <div class="cs_3_img">
+                        <div><a href="http://www.51hejia.com/zhuanti/haier201105/ruanshui.html" target="_blank"><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_img4.jpg" /></a></div>
+                        <div class="q_p">在我们的调查中发现，水质问题正越来越受广大消费者关注。其中，超过半数受访者认为家里“存在水质问题，但没有……  <a href="http://www.51hejia.com/zhuanti/haier201105/ruanshui.html" target="_blank">[详细]</a></div>
+                  </div>
+                    <div class="q_name_g">您对该技术的看法</div>
+                    <%= render :partial =>'rated',:locals =>{:u_like =>@resolveplan_like,:u_nolike =>@resolveplan_nolike,:item =>'resolveplan'} %>
+                </li>
+            </ul>
+        </div>
+        <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_3_end.jpg" /></div>
+    </div>
+
+
+    <div class="cs_4">
+
+        <div class="cs_4_l">
+            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_4_l_top.jpg" /></div>
+            <div class="cs_4_l_content">
+                <div class="cs_4_li">
+                    <ul>
+                      <% @msgs.each do |msg| %>
+                        <li><span class="font_l"><%= msg.user_id.to_i == 7360706 ? '和家网友' : msg.hejia_bbs_user.USERNAME %>：</span><%= truncate_u(msg.content,34) %></li>
+                      <% end %>
+                    </ul>
+                </div>
+                <div><span class="q_name">我要留言</span><span class="cs_4_li_more q_p"></span></div>
+                <div class="cs_4_margin">用户名：<input type="text" size="10" id="uname" />&nbsp;密码：<input type="password" size="10" id="upwd" />&nbsp;<input name="" type="checkbox" value="" id="uchecked" />&nbsp;匿名发表</div>
+                <div><textarea name="" cols="50" rows="2" id="ucontent"></textarea></div>
+                <div class="cs_4_margin"><a style="cursor:pointer;"><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_4_input1.jpg" id="submitmark" /></a></div>
+            </div>
+            <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_4_l_end.jpg" /></div>
+        </div>
+
+
+        <div class="cs_4_r">
+             <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_4_r_top.jpg" /></div>
+          <div class="cs_4_r_content">
+              <div class="q_p">您家的热水器是否经常出现各种各样的“疑难问题”？如：出水量小、忽冷忽热、不知道怎样安装、选择什么样的热水器合适、操控不便、泄漏煤气、漏电、不够美观、不够环保等等……海尔热水器问题解决专家参与了我们此次问卷调查活动，并为各位网友即时解决热水器难题。有什么困扰、有什么难题，不妨来一吐为快吧！</div>
+              <div class="cs_4_r_input"><a href="http://wb.51hejia.com/list/sort/132.html?tp=0&wd="><img src="http://www.51hejia.com/zhuanti/haier201105/images/cs_4_input2.jpg" /></a></div>
+          </div>
+             <div><img src="http://www.51hejia.com/zhuanti/haier201105/images/p_2_end.jpg" /></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--end -->

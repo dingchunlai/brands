@@ -1,0 +1,54 @@
+<% city_name = CITIES[@user_city_code.to_i]%>
+<% location "在建工地列表" %>
+<% @title = "#{city_name}在建工地列表-#{city_name}和家网装修点评" %>
+<%
+@description = "#{city_name}在建工地,在建工地,工地列表"
+@keywords = "#{city_name}在建工地列表,#{city_name}和家网装修点评"
+%>
+<%= render :partial => "dianping/shared/firm_factory_pop"%>
+
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <!-- 左边部分 -->
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sjlnlist">
+      <h3>在建工地</h3>
+      <div class="zxdp2010_zjgdselect"></div>
+      <div class="zxdp2010_sjslisthack"></div>
+      <div class="zxdp2010_zjgdlist">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="gsl_zjgd_tit">
+            <td width="90"><strong>所属公司</strong></td>
+            <td width="200"><strong>楼盘名称</strong></td>
+            <td width="89"><strong>房型</strong></td>
+            <td width="52"><strong>预算</strong></td>
+            <td width="141"><strong>可供参观时间</strong></td>
+            <td width="72"><strong>预约</strong></td>
+          </tr>
+          <% @factories.each do |factory| %>
+            <tr>
+              <td width="90"><%= factory.deco_firm.name_abbr %></td>
+              <td width="200"><%= factory.NAME %></td>
+              <td width="89"><%= factory.FANGXING ? factory.FANGXING : '— — —' %></td>
+              <td width="52"><%= factory.MONEY %>万</td>
+              <td width="141"><%= factory.STARTENABLE.to_date if factory.STARTENABLE %> 至 <%= factory.ENDENABLE.strftime("%m-%d") if factory.ENDENABLE %></td>
+              <td width="72"><%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id),:class => "fancy_box gsl_zjgd_btn" %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="zxdp2010_sjsnum f_l">共有<span><%= @factories.total_entries %></span>个<%= city_name %>在建工地 <%= will_paginate @factories %></div>
+    </div>
+  </div>
+  <!-- 右边部分 -->
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => "dianping/shared/yuyue" %>
+    <% unless @assort_firms.blank? %>
+      <%= render :partial => "dianping/firms/assort_firms", :locals => {:firms => @assort_firms }%>
+    <% end %>
+    <%= render :partial => "dianping/shared/dianping_help" %>
+    <div class="margin10">
+      <%= render :partial => "dianping/shared/right_list_afp"%>
+    </div>
+  </div>
+</div>

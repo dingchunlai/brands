@@ -1,0 +1,22 @@
+  <div class="djq_yb_l f_l">
+    <div class="djq_yb_lbox djq_yb_lbox1 margin10">
+      <h3>商户信息</h3>
+      <div class="djq_yb_llogo">
+        <% 
+          link_a = @distributor.coupons.size > 1 ? distributor_index_path(@distributor) : "#n"
+          unless @distributor.logo.blank? 
+        %>
+          <%= link_to image_tag(cloud_fs_domain('image') + @distributor.logo), link_a, :title => @distributor.title %>
+        <% end %>
+      </div>
+      <h4><%= link_to @distributor.title, link_a %></h4>
+      <% @distributor.shops.each do |shop| %>
+        <ul>
+          <li><strong>店铺名称：</strong><%= shop.name %></li>
+          <li><strong>联系电话：</strong><%= shop.telphone %></li>
+          <li><strong>店铺地址：</strong><%= shop.address %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+

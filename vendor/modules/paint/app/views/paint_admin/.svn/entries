@@ -1,0 +1,61 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin
+http://svn.51hejia.com:8081
+
+
+
+2013-01-23T07:57:16.357904Z
+496
+dingchunlai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+paint_admins
+dir
+
+shared
+dir
+
+export_xls
+dir
+
+paint_workers
+dir
+
+home
+dir
+
+login
+dir
+
+paint_cases
+dir
+
+paint_log
+dir
+
+contacts
+dir
+
+mail
+dir
+
+online
+dir
+

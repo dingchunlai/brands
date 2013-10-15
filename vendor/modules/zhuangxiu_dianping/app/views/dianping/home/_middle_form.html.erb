@@ -1,0 +1,149 @@
+<script type="text/javascript">
+  function ge(id){return document.getElementById(id);}
+  function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+    $(function(){
+        $("#dianping_home_submit").click(function() {
+          if (trim(ge("c1").value)==""){
+              alert("您必须填写称呼！");
+              ge("c1").focus();
+              return false;
+          }
+          if (trim(ge("c2").value)==""){
+              alert("您必须填写联系方式！");
+              ge("c2").focus();
+              return false;
+          }else {
+              var phone = /^0?1(4\d|3\d|5[012356789]|8[0123456789])\d{8}$/;
+              var tel = /^((0\d{2,3})-)(\d{7,8})?$/;
+              if (phone.test(ge("c2").value) || tel.test(ge("c2").value)) {
+              }else {
+                  alert('请输入正确的联系方式!\r\n如：13888888888或021-8888888');
+                  $("#c2").focus();
+                  return false;
+              }
+          }
+          if (trim(ge("c5").value)==""){
+              alert("请选择您的预算！");
+              return false;
+          }
+          if (trim(ge("c6").value)==""){
+              alert("请选择装修风格！");
+              return false;
+          }
+          if (trim(ge("c7").value)==""){
+              alert("请选择装修方式！");
+              return false;
+          }
+          $.ajax({
+            type:"post",
+            url:"<%= dianping_form_save_path %>",
+            data: $("#dianping_home_form").serialize(),
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            error: function(request) {
+                alert('发送出错,请重新提交!');
+                return false;
+            },
+            success: function(data) {
+                if (data == 'ok') {
+                    ge("c1").value = '';
+                    ge("c2").value = '';
+                    alert('感谢您的参与!');
+                    _gaq.push(['_trackEvent','效果', '找装修公司', '找装修公司', 1]);
+                    return false;
+                }
+                if (data == 'no') {
+                    alert('提交错误!请稍后再提交!');
+                    return false;
+                }
+                if (data == 'notblank') {
+                    alert('提交的数据不能为空!');
+                    return false;
+                }
+            }
+          });
+        });
+    });
+</script>
+
+<div class="zxdp2011_table">
+  <h3>
+    <label>不知道如何选择？和家帮您</label>
+  </h3>
+  <form action="#" method="get" enctype="multipart/form-data" id="dianping_home_form">
+  <div class="zxdp2011_table_list">
+    <table width="370" height="90" cellspacing="0" cellpadding="0" border="0">
+      <!--DWLayoutTable-->
+      <tbody><tr>
+        <td width="80" valign="middle" height="30" align="center">称    呼：</td>
+        <td width="126" valign="middle" align="left"><input type="text" size="12" id="c1" name="c1"></td>
+        <td width="80" valign="middle" align="center">预算区间：</td>
+        <td width="84" valign="middle" align="left"><label>
+          <select id="c5" name="c5" style="width:85px;">
+            <option value="">请选择</option>
+            <% if [12117,12301].include? @user_city_code.to_i %>
+            <option value="6万以下" >6万以下</option>
+            <option value="6-10万" >6-10万</option>
+            <option value="10-15万" >10-15万</option>
+            <option value="15-30万" >15-30万</option>
+            <option value="30万以上" >30万以上</option>
+            <% else  %>
+            <option value="8万以下" >8万以下</option>
+            <option value="8-15万" >8-15万</option>
+            <option value="15-30万" >15-30万</option>
+            <option value="30万-100万" >30万-100万</option>
+            <option value="100万以上" >100万以上</option>
+            <% end %>
+          </select>
+          </label></td>
+      </tr>
+      <tr>
+        <td valign="middle" height="30" align="center">联系方式：</td>
+        <td valign="middle" align="left"><input type="text" size="12" id="c2" name="c2"></td>
+        <td valign="middle" align="center">装修风格：</td>
+        <td valign="middle" align="left"><label>
+          <select id="c6" name="c6" style="width:85px;">
+            <option value="">请选择</option>
+            <option value="现代简约">现代简约</option>
+            <option value="田园风格">田园风格</option>
+            <option value="欧美式">欧美式</option>
+            <option value="中式风格">中式风格</option>
+            <option value="地中海">地中海</option>
+            <option value="混搭">混搭</option>
+          </select>
+          </label></td>
+      </tr>
+      <tr>
+        <td valign="middle" height="30" align="center">房    型：</td>
+        <td valign="middle" align="left"><label>
+          <select id="c3" name="c3">
+
+            <option value="1室">1</option>
+            <option value="2室">2</option>
+            <option value="3室">3</option>
+          </select></label>
+          室
+          <label><select id="c4" name="c4">
+
+            <option value="1厅">1</option>
+            <option value="2厅">2</option>
+            <option value="3厅">3</option>
+          </select></label>
+          厅</td>
+        <td valign="middle" align="center">装修方式：</td>
+        <td valign="middle" align="left"><label>
+          <select id="c7" name="c7" style="width:85px;">
+            <option value="">请选择</option>
+            <option value="清包">清包</option>
+            <option value="半包">半包</option>
+            <option value="全包">全包</option>
+          </select>
+          </label></td>
+      </tr>
+    </tbody></table>
+    <input type="hidden" size="12" id="c8" name="c8" value="<%= CITIES[@user_city_code.to_i] %>">
+    <input type="hidden" size="12" id="dianpingform_id" name="formid" value="185">
+    <input type="hidden" size="12" id="jsonp" name="noforward" value="1">
+    <p>您可以提交您的装修信息给和家。根据您的情况，和家将筛选出符合条件的装修公司提供给您。您可以根据该公司的口碑情况、网友评论等条件进行最终选择。</p>
+    <img id="dianping_home_submit" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_table_img1.jpg" style="cursor:pointer;"></div>
+    </form>
+</div>

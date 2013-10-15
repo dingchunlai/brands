@@ -1,0 +1,19 @@
+<style type="text/css">
+  .brands_denglubox{width:400px;height:220px;border:5px solid #f60;font-size:12px;margin:100px auto 0 auto;}
+  .brands_denglubox form{width:360px;margin:38px 20px 0 20px;}
+  .brands_denglubox p{margin:10px 0;}
+  .brands_denglubtn{text-align:center;}
+  .brands_denglubtn input{padding:2px 25px;}
+  .brands_denglutxt{margin:0 20px;color:#f00;padding:10px 0;font-size:14px;}
+  .brands_dengluhack input{vertical-align:middle;}
+</style>
+<div class="brands_denglubox">
+<% form_for 'account', :url => admin_user_sessions_path, :method => :post do |f| %>
+    <p><strong>帐号：</strong><%= f.text_field "name"%></p>
+    <p><strong>密码：</strong><%= f.password_field "password"%></p>
+    <p class="brands_dengluhack"><%= f.check_box "login_type"%>以管理员身分登录</p>
+    <div class="brands_denglubtn"><%= f.submit "登录"%></div>
+<% end %>
+<div class="brands_denglutxt"><%= flash[:notice] %></div>
+<div class="brands_denglutxt"><%= flash[:session_expired] %></div>
+</div>

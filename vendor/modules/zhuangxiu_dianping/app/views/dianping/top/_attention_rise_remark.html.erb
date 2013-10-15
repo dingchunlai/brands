@@ -1,0 +1,128 @@
+<% if @user_city_code.to_i == 11910 %>
+      <li class="zxdp_phbhack">
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][6] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">施工口碑</td>
+          </tr>
+          <% if @promoted_construction.size >0 %>
+            <% @promoted_construction.each_with_index do |firm,index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><a href="<%= generate_firm_path(firm[0].id) %>" title="<%= firm[0].name_abbr %>" target="_blank"><%= firm[0].name_abbr %>&nbsp;<img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_icon1.gif"/></a></td>
+                <td><%= format("%.1f",firm[0].c) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+          <% @firms_top_construction_praise.each_with_index do |firm, index| %>
+            <% index += @promoted_construction.size %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+      </li>
+<% else %>
+      <li class="zxdp_phbhack">
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][3] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">关注度</td>
+          </tr>
+          <% @firms_top_attention.each_with_index do |firm, index| %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+      </li>
+<% end %>
+      <li>
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][4] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">活跃度</td>
+          </tr>
+          <% @firms_top_rise.each_with_index do |firm, index| %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+      </li>
+      <li>
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][5] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">本周评论</td>
+          </tr>
+          <% @firms_top_remarks.each_with_index do |firm, index| %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+      </li>
+<% if @user_city_code.to_i == 11910 %>
+    <li>
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][3] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">关注度</td>
+          </tr>
+          <% @firms_top_attention.each_with_index do |firm, index| %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+    </li>
+<% else %>
+      <li>
+        <h3><%= API_RANK_TITLE[@user_city_code.to_i][6] %></h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr class="zxdp_phbbgcolor">
+            <td width="34">&nbsp;</td>
+            <td width="99"><label>名称</label></td>
+            <td width="58">施工口碑</td>
+          </tr>
+          <% if @promoted_construction.size >0 %>
+            <% @promoted_construction.each_with_index do |firm,index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><a href="<%= generate_firm_path(firm[0].id) %>" title="<%= firm[0].name_abbr %>" target="_blank"><%= firm[0].name_abbr %>&nbsp;<img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_icon1.gif"/></a></td>
+                <td><%= format("%.1f",firm[0].c) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+          <% @firms_top_construction_praise.each_with_index do |firm, index| %>
+            <% index += @promoted_construction.size %>
+            <tr>
+              <td><strong><%= index + 1 %></strong></td>
+              <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+              <td><%= firm.c %></td>
+            </tr>
+          <% end %>
+        </table>
+      </li>
+<% end %>

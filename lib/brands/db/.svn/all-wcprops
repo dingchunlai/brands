@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db
+END
+update_brand_rank.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/update_brand_rank.rb
+END
+brand_comments_migration.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_comments_migration.rb
+END
+brand_details_migration.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_details_migration.rb
+END
+brand_promotion_code.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_promotion_code.rb
+END
+brand_ratings_migration.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_ratings_migration.rb
+END
+brand_votes.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_votes.rb
+END
+create_category_promotion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/create_category_promotion.rb
+END
+load_ratings.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/load_ratings.rb
+END
+brand_comments.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_comments.rb
+END
+brand_attentions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_attentions.rb
+END
+brand_html_meta.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_html_meta.rb
+END
+article_combinations_migration.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/article_combinations_migration.rb
+END
+brand_impressions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/lib/brands/db/brand_impressions.rb
+END

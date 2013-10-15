@@ -1,0 +1,13 @@
+CREATE TABLE agencies (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  title  VARCHAR(255) not null,
+  telephone VARCHAR(255),
+  city VARCHAR(255),
+  address VARCHAR(255),
+  tagged_brand_id INTEGER REFERENCES tagged_brands (id) ON DELETE SET NULL,
+  created_at DATETIME,
+  updated_at DATETIME
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX agencies_tagged_brand_id ON agencies (tagged_brand_id);
+CREATE INDEX agencies_city_tagged_brand_id ON agencies (city, tagged_brand_id);

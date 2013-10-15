@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/!svn/ver/94/51hejia/repos/brands/release/script
+END
+console
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/94/51hejia/repos/brands/release/script/console
+END
+autospec
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/94/51hejia/repos/brands/release/script/autospec
+END
+server
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/94/51hejia/repos/brands/release/script/server
+END
+dbconsole
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/94/51hejia/repos/brands/release/script/dbconsole
+END
+destroy
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/94/51hejia/repos/brands/release/script/destroy
+END
+runner
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/94/51hejia/repos/brands/release/script/runner
+END
+about
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/!svn/ver/94/51hejia/repos/brands/release/script/about
+END
+generate
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/94/51hejia/repos/brands/release/script/generate
+END
+spec
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/!svn/ver/94/51hejia/repos/brands/release/script/spec
+END
+plugin
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/94/51hejia/repos/brands/release/script/plugin
+END

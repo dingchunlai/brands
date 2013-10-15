@@ -1,0 +1,61 @@
+<%= show_flash_message %>
+
+<div class="search">
+  <% form_tag admin_comments_path, :method => :get do %>
+    <div style="line-height: 35px;">
+      标题：<%= text_field_tag :title, @title, {:size => 13} %>&nbsp;&nbsp;
+      <%= submit_tag '搜索' %>
+    </div>
+  <% end %>
+</div>
+
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+<table border="1" >
+  <tr>
+    <th>编号</th>
+    <th>标题</th>
+    <th>内容</th>
+    <th>时间</th>
+    <th>用户</th>
+    <th>操作</th>
+  </tr>
+  <%@comments.each do |comment|%>
+    <tr>
+      <td style="width:40px;"><%= comment.id %></td>
+      <td><%= ul(comment.title, 20) %></td>
+      <td><%= ul(comment.body, 30) %></td>
+      <td><%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= comment.user_name  %></td>
+      <td style="width:50px;"><%=link_to '删除', admin_comment_path(comment)+"?page=#{params[:page]}", :method => :delete, :confirm => "您确定要删除这条点评吗？"%></td>
+    </tr>
+  <%end%>
+</table>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+
+<%content_for :html_head do%>
+  <style type="text/css">
+    table, td{
+      border-color: #7EBF4F;
+      border-style: solid;
+    }
+    tr{
+      height:22px;
+    }
+    table{
+      border-width: 0 0 1px 1px;
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+    td{
+      margin: 0;
+      padding: 4px;
+      border-width: 1px 1px 0 0;
+      background-color: #FFC;
+      text-align: center;
+    }
+  </style>
+<%end%>

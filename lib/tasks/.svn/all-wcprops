@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/360/51hejia/repos/brands/release/lib/tasks
+END
+add_cases_and_diaries_table.rake
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/add_cases_and_diaries_table.rake
+END
+yougong_zhuce_tongji_mail.rake
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/yougong_zhuce_tongji_mail.rake
+END
+hoptoad_notifier_tasks.rake
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/hoptoad_notifier_tasks.rake
+END
+import_provinces.rake
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/import_provinces.rake
+END
+set_province_for_ipaddress.rake
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/set_province_for_ipaddress.rake
+END
+create_news_promotion.rake
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/create_news_promotion.rake
+END
+update_relate_tag_value.rake
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/update_relate_tag_value.rake
+END
+seo_for_dianping.rake
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/seo_for_dianping.rake
+END
+update_diary_remarks_count.rake
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/update_diary_remarks_count.rake
+END
+zx_merchant_buy_pv.rake
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/360/51hejia/repos/brands/release/lib/tasks/zx_merchant_buy_pv.rake
+END
+add_province_and_city.rake
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/add_province_and_city.rake
+END
+import_cities.rake
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/import_cities.rake
+END
+articles_pv.rake
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/358/51hejia/repos/brands/release/lib/tasks/articles_pv.rake
+END
+add_province_or_city_to_redies.rake
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/add_province_or_city_to_redies.rake
+END
+areas_top_ten.rake
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/areas_top_ten.rake
+END
+cities_collate.rake
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/cities_collate.rake
+END
+update_yesterday_remark_count.rake
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/update_yesterday_remark_count.rake
+END
+send_mail_by_paint_admin.rake
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/238/51hejia/repos/brands/release/lib/tasks/send_mail_by_paint_admin.rake
+END
+insert_htmlmetadata.rake
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/insert_htmlmetadata.rake
+END
+update_total_pv.rake
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/update_total_pv.rake
+END
+baidu_map_mapping.rake
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/baidu_map_mapping.rake
+END
+set_province_value.rake
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/set_province_value.rake
+END

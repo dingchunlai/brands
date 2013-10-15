@@ -1,0 +1,121 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+#
+# Install the MySQL driver:
+#   gem install mysql
+# On Mac OS X:
+#   sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql
+# On Mac OS X Leopard:
+#   sudo env ARCHFLAGS="-arch i386" gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
+#       This sets the ARCHFLAGS environment variable to your native architecture
+# On Windows:
+#   gem install mysql
+#       Choose the win32 build.
+#       Install MySQL and put its /bin directory on your path.
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+basic: &basic
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: product
+  pool: 5
+
+realtime: &realtime
+  username: hejiasql
+  password: sql2009
+  host: 192.168.0.14
+
+
+semi_realtime: &semi
+  #username: hejiasql
+  #password: sql2009
+  #host: 192.168.0.14
+
+  username: 51hejia
+  password: ruby
+  host: 192.168.0.2
+
+development: &dev
+  <<: *basic
+  <<: *semi
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+staging: &stag
+  <<: *basic
+  username: 51hejia
+  password: ruby
+  host: 192.168.0.2
+
+
+rehearsal: &reh
+  <<: *basic
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+
+production: &pro
+  <<: *basic
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  read_only_51hejia:
+      adapter: mysql
+      database: 51hejia
+      username: hejiasql
+      password: sql2009
+      host: 192.168.1.14
+      encoding: utf8
+
+
+
+# -- 51hejia ---
+51hejia_development:
+  <<: *dev
+  database: 51hejia
+
+51hejia_staging:
+  <<: *stag
+  database: 51hejia
+
+51hejia_rehearsal:
+  <<: *reh
+  database: 51hejia
+
+51hejia_production:
+  <<: *pro
+  database: 51hejia
+
+# -- 51hejia_index ---
+index_development:
+  <<: *dev
+  database: 51hejia_index
+
+index_staging:
+  <<: *stag
+  database: 51hejia_index
+
+index_rehearsal:
+  <<: *reh
+  database: 51hejia_index
+
+index_production:
+  <<: *pro
+  database: 51hejia_index
+
+# -- 51hejia_forum---
+forum_development:
+  <<: *dev
+  database: 51hejia_forum
+forum_staging:
+  <<: *stag
+  database: 51hejia_forum
+forum_rehearsal:
+  <<: *reh
+  database: 51hejia_forum
+forum_production:
+  <<: *pro
+  database: 51hejia_forum
+

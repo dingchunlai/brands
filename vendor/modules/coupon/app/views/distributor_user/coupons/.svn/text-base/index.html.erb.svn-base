@@ -1,0 +1,50 @@
+<%
+    if @coupons_count >= @max_coupons_count
+      button = ['<strike>不可添加</strike>', '#']
+    else
+      button = ["添加#{Coupon.human_name}", new_distributor_user_coupon_path]
+    end
+%>
+<%= top_bar :title => "#{Coupon.human_name}管理",
+  :button => button,
+  :breadcrumbs => [
+  ['首页', distributor_user_index_path],
+  ["#{Coupon.human_name}管理", distributor_user_coupons_path]
+]
+%>
+
+<div class="select-bar">
+  <%form_tag distributor_user_coupons_path, :method => :get do%>
+
+  <%end%>
+</div>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>编号</th>
+      <th class="first" width="177">抵用券标题</th>
+      <th>状态</th>
+      <th>起止日期</th>
+      <th>管理</th>
+    </tr>
+    <%@coupons.each do |coupon|%>
+      <tr>
+        <td> <%=coupon.code%> </td>
+        <td class="first">
+          <%= coupon.title %>
+        </td>
+        <td> <%=coupon.status_explain%></td>
+        <td> <%=coupon.activity_began_at%>~<%=coupon.activity_end_at%></td>
+        <td class="last">
+          <%= link_to "编辑", edit_distributor_user_coupon_path(coupon)%>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+  <% unless @coupons.empty? -%>
+      总<%=Coupon.human_name%>数: <%= @coupons_count%>&nbsp;&nbsp;<%= will_paginate @coupons, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

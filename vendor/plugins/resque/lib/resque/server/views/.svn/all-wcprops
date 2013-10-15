@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views
+END
+workers.erb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/workers.erb
+END
+layout.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/layout.erb
+END
+key_string.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/key_string.erb
+END
+stats.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/stats.erb
+END
+next_more.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/next_more.erb
+END
+working.erb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/working.erb
+END
+failed.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/failed.erb
+END
+key_sets.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/key_sets.erb
+END
+overview.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/overview.erb
+END
+queues.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/queues.erb
+END
+error.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server/views/error.erb
+END

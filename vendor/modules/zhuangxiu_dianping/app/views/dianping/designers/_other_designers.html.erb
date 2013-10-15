@@ -1,0 +1,17 @@
+<div class="zxdp2010_yyphb margin10">
+  <h3>公司其他设计师推荐...</h3>
+  <div class="zxdp2010_shejln" style="padding:10px;">
+    <ul>
+      <% @designers.each do |designer| %>
+        <li class="clearfix">
+          <div class="zxdp2010_shejsimg f_l"><%= link_to designer_avatar(designer), designer.url, :class => "zxdp2010_anliahack", :target =>"_blank", :title => truncate_u(designer.DESNAME,8)%></div>
+          <div class="zxdp2010_shejstxt f_r">
+            <h5>
+              <label><%= link_to "[详细]", designer.url, :target => '_blank' %></label>
+              <%= link_to truncate_u(designer.DESNAME,8), designer.url, :target => '_blank' %></h5>
+            <span>案例：<em><%= designer.cs.count %></em>篇</span> <span>设计费：<%= designer.desfee_text %></span></div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

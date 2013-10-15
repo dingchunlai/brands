@@ -1,0 +1,62 @@
+<div class="b_ppdp b_width680 f_l">
+  <div class="b_pln_ltit02">
+    <h3><%=@brand.name_zh%>精选点评</h3>
+    <div class="b_pln_ltxt02more">
+      <%=link_to '[全部]', pinpai_comments_path(:permalink => @brand.permalink, :tag => @comment_tag), :disabled => @type=='all'?true:false%>
+      <%=link_to '[好评]', pinpai_comments_path(:permalink => @brand.permalink, :tag => @comment_tag, :type => 'good'), :disabled => @type=='good'?true:false%>
+      <%=link_to '[差评]', pinpai_comments_path(:permalink => @brand.permalink, :tag => @comment_tag, :type => 'bad'), :disabled => @type=='bad'?true:false%>
+    </div>
+    <div class="b_ppdp_dpts"><%="关键词：《#{@comment_tag}》　" unless @comment_tag.blank?%> 共  <%=@comments.length%> 条</div>
+  </div>
+  <div class="b_pln_ltxt02 clearfix">
+    <ul>
+      <%@comments.each do |comment|%>
+        <li class="clearfix">
+          <h4>
+            <%=link_to strip_tags(comment.title), pinpai_show_comment_path(:permalink => @brand.permalink, :id => comment.id), :target=>'_blank'%>
+          </h4>
+          <div class="b_ppdp_shij"><%=comment.created_at.strftime("%Y-%m-%d %H:%M") rescue ""%></div>
+          <div class="b_ppdp_pinf">
+            <div class="f_l"><span><%=comment.user_name%></span> 对<%=@brand.name_zh%>的评分：</div>
+            <div class="dafenstars02 f_l">
+              <p style="width:<%="#{comment.remark * 20}%"%>"></p>
+            </div>
+          </div>
+          <p class="b_ppdp_p">
+            <%=ul(comment.body, 100)%>
+            <%=link_to '[详细]', pinpai_show_comment_path(:permalink => @brand.permalink, :id => comment.id), :target=>'_blank'%>
+          </p>
+          <div class="b_ppdp_hud">
+            <%=link_to "评论(#{comment.comments_count})", pinpai_show_comment_path(:permalink => @brand.permalink, :id => comment.id), :target=>'_blank', :class => 'b_ppdp_hud_a01'%>
+            <a href="javascript://" class="b_ppdp_hud_a02" comment_id="<%=comment.id%>">送鲜花(<%=comment.support%>)</a>
+            <a href="javascript://" class="b_ppdp_hud_a03" comment_id="<%=comment.id%>">扔鸡蛋(<%=comment.oppose%>)</a>
+          </div>
+        </li>
+      <%end%>
+    </ul>
+    <div class="pagination" style="margin-bottom:0;">
+      <%=will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.b_ppdp_hud_a02').click(function(){
+    var t = $(this);
+    $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=support&comment_id="+t.attr('comment_id'), function(data){
+      if (data=='0')
+        alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+      else
+        t.html('送鲜花('+data+')');
+    }, "text")
+  });
+  $('.b_ppdp_hud_a03').click(function(){
+    var t = $(this);
+    $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=oppose&comment_id="+t.attr('comment_id'), function(data){
+      if (data=='0')
+        alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+      else
+        t.html('扔鸡蛋('+data+')');
+    }, "text")
+  });
+</script>

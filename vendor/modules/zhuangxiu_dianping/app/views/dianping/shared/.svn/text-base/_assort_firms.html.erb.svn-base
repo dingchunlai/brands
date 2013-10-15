@@ -1,0 +1,15 @@
+<% 
+  sort_firms = assort_firms(@user_city_code)
+  unless sort_firms.blank?
+%>
+    <div class="zxdp2010_cur margin10">
+      <h3>装修公司TOP10</h3>
+      <div class="zxdp2010_txt zxdp2010_txttop zxdp2010_kbtop">
+        <dl>
+          <% sort_firms.each do |firm| %>
+            <dd> <span class="f_r"><%= firm.praise %></span><a href="<%= firm_url(:id => firm.id,:trailing_slash => "/") %>" target="_blank"><%= firm.name_abbr %></a> </dd>
+          <% end -%>
+        </dl>
+      </div>
+    </div>
+<% end -%>

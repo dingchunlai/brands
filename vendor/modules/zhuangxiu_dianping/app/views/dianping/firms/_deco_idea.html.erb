@@ -1,0 +1,16 @@
+<% if @deco_ideas.count > 0 %>
+  <div class="zxdp2010_cur margin10">
+    <h3><%= $redis.get("deco_idea_#{@firm.id}").nil? ? '设计理念' : $redis.get("deco_idea_#{@firm.id}")%>  </h3>
+    <div class="zxdp2010_more"><%= link_to "更多&gt;&gt;",firm_deco_ideas_url(:firm_id => @firm.id) %></div>
+    <div class="zxdp2010_txt zxdp2010_shejln">
+      <ul>
+				<% @deco_ideas.each do |idea|%>
+        <li>
+          <h4>· <%= link_to truncate_u(idea.title,15), deco_idea_url(:id => idea.id), :target => "_blank"%></h4>
+          <p><%= truncate_u(idea.content, 100, "...")%><%= link_to "[详细]", deco_idea_url(:id => idea.id), :target => "_blank"%></p>
+        </li>
+       <% end -%>
+      </ul>
+    </div>
+  </div>
+<% end -%>

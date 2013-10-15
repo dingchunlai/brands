@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test
+END
+abstract_unit.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/abstract_unit.rb
+END
+debug.log
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/debug.log
+END
+base_errors_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/base_errors_test.rb
+END
+format_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/format_test.rb
+END
+http_mock_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/http_mock_test.rb
+END
+base_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/base_test.rb
+END
+setter_trap.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/setter_trap.rb
+END
+connection_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/connection_test.rb
+END
+authorization_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/authorization_test.rb
+END

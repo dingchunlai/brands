@@ -1,0 +1,66 @@
+    <% coupon_searh_explain = "如：地板、月星家居" %> 
+    <div class="diyq_l_search margin10">
+      <h3>装修省钱<%= Coupon.human_name %>下载</h3>
+      <script type="text/javascript">
+        jQuery(function($){
+                $(".diyq_l_input2").click(
+                        function(){
+                                $(".diyq_searchboxbg").show();
+                                $(".diyq_searchbox").show();
+                                                });
+                $(".jinsheng_btnhack02").click(
+                        function(){
+                                $(".diyq_searchboxbg").hide();
+                                $(".diyq_searchbox").hide();
+                                                });
+                $(".diyq_searchbtn a").click(
+                        function(){
+                                $(".diyq_searchboxbg").hide();
+                                $(".diyq_searchbox").hide();
+                                                });
+                $('.diyq_tgmaiclist').hide();
+            $('.diyq_tgmaic > a').mouseover(
+                        function(){
+                        $(this).next().show()
+                            });
+            $('.diyq_tgmaiclist').mouseover(
+                        function(){
+                        $(this).show()
+                            });
+            $('.diyq_tgmaic > a').mouseout(
+                        function(){
+                        $(this).next().hide()
+                            });
+            $('.diyq_tgmaiclist').mouseout(
+                        function(){
+                        $(this).hide()
+                            });
+              //抵用券关键词搜索
+              $('form[name=keyword_search]').submit(function(){
+                var tf_keyword = $(this).find('input[name=keyword]');
+                var kw = $.trim(tf_keyword.val());
+                tf_keyword.val(kw);
+                if (kw=='<%= coupon_searh_explain %>'||kw==''){
+                  alert('请输入搜索关键词！');
+                }else{
+                  window.open('/kw-' + kw + '-0.html', '_top');
+                }
+                return false;
+              });
+
+            });
+        </script>
+      <form name="keyword_search" method="get">
+        <table width="180" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="right">关键字</td>
+            <td width="126" style="height: 45px;"><input name="keyword" type="text" class="diyq_l_input1" title="<%= coupon_searh_explain %>" onfocus="if(this.value=='<%= coupon_searh_explain %>') this.value='';" onblur="if(this.value=='')this.value='<%= coupon_searh_explain %>';" value="<%= coupon_searh_explain %>" /></td>
+          </tr>
+         <tr>
+            <td colspan="2" align="center" style="height: 45px;"><input name="" type="submit" value=" " class="diyq_l_btn" style="cursor: pointer;"/></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+

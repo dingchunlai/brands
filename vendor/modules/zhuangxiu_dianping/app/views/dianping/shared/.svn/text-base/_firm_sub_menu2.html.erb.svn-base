@@ -1,0 +1,39 @@
+<% 	id = params[:firm_id] || params[:id] %>
+<% cache "dianping:firm_sub_menu:#{id}:#{controller.controller_name}", :expires_in => 5.minutes do %>
+<% firm = DecoFirm.find id %>
+<% @event = @firm.events.find(:first,:order => "created_at desc", :limit =>1 ) %>
+	<div class="width960" style="margin-bottom:3px">
+	  <div class="zxdp2010_submenu">
+	    <h2><%= @firm.name_zh%></h2>
+	    <div class="zxdp2010_sm_wypf" style="height:20px;line-height:20px;top:6px;">
+	      <% if controller.controller_name == "firms" %>
+				<div class="f_l" style="padding-top:2px;">我要评分：</div>
+				<span data-praise="0" style="display:block;" class="set-praise f_l big-star" id="firm-big-star"></span>
+	      <span id="show_key" style="padding-top:2px;display:block;margin-left:3px;" class="set-praise f_l"></span>
+				<% end -%>
+	    </div>
+
+	    <div class="zxdp2010_sm_zpf">有<span><%= @firm.pv_count%></span>人关注过这家公司 总评分<span class="zxdp2010_sm_zpffont"><%= @firm.praise%></span>分</div>
+	    <div class="zxdp2010_sm_cont">
+			<ul class="clearfix">
+				<li class="zxdp2010_sm_contl"></li>
+				<li><%= link_to "公司首页", firm_path(@firm.id), :class=>"#{highlight('firms')}", :target=>"_self"%></li>
+				<%= firm_sub_link @firm, "点评日记", firm_decoration_diaries_path(@firm.id), @firm.decoration_diaries.published.count, "decoration_diaries" %>
+				<%= firm_sub_link @firm, "案例图片", firm_cases_path(@firm.id), @firm.cases.count, "cases" %>
+				<%= firm_sub_link @firm, "施工图片", firm_construction_photos_path(@firm.id), @firm.photos.count, "construction_photos" %>
+				<%= firm_sub_link @firm, "在建工地", firm_factories_path(@firm.id), @firm.factories.count, "factories" %>
+				<%= firm_sub_link @firm, "设计师", firm_designers_path(@firm.id), CaseDesigner.firm_case_designer(@firm.id).count, "designers" %>
+				<%= firm_sub_link @firm, "设计理念", firm_deco_ideas_path(@firm.id), @firm.deco_ideas.count, "deco_ideas" %>
+                                <% if @coupon %>
+                                  <%= content_tag(:li, link_to("优惠信息", two_coupon_urls(@user_city_code,@event), :class=>"#{highlight('coupons')}", :target=>"_self")) %>
+                                <% elsif @event %>
+                                  <%= content_tag(:li, link_to("抵用劵", firm_coupon_path(@coupon.id), :class=>"#{highlight('coupons')}", :target=>"_self")) %>
+                                <% end %>
+				<li class="zxdp2010_sm_contr"></li>
+			</ul>
+			</div>
+
+	 </div>
+	</div>
+
+<% end -%>

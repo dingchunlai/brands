@@ -1,0 +1,13 @@
+<ul class="vertical" style="padding-left: 10px;padding-top: 20px;">
+  <% unless @tag.blank?  
+      Tag.all_categories.each do |tag| 
+        class_css = (tag.TAGID.to_i == @tag.TAGID.to_i) ? 'current' : nil 
+  %>
+    <li><%= link_to tag.TAGNAME, manage_admin_tag_path(tag), :class => class_css %></li>
+  <%  
+      end 
+     else 
+  %>
+    <li>未找到品类信息</li>
+  <% end %>
+</ul>

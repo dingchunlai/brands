@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    $(function(){
+            $(".diyq_rboxrcont ul:first").show();
+            $(".diyq_rboxrtab li:first").addClass("active");
+            $(".diyq_rboxrtab li").click(
+            function(){
+                    $(this).addClass("active")
+                            .siblings().removeClass("active");
+                    $(".diyq_rboxrcont ul").eq($(this).index())
+                            .siblings().hide().end().show();
+                                    });
+            
+            $("tr[id^='diyq_rboxrxz']").each(function(){
+            var id = $(this).attr("id").replace("diyq_rboxrxz", "");
+            $("#diyq_rboxrxz"+ id).mouseover(
+                  function(){
+                      $("#diyq_rboxrxz"+ id).addClass("active")
+                      .siblings().removeClass("active");
+                                        });	
+                                                                                            });	
+    });
+</script>
+
+<div class="diyq_rboxrtop margin10">
+  <h3><%= link_to '', coupon_top_path, :target => '_blank' %></h3>
+  <div class="diyq_rboxrtab">
+    <ul class="clearfix">
+      <% @three_tags.each do |tag| %>
+        <li><%= tag.TAGNAME.gsub("/",'') %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="diyq_rboxrcont">
+    <%
+      n = 0
+      @three_tags.each do |tag| 
+    %>
+    <ul>
+      <li>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <% 
+            Coupon.with_tag_city(tag.TAGID,  @city.id, 5).each_with_index do |coupon, index| 
+              existing_amount = coupon.virtual_existing_number.to_i <= 0 ? 0 : coupon.virtual_existing_number.to_i
+              i = index + 1
+          %>
+          <tr id="diyq_rboxrxz<%= n %>" class="<%= ((n % 5) == 0 ? 'active' : '') %>">
+            <td width="12" valign="top"><div class="num"><%= i %></div></td>
+            <td><div class="diyq_rboxrconttit"><%= truncate(coupon.title, 11, '') %></div>
+              <div class="diyq_rboxrconttxt">
+                <div class="diyq_rboxrcontimg">
+                  <%= link_to image_tag(File.join(cloud_fs_domain('image'), coupon.list_thumbnail_url.to_s), :alt => coupon.title, :width => '50', :height => '36'), coupon_show_path(coupon), :target => '_blank' %>
+                </div>
+                <h4><%= link_to truncate(coupon.title, 11, ''), coupon_show_path(coupon), :target => '_blank' %></h4>
+                <p>总发行<%= coupon.total_issue_number %>张 当前可用<%= existing_amount %>张</p>
+              </div></td>
+          </tr>
+          <% 
+            n = n + 1 
+            end 
+          %>
+        </table>
+      </li>
+    </ul>
+    <% end %>
+  </div>
+</div>

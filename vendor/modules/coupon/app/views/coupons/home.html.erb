@@ -1,0 +1,197 @@
+<% content_for :html_head do %>
+    <% set_coupon_page_meta_data "【无条件现金抵用券】#{@city.name}装修建材优惠券,家装产品购买现金抵用券_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券", "和家网无条件现金抵用券,覆盖油漆涂料、厨房电器、地板、卫浴洁具、橱柜厨具、水处理、中央空调、家具、吊顶、瓷砖、门窗、壁纸、背景墙、照明灯具、装修辅材、五金、楼梯、采暖、家电、智能家居、布艺软、装饰品、装修公司等行业,聚合家居建材品牌,集优惠券、代金券、折扣券全部功能,为装修消费者提供代金优惠服务,目前已开通上海、南京、无锡、苏州、杭州、宁波6个城市。装修省钱,尽在和家网装修省钱狂频道。" %>
+<% end %>
+<style type="text/css">
+  #newsSlider{width:550px;}
+  #newsSlider .container{width:550px;height:175px;}
+  #newsSlider ul.paginationationnation{bottom:8px;right:5px;}
+  #newsSlider ul.pagination li{margin-rightt:5px;}
+  #newsSlider ul.pagination li a{background:#fff;color:#f00;font:12px/16px Arial,Helvetica,sans-serif;height:16px;width:16px;}
+  #newsSliderider ul.pagination li.active a{background:#f00;color:#fff;}
+</style>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+<div class="diyq_r f_r">
+<div class="diyq_rboxl f_l margin10">
+  <script type="text/javascript">
+      $(function() {
+          $('#newsSlider').loopedSlider({
+              autoStart: 5000
+          });
+          $('.validate_Slider').loopedSlider({
+              autoStart: 5000
+          });
+      });
+  </script>
+  <% six_vedios = promotion_items("抵用券:频道首页:#{@city.pinyin}:视图广告") %>
+  <div id="newsSlider" class="diyq_rboxlslide">
+    <div class="container">
+      <ul class="slides">
+        <% six_vedios.each do |item| %>
+            <li>
+              <%= link_to image_tag(item.image, :alt => item.title), item.url, :target => '_blank', :title => item.title %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="validate_Slider"></div>
+    <ul class="pagination">
+      <%
+         six_vedios.each_with_index do |item, index|
+             i = index + 1
+      %>
+          <li><a href="#"><%= i %></a></li>
+      <% end %>
+    </ul>
+  </div>
+  <script type="text/javascript">
+      jQuery(function($) {
+          $.fn.hFlick = function(options) {
+              $(this).each(function() {
+                  var pageCount = Math.ceil($(this).find('li').size() / options.size);
+                  var width = $(this).find('.v_content').width();
+
+                  function flick() {
+                      var goNext = $(this).hasClass('next');
+                      var list = $(this).parent().next().find('.v_content_list');
+                      if (!list.is(':animated')) {
+                          var left;
+                          if (goNext)
+                              if (list.position().left <= -(width * (pageCount - 1))) left = 0; else left = '-=' + width;
+                          else
+                          if (list.position().left >= 0) left = -(width * (pageCount - 1)); else left = '+=' + width;
+                          list.animate({'left': left}, 'slow');
+                      }
+                  }
+
+                  $(this).find('.next,.prev').click(flick);
+              });
+          };
+
+          $('.v_show').hFlick({size: 1});
+      });
+  </script>
+  <div class="diyq_rboxltxt">
+    <dl class="v_show">
+      <dd class="f_l left">
+        <% promotion_items("抵用券:频道首页:#{@city.pinyin}:焦点文字").each do |item| %>
+            <%= link_to item.title, item.url, :target => '_blank' %>
+        <% end %>
+      </dd>
+      <dt class="f_r">
+        <a href="javascript:void(0)" class="prev">&lt;</a><a href="javascript:void(0)" class="next">&gt;</a></dt>
+      <dd class="f_r right v_content">
+        <div class="v_content_list">
+          <ul>
+            <% promotion_items("抵用券:频道首页:#{@city.pinyin}:滚动焦点文字").each do |item| %>
+                <li><%= link_to item.title, item.url, :target => '_blank' %></li>
+            <% end %>
+          </ul>
+        </div>
+      </dd>
+    </dl>
+  </div>
+  <div class="diyq_rboxllogo margin10">
+    <ul id="cont_m_6">
+      <% promotion_items("抵用券:频道首页:#{@city.pinyin}:推荐品牌").each do |item| %>
+          <li><%= link_to image_tag(item.description, :alt => item.title), item.url, :target => '_blank' %></li>
+      <% end %>
+    </ul>
+    <script type="text/javascript" src="http://js2.51hejia.net/js/txt_auto2.js"></script>
+  </div>
+  <div class="diyq_latest">
+    <h3>
+      <p>最新现金券使用体验</p>
+    </h3>
+    <script type="text/javascript" src="http://js1.51hejia.net/js/textscroll.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#newsSlider').loopedSlider({
+                autoStart: 5000});
+        });
+    </script>
+    <%
+       tui = promotion_items("抵用券:频道首页:#{@city.pinyin}:下载体验").first
+       unless tui.blank?
+    %>
+        <div class="diyq_latestnum">已有<span><%= CouponDownload.count %></span>名网友下载体验<span><%= link_to tui.title, tui.url, :target => '_blank' %></span>
+        </div>
+    <% end %>
+    <div class="diyq_latesttxt">
+      <div id="ScrollMe">
+        <ul>
+          <%
+             Remark.new_coupon_remark(@city.id, 12).each do |remark|
+                 coupon = Coupon.find_by_id remark.resource_id
+                 unless coupon.blank?
+          %>
+                  <li><span><%= distance_of_time_in_words(Time.now, remark.created_at) %></span>
+                    <label><%= truncate(remark.user_name, 2, '') %></label>
+                    点评
+                    <label><%= link_to truncate(coupon.brand.name_zh, 4, ''), coupon_show_path(coupon), :target => '_blank' %></label>
+                    ：“<%= truncate(remark.content, 23, '...') %>”
+                  </li>
+              <%
+                 end
+                 end
+              %>
+        </ul>
+      </div>
+      <script type="text/javascript">new srcMarquee("ScrollMe", 0, 1, 528, 124, 30, 5000, 0, 124)</script>
+    </div>
+  </div>
+</div>
+<div class="diyq_rboxr f_r margin10">
+  <div class="margin10"><img src="http://img3.51hejia.net/img/diyongquan/diyq_phone.gif" width="190" height="68"/></div>
+  <div class="diyq_rboxrwt margin10">
+    <h3>
+      <span><a href="<%= coupon_help_path %>" target="_blank"><strong>常见问题</strong></a></span><span><a href="<%= new_offer_coupon_path %>" target="_blank">商家申请加入</a></span>
+    </h3>
+    <ul>
+      <% promotion_items("抵用券:频道首页:常见问题").each_with_index do |item, index| %>
+          <li>·<%= link_to (index != 0 ? truncate(item.title, 13, '') : item.title), item.url, :target => '_blank' %></li>
+      <% end %>
+    </ul>
+  </div>
+  <script type="text/javascript">
+      $(function() {
+          $(".diyq_rboxrcont ul:first").show();
+          $(".diyq_rboxrtab li:first").addClass("active");
+          $(".diyq_rboxrtab li").click(
+                                      function() {
+                                          $(this).addClass("active")
+                                                  .siblings().removeClass("active");
+                                          $(".diyq_rboxrcont ul").eq($(this).index())
+                                                  .siblings().hide().end().show();
+                                      });
+
+          $("tr[id^='diyq_rboxrxz']").each(function() {
+              var id = $(this).attr("id").replace("diyq_rboxrxz", "");
+              $("#diyq_rboxrxz" + id).mouseover(
+                                               function() {
+                                                   $("#diyq_rboxrxz" + id).addClass("active")
+                                                           .siblings().removeClass("active");
+                                               });
+
+          });
+      });
+  </script>
+  <%= render_cell :coupon, :one_week_top %>
+</div>
+<%= render :partial => '/share/recommended_industry' %>
+<div class="diyq_l f_l">
+  <%= render :partial => '/share/title_search' %>
+  <%= render :partial => '/share/category_search' %>
+  <%= render :partial => '/share/district_consulting' %>
+</div>
+</div>
+</div>
+<%= render :partial => '/share/common_help' %>
+<!--end_content_code-->
+<!--coupon_code-->
+<%= render :partial => '/share/coupon_image_hover' %>
+<!--end_coupon_code-->
+<!--coupon_code-->
+<!-- 添加到下载脚本 -->
+<%= render :partial => '/share/coupon_download_pop' %>
+<!--end_coupon_code-->
+

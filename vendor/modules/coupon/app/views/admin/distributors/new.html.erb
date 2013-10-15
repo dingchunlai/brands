@@ -1,0 +1,67 @@
+<%=include_jquery_easy_validator%>
+<%= top_bar :title => '经销商管理页',
+            :button => ['经销商列表', admin_distributors_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['经销商管理', admin_distributors_path],
+              ['新建经销商']
+            ]
+%>
+
+<% form_for @distributor, :url => admin_distributors_path do |f| %>
+  <%= f.error_messages %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2">创建经销商</th>
+      </tr>
+     <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :title %></strong></td>
+        <td class="last"><%= f.text_field :title, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :short_title %></strong></td>
+        <td class="last"><%= f.text_field :short_title, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :class_name %></strong></td>
+        <td class="last"><%= f.select :class_name, Object.subclasses_of(Distributor).collect { |obj| [obj.human_name, obj.to_s] }, :include_blank => "默认" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"></td>
+        <td class="last"><strong>经销商帐号信息</strong></td>
+      </tr>
+
+      <% fields_for @distributor_account do |user| %>
+        <%= user.error_messages %>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= user.label :USERNAME %></strong></td>
+          <td class="last"><%= user.text_field :USERNAME, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+          <tr class="bg">
+            <td class="first" width="172"><strong><%= user.label :USERBBSNAME %></strong></td>
+            <td class="last"><%= user.text_field :USERBBSNAME, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+          </tr>
+          <tr class="bg">
+            <td class="first" width="172"><strong><%= user.label :USERBBSSEX %></strong></td>
+            <td class="last"><%= user.select :USERBBSSEX, ["男","女"], :include_blank => "请选择", :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+          </tr>
+          <tr class="bg">
+          <td class="first" width="172"><strong><%= user.label :USERBBSEMAIL %></strong></td>
+          <td class="last"><%= user.text_field :USERBBSEMAIL %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= user.label :USERBBSMOBELTELEPHONE %></strong></td>
+          <td class="last"><%= user.text_field :USERBBSMOBELTELEPHONE  %></td>
+        </tr>
+     <% end %>
+
+      <tr>
+        <td></td>
+        <td><%= f.submit '提交' %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>

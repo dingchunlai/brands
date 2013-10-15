@@ -1,0 +1,473 @@
+
+
+zh:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b%d日"
+      long: "%Y年%b%d日"
+    day_names: [星期日, 星期一, 星期二, 星期三, 星期四, 星期五, 星期六]
+    abbr_day_names: [日, 一, 二, 三, 四, 五, 六]
+    month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    order: [ :year, :month, :day ]
+  
+  time:
+    formats:
+      default: "%Y年%b%d日 %A %H:%M:%S %Z"
+      short: "%b%d日 %H:%M"
+      long: "%Y年%b%d日 %H:%M"
+    am: "上午"
+    pm: "下午"
+  
+  datetime:
+    distance_in_words:
+      half_a_minute: "半分钟"
+      less_than_x_seconds:
+        one: "不到1秒"
+        other: "不到 %{count} 秒"
+      x_seconds:
+        one: "1秒"
+        other: "%{count} 秒"
+      less_than_x_minutes:
+        one: "不到1分钟"
+        other: "不到 %{count} 分钟"
+      x_minutes:
+        one: "1分钟"
+        other: "%{count} 分钟"
+      about_x_hours:
+        one: "大约1小时"
+        other: "大约 %{count} 小时"
+      x_days:
+        one: "1天"
+        other: "%{count} 天"
+      about_x_months:
+        one: "大约1个月"
+        other: "大约 %{count} 个月"
+      x_months:
+        one: "1个月"
+        other: "%{count} 个月"
+      about_x_years:
+        one: "大约1年"
+        other: "大约 %{count} 年"
+      over_x_years:
+        one: "1年多"
+        other: "%{count} 年多"
+      almost_x_years:
+        one:   "接近1年"
+        other: "接近 %{count} 年"
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "日"
+      hour:   "时"
+      minute: "分"
+      second: "秒"
+  
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+    currency:
+      format:
+        format: "%u %n"
+        unit: "CN¥"
+        separator: "."
+        delimiter: ","
+        precision: 2
+    percentage:
+      format:
+        delimiter: ""
+    precision:
+      format:
+        delimiter: ""
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  activerecord:
+    models:
+      app_resource_setting:
+        one: "配置"
+        other: "%{count}条配置"
+      coupon:
+        one: "现金劵"
+        other: "%{count}张现金劵"
+      coupon_remind_mail:
+        one: "提示邮件接收人"
+        other: "%{count}多个提示邮件接收人"
+      coupon_commission:
+        one: "现金劵佣金"
+        other: "%{count}现金劵佣金"
+      coupon_leaflet_point:
+        one: "现金劵发放点"
+        other: "%{count}处现金劵发放点"
+      complaint:
+        one: "投诉信息"
+        other: "%{count}条投诉信息"
+      partner_ship:
+        one: "合作伙伴"
+        other: "%{count}个合作伙伴"
+      distributor:
+        one: "经销商"
+        other: "%{count}个经销商"
+      distributor_account:
+        one: "经销商用户"
+        other: "%{count}个经销商用户"
+      distributor/di_jia:
+        one: "低价"
+      distributor/hui_yuan:
+        one: "会员"
+      distributor/cheng_xin:
+        one: "诚信"
+      distributor/contract:
+        one: "合同"
+        other: "%{count}份合同"
+      distributor/shop:
+        one: "门店"
+        other: "%{count}家门店"
+      distributor/upload_picture:
+        one: "上传图片"
+        other: "%{count}张上传图片"
+      vip_distributor_activity:
+        one: "活动"
+        other: "%{count}个活动"
+      vip_distributor_case:
+        one: "案例"
+        other: "%{count}个案例"
+      coupon_issue_num_stat:
+        one: "现金券发行量管理"
+        other: "%{count}条现金券发行量管理"
+      province:
+        one: "省份"
+        other: "%{count}个省份"
+      city:
+        one: "城市"
+        other: "%{count}座城市"
+      district:
+        one: "地区"
+        other: "%{count}个城市"
+      business_zone:
+        one: "商圈"
+        other: "%{count}个商圈"
+      market:
+        one: "卖场"
+        other: "%{count}家卖场"
+      market_shop:
+        one: "卖场分店"
+        other: "%{count}家卖场分店"
+      print_record:
+        one: "印刷记录"
+        other: "%{count}条打印记录"
+      offline_address:
+        one: "线下发放"
+        other: "%{count}个发放地址"
+      tag_amount:
+        one: "行业信息"
+        other: "%{count}条行业数量"
+      coupon_faq:
+        one: "Q&A"
+        other: "%{count}条Q&A信息"
+      distributor_account:
+        one: "经销商帐号"
+        other: "%{count}条经销商"
+      remark:
+        one: "留言"
+        other: "%{count}条留言"
+      offer_coupon:
+        one: "提供抵用券"
+        other: "%{count}张抵用券"        
+      coupon_download:
+        one: "抵用券下载"
+        other: "%{count}张抵用券下载"
+      coupon_subscribe:
+        one: "订阅抵用券"
+        other: "%{count}条订阅"
+      coupon_subscribe:
+        one: "推荐抵用券"
+        other: "%{count}位推荐友人"
+      sales_profile:
+        one: "业务员"
+        other: "%{count}位业务员"
+
+
+    attributes:
+        vip_distributor_activity:
+          title: "标题"
+          begin_at: "起始日期"
+          end_at: "结束日期"
+          default_image_id: "默认图片"
+          distributor_id: "VIP商户"
+        vip_distributor_case:
+          title: "标题"
+          default_image_id: "默认图片"
+          distributor_id: "VIP商户"
+        coupon_issue_num_stat:
+          coupon_id: "现金券编号"
+          counts: "数量"
+          op_type: "操作类型"
+        app_resource_setting:
+          name: "配置名"
+          key: "配置键"
+          value: "配置内容"
+          summary: "配置说明"
+          channel: "使用点标识"
+          resource_type: "资源类型"
+          resource_id: "资源编号"
+        coupon:
+          contract_id: "隶属合同"
+          title: "标题"
+          distributor_id: "经销商"
+          distributor_shop_id: "店面"
+          tag_id: "行业"
+          brand_id: "品牌"
+          production_category_id: "品类"
+          discount_amount: "满"
+          return_amount: "抵用券金额"
+          shop_id: "门店"
+          agency: "经销商"
+          sms_msg: "短消息"
+          activity_began_at: "生效起始日期"
+          activity_end_at: "生效结束日期"
+          usage: "使用说明"
+          offline_event: "线下发放"
+          offline_address: "线下放发地址"
+          offline_out_count: "线下放发量"
+          priority: "排序权重"
+          image_url: "图片"
+          print_image_url: "打印图片"
+          seo_title: "SEO标题"
+          seo_keywords: "SEO关键字"
+          seo_description: "SEO描述"
+          complaints_count: "投诉次数"
+          penalty_deadline: "失效时间"
+          is_hidden: "是否隐藏"
+          code: "抵用券编号"
+          commission: "本月佣金"
+          # 确认打印属性添加
+          shop_name: "经销商店名"
+          shop_telphone: "经销商门店电话"
+          shop_address: "经销商门店地址"
+          production_categories: "抵用券品类"
+          logo: "品牌LOGO"
+          area: "经销商门店所在地区简称"
+          city: "经销商门店所在城市"
+          industry: "抵用券所属行业"
+          # 发行量 ｜ 现有数 
+          total_issue_number: "总发行量"
+          existing_number: "可用数量"
+          difference_value: "总－虚拟 差值"
+          virtual_existing_number: "虚拟可用数量"
+          brand_industry_name: "品牌行业合成名称"
+        coupon_remind_mail:
+          city_id: "城市"
+          recipient: "收件人"
+          cc: "抄送"
+        coupon_commission:
+          coupon_id: "抵用券ID"
+          commission: "佣金"
+          activity_in: "月份"
+        coupon_leaflet_point:
+          name: "名称"
+          address: "地址"
+          telephone: "电话"
+          shop_name: "店名"
+          linkman: "联系人"
+          city_id: "城市"
+          district_id: "地区"
+          activity_begin_at: "发放起始日期"
+          activity_end_at: "发放结束日期"
+        complaint:
+          coupon_id: "抵用券ID"
+          coupon_code: "抵用券编号"
+          title: "主题"
+          name: "姓名"
+          telphone: "电话"
+          email: "邮件"
+          address: "地址"
+          body: "内容"
+          description: "备注"
+        partner_ship:
+          domain: "域名"
+          code: "渠道编号"
+          name: "名称"
+          summary: "简介"
+          activity_begin_at: "合作起始日期"
+          activity_end_at: "合作结束日期"
+        distributor:
+          title: "名称"
+          short_title: "简称"
+          code: "经销商编号"
+          qq: "QQ"
+          tag: "标签"
+          class_name: "类型"
+          pv: "访问量"
+          description: "描述"
+          logo: "LOGO"
+          settings: "配置信息"
+        distributor_account:
+          settings: "配置信息"
+        distributor/contract:
+          distributor_id: "经销商"
+          title: "名称"
+          start_date: "合同起始日"
+          end_date: "合同终止日"
+          distributor: "经销商"
+          radmin_user_id: "业务员"
+          description: "合同说明"
+          code: "合同编号"
+        distributor/shop:
+          name: "名称"
+          distributor_id: "经销商"
+          city_id: "城市"
+          district_id: "地区"
+          business_zone_id: "商圈"
+          market_shop_id: "卖场分店"
+          linkman: "联系人"
+          address: "地址"
+          telphone: "电话"
+          latitude: "座标纬度"
+          logitude: "座标经度"
+        distributor/upload_picture:
+          name: "名称"
+          summary: "描述"
+          image_url: "图片"
+        province:
+          name: "名称"
+          pinyin: "拼音"
+          code_name: "简称"
+          cities_count: "城市数"
+        city:
+          name: "名称"
+          pinyin: "拼音"
+          code_name: "简称"
+          districts_count: "地区数"
+          province_id: "省份"
+        district:
+          name: "名称"
+          pinyin: "拼音"
+          code_name: "缩写"
+          city_id: "城市"
+          business_zones_count: "商圈数"
+        business_zone:
+          name: "名称"
+          pinyin: "拼音"
+          code_name: "缩写"
+          city_id: "城市"
+          district_id: "地区"
+        market:
+          name: "卖场名称"
+        market_shop:
+          name: "分店名称"
+          city_id: "城市"
+          district_id: "地区"
+          business_zone_id: "商圈"
+          market_id: "分店所属卖场"
+          address: "地址"
+          telphone: "电话"
+        offline_address:
+          city_id: "城市"
+          district_id: "区域"
+          address: "地址"
+        print_record:
+          month: "日期"
+          amount: "印刷数量"
+          city: "城市"
+          archive_path: "压缩包"
+        tag_amount:
+          tag_id: "行业"
+          amount: "现金劵数量"
+        coupon_faq:
+          question: "问题"
+          answer: "回答"
+          faq_group_id: "所属组"
+        distributor_account:
+          USERNAME: "登录名"
+          USERBBSEMAIL: "邮箱"
+          USERBBSMOBELTELEPHONE: "联系人手机"
+          USERSPASSWORD: "密码"
+          PASSWORD_CONFIRMATION: "确认密码"
+          USERBBSNAME: "联系人"
+          USERBBSSEX: "性别"
+        remark:
+          content: "评论"
+          user_id: "用户"
+        offer_coupon:
+          merchant: "商户名称"
+          body: "抵用券内容"
+          city_id: "城市"
+          district_id: "地区"
+          linkman: "联系人"
+          sex: "性别"
+          telphone: "电话"
+          status: "处理状态"
+        coupon_download:
+          coupon_id: "抵用券编号"
+          is_confirm: "是否确认"
+          mobile: "手机号"
+        coupon_recommendation:
+          coupon_id: "抵用券编号"
+          name: "姓名"
+          email: "邮箱"
+        coupon_subscribe:
+          city_id: "城市"
+          tag_id: "行业"
+          email: "邮箱"
+        sales_profile:
+          city_id: "城市"
+          email: "邮箱"
+          qq: "QQ"
+          mobile: "手机号码"
+          telephone: "分机号码"
+          manager_id: "业务经理"
+          user_id: "业务员"
+
+
+    errors:
+      template: # ~ 2.3.5 backward compatible
+        header:
+          one: "有 1 个错误发生导致「%{model}」无法被保存。"
+          other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
+        body: "如下字段出现错误："
+      messages:
+        inclusion: "不包含于列表中"
+        exclusion: "是保留关键字"
+        invalid: "是无效的"
+        confirmation: "与确认值不匹配"
+        accepted: "必须是可被接受的"
+        empty: "不能留空"
+        blank: "不能为空字符"
+        too_long: "过长（最多 %{count} 个字符）"
+        too_short: "过短（最少 %{count} 个字符）"
+        wrong_length: "长度非法（必须为 %{count} 个字符）"
+        taken: "已经被使用"
+        not_a_number: "不是数字"
+        not_an_integer: "必须是整数"
+        greater_than: "必须大于 %{count}"
+        greater_than_or_equal_to: "必须大于或等于 %{count}"
+        equal_to: "必须等于 %{count}"
+        less_than: "必须小于 %{count}"
+        less_than_or_equal_to: "必须小于或等于 %{count}"
+        odd: "必须为单数"
+        even: "必须为双数"
+        record_invalid: "校验失败: %{errors}"
+  
+  activemodel:
+    errors:
+      template:
+        header:
+          one: "有 1 个错误发生导致「%{model}」无法被保存。"
+          other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
+        body: "如下字段出现错误："

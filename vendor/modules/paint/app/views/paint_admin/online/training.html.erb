@@ -1,0 +1,99 @@
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function(){
+  	$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+	$(".worker_table tr:odd").addClass("odd");
+	$(".worker_table tr:even").addClass("even");
+	$("#select_status").change(function(){
+		$("#send_form").submit();
+	});
+	$(".update_remark").click(function(){
+		var this_button = $(this)
+		var this_remark = $(this).parent().siblings(".td_remark").children(".remark");
+		$(this).attr("disabled", "disabled");
+		$(this).val("修改中...");
+		$.post("/paint_admin/online/update_training_remark",
+			{id : this_remark.attr("this_id"), remark : this_remark.val()},
+			function(data){
+				this_button.removeAttr("disabled");
+				this_button.val("修改");
+			},'json');
+	});
+	$('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+  });
+</script>
+<style type="text/css">
+	.worker_table td{height:30px;line-height:30px;padding:0 4px;}
+	.worker_table .odd{background:#fff;}
+	.worker_table .even{background:#dedede;}
+</style>
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>培训申请</h1>
+	<div class="breadcrumbs">在线申请/ 培训申请</div>
+</div>
+<%= show_flash_message%>
+<div>
+	<div class="select-bar">
+	<form id="send_form" method="get" action="/paint_admin/online/training">
+	状态：<select id="select_status" name="status">
+			<option value="" <%= "selected='selected'" if @status.blank? %> >全部</option>
+			<option value="0" <%= "selected='selected'" if !@status.blank? && @status.to_i == 0 %> >未备注</option>
+			<option value="1" <%= "selected='selected'" if @status.to_i == 1 %> >已备注</option>
+		</select>
+		申请时间：<input type="text" class="datepicker" size="10"  name="start_date" value="<%=@start_date%>">
+		到：<input type="text" class="datepicker" size="10"  name="end_date" value="<%=@end_date%>">
+		<input type="submit" value="检索">
+	</form>
+	</div>
+	<div class="clearfix">
+		<% form_tag "/paint_admin/online/training_destroy",:method => "post" do%>
+		<table width="880" class="worker_table" align="center">
+			<tr>
+				<td><input type="checkbox" id="select_all"></td>
+				<td>省份</td>
+				<td>城市</td>
+				<td>姓名</td>
+				<td>电话</td>
+				<td>性别</td>
+				<td>邮箱</td>
+				<td>工龄</td>
+				<td>证书</td>
+				<td>学历</td>
+				<td>PQ</td>
+				<td>DJ/XS/CS</td>
+				<td>课程</td>
+				<td>PQ(H)</td>
+				<td>DJ/XS/CS(H)</td>
+				<td>备注</td>
+				<td>修改</td>
+			</tr>
+			<% @trainings.each do |t| %> 
+			<tr>
+				<td><input type="checkbox" name="training_ids[]" class="check_box" value="<%= t.id %>"></td>
+				<td><%= Province.name_for_code(t.province) %></td>
+				<td><%= City.name_for_code(t.city) %></td>
+				<td><%= t.user_name %></td>
+				<td><%= t.phone %></td>
+				<td><%= Painter::GENDER.index(t.gender) %></td>
+				<td><%= truncate(t.email, :length => 20, :omission => '') %></td>
+				<td><%= t.job_year %></td>
+				<td><%= Painter::CERTIFICATES.index(t.certificate) %></td>
+				<td><%= t.education %></td>
+				<td><%= t.spray_gun.to_i == 1 ? "是" : "否" %></td>
+				<td><%= t.brush.to_i == 1 ? "是" : "否" %></td>
+				<td><%= PaintTraining::HOPE_GRADE.index(t.hope_grade) %></td>
+				<td><%= t.hope_spray_gun.to_i == 1 ? "是" : "否" %></td>
+				<td><%= t.hope_brush.to_i == 1 ? "是" : "否" %></td>
+				<td class="td_remark"><input type="text" value="<%= t.remark %>" this_id="<%= t.id %>" class="remark" size="7"></td>
+				<td><input type="button" class="update_remark" value="修改"></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= submit_tag "删除" , :confirm => '确定删除'%>
+		<% end %>
+		<%= will_paginate @trainings , :class => 'digg_pagination'%>
+	</div>
+</div>

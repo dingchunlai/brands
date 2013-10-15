@@ -1,0 +1,2 @@
+您的帐号：<%= @user.USERNAME %>
+密码：<%= @user.PASSWORD_CONFIRMATION %>

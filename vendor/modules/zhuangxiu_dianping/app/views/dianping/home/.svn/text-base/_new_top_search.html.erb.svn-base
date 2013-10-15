@@ -1,0 +1,74 @@
+<% has_district = has_district.nil? ? false : has_district %>
+<div class="f_l margin10 zxdp2011-kdpzgs">
+  <p class="zxdp2011-kdpzgs-title">看点评 找装修公司</p>
+  <div class="choose_2011">
+    <% prices = [12117].include?(@user_city_code.to_i) ? NINBO_PRICE.sort : DecoFirm::PRICE.sort %>
+    <p>
+      <span>我的预算是</span>
+      <% prices.each do |k, v| %>
+        <%= link_to v,search_firm_for_options(:price => k), :target => "_blank"%>
+      <% end %>
+    </p>
+    <p>
+      <span>我喜欢的风格</span>
+      <% DecoFirm::STYLES.sort.each do |k, v| %>
+        <a href="<%= search_firm_for_options(:style => k)%>" target="_blank"><%= v %></a>
+      <% end %>
+    </p>
+    <p style="height:60px;overflow:hidden;">
+      <span>预期装修方式</span>
+      <% models = Marshal.load(Marshal.dump(DecoFirm::MODELS))%>
+      <% models.delete(models.index("装修监理"))%>
+      <% models.sort.each do |k, v| %>
+        <a href="<%= search_firm_for_options(:model => k)%>" target="_blank"><% if v == "设计工作室" %><em class="font_style_2011"><%= v %></em><% else %><%= v %><% end %></a>
+      <% end %>
+      <% if @user_city_code.to_i == 11910 %>
+        <%= link_to "装修监理", "http://zt.51hejia.com/zhuanti/laotian/index.html" ,:target =>"_blank"%>
+      <% end %>
+      <a href="<%= decoration_url(:trailing_slash => "/") %>" target="_blank"><em class="font_style_2011">工装</em></a>
+      <% if @user_city_code.to_i == 11910 %>
+        <%= link_to "翻新报修", "http://zt.51hejia.com/zhuanti/diniu/index.html" ,:target =>"_blank"%>
+      <% end %>
+    </p>
+    <% if @user_city_code.to_i == 11910 %>
+      <p class="p_noborder">
+        <span>我的房型</span>
+        <% DecoFirm::ROOM.sort.each do |k, v| %>
+          <a href="<%= search_room_url(@user_city_code, v, controller_name) %>" target="_blank"><%= v %></a>
+        <% end %>
+      </p>
+    <% end %>
+    <p>
+      <% if has_district %>
+        <% unless @user_city_code.to_i == 11910 %>
+        <tr>
+          <td><span>我的区县是</span></td>
+          <td>
+            <% if @user_city_code.to_i == 12117 %>
+              <%= link_to "市区", "/zhuangxiugongsi", :target => "_blank" %>
+              <% DIANPING_INDEX_TOP_SEARCH[TAGURLS[@user_city_code.to_i]].each do |district| %>
+                <%= link_to district[0], search_firm_for_options(:district => district[1]), :target => "_blank" %>
+              <% end %>
+            <% else %>
+              <% areas = HejiaTag.urban_areas(@user_city_code) %>
+              <% c_areas =  areas.size >=7 ? areas[0..6] : areas %>
+              <% c_areas.each do |area| %>
+                <a href="<%= search_firm_for_options( :district => area.TAGID)%>" target="_blank">
+                  <% if @user_city_code.to_i == 12173 and area.TAGNAME == "黄岛区" %>
+                    开发区
+                  <% else %>
+                    <%= truncate(area.TAGNAME,:length => 2 ,:omission => '') %>
+                  <% end %>
+                </a>
+              <% end %>
+              <% if areas.size >= 7 %>
+                <a href="<%= search_firm_for_options(:district => 0)%>" target="_blank">更多</a>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </p>
+  </div>
+</div>

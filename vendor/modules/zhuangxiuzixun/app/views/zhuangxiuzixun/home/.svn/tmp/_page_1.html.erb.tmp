@@ -1,0 +1,256 @@
+<div class="left">
+	<div class="jiaodian">
+		<script type="text/javascript">
+			$(function() {
+				$('#newsSlider').loopedSlider({
+					autoStart : 5000
+				});
+				$('.validate_Slider').loopedSlider({
+					autoStart : 5000
+				});
+				$("#enter_lab").click(function() {
+					window.location = $(this).find("a").attr("href");
+					return false;
+				});
+			});
+		</script>
+		<div id="newsSlider">
+			<div class="container">
+				<div class="bmdiv_alpha">
+					<a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_btn.gif" /></a>
+				</div>
+				<ul class="slides">
+					<% hejia_promotion_items(54146, :attributes => ['title','url','image_url'],:limit => 5).each do |r| %>
+					<li>
+						<%= link_to image_tag(api_img_url_for(r.image_url)), r.url, :title => r.title, :target => "_blank" %>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<div class="validate_Slider"></div>
+			<ul class="pagination">
+				<li>
+					<a href="#">1</a>
+				</li>
+				<li>
+					<a href="#">2</a>
+				</li>
+				<li>
+					<a href="#">3</a>
+				</li>
+				<li>
+					<a href="#">4</a>
+				</li>
+				<li>
+					<a href="#">5</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$(".zx_hotduod_img div:first").show();
+			$(".zx_hotduod_news li:first").addClass("zx_hotduod_active");
+			$(".zx_hotduod_news li").mouseover(function() {
+				$(this).removeClass("zx_hotduod_news_list").siblings().removeClass("zx_hotduod_active");
+				$(this).addClass("zx_hotduod_active").siblings().addClass("zx_hotduod_news_list");
+				$(".zx_hotduod_img .zx_hotduod_img_list").eq($(this).index()).siblings().hide().end().show();
+			})
+		})
+
+	</script>
+	<div class="box">
+		<h3 class="noindent">装修热点聚焦</h3>
+
+		<div class="zx_hotduod">
+			<div class="zx_hotduod_img">
+				<% @new_cases.each do |nc| %>
+				<div class="zx_hotduod_img1 zx_hotduod_img_list" style="display: none;"><img src="http://d.51hejia.com/api<%= nc.image_url %>" />
+				</div>
+				<% end %>
+			</div>
+			<div class="zx_hotduod_news">
+				<ul>
+					<% @new_cases.each_with_index do |nc,i| %>
+					<li class=<%= (i == 0) ? 'zx_hotduod_active' : 'zx_hotduod_news_list' %>>
+						<a target="_blank" href="<%= nc.url %>" title="<%= h nc.title %>"><%= truncate_for_zh nc.title,24 %></a>
+						<br />
+						<!--a target="_blank" href="<%= nc.price_now %>">装修公司：<%= nc.price_ago %></a-->
+					</li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="middle">
+	<% articles = hejia_promotion_items(54147, :attributes => ['title','url','image_url','description'],:limit => 5) %>
+	<% first = articles.shift %>
+	<div class="box">
+		<h3 class="noindent"> <%= link_to first.title, first.url, :target => "_blank", :class => "noindent"%> </h3>
+		<p>
+			<a href="<%= first.url %>" target="_blank"><%= truncate(first.description,:length => 60 ,:omission => "") %>...[查看详细]</a>
+		</p>
+	</div>
+	<ul>
+		<% tags = hejia_promotion_items(54220, :attributes => ['title','url','image_url','description'],:limit => 12) %>
+		<% articles.each_with_index do |article, index| %>
+		<li class=" clearfix" style="position:relative;">
+			<a href="<%= article.url %>" target="_blank"><img class="img-1" src="<%= api_img_url_for(article.image_url) %>" /></a>
+			<i class="bmdiv_i_red"><a style="color:#fff;" href="javascript:void(0)" class="tanchuall_open">我想<i class="bmdiv_i_fontff0">免费设计</i></a></i>
+			<div class="inbox">
+				<h3 class="noindent"><a class="noindent" href="<%= article.url %>" target="_blank"><%= article.title %></a></h3>
+				<p>
+					<a href="<%= article.url %>" target="_blank"><%= truncate(article.description,:length => 40 ,:omission => "") %>...[查看详细]</a>
+				</p>
+				<p class="tags"><img src="http://img.51hejia.com/images/zhuangxiu1023/tag.gif" />
+					<% for tag in tags[index * 3...index * 3 + 3] %>
+					<a href="<%= tag.url %>" target="_blank"><%= tag.title %></a>
+					<% end %>
+				</p>
+			</div>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<div style="width:260px; overflow:hidden; float:right; margin-right:1px; background-color:#fff; text-align:center;">
+	<img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_02.gif" />
+	<a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_03.gif" /></a>
+	<a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_04.gif" /></a>
+	<a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_05.gif" /></a>
+	<a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_06.gif" /></a>
+	<img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_right_07.gif" />
+	<!--文字滚动2012年8月27日-->
+	<div class="WQ_serverTit">
+		<span class="WQ_serverspan"> 最新报名<b id="zxbm_num"></b>人&#12288;
+			30天报名<b id="bm30_num"></b>人 </span>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$.getJSON('http://zhaobiao.51hejia.com/index/form_num/zxbm?callback=?', function(msg) {
+				if (msg != '' && msg != null) {
+					$('#zxbm_num').html($.trim(msg));
+				}
+			});
+			$.getJSON('http://zhaobiao.51hejia.com/index/form_num/bm30?callback=?', function(msg) {
+				if (msg != '' && msg != null) {
+					$('#bm30_num').html($.trim(msg));
+				}
+			});
+		});
+	</script>
+	<div class="WQ_turn">
+		<style>
+			#scrolls {
+				float: left;
+				width: 200px;
+				height: 105px;
+				overflow: hidden;
+				font-size: 12px;
+				border: 1px solid #ddd;
+				padding: 2px;
+				margin-left: 25px;
+				display: inline;
+			}
+			#scrolls .indemo {
+				float: left;
+				width: 100%;
+			}
+			#scrolls p {
+				font-size: 12px;
+			}
+			#demo1, #demo2 {
+				float: left;
+			}
+			.demo tr {
+				line-height: 20px;
+				overflow: hidden;
+				display: block;
+			}
+			.demo .WQ_td1 {
+				overflow: hidden;
+				width: 30px;
+			}
+			.demo .WQ_td2 {
+				overflow: hidden;
+				width: 90px;
+				text-align: center;
+			}
+			.demo .WQ_td3 {
+				overflow: hidden;
+				width: 60px;
+			}
+		</style>
+		<div id="scrolls" style="height:142px;">
+			<div class="demo">
+				<% baomings = ActiveRecord::Base.connection.select_all("SELECT name,mobile,addtime FROM 51hejia_zhaobiao.zhaobiao_baomings where status in (4,9,12,15) order by id desc limit 60") %>
+				<% unless baomings.blank? %>
+				<div id="demo1">
+					<table width="200">
+						<tbody>
+							<% for baoming in baomings[0,30] %>
+							<tr>
+								<td class="WQ_td1"> <% if baoming["name"].split("").size > 1 %>
+								<%= baoming["name"].split("")[0] %>**
+								<% else %>
+								<%= baoming["name"] %>
+								<% end %> </td>
+								<td class="WQ_td2"><%= baoming["mobile"].first(3) + "*****" + baoming["mobile"].last(3) %></td>
+								<td class="WQ_td4"><%= baoming["addtime"].to_date.strftime("%Y-%m-%d") %></td>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+				<div id="demo2">
+					<table width="200">
+						<tbody>
+							<% if baomings.size > 30 %>
+							<% for baoming in baomings[31,60] %>
+							<tr>
+								<td class="WQ_td1"> <% if baoming["name"].split("").size > 1 %>
+								<%= baoming["name"].split("")[0] %>**
+								<% else %>
+								<%= baoming["name"] %>
+								<% end %> </td>
+								<td class="WQ_td2"><%= baoming["mobile"].first(3) + "*****" + baoming["mobile"].last(3) %></td>
+								<td class="WQ_td4"><%= baoming["addtime"].to_date.strftime("%Y-%m-%d") %></td>
+							</tr>
+							<% end %>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+				<% end %>
+			</div>
+		</div>
+		<script>
+			function ScrollsTop(mainid, speeds) {
+				var speed = speeds;
+				var tabTop = document.getElementById(mainid);
+				var tab1 = document.getElementById("demo1");
+				var tab2 = document.getElementById("demo2");
+				tab2.innerHTML = tab1.innerHTML;
+				function Marqueet() {
+					if (tabTop.scrollTop >= tab2.offsetHeight)
+						tabTop.scrollTop -= tab1.offsetHeight;
+					else {
+						tabTop.scrollTop++;
+					}
+				}
+
+				var MyMar = setInterval(Marqueet, speed);
+				tabTop.onmouseover = function() {
+					clearInterval(MyMar)
+				};
+				tabTop.onmouseout = function() {
+					MyMar = setInterval(Marqueet, speed)
+				};
+			}
+
+			ScrollsTop('scrolls', 30);
+		</script>
+	</div>
+	<!--end-文字滚动2012年8月27日-->
+</div>

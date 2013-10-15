@@ -1,0 +1,16 @@
+<div id="newsSlider">
+  <div class="container">
+    <% size = (%w[苏州 宁波 杭州 无锡 武汉 南京].include? city) ? 6 : 3%>
+    <ul class="slides">
+      <% 1.upto(size) do |i| %>
+        <li><%=adspace("#{city}站-点评首页-大旗帜1-#{i}", '', '')%></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="validate_Slider"></div>
+  <ul class="pagination">
+    <% 1.upto(size) do |i|%>
+      <li><a href="<%= i %>"><%= i %></a></li>
+    <% end %>
+  </ul>
+</div>

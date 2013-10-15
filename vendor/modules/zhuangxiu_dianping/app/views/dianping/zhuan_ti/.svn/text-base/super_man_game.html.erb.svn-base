@@ -1,0 +1,57 @@
+<link href="http://zt.51hejia.com/zhuanti/zhenbasai/zhenbasainew.css" type="text/css" rel="stylesheet" />
+<div class="width960">
+  <div class="zhenbasai_box1"></div>
+  <div class="zhenbasai_box2"></div>
+  <div class="zhenbasai_box3">
+    <script type="text/javascript" src="http://js1.51hejia.com/js/textscroll.js"></script>
+    <div class="zhenbasai_box3_txt">
+      <div id="ScrollMe" style="overflow: hidden; height: 44px;">
+        <table width="151" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <% @prizes.each do |prize| %>
+                <span><%= prize.title %></span>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script type="text/javascript">new srcMarquee("ScrollMe",0,1,151,44,30,3000,300,22)</script>
+    <div class="zhenbasai_box3_hack"></div>
+    <div class="zhenbasai_box3_more"><a href="http://bbs.51hejia.com/btopic/251311" target="_blank">&gt;&gt;查看详情</a></div>
+  </div>
+</div>
+<div class="width960 clearfix">
+  <div class="zhenbasai_box4_l f_l">
+    <a href="http://api.51hejia.com/html/index_help_page/help0609.html" target="_blank" title="如何发表日记" class="a1"></a>
+    <a href="http://member.51hejia.com/member/ulogin" target="_blank" title="我要参加" class="a2"></a>
+  </div>
+  <div class="zhenbasai_box4new_r f_r">
+    <ul>
+      <% @except_shanghai_diaries_top_10.each_with_index do |diary, index| %>
+        <% if index < 3 %>
+          <li><label><a href="<%= diary.url %>" target="_blank" class="zhenbasai_box4new_a1"><%= truncate(diary.title, :length => 16 ,:omission => '') %></a><span class="zhenbasai_box4new_a2"><%= truncate(diary.user_name, :length => 6 ,:omission => '') %></span> <span class="zhenbasai_box4new_s1"><%= diary.votes_current_month %>票</span><span class="zhenbasai_box4new_s2"><%= diary.order_time.strftime("%m-%d") %></span></label></li>
+        <% else %>
+          <li><a href="<%= diary.url %>" target="_blank" class="zhenbasai_box4new_a1"><%= truncate(diary.title, :length => 16 ,:omission => '') %></a><span class="zhenbasai_box4new_a2"><%= truncate(diary.user_name, :length => 6 ,:omission => '') %></span> <span class="zhenbasai_box4new_s1"><%= diary.votes_current_month %>票</span><span class="zhenbasai_box4new_s2"><%= diary.order_time.strftime("%m-%d") %></span></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="width960 margin10">
+  <div class="zhenbasai_box5">
+    <div class="zhenbasai_box5_top clearfix">
+      <ul>
+        <% @promotion_diary.each do |diary| %>
+          <li>
+            <%= link_to image_tag(get_api_img_url(diary.image_url), :alt => diary.title), diary.url, :target => "_blank"%>
+            <h4><%= link_to truncate(diary.title, :length => 12 ,:omission => ''), diary.url ,:target => "_blank" , :title => diary.title %></h4>
+            <p>本月得票数：<%= DecorationDiary.find(diary.description.to_i).votes_current_month %></p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="zhenbasai_box5_bottom"></div>
+  </div>
+</div>

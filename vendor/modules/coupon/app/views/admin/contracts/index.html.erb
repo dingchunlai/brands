@@ -1,0 +1,65 @@
+<%= top_bar :title => "#{@distributor.title}经销商合同列表页",
+      :button => ['新建合同', new_admin_distributor_contract_path(@distributor)],
+      :breadcrumbs => [
+        ['首页', coupon_admin_index_path],
+        ['经销商', admin_distributor_path(@distributor)],
+        ['合同管理页面']
+      ]
+%>
+
+<div class="select-bar">
+  <% form_tag admin_distributor_contracts_path(@distributor), :method => :get do %>
+  <label>
+    <%= text_field_tag :title, (@title || '') %> 
+    <%= hidden_field_tag :distributor_id, @distributor.id %> 
+  </label>
+  <label>
+    <input type="submit" name="Submit" value="Search" />
+  </label>
+  <% end %>
+</div>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first" width="177">标题</th>
+      <th>开始时间</th>
+      <th>结果时间</th>
+      <th>合同编号</th>
+      <th>业务员</th>
+      <th>描述</th>
+      <th colspan="2">操作</th>
+    </tr>
+    <% @contracts && @contracts.each do |contract| %>
+    <tr>
+      <td class="first style4"><%=h contract.title %></td>
+      <td><%= contract.start_date.strftime("%Y-%m-%d") %></td>
+      <td><%= contract.end_date.strftime("%Y-%m-%d") %></td>
+      <td><%=h contract.code %></td>
+      <td><%= contract.radmin_user && contract.radmin_user.rname || '---'%></td>
+      <td><%=h contract.description %></td>
+      <td>
+        <% if can? :read, contract %>
+          <%= link_to '查看', admin_distributor_contract_path(contract.distributor_id, contract) %>
+        <% elsif can? :read_owned_contracts, Distributor::Contract %>
+          <%= link_to '查看', admin_distributor_contract_path(contract.distributor_id, contract) %>
+        <% else %>
+        <% end %>
+      </td>
+      <td>
+        <% if can? :update, contract %>
+          <%= link_to '编辑', edit_admin_distributor_contract_path(contract.distributor_id, contract) %>
+        <% elsif can? :edit_owned_contract, Distributor::Contract %>
+          <%= link_to '编辑', edit_admin_distributor_contract_path(contract.distributor_id, contract) %>
+        <% else %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @contracts, :class => "digg_pagination" %>
+</div>
+  
+
+

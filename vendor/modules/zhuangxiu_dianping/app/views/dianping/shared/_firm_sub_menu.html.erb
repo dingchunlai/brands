@@ -1,0 +1,38 @@
+<style type="text/css" media="screen">
+  #firm-big-star{height:20px;}
+  .big-star p{overflow:hidden;}
+</style>
+<% id = params[:firm_id] || params[:id] %>
+<% cache "dianping:firm_sub_menu:#{id}:#{controller.controller_name}", :expires_in => 5.minutes do %>
+  <% @event = @firm.events.find(:first,:order => "created_at desc", :limit =>1 ) %>
+  <% @coupon = fetch_firm_coupon(@firm.id) %>
+  <div class="width960">
+    <div class="zxdp2011_secmenu margin10">
+      <ul class="f_l clearfix">
+        <%= firm_sub_link @firm, @firm.name_abbr, firm_url(:id => @firm.id,:trailing_slash => "/"), -1, "firms" %>
+        <%= firm_sub_link @firm, "网友日记", firm_decoration_diaries_url(:firm_id => @firm.id), @firm.decoration_diaries.count, "decoration_diaries" %>
+        <%= firm_sub_link @firm, "公司案例", firm_cases_url(:firm_id => @firm.id), @firm.cases.count, "cases" if firm_is_cooperation? @firm %>
+        <% if firm_is_cooperation? @firm %>
+          <% if @coupon %>
+            <%= firm_sub_link @firm, "现金劵下载", firm_coupon_path(@coupon), @coupon.distributor.coupons.valid.count, "coupons" %>
+          <% elsif @event %>
+            <%= firm_sub_link @firm, "优惠信息", two_coupon_urls(@user_city_code,@event), @firm.events.count, "coupons" %>
+          <% end %>
+          <%= firm_sub_link @firm, "免费参观工地", firm_factories_url(:firm_id => @firm.id), @firm.factories.count, "factories" %>
+          <%= firm_sub_link @firm, "设计师", firm_designers_url(:firm_id => @firm.id), CaseDesigner.firm_case_designer(@firm.id).count, "designers" %>
+          <%= firm_sub_link @firm, "#{($redis.get("deco_idea_#{@firm.id}").nil?) ? '设计理念' : $redis.get("deco_idea_#{@firm.id}")}", firm_deco_ideas_url(:firm_id => @firm.id), @firm.deco_ideas.count, "deco_ideas" %>
+        <% end %>
+      </ul>
+      <div class="zxdp2011_pingfen f_r">
+        <div class="f_l"><%= "请评分：" if controller.controller_name == "firms" && controller.action_name == "show"%></div>
+        <span data-praise="0" style="display:block;" class="set-praise f_l big-star" id="firm-big-star"></span>
+        <div id="praise_tip">很不满意</div>
+        <div class="f_l">
+          <label>总分:</label>
+          <span style="padding:0 2px"><%= @firm.praise%></span><label>分</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end_secmenu_code-->
+<% end -%>

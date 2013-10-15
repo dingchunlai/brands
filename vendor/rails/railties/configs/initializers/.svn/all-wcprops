@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers
+END
+cookie_verification_secret.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/cookie_verification_secret.rb
+END
+backtrace_silencers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/backtrace_silencers.rb
+END
+new_rails_defaults.rb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/new_rails_defaults.rb
+END
+mime_types.rb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/mime_types.rb
+END
+inflections.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/inflections.rb
+END
+session_store.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/configs/initializers/session_store.rb
+END

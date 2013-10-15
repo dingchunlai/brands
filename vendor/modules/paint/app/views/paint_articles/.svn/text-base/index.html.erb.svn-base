@@ -1,0 +1,43 @@
+<% title "【油漆施工】#{@youqi}施工资讯_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_5 %>
+<% description PAINT_DESCRIPTION_5 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => @youqi, :location_end => nil }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+  	<% @articles.each do |article|%>
+    <div class="yg_listp1 clearfix">
+      <h3><a href="<%= get_article_url(article.id) %>" target="_blank" title="<%= article.title %>"><%= article.title %></a></h3>
+      <p><%= truncate(article.SUMMARY,:length => 160 ,:omission => '')%><a href="<%= get_article_url(article.id) %>" target="_self" title="查看全文">【查看全文】</a></p>
+      <div class="yg_listp1_img"><a href="<%= get_article_url(article.id) %>" target="_self"><img src="<%= get_article_image_link(article) %>" /></a></div>
+	  <div class="yg_listp1_tags f_l"><span>标签：<%= get_article_keyword(article.KEYWORD1)%></span></div>
+      <div class="yg_listp1_time f_r"><%= article.CREATETIME.strftime("%Y-%m-%d %H:%M")%></div>
+    </div>
+	<% end %>
+    <div><%= will_paginate @articles %></div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10">
+    	<%= render :partial => "/shared/right_top_img"%>
+    </div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+        <%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<div class="width960 margin10">
+  <div class="yg_yqgy yg_current">
+    <h3><%= @youqi %>产品推荐</h3>
+    <div class="yg_more"><a href="<%= get_production_url(@category_id) %>" target="_blank" title="更多">更多&gt;&gt;</a></div>
+    <ul class="yg_yqgylist clearfix">
+    <%@productions.each do |production|%>
+      <li><a href="<%= get_production_info_url(production.id)%>" target="_blank" title="<%=production.name%>"><img src="<%=production_master_picture(production)%>" alt="<%=production.name%>" /></a>
+	  <a href="<%= get_production_url(production.id)%>" target="_blank" title="<%=production.name%>"><%=truncate(production.name, :length => 12, :omission => '')%></a></li>
+	<% end %>
+    </ul>
+  </div>
+</div>
+<!--content_code_end-->

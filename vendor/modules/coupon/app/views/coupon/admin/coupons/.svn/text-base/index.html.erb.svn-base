@@ -1,0 +1,42 @@
+<h1>Listing coupons</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Money reach</th>
+    <th>Money refund</th>
+    <th>Coupon shop</th>
+    <th>Agency</th>
+    <th>Sms msg</th>
+    <th>Activity began at</th>
+    <th>Activity end at</th>
+    <th>Usage</th>
+    <th>Offline event</th>
+    <th>Offline address</th>
+    <th>Offline out count</th>
+  </tr>
+
+<% @coupons.each do |coupon| %>
+  <tr>
+    <td><%=h coupon.title %></td>
+    <td><%=h coupon.money_reach %></td>
+    <td><%=h coupon.money_refund %></td>
+    <td><%=h coupon.coupon_shop %></td>
+    <td><%=h coupon.agency %></td>
+    <td><%=h coupon.sms_msg %></td>
+    <td><%=h coupon.activity_began_at %></td>
+    <td><%=h coupon.activity_end_at %></td>
+    <td><%=h coupon.usage %></td>
+    <td><%=h coupon.offline_event %></td>
+    <td><%=h coupon.offline_address %></td>
+    <td><%=h coupon.offline_out_count %></td>
+    <td><%= link_to 'Show', coupon %></td>
+    <td><%= link_to 'Edit', edit_coupon_path(coupon) %></td>
+    <td><%= link_to 'Destroy', coupon, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New coupon', new_coupon_path %>

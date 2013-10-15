@@ -1,0 +1,227 @@
+<style type="text/css" media="screen">
+    .signup_input {
+        width: 100px;
+    }
+</style>
+
+<script type="text/javascript" charset="utf-8">
+    function login_callback(data) {
+        if (data == 'error') {
+            alert('用户名或密码错误!');
+            $("#password").val("");
+            $("#pop_login_submit").attr("disabled", null);
+        } else if (data == "freeze") {
+            alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+            $("#password").val("");
+            $("#pop_login_submit").attr("disabled", null);
+        } else {
+            $("#login").html('');
+            $.fn.colorbox.close();
+        }
+    }
+    function username_exists(callback){
+      if (callback==1)
+        $('#signup_username').setRed('用户名已经存在!');
+      else
+        $('#signup_username').setGreen();
+    }
+    function user_email_exists(callback){
+      if (callback==1)
+        $("#user_email").setRed('Email地址已经存在!');
+      else
+        $("#user_email").setGreen();
+    }
+    function register_callback(data) {
+        //成功：register_callback('7340760') 失败：register_callback({'error':'code'})
+        if (typeof(data) == "string") {
+            $('#signup_form').reset();
+            alert("注册成功！请登录。")
+            //$.fn.colorbox.close();
+        } else {
+            alert("验证码不正确,请重新输入");
+        }
+    }
+
+    jQuery(document).ready(function($) {
+
+
+        // 设置一些初始数据
+        var red = "#f00" // 红色边框和姿态
+        var green = "#0c0" // 绿色边框和字体
+        var blue = "#09f" //蓝色
+        //设置通过验证和未通过验证的样式
+        jQuery.fn.setBlue = function() {
+            tip = $(this).next();
+            if (tip.css("color") != red) {
+                tip.css("color", blue);
+            }
+        };
+        jQuery.fn.setRed = function(message) {
+            // $(this).css("border-color",red);
+            $tip = $(this).next();
+            $tip.css("color", red);
+            $tip.text(message);
+            $tip.addClass("errorFlag");
+            //   alert($("form .errorFlag").length);
+        };
+        jQuery.fn.setGreen = function() {
+            $tip = $(this).next();
+            //   $(this).css("border-color",green);
+            $tip.css("color", green);
+            $tip.html("<img src='http://api.51hejia.com/images/right.gif' />");
+            $tip.removeClass("errorFlag");
+        };
+        //开始验证输入的用户名
+        $("input").focus(function() {
+            $(this).setBlue();
+        });
+
+        $('#signup_username').blur(function() {
+            var login_length = $(this).val().length;
+            if (login_length <= 1 || login_length >= 14) {
+                $(this).setRed("用户名为2-14位");
+            }
+            else {
+              $.ajax({
+                url: "/remote/username_exists/" + $(this).val(),
+                type: 'get',
+                dataType: 'jsonp',
+                jsonpCallback: 'username_exists'
+              });
+            }
+        });
+
+        //开始验证密码长度
+        $("#signup_password").blur(function() {
+            var password_length = $(this).val().length;
+            if (password_length < 6 || password_length > 16) {
+                $(this).setRed("密码长度应为6-16");
+            } else {
+                $(this).setGreen();
+            }
+        });
+
+        //开始验证EMAIL
+        $("#user_email").blur(function() {
+            if (this.value == "" || this.value != "" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value)) {
+                $(this).setRed("Email格式错误");
+            } else {
+             $.ajax({
+               url: '/remote/user_email_exists/?email=' + $(this).val(),
+               type: 'get',
+               dataType: 'jsonp',
+               jsonpCallback: 'user_email_exists'
+             });
+            }
+        });
+
+        //开始验证密码确认
+        $("#signup_password_confirm").blur(function() {
+            var password = $("#signup_password").val();
+            var password_confirmation = $(this).val();
+            if (password != password_confirmation || password_confirmation.length == 0) {
+                $(this).setRed("两次密码不同");
+            } else {
+                $(this).setGreen();
+            }
+        });
+
+        $('#signup_form').submit(function() {
+            var numError = $("form .errorFlag").length;
+            if (numError > 0) {
+
+            } else {
+                //$("#signup_submit").attr("disabled", "disabled");
+                $.ajax({
+                    url: 'http://api.51hejia.com/user/reg_save',
+                    dataType: 'jsonp',
+                    data: $(this).serialize(),
+                    jsonpCallback: 'register_callback',
+                    error: function() {
+                        alert('您填写的注册信息有误，请更正后重试。');
+                    }
+                });
+            }
+            return false;
+        });
+
+
+        $('#pop_login_form').submit(function() {
+            if ($('#pop_user_name').val().length <= 0) {
+                alert('请输入用户名!');
+            } else if ($('#pop_password').val().length <= 0) {
+                alert('请输入密码!');
+            } else {
+                $("#pop_login_submit").attr("disabled", "disabled");
+                $.ajax({
+                    url: "http://api.51hejia.com/sessions/user_login",
+                    dataType: "jsonp",
+                    jsonpCallback: 'login_callback',
+                    data: $(this).serialize(),
+                    error: function() {
+                        alert('很抱歉，发生未知错误，请稍后重试。');
+                    }
+                })
+            }
+            return false;
+        });
+
+    });
+
+</script>
+
+<div class="dafenbox denglzhuc" style="width:600px;margin-top:30px">
+  <table width="600" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="255" valign="top"><h3>已有和家帐号 </h3>
+
+        <form action="" id="pop_login_form" method="post">
+          <ul>
+            <li>用&nbsp;户&nbsp;名：
+              <input id="pop_user_name" name="user_name" type="text" style="width:100px"/><em></em>
+            </li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：
+              <input id="pop_password" name="password" type="password" style="width:100px"/>
+            </li>
+            <li>
+              <input name="self_login" id="pop_self_login" type="checkbox" value="0" style="vertical-align:middle;"/>
+              自动登录
+            </li>
+            <li style="padding:10px;text-align:center;">
+              <input id="pop_login_submit" type="submit" value="登录" class="gsl_wyly_btn"/>
+            </li>
+          </ul>
+        </form>
+      </td>
+      <td width="1" bgcolor="#cccccc"></td>
+      <td width="325"><h3>注册和家帐号</h3>
+
+        <form action="" method="post" id="signup_form">
+          <ul style="width:300px;">
+            <li>用&nbsp;户&nbsp;名：
+              <input id="signup_username" name="username" type="text" class="signup_input"/> <em></em>
+            </li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：
+              <input id="signup_password" name="userpassword" type="password" class="signup_input"/> <em></em>
+            </li>
+            <li>重复密码：
+              <input id="signup_password_confirm" name="userpasswordconfirm" type="password" class="signup_input"/>
+              <em></em>
+            </li>
+            <li>&nbsp;E-mail&nbsp;：
+              <input id="user_email" name="userbbsemail" type="text" class="signup_input"/> <em></em>
+            </li>
+            <li>验&nbsp;证&nbsp;码：
+              <input type="text" size="5" name="image_code"/>
+              <img id="image_code_area" src="http://api.51hejia.com/user/get_image_code" width="50" height="20" style="vertical-align:middle;" onclick="this.src=(function(){ var url='http://api.51hejia.com/user/get_image_code?rand='; url = url + Math.random().toString(); return url;})();">
+
+            </li>
+            <li style="padding-top:10px;text-align:center;">
+              <input id="signup_submit" type="submit" value="点击注册" class="gsl_wyly_btn"/>
+            </li>
+          </ul>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+<% content_for :html_head do %>
+  <link href="http://js.51hejia.com/css/djq_yb.css" rel="stylesheet" type="text/css" />
+<% end %>
+
+<!--content_code-->
+  <%= render :partial => 'head'  %>
+  <%= render :partial => 'left'  %>
+  <div class="djq_yb_r f_r">
+    <div class="djq_yb_rbox djq_yb_rbox3 clear margin10">
+      <h3>无条件现金抵用券</h3>
+      <ul class="djq_yb_rdjqlist clearfix">
+        <% @distributor.coupons.each do |coupon| %>
+          <li>
+              <div>
+               <a href="<%= coupon_show_path(:id => coupon.id) %>" target="_blank">
+                <% if coupon.image_url.to_s.blank? %>
+                  <img src="http://img.51hejia.com/api/images/0004/9455/1.jpg" width="800"/>
+                <% else %>
+                  <img src="<%= cloud_fs_domain("image") %><%= coupon.image_url %>"/>
+                <% end %>
+                </a>
+              </div>
+              <p><%= link_to coupon.title, coupon_show_path(:id => coupon.id), :target => "_blank" %></p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/articles
+END
+for_brands.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/articles/for_brands.html.erb
+END
+zixun_top5.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/articles/zixun_top5.html.erb
+END
+this_week_top10.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/articles/this_week_top10.html.erb
+END

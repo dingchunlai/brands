@@ -1,0 +1,46 @@
+<%= top_bar :title => '首页',
+  :breadcrumbs => [
+    ['首页', coupon_admin_index_path]
+  ]
+%>
+
+<% unless flash[:permission_denied].blank? %>
+  <div class="select-bar">
+    <div style="color:red;font-weigth:bold;font-size: 16px;text-align: center"><%= flash[:permission_denied] %></div>
+  </div>
+<% end %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th colspan="2" style="text-align: left;font-size: 14px;font-weigth:bold;">相关信息</th>
+    </tr>
+    <% if @distributors_count != 0 %>
+    <tr>
+      <td class="first style1"><%= Distributor.human_name %></td>
+      <td class="last">数量（<%= @distributors_count %>）  <%= link_to "查看 >>", admin_distributors_path %></td>
+    </tr>
+    <% end %>
+    <% if @shops_count != 0 %>
+    <tr>
+      <td class="first style1"><%= Distributor::Shop.human_name %></td>
+      <td class="last">数量（<%= @shops_count %>）  <%= link_to "查看 >>", admin_distributors_path %></td>
+    </tr>
+    <% end %>
+    <% if @coupons_count != 0 %>
+    <tr>
+      <td class="first style1"><%= Coupon.human_name %></td>
+      <td class="last">数量（<%= @coupons_count %>） <%= link_to "查看 >>", admin_coupons_path %></td>
+    </tr>
+    <% end %>
+    <% if @valid_contracts_count != 0 %>
+    <tr>
+      <td class="first style1"><%= Distributor::Contract.human_name %></td>
+      <td class="last">数量 （<%= @valid_contracts_count %>）  <%= link_to "查看 >>", admin_distributors_path %></td>
+    </tr>
+    <% end %>
+ </table>
+</div>
+
+

@@ -1,0 +1,133 @@
+<%= show_flash_message %>
+<div class="search">
+  <% form_tag admin_promotions_path, :method => :get do %>
+    <div style="line-height: 35px;">
+      主题：<%= text_field_tag :subject, @subject, {:size => 13} %>&nbsp;&nbsp;
+      品类：<%= select_tag :tag_id, options_for_select([["全部",0]].concat(Tag.all_categories.map{|r| [r.TAGNAME, r.TAGID.to_i]}), @tag_id), 'data-ajax-url' => pinpai_pin_lei_path(':id:') %>　&nbsp;&nbsp;
+      品牌：
+      <%if @brand_tag%>
+        <%= select_tag :brand_id, options_for_select([["全部",0]].concat(@brand_tag.brands.map { |b| [b.name_zh, b.id] }), @brand_id)%>
+      <% else %>
+        <%= select_tag :brand_id%>
+      <%end%>
+      <br />
+      活动时间：<%= text_field_tag :event_start, @event_start, :size => 6 %> -
+      <%= text_field_tag :event_end, @event_end, :size => 6 %>　
+      <%= submit_tag '搜索' %>
+    </div>
+  <% end %>
+</div>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @promotions, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+<table border="1" >
+  <tr>
+    <th>主题</th>
+    <th>地点</th>
+    <th>组织者</th>
+    <th>所属品类</th>
+    <th>所属品牌</th>
+    <th>开始时间</th>
+    <th>结束时间</th>
+    <th>发布时间</th>
+    <th>操作</th>
+  </tr>
+  <%@promotions.each do |promotion|%>
+    <tr>
+      <td style="width:200px;">
+        <%=link_to promotion.subject, edit_admin_promotion_path(promotion.id), :target => '_blank'%>
+      </td>
+      <td style="width:60px;"><%=promotion.location%></td>
+      <td style="width:100px;"><%=promotion.organizer%></td>
+      <td style="width:100px;">
+        <%promotion.tags.each do |tag|%>
+          <%=tag.TAGNAME%>
+        <%end%>
+      </td>
+      <td style="width:100px;">
+        <%promotion.brands.each do |brand|%>
+          <%=brand.name_zh%>
+        <%end%>
+      </td>
+      <td style="width:100px;"><%=promotion.begins_at.strftime("%Y-%m-%d") rescue ""%></td>
+      <td style="width:100px;"><%=promotion.ends_at.strftime("%Y-%m-%d") rescue ""%></td>
+      <td style="width:100px;"><%=promotion.published_at.strftime("%Y-%m-%d") rescue ""%></td>
+      <td>
+        <%=link_to '编辑', edit_admin_promotion_path(promotion.id), :target => '_blank'%>
+        <%=link_to '删除', admin_promotion_path(promotion.id)+"?page=#{params[:page]}", :method => :delete%>
+      </td>
+    </tr>
+  <%end%>
+</table>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @promotions, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+
+<%content_for :html_head do%>
+  <style type="text/css">
+    table, td{
+      border-color: #7EBF4F;
+      border-style: solid;
+    }
+    tr{
+      height:22px;
+    }
+    table{
+      border-width: 0 0 1px 1px;
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+    td{
+      margin: 0;
+      padding: 4px;
+      border-width: 1px 1px 0 0;
+      background-color: #FFC;
+      text-align: center;
+    }
+  </style>
+
+  <script type="text/javascript">
+    (function() {
+      // 处理品类发生变化之后的情况
+      function handleCategoryChange() {
+        $('#tag_id').change(function(event) {
+          event.preventDefault();
+          var id = $(this).val();
+          if(!id || id == '') {
+            updateBrandSelectElement([]);
+            return false;
+          }
+          var url = $(this).attr('data-ajax-url').replace(':id:', id);
+          $.getJSON(url, function(data, textStatus) {
+            if(textStatus == 'success') {
+              updateBrandSelectElement(data);
+            } else {
+              alert('读取品牌数据出错！');
+            }
+          });
+          return false;
+        });
+      }
+
+      // 更新品牌下拉框
+
+      function updateBrandSelectElement(brands) {
+        var dom = $('#brand_id').empty();
+        if(!brands || brands.length < 1) {
+          $('<option />').val('').text('-- 无 --').appendTo(dom);
+        } else {
+          $('<option />').val('').text('-- 全部 --').appendTo(dom);
+          $.each(brands, function(_, brand) {
+            $('<option />').val(brand.id).text(brand.name_zh).appendTo(dom);
+          })
+        }
+      }
+
+      $(function() {
+        $("#event_start").datepicker({dateFormat: 'yy-m-d'});
+        $("#event_end").datepicker({dateFormat: 'yy-m-d'});
+        handleCategoryChange();
+      });
+    })();
+  </script>
+<%end%>

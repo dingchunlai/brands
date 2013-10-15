@@ -1,0 +1,37 @@
+<%= top_bar :title       => '合作伙伴管理页',
+            :button      => ['创建合作伙伴', new_admin_partner_ship_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['合作伙伴', admin_partner_ships_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th><%= PartnerShip.human_attribute_name("domain") %></th>
+      <th><%= PartnerShip.human_attribute_name("code") %></th>
+      <th><%= PartnerShip.human_attribute_name("name") %></th>
+      <th><%= PartnerShip.human_attribute_name("activity_begin_at") %></th>
+      <th><%= PartnerShip.human_attribute_name("activity_end_at") %></th>
+
+      <th colspan=2 class="last">操作</th>
+    </tr>
+    <% @partner_ships.each_with_index do |partner_ship, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td><%= partner_ship.domain %></td>
+          <td><%= partner_ship.code %></td>
+          <td><%= partner_ship.name %></td>
+          <td><%= partner_ship.activity_begin_at %></td>
+          <td><%= partner_ship.activity_end_at %></td>
+
+          <td><%= link_to '修改', edit_admin_partner_ship_path(partner_ship) %></td>
+          <td><%#= link_to '删除', admin_partner_ship_path(partner_ship), :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @partner_ships.empty? -%>
+      <%= will_paginate @partner_ships, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

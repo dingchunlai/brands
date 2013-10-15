@@ -1,0 +1,8 @@
+<%= top_bar :title => "#{Distributor::Shop.human_name}管理",
+  :button => ["#{Distributor::Shop.human_name}列表", distributor_user_shops_path],
+  :breadcrumbs => [
+  ['首页', distributor_user_index_path],
+  ["#{Distributor::Shop.human_name}管理", distributor_user_shops_path]
+]
+%>
+<%= render :partial => 'form' %>

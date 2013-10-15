@@ -1,0 +1,80 @@
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/messages_cn.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.validator.setDefaults({ 
+			onkeyup: false
+		});
+		$("#new_paint_admin").validate({
+		  rules: {
+		    user_name: {
+			  required: true,
+		      remote: {
+		        url: "/sessions/validate_username"
+		      }
+		    },
+			confirm_password: {
+		        equalTo: "#password"
+		       }
+		 },
+		 messages: {
+		 	user_name:{remote: "用户名已存在"},
+			confirm_password:{equalTo:"两次输入密码不一致"}
+			}
+		});
+		$(".edit_paint_admin").validate();
+	});
+</script>
+<style type="text/css">
+	label.error {
+	background:url("http://js.51hejia.com/img/icons/alert.gif") no-repeat scroll left 4px transparent;
+	color:red;
+	float:none;
+	padding-left:1.5em;
+	vertical-align:middle;
+	padding-top:5px;
+	}
+</style>
+	<%= f.error_messages%>
+	  <table border="0" cellspacing="0" cellpadding="3">
+			<tr>
+				<td><label for="USERNAME">用户名:</label></td>
+				<td>
+					<% if @paint_admin.id.nil?%>
+					<%= f.text_field :USERNAME,:size=>20 ,:name => 'user_name' , :class => "required" %>
+					<% else %>
+					<%= @paint_admin.USERNAME %>
+					<% end %>	
+				</td>
+			</tr>
+			<tr>
+				<td><label for="USERBBSNAME">姓名:</label></td>
+				<td><%= f.text_field :USERBBSNAME,:size=>20 , :class => "required"  %></td>
+			</tr>
+			<% if @paint_admin.id.nil? %>
+			<tr>
+				<td><label>密码:</label></td>
+				<td><input type="password" name="password" id="password" class="required"></td>
+			</tr>
+			<tr>
+				<td><label>确认密码:</label></td>
+				<td><input type="password" name="confirm_password" class="required" ></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td><label for="USERBBSEMAIL">E-mail:</label></td>
+				<td><%= f.text_field :USERBBSEMAIL,:size=>20, :class => "required email" %></td>
+			</tr>
+			<tr>
+				<td><label for="">权限:</label></td>
+				<td>
+					<%#= f.select :roles, PaintAdmin::ROLES.map{|k,v| [ k,v] }%>
+					<% PaintAdmin::ROLES.each do |key,value|%>
+						<%= key%><%= check_box_tag("roles[]",value, (checked = true if @paint_admin.has_role?(key)))%>
+					<% end -%>
+				</td>
+			</tr>
+			<tr>
+				<td></td><td><%= f.submit "提交"%></td>
+			</tr>
+		</table>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <title>品牌库管理后台</title>
+    <meta charset="utf-8" />
+    <%= javascript_include_tag 'html5' %>
+    <%= stylesheet_link_tag 'admin_v2' %>
+    <link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <%= yield :html_head %>
+  </head>
+  <body>
+  <div id="brand_admin_page">
+    <div id="brand_admin_header">
+      <br />
+      <ul class="horizontal" style="padding-left: 50px;">
+        <li><%= link_to "首页", admin_index_index_path %> </li>
+        <li><%= link_to "文章推广", admin_articles_path %> </li>
+        <li><%= link_to '促销活动', admin_promotions_path%></li>
+        <li><%= link_to '类别管理', admin_production_categories_path%></li>
+        <li><%= link_to '产品系列管理', admin_chanpinxilie_path%></li>
+        <li><%= link_to '推广位', admin_promotion_pages_path%></li>
+        <li><%= link_to "经销商后台", coupon_admin_index_path %> </li>
+        <li><%= link_to '权限管理', admin_web_permissions_path %></li>
+        <li><%= link_to '评论管理', "/admin_v2/comments/all" %></li>
+      </ul>
+      <br /><br />
+    </div>
+    <div id="brand_admin_lefter">
+      <%= render_subnav %>
+    </div>
+    <div id="brand_admin_righter">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

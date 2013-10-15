@@ -1,0 +1,26 @@
+<% @title = "5招教您如何选择优秀的设计师" %>
+<div class="he_con">
+  <div class="qu0_con f_l">
+    <div class="qu2_con1 qu0_con1"></div>
+    <div class="qu2_con2">
+      <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/zximg.jpg" alt="" />
+      <div class="qu_txt">
+        <h4>5招教您如何选择优秀设计师：</h4>
+        <ol>
+
+          <li>1.在与设计师沟通的过程去感受这个设计师自身的涵养及素质；</li>
+          <li>2.要了解这个设计师是否对施工流程、施工工艺、施工材料熟悉；</li>
+          <li>3.在与设计师沟通的过程中设计师能否给出好的空间建议并且能够切身实际的提出很多细节上的问题，以避后患。</li>
+          <li>4.重要的还是要能找到一个懂你的设计师,帮你去实现美好的梦想，这就是第四点要说明的，与专业的设计师沟通的时候，设计师会很快的理解你想要的那种家的感觉，并且可以大致的描述出你需要的风格，色彩，样式等。</li>
+          <li>5.与设计师的沟通是非常重要的从沟通中不只会感受到设计师的专业素养，还能直观的感受设计师是否拥有诚信的态度，和良好的工作责任心，而这两点，也是最为重要</li>
+        </ol>
+
+      </div>
+    </div>
+  </div>
+  <div class="qu_con f_l">
+    <%= render :partial => "jzsjs" %>
+    <%= render :partial => "jdsjs" %>
+  </div>
+</div>
+<!--end_content_code-->

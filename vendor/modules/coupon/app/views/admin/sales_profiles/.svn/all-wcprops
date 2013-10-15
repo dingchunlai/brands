@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/show.html.erb
+END
+assign_contracts.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/assign_contracts.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/new.html.erb
+END
+_sub_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/sales_profiles/_sub_menu.html.erb
+END

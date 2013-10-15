@@ -1,0 +1,529 @@
+<% content_for :html_head do %>
+  <script type="text/javascript" src=" http://js1.51hejia.com/js/2010/focusImg.js"></script>
+<% end %>
+<%
+set_page_meta_data '品类', @tag.TAGNAME
+promotion_items = @promotion_items['品类'][@tag.TAGNAME]
+
+content_for :banner_ad do
+%>
+  <%=
+  if (ad = API_PROMOTION_MAPPING['广告']['品类'][@tag.TAGURL]) && (ad = ad['大旗'])
+    ad
+  else
+    ad = @promotion_items['首页']['页头广告']
+    promotion_image_tag ad if ad
+  end
+%>
+<% end %>
+<%= render :partial => 'shared/layouts/header' %>
+<script type="text/javascript" src="http://js1.51hejia.com/js/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<!--script src="http://js.51hejia.com/js/zb-ad.js" type="text/javascript"></script-->
+<script type="text/javascript">
+  function rember_cookies()
+  {
+    var url_img = new Image();
+    url_img.onerror = url_img.onload = function() {
+      try {
+        delete url_img
+      } catch(e) {}
+    }
+    url_img.src = "http://api.51hejia.com/statistics?code=zb-ad-js&style=close&source="+document.URL
+    $('#jie_sheng_ad').hide();
+    document.cookie = "jie_sheng" + "="+ escape("jie_sheng") + ";path=/;domain=.51hejia.com";
+  }
+</script>
+<link href="http://js.51hejia.com/css/zb20120510.css" rel="stylesheet" type="text/css"/>
+
+<style type="text/css" media="screen">
+  .recommended_brands {
+    border: 1px solid #DEDEDE;
+    float: left;
+  }
+
+  .recommended_brands ul {
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    padding: 5px;
+    width: 220px;
+  }
+
+  .recommended_brands ul li {
+    border: 1px solid #CCCCCC;
+    display: inline;
+    float: left;
+    margin: 5px 0 5px 1px;
+  }
+</style>
+<%= render :partial => 'shared/tags/promotion_categories' %>
+<div class="b_width960 clearfix margin10 margin_top10">
+  <div class="bpl_left f_l">
+    <div class="bpl_left f_l" <%= "style='position:relative;'" if @tag.TAGNAME == "油漆涂料" %> >
+      <!-- 当不是地板品牌时显示 -->
+      <% if @tag.TAGURL != 'diban' %>
+  <%# url = LINK_URLS[@tag.TAGNAME]['更多品牌'] || LINK_URLS['品牌专区']['默认'] %>
+        <h3 class="blp_l_h3">
+          <span class="bpl_l_more f_r"><%# = link_to '>>更多', url, :target => '_blank' %></span><%= @tag.TAGNAME %>品牌：
+          <% promotion_items['导航栏品牌链接'].each do |item| %>
+            <a href="<%= item['url'] %>" target="_blank"><%= item['title'] %></a>
+          <% end %>
+        </h3>
+      <% end %>
+      <% if @tag.TAGNAME == "油漆涂料" %>
+        <div class="bpl_youqisg"><a href="http://www.yougong.51hejia.com/" target="_blank"></a></div>
+        <div class="bpl_ygicon"></div>
+      <% end %>
+      <div class="bpl_l_text clearfix">
+        <!--	begin 焦点图切换区域-->
+        <div class="bpl_l_img f_l">
+          <div class="focuspic">
+            <div id="f_div">
+              <div id="f_imgDiv">
+                <% promotion_items['焦点图'].each do |focus| %>
+                  <%= promotion_image_tag focus %>
+                <% end %>
+              </div>
+              <div id="f_infoDiv">
+                <!--数字按钮区域-->
+                <div id="f_buttonDiv">
+                  <%
+                  i = 0
+                  promotion_items['焦点图'].each do |focus|
+                    i += 1
+                  %>
+                    <div class="bg"><a href="javascript:void(0)" class="" focusClass="on" normalClass=""><%= i %></a>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div id="f_text">
+              <% promotion_items['焦点图'].each do |focus| %>
+                <label><a href="<%= focus['url'] %>" target="_blank"><%= focus['title'] %></a></label>
+              <% end %>
+            </div>
+            <script>
+              var a = new PicFocus("f_imgDiv", "f_text", "f_buttonDiv", "4000");
+              a.init();
+              a.play();
+            </script>
+          </div>
+        </div>
+        <!--	end	焦点图切换区域-->
+        <% if item = promotion_items['文字大标题'] %>
+          <div class="bpl_l_tit f_l">
+            <h2><a href="<%= item['url'] %>" target="_blank"><%= item['title'] %></a></h2>
+
+            <p><a href="<%= item['url'] %>" target="_blank">
+                <%= item['description'] %>
+              </a></p>
+          </div>
+        <% end %>
+        <ul class="bpl_l_ul01 f_l">
+          <%
+          prefixes = promotion_items['文字小标题前缀']
+          promotion_items['文字小标题'].each_with_index do |item, index|
+            prefix = prefixes[index] || prefixes.last
+          %>
+            <li><span><%= link_to prefix.title, prefix.url, :target => "_blank" %></span>
+              <%= link_to item.title, item.url, :target => "_blank" %></li>
+          <% end %>
+        </ul>
+        <dl class="bpl_l_ul02 f_l">
+          <dt><strong>最新消息</strong></dt>
+          <%
+          prefixes = promotion_items['最新消息前缀']
+          promotion_items['最新消息'].each_with_index do |item, index|
+            prefix = prefixes[index] || prefixes.last
+          %>
+            <dd>
+              <!--span class="f_r"><%#= publish_date_of item %></span-->
+              <span><a href="<%= prefix['url'] %>" target="_blank"><%= prefix['title'] %></a></span>
+              <a href="<%= item['url'] %>" target="_blank"><%= item['title'] %></a>
+            </dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+
+    <div class="bpl_left f_l">
+
+      <%= adspace("#{@adspace_page}-大旗帜1", '', '<div style="margin-bottom: 5px"></div>') %>
+
+      <SCRIPT src="http://js.51hejia.com/js/b_pic.js" type="text/javascript"></SCRIPT>
+      <h3>
+        <a onmouseup="ISL_StopDown_1()" class="bpl_photo_but_r f_r" onmousedown="ISL_GoDown_1() " onmouseout="ISL_StopDown_1()" href="javascript:void(0);" target="_self"></a>
+        <a onmouseup=ISL_StopUp_1() onmousedown=ISL_GoUp_1() onmouseout=ISL_StopUp_1() href="javascript:void(0);" target="_self" class="bpl_photo_but_l f_r"></a>
+        精选单品推荐
+      </h3>
+
+      <div class="bpl_l_text clearfix">
+        <div id="ISL_Cont_1" class="bpl_photo_c_b f_l">
+          <div class="bpl_photo_c2">
+
+            <div id="List1_1" class="f_l">
+              <ul class="bpl_l_ul03">
+                <% @products.each do |product| %>
+                  <% if current_subdomain == "chufangdianqi" %>
+                    <% if product.name.strip != "大智系列" and product.name.strip+product.model.strip != "净快烧系列RB-2WGX" %>
+                      <li>
+                        <%=
+                        link_url = pinpai_production_path :subdomain => false, :permalink => product.brand.permalink, :id => product.id
+
+                        link_to(show_production_master_picture(product), link_url, :target => '_blank') +
+                          link_to_with_title(product.name+product.model, link_url, :truncate => 16, :target => '_blank') +
+                          content_tag(:p, link_to(truncate_u(product.description, 45, '...'), link_url, :target => '_blank'))
+                      %>
+                      </li>
+                    <% end %>
+                  <% else %>
+                    <li>
+                      <%=
+                      link_url = pinpai_production_path :subdomain => false, :permalink => product.brand.permalink, :id => product.id
+
+                      link_to(show_production_master_picture(product), link_url, :target => '_blank') +
+                        link_to_with_title(product.name, link_url, :truncate => 16, :target => '_blank') +
+                        content_tag(:p, link_to(truncate_u(product.description, 45, '...'), link_url, :target => '_blank'))
+                    %>
+                    </li>
+
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+            <div id="List2_1"></div>
+            <script type="text/javascript">
+              picrun_ini()
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bpl_left f_l">
+      <h3>
+        <span class="bpl_l_more f_r"><a href="<%= LINK_URLS[@tag.TAGNAME]['资讯'] %>" target="_blank">>>更多</a></span><%= @tag.TAGNAME %>
+        资讯</h3>
+
+      <div class="bpl_l_text clearfix">
+        <div class="bpl_l_t_left f_l">
+          <% focus_news = promotion_items['资讯焦点图'] %>
+          <% unless focus_news.nil? %>
+            <div class="bpl_l_t_img"><%= promotion_image_tag focus_news %>
+              <a href="<%= focus_news['url'] %>" target="_blank"><strong><%= focus_news['title'] %></strong></a>
+
+              <p>
+                <a href="<%= focus_news['url'] %>" target="_blank"><%= truncate focus_news['description'], :length => 80 %></a>
+              </p></div>
+          <% end %>
+          <dl class="bpl_l_t_hot">
+            <dt><strong>热门专区</strong></dt>
+            <% promotion_items['热门专区'].each do |item| %>
+              <dd><a href="<%= item['url'] %>" target="_blank"><%= item['title'] %></a></dd>
+            <% end %>
+          </dl>
+        </div>
+        <%
+        pictures = promotion_items['三张小图']
+        prefixes = promotion_items['小字部分']
+        prefix = ''
+        @article_lists.each do |list|
+          first_article = list.shift
+        %>
+          <div class="bpl_l_t_right f_l">
+            <dl class="f_l">
+              <dt><%= show_article_link first_article, :tag => @tag, :strong => true %></dt>
+              <%
+              list.each do |article|
+                prefix = prefixes.shift || prefix
+              %>
+                <dd>
+                  <span><strong><a href="<%= prefix['url'] %>" target="_blank"><%= prefix['title'] %></a></strong></span>|
+                  <%= show_article_link article, :tag => @tag, :truncate => 15 %></dd>
+              <% end %>
+            </dl>
+            <% picture = pictures.shift %>
+            <% unless picture.nil? || picture.image_url.blank? %>
+              <div class="bpl_l_t_r_img f_r"><%=
+                promotion_image_tag(picture) +
+                  link_to(picture['title'], picture['url'], :target => '_blank')
+              %></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bpl_left f_l">
+      <h3>
+        <span class="bpl_l_more f_r"><a href="<%= LINK_URLS[@tag.TAGNAME]['品牌专区'] %>" target="_blank">>>更多</a></span>各类<%= @tag.TAGNAME %>
+        专区</h3>
+
+      <div class="bpl_l_text clearfix">
+        <ul class="bpl_l_ul04">
+          <% promotion_items['各类专区'].each do |item| %>
+            <li><%=
+              promotion_image_tag(item) +
+                link_to(item['title'], item['url'], :target => '_blank')
+            %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bpl_right f_r">
+    <!-- 当不是地板品牌时显示 -->
+    <% if @tag.TAGURL != "diban" %>
+      <% unless promotion_items['品牌Logo区'].blank? %>
+        <h3><%= @tag.TAGNAME %>名牌推荐</h3>
+
+        <div class="bpl_r_text">
+          <ul class="b_index_r_ul01">
+            <li>
+              <% promotion_items['品牌Logo区'].each do |item| %>
+                <%= promotion_image_tag item %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="b_ad04">
+      <% if (ad = API_PROMOTION_MAPPING['广告']['品类'][@tag.TAGURL]) && (ad = ad['侧栏1']) %>
+        <%= ad %>
+      <% else %>
+        <%= promotion_image_tag promotion_items['宽幅广告1'] if promotion_items['宽幅广告1'] %>
+      <% end %>
+    </div>
+    <% unless promotion_items['品牌排行'].blank? %>
+      <h3><span class="bp_left_tit_span f_r">关注度</span><%= @tag.TAGNAME %>品牌排行</h3>
+
+      <div class="bpl_r_text" style="padding: 2px 0;">
+        <ul class="bpl_r_ul01" style="padding-top:3px">
+          <% promotion_items['品牌排行'].first(4).each do |item| %>
+            <li><span><%= item['price_ago'] %></span><%= link_to item['title'], item['url'], :target => '_blank' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div style="padding-left:1px;">
+      <%= AdSpace.render("#{@tag.TAGNAME}-首页-宽幅1") %>
+    </div>
+
+    <%
+    vendors = promotion_items['经销商促销']
+    unless vendors.blank?
+    %>
+      <h3>经销商促销</h3>
+
+      <div class="bpl_r_text">
+        <ul class="bpl_r_ul02">
+          <% vendors.each do |item| %>
+            <li class="clearfix"><%=
+              promotion_image_tag(item) +
+                content_tag(:h5, link_to(item['title'], item['url'], :target => '_blank'))
+            %>
+              <span>经销商：<%= item['price_ago'] %></span><span>电话：<%= item['price_now'] %></span></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% sidebar_ad2 = capture do %>
+      <div class="b_ad04">
+        <% if (ad = API_PROMOTION_MAPPING['广告']['品类'][@tag.TAGURL]) && (ad = ad['侧栏2']) %>
+          <%= ad %>
+        <% else %>
+          <%= promotion_image_tag promotion_items['宽幅广告2'] if promotion_items['宽幅广告2'] %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% latest_articles = capture do %>
+      <% unless @latest_articles.blank? %>
+        <h3>最新文章</h3>
+
+        <div class="bpl_r_text">
+          <% first_article = @latest_articles.shift %>
+          <h4><%= show_article_link first_article, :tag => @tag, :truncate => 12 %></h4>
+
+          <p class="bpl_r_p"><%= truncate strip_tags(first_article.SUMMARY), :length => 50 %></p>
+          <ul class="bpl_r_ul03">
+            <% @latest_articles.each do |latest_article| %>
+              <li><%= show_article_link latest_article, :tag => @tag, :truncate => 16 %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+<%# 如果品牌排行和经销商促销都没有内容的话，会导致两个侧栏广告堆在一起，所以如果发生这种情况，则把第二个广告放在最新文章下 %>
+    <% if promotion_items['品牌排行'].blank? && promotion_items['经销商促销'].blank? %>
+      <%= latest_articles %>
+      <%= sidebar_ad2 %>
+    <% else %>
+      <%= sidebar_ad2 %>
+      <%= latest_articles %>
+    <% end %>
+
+    <div style="padding-left:3px;">
+      <%= AdSpace.render("#{@tag.TAGNAME}_品类首页_宽幅2") %>
+    </div>
+
+    <h3><%= @tag.TAGNAME %>术语</h3>
+
+    <div class="bpl_r_text">
+      <ul class="bpl_r_ul03">
+        <% @terminologys.each do |terminology| %>
+          <li><%= show_article_link terminology, :tag => @tag, :truncate => 16 %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% tuijian_shop = TUIJIAN_SHOP.assoc(current_subdomain) %>
+    <% if tuijian_shop %>
+      <h3>推荐经销商</h3>
+
+      <div class="recommended_brands f_l">
+        <ul>
+          <% for shop in tuijian_shop[1] %>
+            <li>
+              <a target="_blank" title="<%= shop[0] %>" href="<%= shop[1] %>"><img alt="<%= shop[0] %>" src="<%= shop[2] %>"/></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= render :partial => 'shared/layouts/footer', :locals => {:friend_links => @friendly_links} %>
+
+<style type="text/css">
+  .footer_ad {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    _position: absolute;
+    _left: expression(eval(document.documentElement.scrollLeft));
+    _top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+    background: url(http://js.51hejia.com/img/ad_bg.gif) no-repeat top center;
+  }
+
+  .footer_ad .footer_ad_img {
+    width: 1000px;
+    height: 84px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .footer_ad a.footer_ad_close {
+    width: 16px;
+    height: 16px;
+    margin: 0px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    background: url(http://js1.51hejia.com/img/zxdpimg/contrast_li_close.jpg) no-repeat;
+    z-index: 99;
+  }
+
+  .footer_ad a.footer_ad_link {
+    display: block;
+    width: 1000px;
+    height: 84px;
+    margin: 0 auto;
+  }
+</style>
+
+<div class="footer_ad" id="footer_ad">
+  <div class="footer_ad_img">
+    <!--a href="javascript:void(0);" onclick="open_gongyi_ad_url();" class="footer_ad_link"></a-->
+    <%= render_ad(81091, '品牌中心首页-飘带底', 'afp') %>
+    <a class="footer_ad_close" href="javascript:void(0);" onclick="$('#footer_ad').hide();"></a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(
+  ['_setAccount', 'UA-7619267-1'],
+  ['_setDomainName', '.51hejia.com'],
+  ['_addOrganic', "baidu", "kw"],
+  ['_addOrganic', "baidu", "word"],
+  ['_addOrganic', "soso", "w"],
+  ['_addOrganic', "3721", "name"],
+  ['_addOrganic', "yodao", "q"],
+  ['_addOrganic', "vnet", "kw"],
+  ['_addOrganic', "sogou", "query"],
+  ['_trackPageview']
+);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<% if @tag.TAGURL == "youqituliao" %>
+  <script type="text/javascript" src="http://js.51hejia.com/js/cmp_adtv_20100621.js?20101115"></script>
+  <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HM"></script>
+<% end %>
+
+<% if render_ad(82293, '品牌中心-左漂浮', 'afp').include?("<span>") %>
+  <div style="left: 0px; position: absolute; top: 100px;" id="ALayer1">
+    <div align="left">
+      <img border="0" style="cursor:pointer" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif">
+    </div>
+    <%= render_ad(82293, '品牌中心-左漂浮', 'afp') %>
+  </div>
+<% end %>
+<% if render_ad(82295, '品牌中心-右漂浮', 'afp').include?("<span>") %>
+  <div style="right: 0px; position: absolute; top: 100px;" id="ALayer2">
+    <div align="right"><img border="0" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif"></div>
+    <%= render_ad(82295, '品牌中心-右漂浮', 'afp') %>
+  </div>
+<% end %>
+<% if render_ad(82293, '品牌中心-左漂浮', 'afp').include?("<span>") || render_ad(82295, '品牌中心-右漂浮', 'afp').include?("<span>") %>
+  <script type="text/javascript">
+    if (remote_ip_info.city == '上海') {
+      lastScrollY = 0;
+      function heartBeat() {
+        var diffY;
+        if (document.documentElement && document.documentElement.scrollTop) {
+          diffY = document.documentElement.scrollTop;
+        }
+        else if (document.body) {
+          diffY = document.body.scrollTop
+        }
+        else {
+        }
+        percent = .1 * (diffY - lastScrollY);
+        if (percent > 0) {
+          percent = Math.ceil(percent);
+        }
+
+        else {
+          percent = Math.floor(percent);
+        }
+        document.getElementById("ALayer1").style.top = parseInt(document.getElementById("ALayer1").style.top) + percent + "px";
+        document.getElementById("ALayer2").style.top = parseInt(document.getElementById("ALayer1").style.top) + percent + "px";
+        lastScrollY = lastScrollY + percent;
+      }
+
+      window.setInterval("heartBeat()", 1);
+      function closeBanner() {
+        document.getElementById("ALayer1").style.display = 'none';
+        document.getElementById("ALayer2").style.display = 'none';
+      }
+    }
+  </script>
+<% end %>
+<% if false #if cookies["jie_sheng"].blank? %>
+  <div id="jie_sheng_ad" style="bottom: 0px; right: 0px;_position:absolute; _top:expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);" class="zb-ad" title="">
+  <%#= render_ad(81093, '品牌中心首页-弹窗右下', 'afp') %>
+    <a class="close" id="jie_sheng" onclick="rember_cookies();"></a>
+  </div>
+<% end %>
+</body>
+</html>

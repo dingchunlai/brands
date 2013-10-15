@@ -1,0 +1,23 @@
+<div style="width: 400px;height: 150px;">
+    <% form_for :complain, :url => ajax_post_path(:permalink => @brand.permalink, :t => "complain"), :html => {:method => :post, :id => "ajax_post"} do |f| %>
+        <p>姓名: <%= f.text_field :name  %> <span style="color:red;"> * <span> </p>
+        <p>联系方式: <%= f.text_field :contact %>  <span style="color:red;"> * <span> </p>
+        <p>内容: <%= f.text_field :content %>  <span style="color:red;"> * <span> </p>
+        <p><%= submit_tag "提交" %></p>
+    <% end %>
+</div>
+
+<script type="text/javascript">
+    $('#ajax_post').submit(function(event){
+        event.preventDefault();
+        if($('#complain_name').val() && $('#complain_contact').val() && $('#complain_content').val()){
+            $.post($(this).attr('action'), $('#ajax_post').serialize(), function(date){
+                alert(date['message']);
+                $.fn.colorbox.close();
+            }, 'json');
+        }else{
+            alert("输入数据  .. ");
+        }        
+    })
+</script>
+

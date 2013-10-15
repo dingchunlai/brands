@@ -1,0 +1,21 @@
+CREATE TABLE paint_contacts(
+
+id INT(11) NOT NULL AUTO_INCREMENT,
+
+contact_name VARCHAR(100),
+
+address VARCHAR(255),
+
+city VARCHAR(50),
+
+phone VARCHAR(50),
+
+contact_people​​​​​​  VARCHAR(50) ,
+
+created_at DATETIME DEFAULT NULL COMMENT '创建时间',
+
+updated_at DATETIME DEFAULT NULL COMMENT '修改时间',
+
+PRIMARY KEY (id)
+
+)

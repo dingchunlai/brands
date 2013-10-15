@@ -1,0 +1,29 @@
+
+  CREATE TABLE paint_cases (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    paint_worker_id INTEGER,
+    paint_admin_id INTEGER,
+    skill_score INTEGER DEFAULT 0,
+    service_score INTEGER DEFAULT 0,
+    status TINYINT(4) DEFAULT 0,
+    customer_name VARCHAR(50),
+    customer_tel VARCHAR(50),
+    customer_address VARCHAR(200),
+    renovation TINYINT(1) DEFAULT 0,
+    room INT(11),
+    area INT(11),
+    wood_paint INT(11),
+    emulsion_paint VARCHAR(50),
+    wall_technology INT(11),
+    wood_paint_technology INT(11),
+    essence TINYINT(1) DEFAULT 0,
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL
+  ) ENGINE InnoDB CHARACTER SET utf8;
+
+alter table paint_cases add column server_number varchar(100);
+alter table paint_cases add column start_date datetime;
+alter table paint_cases modify column renovation varchar(50);
+alter table paint_cases modify column wood_paint text;

@@ -1,0 +1,109 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin
+http://svn.51hejia.com:8081
+
+
+
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+market_shops
+dir
+
+contracts
+dir
+
+coupon
+dir
+
+user_sessions
+dir
+
+hy_images
+dir
+
+offlines
+dir
+
+markets
+dir
+
+offer_coupons
+dir
+
+location_relate_models
+dir
+
+provinces
+dir
+
+print_properties
+dir
+
+coupon_issue_num_stats
+dir
+
+districts
+dir
+
+complaints
+dir
+
+business_zones
+dir
+
+sales_profiles
+dir
+
+print_records
+dir
+
+coupon_downloads
+dir
+
+coupon_faqs
+dir
+
+cities
+dir
+
+partner_ships
+dir
+
+coupons
+dir
+
+coupon_remind_mails
+dir
+
+coupon_commissions
+dir
+
+coupon_leaflet_points
+dir
+
+shops
+dir
+
+distributors
+dir
+

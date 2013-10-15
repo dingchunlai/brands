@@ -1,0 +1,39 @@
+  	<div class="txt_list">
+    	<div class="title_box">
+        	<h3><%=@brand.name_zh %><% if @category && @p_category_id %><%= @category.name %><% end %>文章列表</h3>
+    		<p><!--显示 
+             <input type="image" src="http://js.51hejia.com/img/brandimg/icon-1.gif" />-->
+           <!-- <input type="image" src="http://js.51hejia.com/img/brandimg/icon-2.gif" />--></p>
+        </div>
+        <div class="page_menu clearfix clear">
+          <p class="f_l">共有<strong><%=@articles.total_entries  %></strong>篇文章</p>
+        	<div class="clearfix f_r">
+        		<%if @articles.total_entries > 10 %>  							
+							<span class="f_r" style="margin-top:7px;">
+                <%form_tag  pinpai_articles_path(:permalink => @brand.permalink, :subdomain => false, :trailing_slash => true), :method => :get do%>
+									到第 <%=text_field_tag :page, '', :size => 3 %> 页
+									<%=submit_tag 'search',:style=>"display:none"%>
+							<%end%>
+							</span>
+							<span class="disabled prev_page f_l"><%= paginate_content = will_paginate @articles, :previous_label => "上一页", :next_label => "下一页" %></span>
+							<%end%>
+           </div>
+        </div>
+        <ul class="content_list">
+        	<%@articles.each do |article|  %>
+        	<li class="clearfix">
+        			<%if article.IMAGENAME%>
+            	<a href="<%=get_article_link(article) %>" target="_blank">
+            	<img src="<%=get_article_image_link(article) %>" />
+            	</a>
+            	<%end%>
+                <div class="f_l">
+                <h3><strong><%if article.CHECK_BRAND.to_i ==  3 %>【评测】<%else%>【导购】<%end%></strong><%=link_to_with_title  article.TITLE, get_article_link(article), :truncate => 20, :target => "_blank" %></h3>
+                <p><%=truncate_u(article.SUMMARY,120,"...")  %>
+                <span>
+                <a href="<%=get_article_link(article) %>" target="_blank"><img src="http://js.51hejia.com/img/brandimg/read.jpg" /></a></span></p>
+                </div>
+            </li>
+            <%end%>
+        </ul>
+    </div>

@@ -1,0 +1,39 @@
+<% form_for :comment, :url => ajax_post_path(@brand.permalink, 'comment'), :html => {:id => "comment_form" } do |f|%>
+  <div style="padding:4px;">
+    <table class="post_comment_table">
+      <tr>
+        <th>评价</th>
+        <td>
+          <% Comment.rating_levels.each do |value, text| %>
+            <%= f.radio_button :remark, value %> <%= text %>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <th valign="top">评论</th>
+        <td><%= f.text_area :body, :style => "width:360px; height:110px;" %>
+          <br />
+          10 - 999个字符
+        </td>
+      </tr>
+      <tr>
+        <th>标题</th>
+        <td><%= f.text_field :title, :style => "width:360px;" %></td>
+      </tr>
+      <tr>
+        <th valign="top">标签</th>
+        <td>
+          <%= f.text_field :tags, :style => "width:360px;"%>
+          <br />
+          多个标签请用空格分开，每个标签最多不超过5个字。
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.hidden_field :tagged_brand_id, :value => @tagged_brand.id %>
+          <%= f.submit '提 交' %>
+        </td>
+      </tr>
+    </table>
+  </div>
+<%end%>

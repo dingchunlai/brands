@@ -1,0 +1,10 @@
+<div class="b_hdside_txt">
+  <% unless hot_event.nil? %>
+    <a href="<%= hot_event.url%>" target="_blank">
+      <img alt="<%= hot_event.subject %>" border="0" src="<%= hot_event.image(185) %>" /></a>
+    <h4><a href="<%= hot_event.url %>" target="_blank"><%= hot_event.subject %></a></h4>
+    <span>时间：<%= hot_event.duration %>
+    </span>
+    <span>地点：<%= hot_event.location %></span>
+  <% end %>
+</div>

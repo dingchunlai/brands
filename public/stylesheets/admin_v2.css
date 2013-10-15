@@ -1,0 +1,64 @@
+
+/*
+.clear { clear: both; }
+
+body, ul, li, nav, header { border: none }
+header, nav { display: block; margin: 0; padding: 0; }
+
+body { font-family: '宋体'; font-size: 12px; font-weight: normal }
+table { width: 100% }
+
+#content { margin: 20px 0 0 }
+
+nav { border-bottom: 1px solid blue; padding: 5px 0 3px 5px; }
+nav li.last, .horizontal li.last { margin-right: 0; }
+nav a { text-decoration: none; line-height: 18px }
+nav ul, .horizontal { display: block; list-style: none; margin: 0; padding: 0; }
+nav li, .horizontal li { display: block; float: left; color: blue; margin: 0 20px 0 0; padding: 0 3; }
+
+
+
+img.demo { max-width: 300px; max-height: 300px; }
+.tool_span {width: 100%; text-align: center;}
+
+*/
+
+a:visited { color: blue; }
+a:hover { text-decoration: underline }
+
+a.current { color: green;font-size: 16px; }
+
+
+/*
+  后台所有页面提示消息
+*/
+.notice, .alert {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.alert {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+/*
+  公共模板页
+*/
+#brand_admin_header{ border-bottom: #DEDEDE solid 2px;height: auto;width: 100%;}
+#brand_admin_lefter{ border-right: #DEDEDE solid 2px;height: 600px;width: 10%;float: left;}
+#brand_admin_righter{ width: 88%;float: right;}
+
+/*
+  ul 中 li 横向显示
+*/
+.horizontal { display: block; list-style: none; margin: 0; padding: 0; }
+.horizontal li { display: block; float: left; color: blue; margin: 0 20px 0 0; padding: 0 3; }
+.horizontal a { text-decoration: none; }
+/*
+  ul 中 li 竖向显示
+*/
+.vertical li{ display: block; color: blue; margin: 2px 0 0 0; padding: 2 0; }
+.vertical { display: block; list-style: none; margin: 0; padding: 0; }
+.vertical a { text-decoration: none; line-height: 18px }
+.menu_padding { padding-top: 20px; padding-left: 10px; }
+
+/*
+  关于页面导航部分
+ */
+.page_navigate span{ font-size: 18px; font-weight: bold }
+.page_navigate { margin-top: 10px; }
+.page_padding { padding-top: 10px; }

@@ -1,0 +1,70 @@
+<% title "【1家1服务】一站式服务中心_家易涂服务_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_2 %>
+<% description PAINT_DESCRIPTION_2 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/fuwuzhongxin' target='_self' title='一站式服务中心'>一站式服务中心</a>", :location_end => "服务中心信息" }%>
+<script type="text/javascript">
+  	$(document).ready(function(){
+		$("#province").change(function(){
+			$.getJSON("/paint_contacts/get_contacts_cities",{province: $("#province").val()}, function(data){
+				$(".this_city").empty();
+				$("<option value=''>请选择</option>").appendTo(".this_city");
+				$.each(data,function(i){
+					 $("<option value='"+ data[i][1] +"'>"+ data[i][0] +"</option>").appendTo(".this_city");
+				});
+			});
+		});
+	});
+</script>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current" style="position:relative;">
+      <h3>服务中心信息列表</h3>
+	  <div class="yg_smss_input" style="position:absolute;top:0;right:0;">
+        <form action="/fuwuzhongxin/list" method="get">
+		  	<select name="province" id="province" style="width:80px">
+				<option value="">省份</option>
+				<% Province.get_province_douleshi.each do |k,v| %>
+					<option value="<%= v %>" <%= 'selected' if @province == v %>><%= k %></option>
+				<% end %>
+			</select>
+			<select name="city" id="city" class="this_city" style="width:80px;">
+				<option value="">城市</option>
+				<% City.get_cities_for_province_douleshi(@province).each do |k,v| %>
+					<option value="<%= k %>" <%= "selected='selected'" if @city == k %>><%= v %></option>
+				<% end %>
+          <input name="" type="submit" value="搜索" class="yg_smss_inputbtn" />
+        </form>
+      </div>
+	  <div class="yjy_list clearfix">
+		<table width="680" border="0" cellspacing="0" cellpadding="0" class="margin10">
+		  <tr>
+		    <td width="67"><strong>城市</strong></td>
+    		<td width="167"><strong>服务中心</strong></td>
+    		<td width="310"><strong>地址</strong></td>
+    		<td width="96"><strong>联系人</strong></td>
+		  </tr>
+		  <% @contacts.each do |contact|%>
+		  <tr>
+		    <td><%= City.name_for_code(contact.city) %></td>
+		    <td><%= contact.contact_name %></td>
+		    <td><%= contact.address %></td>
+		    <td><%= contact.contact_people %></td>
+		  </tr>
+		  <% end %>
+		</table>
+		<div class="pagination"><%= will_paginate @contacts %></div>
+      </div>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

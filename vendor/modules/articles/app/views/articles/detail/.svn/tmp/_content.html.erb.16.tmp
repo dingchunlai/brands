@@ -1,0 +1,229 @@
+<link href="http://js.51hejia.com/css/tanchuall.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  .tanchuall_right {
+    text-align:right;
+  }
+</style>
+<script type="text/javascript">
+  function record_dynamic(article_id, url_id, dynamic_type,zcb_id)
+  {
+    var url_img = new Image();
+    url_img.onerror = url_img.onload = function() {
+      try {
+        delete url_img
+      } catch(e) {}
+    }
+<% unless params[:merchant_id].blank? %>
+      url_img.src = "http://d.51hejia.com/record_dynamic?merchant_id=<%= params[:merchant_id] %>&article_id=" + article_id + "&url_id=" + url_id + "&dynamic_type=" + dynamic_type + "&zcb_id=" + zcb_id
+<% else %>
+      url_img.src = "http://d.51hejia.com/record_dynamic?article_id=" + article_id + "&url_id=" + url_id + "&dynamic_type=" + dynamic_type + "&zcb_id=" + zcb_id
+<% end %>
+  }
+</script>
+
+<% if @city_id.to_i == 11910 %>
+  <% unless @ad.blank? %>
+    <div style="padding: 5px;">
+      <% unless @ad.ad_path.blank? %>
+        <%= link_to(image_tag("http://zxshop.51hejia.com/ad/#{@ad.ad_path}", :size => "670x80"), @ad.detail_url, :target => "_blank", :onclick => "record_dynamic(#{@article.ID}, #{@ad.id}, 3, #{@zcb.id})") %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+  function statistics()
+  {
+    var url_img = new Image();
+    url_img.onerror = url_img.onload = function() {
+      try {
+        delete url_img
+      } catch(e) {}
+    }
+    url_img.src = "http://api.51hejia.com/statistics?code=ad_baoming_yusuan_gif&style=eject&source=d51hejia"
+  }
+</script>
+<!--div style="padding: 5px;">
+  <a target="_blank" onclick="statistics()" href="http://www.51hejia.com/zhuanti/yusuan20130301/index.html?source=d51hejia">
+    <img width="670" height="80" src="http://www.51hejia.com/zhuanti/yusuan20130301/images/670-80.jpg">
+  </a>
+</div-->
+
+<div class="textarea">
+  <h1 class="text_title"><%=@article.title%></h1>
+  <p class="text_title2">
+    <a style="color: #B0B0B0" target="_blank" href="http://www.51hejia.com">http://www.51hejia.com</a>&nbsp;&nbsp;
+    <%= @article.created_at && @article.created_at.strftime("%Y-%m-%d %H:%M") || ''%>
+    作者：<%= @article.AUTHOR %> 
+    来源：<%= @article.SOURCE %>
+  </p>
+  <p class="text_title3">
+    <span style="float: right">
+      <%= read_mode_button(@article_total_pages)%>
+    </span>
+  <h2 style="float: left; padding-top: 0px; line-height: 20px;font-size: 12px;color: #8F8F8F">关键词 </h2>：<%= @article.keyword_links %>
+</p>
+<p class="previous" id="n_page"></p>
+<div class="pic">
+
+  <div class="intextarea">
+
+    <%if @article.insert_summary.to_i == 1%>
+      <p class="text_title4"><strong>导语：</strong><%= @article.SUMMARY %></p>
+    <%end%>
+
+    <%= @contents[0] %>
+    <% if @id == 680442 %>
+      <p style="text-align: center;">
+        <span style="font-size: medium;">
+          <strong>
+            <a class="WQbaomingbox" href="javascript:void(0)">
+              <img src="http://js.51hejia.com/img/2010/tijiao0725.jpg" style="border:none;"></img>
+            </a>
+          </strong>
+        </span>
+      </p>
+    <% end %>
+
+    <%unless @article.statement.blank?%>
+      <div style="padding:5px;font-size:14px;color:red;">
+        <%=@article.statement%>
+      </div>
+    <%end%>
+
+    <% unless @article.baoming_keyword_links.blank? %>
+      <script type="text/javascript" src="http://api.51hejia.com/statistics?code=ad_baoming_<%= @article.baoming_keyword_links %>_gif&style=eject&source=http://www.51hejia.com/article"></script>
+      <script type="text/javascript">
+        function open_ad_baoming(baoming)
+        {
+          var url_img = new Image();
+          url_img.onerror = url_img.onload = function() {
+            try {
+              delete url_img
+            } catch(e) {}
+          }
+          url_img.src = "http://api.51hejia.com/statistics?code=ad_baoming_"+baoming+"_gif&style=open&source=http://www.51hejia.com/article"
+        }
+      </script>
+      <div style="padding:5px;cursor: pointer;" class="view_btn">
+        <div class="high">
+          <%= link_to(image_tag("http://js.51hejia.com/img/baoming/ad_#{@article.baoming_keyword_links}_l.gif"), "javascript:void(0)", :onclick => "_gaq.push(['_trackEvent','效果', '资讯-文章页-通栏下1 ',document.url, 1]);", :class => "tanchuall_open") %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="next clearfix">
+    <span class="f_l">
+    </span>
+
+    <span class="f_r">
+    </span>
+  </div>
+
+  <% if @id == 679379 %>
+    <div class="mfx_form clearfix">
+      <script type="text/javascript">
+        function ge(id){return document.getElementById(id);}
+        function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+        function submitForm(form){
+          var valReturn = true;
+          if (trim(ge("c1").value)==""){
+            alert("您必须填写【姓名】！")
+            valReturn = false;
+          }
+          if (trim(ge("c2").value)==""){
+            alert("您必须填写【联系方式】！")
+            valReturn = false;
+          }
+
+          return valReturn;
+        }
+      </script>
+      <form onsubmit="return submitForm(this);" enctype="multipart/form-data" method="post" action="http://bm.51hejia.com/index/form_process">
+        <table cellspacing="0" cellpadding="0" border="0" width="550" height="111">
+          <tbody><tr>
+              <td width="84">姓       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</td>
+              <td width="168"><input type="text" id="c1" name="c1" class="form-text" /></td>
+              <td width="80">联系方式：</td>
+              <td width="168"><input type="text" id="c2" name="c2" class="form-text" /></td>
+            </tr>
+            <tr>
+              <td>房屋户型： </td>
+              <td colspan="3">
+                <input type="radio" value="公寓" id="c3" name="c3" class="form-radio" />公寓
+                <input type="radio" value="别墅" id="c3" name="c3" class="form-radio" />别墅
+              </td>
+            </tr>
+            <tr>
+              <td>房屋面积：</td>
+              <td colspan="3"><input type="text" id="c4" name="c4" style="width:420px;" class="form-text" /></td>
+            </tr>
+            <tr>
+              <td>楼盘名称：</td>
+              <td colspan="3"><input type="text" id="c5" name="c5" style="width:420px;" class="form-text" /></td>
+            </tr>
+            <tr>
+              <td>收件地址：</td>
+              <td colspan="2"><input type="text" id="c6" name="c6" style="width:245px;" class="form-text" /></td>
+              <td align="center">
+                <input type="hidden" value="259" name="formid" />
+                <input type="hidden" value="和家网" id="c7" name="c7" />
+                <input type="submit" value="提交" name="" class="button" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  <% end %>
+
+  <% if @city_id.to_i == 11910 %>
+    <% unless @designer.blank? %>
+      <div class="designer">
+        <dl>
+          <% unless @designer.designer_path.blank? %>
+            <dt>
+            <%= link_to(image_tag("http://zxshop.51hejia.com/designer/#{@designer.designer_path}", :size => "80x80"), @designer.detail_url, :target => "_blank", :onclick => "record_dynamic(#{@article.ID}, #{@designer.id}, 2, #{@zcb.id})") %>
+            </dt>
+          <% end %>
+          <dd class="bor_left">推荐本文设计师：<%= @designer.designer_name %></dd>
+          <dd>设计费：<%= @designer.designer_price %></dd>
+          <dd class="bor_left">从业年限：<%= @designer.designer_year %></dd>
+          <dd>电话：<%= @designer.designer_phone %></dd>
+          <dd class="last">擅长：<%= @designer.designer_good %></dd>
+          <dd class="last">个人介绍：<%= @designer.designer_introduct %></dd>
+        </dl>
+        <div class="des_more">
+          <div>
+            <% unless @designer.designer_path.blank? %>
+              <%= link_to("点击查看该设计师更多作品", @designer.detail_url, :target => "_blank", :onclick => "record_dynamic(#{@article.ID}, #{@designer.id}, 2, #{@zcb.id})") %>
+            <% end %>
+          </div>
+          <% if @zcb.designers_view.to_i > 10 %>
+            <div>已查看人数<span><%= @zcb.designers_view %></span>人</div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="f2page_menu" style="height: 22px;">
+    <span class="f_r">
+      <%= read_mode_button(@article_total_pages) %>
+    </span>
+    <% if params[:page] != 'all' %>
+  <%#= will_paginate @contents , :previous_label => '上一页', :next_label => '下一页',:params => {:only_path => false, :host => request.host}, :renderer => "HostLinkRenderer" %>
+      <%= will_paginate @contents , :previous_label => '上一页', :next_label => '下一页',:params => {:only_path => false, :host => request.host} %>
+    <% end %>
+  </div>
+
+  <div style="margin: 10px 0pt;height:10px">
+    <span class="f_l">
+      <a title="看过此文章的人，有<%= @article.number %>个人正在……" style="color: red" href="http://zhaobiao.51hejia.com/" target="_blank">
+        看过此文章的人，有<strong><span style="font-size:15px;"><%= @article.number %></span></strong>个人正在……
+      </a>
+    </span>
+  </div>
+</div>
+</div>

@@ -1,0 +1,28 @@
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+	</script>
+<%= render :partial => "sub_menu" %>
+<div class="top-bar">
+    <h1>油漆工开通</h1>
+	<div class="breadcrumbs">油漆工管理 / 开通</div>
+</div>
+<div class="clearfix">
+	<div class="select-bar">
+		<form id="" name="" action="<%=applicants_paint_admin_paint_workers_path%>" method="get">
+		油漆工状态<select id="painters_status" name="painters_status">
+			<% Painter::PAINTERS_STATUS.sort.each do |k,v|%>
+				<option value="<%=v%>" <%= "selected='selected'" if @status.to_i == v%>><%=k%></option>
+			<% end %>
+			</select>
+			申请日期<input type="text" id="datepicker" size="10" name="applicant_data" value="<%=@data%>" >
+			<input type="submit" value="检索" >
+		</form>
+	</div>
+	<div><%= show_flash_message%></div>
+	<div>
+		<%= render :partial => "info" %>
+	</div>
+</div>

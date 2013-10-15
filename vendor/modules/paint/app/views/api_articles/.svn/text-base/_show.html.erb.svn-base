@@ -1,0 +1,49 @@
+<div class="yg_current">
+    	<h3>专业培训 行业认可</h3>
+    </div>
+    <div class="yg_current yg_smbg">
+
+      <div class="yg_smtit clearfix">
+        <%=render :partial => '/explanation/peixun_top'%>
+      </div>
+      <div class="yg_pxtit">
+      	<h4>·油工的选择</h4>
+        <p>目前市面上有几种油漆工选择的途径，为此笔者特意做了分析比较：<br>
+		      &nbsp;&nbsp;&nbsp;&nbsp;点评：专卖店推荐的油工要看情况，有些是厂家授权的经过厂家培训后的油工，有些是专卖店熟知水平的油工，这两种都可以接受。但是有些是收受非法利益的关系，那你可要当心拉。
+		</p>
+        <span><a href="/peixun/1" target="_self" title="查看详情">【查看详情】</a></span>
+
+      </div>
+      <div class="yg_pxtit">
+      	<h4>·油工与特殊工艺</h4>
+        <p>一些大品牌的生产厂家拥有专门的技术和培训部门，他们经常会根据市场客户的需求开发很多新工艺，而经过厂家培训的油漆工就能够熟悉了最新的产品性能及使用方法，
+			甚至能够根据消费者的具体装修风格要求，选用不同施工工艺，还能熟练地解决油漆施工过程中的现场问题。</p>
+        <span><a href="/peixun/2" target="_self" title="查看详情">【查看详情】</a></span>
+      </div>
+      <div class="yg_pxtit">
+
+      	<h4>·油工培训和认证</h4>
+        <p>要达到让今天的众多消费达人满意的效果，必须熟悉涂料性能的施工专业人员的配合。为此许多厂商和经销商对油漆工的培训都给予了高度的关注。据统计数据显示，
+		消费者对涂装效果不满意的问题很大一部分都是是因为施工不得当产生的，只有极少的投诉来自涂料质量本身。</p>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td><a href="/video/木器漆四大类型" target="_self"><img src="http://js.51hejia.com/img/brandimg/yg_video02.jpg" /></a>
+		          <br/>
+		          <strong><a href="/video/木器漆四大类型" target="_self">木器漆四大类型</a></strong></td>
+		
+		    <td><a href="/video/油漆工艺" target="_self"><img src="http://js.51hejia.com/img/brandimg/yg_video03.jpg" /></a>
+		          <br/>
+		          <strong><a href="/video/油漆工艺" target="_self">油漆工艺</a></strong></td>
+		  </tr>
+		</table>
+        <img src="http://img2.51hejia.com/img/brandimg/pic02.jpg" />
+        <span><a href="/peixun/3" target="_blank" title="查看详情">【查看详情】</a></span>
+      </div>
+      <div class="yg_pxtit">
+      	<h4>·施工工具</h4>
+        <p>施工工具就像油工师傅的左右手，是否得心应手，是否提供方便，是否能够省力，在一定程度上决定了施工质量的最后完成。任何一个对自己和工作有要求的人都了解好工具的重要性。在这里我们将实时发布一些市面上省时，省力，特殊工艺的工具和使用方法提供参考。</p>
+        <span><a href="/shigonggongju" target="_blank" title="查看详情">【查看详情】</a></span>
+      </div>
+
+      <div class="yg_pxbtn01"><a href="/paint_worker/applicant" target="_blank" title="申请成为金刷子油工会员"></a></div>
+    </div>

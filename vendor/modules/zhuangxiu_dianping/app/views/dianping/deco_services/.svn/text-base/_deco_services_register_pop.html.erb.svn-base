@@ -1,0 +1,5 @@
+<% content_for (:head) do %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+  <% dp_js 'dianping/home/gongdi.js'%>
+<% end %>

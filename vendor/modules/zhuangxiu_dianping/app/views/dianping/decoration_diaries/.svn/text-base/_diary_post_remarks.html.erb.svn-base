@@ -1,0 +1,25 @@
+<% if flash[:notice] %>
+  <div style="padding-left:25px;color:red;"><%=flash[:notice]%></div>
+<% end %>
+<% diary_post.ordered_remarks.each_with_index do |remark ,index| %>
+  <div class="diary_contwbtxt"  <%= "style='display:none'" if index > 2  %>>
+    <div class="diary_reply_remark"><span><label class="open"><a>回复</a></label>
+			<%= remark_username remark.user %>
+		 于<%= remark.created_at.strftime("%Y-%m-%d %H:%M:%S") %>发表</span></div>
+    <p><%= remark.content %></p>
+    <div class="diary_reply_content">
+      <div class="diary_contwbhuifu">
+        <%= render :partial => "diary_post_remark_replies", :locals => { :remark => remark }%>
+      </div>
+      <div class="diary_contwbhfinput">
+        <form action="" class = "remark_reply_form">
+          <input type="hidden" id="user_id" value="<%= current_user.USERBBSID if user_logged_in? %>"/>
+          <input type="hidden" id="remark_parent_id" value="<%=remark.id%>"/>
+          <input type="text" id="remark_reply_content" class="zx_diary_iptsty" size="50"/>
+          <input name="" type="button" value="回复" class="zx_diary_btnsty diary_remark_reply" />
+        </form>
+      </div>
+    </div>
+  </div>
+<% end if diary_post.remarks.size > 0 %>
+<% if diary_post.ordered_remarks.size > 2 %><a class="show_all_remark">显示全部<%= diary_post.ordered_remarks.size %>条评论↓</a><% end %>

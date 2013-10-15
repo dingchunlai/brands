@@ -1,0 +1,6 @@
+<ul>
+  <%RoleAbility::ROLES.each_with_index do |role, i|%>
+    <li><%= link_to "#{role}权限管理", admin_abilities_path(:role_id => i), :class => @role_id == i ? 'current' : nil %></li>
+  <%end%>
+</ul>
+<div class="clear"></div>

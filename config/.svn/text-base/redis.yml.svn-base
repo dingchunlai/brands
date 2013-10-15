@@ -1,0 +1,15 @@
+---
+development: &dev
+  :host: 192.168.0.15
+
+test:
+  <<: *dev
+
+staging:
+  <<: *dev
+
+production: &pro
+  :host: 192.168.1.13
+
+rehearsal:
+  <<: *pro

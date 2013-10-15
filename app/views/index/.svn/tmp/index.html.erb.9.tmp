@@ -1,0 +1,460 @@
+<div style="width:960px; margin:5px auto 5px auto;">
+  <div style="float:left;margin:5px auto 5px;"><%= render_ad 81431, "品牌中心-首页-顶部大旗1", "afp" %></div>
+  <div style="float:left;margin:5px auto 5px 10px;">
+	<%= render_ad(83303, '品牌中心-宽幅1', 'afp') %>
+    <%#= link_to(image_tag("http://js.51hejia.com/img/soufun1.gif"), "http://esf.hz.soufun.com/house/?utm_source=hzhezuo&utm_medium=click&utm_term=&utm_content=&utm_campaign=chfhejia", :target => "_blank") %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function cns_li_hover(obj,ClassName){ obj.className=ClassName; }
+
+  jQuery(function($){
+    $(".bindex_topcont div:gt(0)").hide();
+    $(".bindex_toptab li:first").addClass("bindex_topactive");
+    $(".bindex_toptab li").mouseover(
+    function(){
+      $(this).addClass("bindex_topactive")
+      .siblings().removeClass("bindex_topactive");
+      $(".bindex_topcont div").eq($(this).index())
+      .siblings().hide().end().show();
+    }
+  )
+    $.fn.hFlick = function(options) {
+      $(this).each(function() {
+        var pageCount = Math.ceil($(this).find('li').size() / options.size);
+        var width = $(this).find('.v_content').width();
+
+        function flick() {
+          var goNext = $(this).hasClass('next');
+          var list = $(this).parent().next().find('.v_content_list');
+          if(!list.is(':animated')) {
+            var left;
+            if(goNext)
+              if(list.position().left <= -(width * (pageCount - 1))) left = 0; else left = '-=' + width;
+            else
+              if(list.position().left >= 0) left = -(width * (pageCount - 1)); else left = '+=' + width;
+            list.animate({'left': left}, 'slow');
+          }
+        }
+
+        $(this).find('.next,.prev').click(flick);
+      });
+    };
+
+    $('.v_show').hFlick({size: 4});
+  });
+</script>
+
+<div style="margin-top:10px; clear:both; overflow:hidden;" class="width960 margin10 clearfix">
+  <div class="brand_left f_l">
+    <div class="bindex_top f_l">
+      <h3>品牌榜</h3>
+      <div class="bindex_toptxt clearfix">
+        <ul class="bindex_toptab">
+          <% ['油漆', '地板', '卫浴', '厨电', '橱柜'].each do |category| %>
+            <li><%= category %></li>
+          <% end %>
+          <li class=" ">油漆</li>
+          <li class=" ">地板</li>
+          <li class="bindex_topactive">卫浴</li>
+          <li>厨电</li>
+          <li>橱柜</li>
+        </ul>
+        <div class="bindex_topcont">
+          <% ['youqituliao', 'diban', 'weiyu', 'chufangdianqi', 'chugui'].each do |category| %>
+            <div>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="38" height="32" align="center">排名</td>
+                  <td>品牌名称</td>
+                  <td width="56">近期关注</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><ul>
+                      <%
+                      @brand_list[category].each_with_index do |brand, index|
+                        tag = Tag[category]
+                      %>
+                        <li class="<%= index.to_i == 0 ? 'topcur' : '' %>"><span><%= brand.last_month_pv(tag.TAGID) %></span><a href="<%= show_pinpai_url(:subdomain => tag.TAGURL, :permalink => brand.permalink) %>/" title="<%= brand.name_zh %>" target="_blank"><%= brand.name_zh %></a></li>
+                      <% end %>
+                    </ul></td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="bindex_temp f_l">
+      <h3>品牌专区</h3>
+      <ul>
+        <% 1.upto(8) do |i| %>
+          <% promotion_items("品牌库:首页:品牌专区:品类标签:#{i}").each do |category| %>
+            <li class="<% if i == 8 %>bindex_last<% end %>">
+              <h4>
+                <a href="<%= category.url %>" target="_blank"><%= category.title %></a>
+              </h4>
+              <% key = "品牌库:首页:品牌专区:品牌标签:#{i}" %>
+              <% promotion_items(key).each do |item| %>
+                <a <% unless item.url.blank? %>href="<%=item.url %>"<% end %> title="<%= item.title %>" target="_blank"><%= item.title %></a>
+              <% end %>
+              <a target="_blank" href="<%= category.url %>" class="bindex_more">更多&gt;&gt;</a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="bindex_comments f_l">
+      <h3>点评</h3>
+      <ul>
+        <% for remark in youhui_remarks %>
+          <li>
+            <% coupon_url = "http://#{City.find(remark.city_id).pinyin}.youhui.51hejia.com/coupon/#{remark.id}" %>
+            <p>
+              <a href="<%= coupon_url %>" target="_blank"><%= HejiaUserBbs.find_by_sql("select f.USERNAME,ff.resource_id from `51hejia`.`HEJIA_USER_BBS` f left join `51hejia`.`remarks` ff on f.USERBBSID=ff.user_id where ff.id in (#{remark.newsrid})")[0].USERNAME rescue "" %></a>
+              点评
+              <a href="<%= coupon_url %>" target="_blank"><%= Brand.find(remark.brand_id).name_zh %></a>
+            </p>
+            <p>
+              <%= truncate(Remark.find(remark.newsrid).content,:length => 18,:omission => '') %>
+            </p>
+            <div class="clearfix"><span class="f_r"><a target="_blank" href="<%= coupon_url %>">共<%= remark.nums %>条</a></span></div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="brand_center f_l">
+    <div class="brand_focus">
+      <div id="newsSlider">
+        <div class="container">
+          <ul class="slides" style="width: 1494px; left: -498px;">
+            <% ad_ids = [74627,74629,74631,81841] %>
+            <% 1.upto(4) do |i| %>
+              <li style="position: absolute; left: <%= 498 * (i - 1) %>px; display: block;"><%= render_ad(ad_ids[i-1],"品牌中心-首页-焦点图#{i}") %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="validate_Slider"></div>
+        <ul class="pagination">
+          <li class="active"><a rel="1" href="javascript:void(0)">1</a></li>
+          <li><a rel="2" href="javascript:void(0)">2</a></li>
+          <li><a rel="3" href="javascript:void(0)">3</a></li>
+          <li><a rel="4" href="javascript:void(0)">4</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="week_hot">
+      <h3>本周热点</h3>
+    </div>
+    <ul class="hot_item">
+      <% promotion_items('品牌库:首页:本周热点:不带图').each do |item| %>
+        <li style="margin-right: 5px;width: 230px;">·<%= link_to item.title, item.url, :target => '_blank' %></li>
+      <% end %>
+    </ul>
+    <div class="hot_reviews f_l">
+      <h3>热点评测</h3>
+
+      <%unless HAIER_SHOUYE['热点评测'].blank? %>
+        <% @result = hejia_promotion_items(HAIER_SHOUYE['热点评测'], :attributes => ["title", "url", "image_url", "description"]) %>
+        <% if @result[0..2] %>
+          <% @result[0..2].each do |r| %>
+            <div class="hot_reviews_img f_l">
+              <% if r["url"] != "" %><a href="<%=r["url"]%>"><%= promotion_image_tag(r) %></a><% else %><%= promotion_image_tag(r, :link => false) %><% end %>
+              <%= link_to truncate(r["title"],:length => 12,:omission => '...'),r["url"], :target=> "_blank", :title => r['title'] %>
+            </div>
+          <% end %>
+        <% end %>
+
+        <ul class="clearfix f_l">
+
+          <% if @result[3..8] %>
+            <% @result[3..8].each do |r| %>
+              <li>
+                <%= link_to truncate(r["title"],:length => 18,:omission => ''), r["url"], :target=> "_blank", :title => r['title'] %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="interviews f_l">
+      <h3>精英访谈</h3>
+      <div class="f_l">
+        <% promotion_items('品牌库:首页:精英访谈:带图').each do |item| %>
+          <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+          <div class="interviews_h4">
+            <h4><a href="<%= item.url %>" title="<% item.title %>" target="_blank"><%= item.title %></a></h4>
+            <p><%= truncate(item.description, 10, '...') %><a href="<%= item.url %>" title="详细" target="_blank">[详细]</a></p>
+          </div>
+        <% end %>
+      </div>
+      <ul>
+        <% promotion_items('品牌库:首页:精英访谈:不带图').each do |item|  %>
+          <li>·<a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><%= item.title %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="brand_chbox f_l ">
+      <h3>
+        <%=
+        promotion_items("品牌库:首页:品类推广:1").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %> |
+        <%=
+        promotion_items("品牌库:首页:品类推广:2").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %>
+      </h3>
+      <ul>
+        <% promotion_items("品牌库:首页:文章推广:1").each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank" style="width: 200px;"><%= item.title %></a>
+          </li>
+        <% end %>
+        <% promotion_items("品牌库:首页:文章推广:2").each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank" style="width: 200px;"><%= item.title %></a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="brand_chboximg clearfix">
+        <% promotion_items("品牌库:首页:图片推广:1").first(6).each do |item| %>
+          <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+        <% end %>
+        <% promotion_items("品牌库:首页:图片推广:2").first(6).each do |item| %>
+          <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+        <% end %>
+      </div>
+    </div>
+    <div class="brand_chbox f_l ">
+      <h3>
+        <%=
+        promotion_items("品牌库:首页:品类推广:3").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %> |
+        <%=
+        promotion_items("品牌库:首页:品类推广:4").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %> |
+        <%=
+        promotion_items("品牌库:首页:品类推广:5").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %> |
+        <%=
+        promotion_items("品牌库:首页:品类推广:6").map do |item|
+          link_to item.title, item.url, :title => item.title, :target => '_blank'
+        end.join(' | ')
+      %>
+      </h3>
+      <ul>
+        <% promotion_items("品牌库:首页:文章推广:3").first(3).each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><%= item.title %></a><span><%= item.published_at.strftime("%m-%d") %></span>
+          </li>
+        <% end %>
+        <% promotion_items("品牌库:首页:文章推广:4").first(3).each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><%= item.title %></a><span><%= item.published_at.strftime("%m-%d") %></span>
+          </li>
+        <% end %>
+        <% promotion_items("品牌库:首页:文章推广:5").first(3).each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><%= item.title %></a><span><%= item.published_at.strftime("%m-%d") %></span>
+          </li>
+        <% end %>
+        <% promotion_items("品牌库:首页:文章推广:6").first(3).each do |item| %>
+          <li>
+            <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><%= item.title %></a><span><%= item.published_at.strftime("%m-%d") %></span>
+          </li>
+        <% end %>
+      </ul>
+      <div class="brand_chboximg clearfix">
+        <% promotion_items("品牌库:首页:图片推广:3").first(6).each do |item| %>
+          <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+        <% end %>
+        <% promotion_items("品牌库:首页:图片推广:4").first(6).each do |item| %>
+          <a href="<%= item.url %>" title="<%= item.title %>" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+        <% end %>
+      </div>
+    </div>
+    <div class="brand_information f_l ">
+      <h3>资讯</h3>
+      <ul>
+        <% for article in Article.pinpaiku_zixun_articles(18) %>
+          <li><a href="<%= article.detail_url %>" title="<%= article.TITLE %>" target="_blank"><%= truncate(article.TITLE, 18, '') %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="brand_right f_r">
+    <div class="activities f_l">
+      <h3>精品活动</h3>
+      <div class="bindex_tempmore"><a href="http://www.51hejia.com/huodong" title="更多" target="_blank">更多&gt;&gt;</a></div>
+      <% huodongs = SalesPromotionEvent.find(:all,:order => "id desc", :limit => 3) %>
+      <% unless huodongs.blank? %>
+        <% huodong = huodongs[0] %>
+        <div class="bindex_hdr_img f_l">
+          <a href="<%= huodong.url %>" title="<%= huodong.subject %>" target="_blank"><img src="<%= huodong.image %>" alt="<%= huodong.subject %>" /></a>
+        </div>
+        <div class="bindex_hdr_txt f_l">
+          <h4><a href="<%= huodong.url %>" title="<% huodong.subject %>" target="_blank"><%= truncate(huodong.subject, 10, '') %></a></h4>
+          <p><%= truncate(huodong.html_description, 20, '...') %><a href="<%= huodong.url %>" title="详细" target="_blank">[详细]</a></p>
+        </div>
+        <ul>
+          <% huodongs[1,2].each do |item| %>
+            <li><span><%= item.published_at.strftime('%m月%d日') %> <a href="<%= item.url %>" title="<%= item.subject %>" target="_blank"><%= item.subject %></a></span> <a href="<%= item.url %>" title="<%= item.url %>" target="_blank"><%= item.subject %></a></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="margin10 f_l">
+		<%= render_ad(83305, '品牌中心-宽幅2', 'afp') %>
+      <!--a target="_blank" href="http://z.wuxi.51hejia.com/zhuanti/ershoufang201108/index.html"><img src="http://js.51hejia.com/img/2010/r_ad01.jpg" /></a-->
+    </div>
+
+    <div class="activities f_l">
+      <h3>厂商活动</h3>
+      <div class="bindex_tempmore"><a href="http://www.51hejia.com/huodong" title="更多" target="_blank">更多&gt;&gt;</a></div>
+      <ul>
+        <% promotion_items('活动:首页:焦点图')[0,7].each do |item| %>
+          <li><span><a href="<%= item.url %>" title="<%= item.title %>" target="_blank"></a></span> <a href="<%= item.url %>" title="<%= item.url %>" target="_blank"><%= item.title %></a></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!--12301对应宁波-->
+    <% if cookies[:api_city] == "宁波" %>
+      <%= render :partial => "ningbo_right" %>
+    <% elsif cookies[:api_city] == "无锡" %>
+      <%= render :partial => "wuxi_right" %>
+    <% else %>
+      <div class="margin10 f_l">
+		<%= render_ad(83307, '品牌中心-宽幅3', 'afp') %>
+        <!--a target="_blank" href="http://www.51hejia.com/jushang/20110720/668043"><img src="http://js.51hejia.com/img/2010/r_ad02.jpg" /></a-->
+      </div>
+      <div class="recommended_brands f_l">
+        <h3>推荐品牌</h3>
+        <ul>
+          <li><a href="http://shops.youhui.51hejia.com/index/4612" title="罗马利奥" target="_blank"><img src="http://js.51hejia.com/img/cqy/lmla_logo.jpg" title="罗马利奥" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/1582" title="能强瓷砖" target="_blank"><img src="http://js.51hejia.com/img/cqy/qiangneng_logo.jpg" title="能强瓷砖" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/3120" title="睿联暖通" target="_blank"><img src="http://js.51hejia.com/img/2010/rlntgs.jpg" title="睿联暖通" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/1607" title="尚品宅配" target="_blank"><img src="http://js.51hejia.com/img/2010/shangpin.jpg" title="尚品宅配" /></a></li>
+
+          <li><a href="http://shops.youhui.51hejia.com/index/5270" title="沃乐夫" target="_blank"><img src="http://js.51hejia.com/img/2010/wolefu.jpg" title="沃乐夫" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/5271" title="上海毯汇国际" target="_blank"><img src="http://js.51hejia.com/img/2010/tanhui.jpg" title="上海毯汇国际" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/5050/4364" title="hoss家居" target="_blank"><img src="http://js.51hejia.com/img/2010/hoss.jpg" title="hoss家居" /></a></li>
+
+          <li><a href="http://shops.youhui.51hejia.com/index/2321/4218" title="乐迈地板" target="_blank"><img src="http://js.51hejia.com/img/2010/lamett.jpg" title="乐迈地板" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/175/4649" title="大金中央空调" target="_blank"><img src="http://js.51hejia.com/img/cqy/dajin_logo.jpg" title="大金中央空调" /></a></li>
+
+          <!--li><a href="http://shops.youhui.51hejia.com/index/175" title="集家楼宇设备" target="_blank"><img src="http://js.51hejia.com/img/2010/sanling.jpg" title="集家楼宇设备" /></a></li>
+          <li><a href="http://shops.youhui.51hejia.com/index/175" title="集家楼宇设备" target="_blank"><img src="http://js.51hejia.com/img/2010/weineng.jpg" title="集家楼宇设备" /></a></li-->
+          <li><a href="http://shops.youhui.51hejia.com/index/2203" title="铂识环保科技" target="_blank"><img src="http://js.51hejia.com/img/2010/toshiba.jpg" title="铂识环保科技" /></a></li>
+
+          <!--li><a href="http://shops.youhui.51hejia.com/index/3389/3959" title="索菲亚衣柜" target="_blank"><img src="http://js.51hejia.com/img/2010/sfy.jpg" title="索菲亚衣柜" /></a></li-->
+        </ul>
+      </div>
+
+      <div class="dealer f_l">
+        <h3>经销商</h3>
+        <ul>
+          <li><a target="_blank" title="罗马利奥" href="http://shops.youhui.51hejia.com/index/4612">罗马利奥</a></li>
+          <li><a target="_blank" title="鸣润大金空调" href="http://mingrunlengqi.51hejia.com/">鸣润大金空调</a></li>
+          <li><a target="_blank" title="能强瓷砖" href="http://shops.youhui.51hejia.com/index/1582">能强瓷砖</a></li>
+          <li><a target="_blank" title="睿联暖通" href="http://shops.youhui.51hejia.com/index/3120">睿联暖通</a></li>
+          <li><a target="_blank" title="尚品宅配" href="http://shops.youhui.51hejia.com/index/1607">尚品宅配</a></li>
+          <li><a target="_blank" title="大金中央空调" href="http://shops.youhui.51hejia.com/index/175/4649">大金中央空调</a></li>
+          <li><a target="_blank" title="铂识环保科技" href="http://shops.youhui.51hejia.com/index/2203">铂识环保科技</a></li>
+          <li><a target="_blank" title="上海京庆暖通" href="http://shops.youhui.51hejia.com/index/5270">上海京庆暖通</a></li>
+          <li><a target="_blank" title="上海毯汇国际" href="http://shops.youhui.51hejia.com/index/5271">上海毯汇国际</a></li>
+          <li><a target="_blank" title="雅立淋浴房" href="http://shops.youhui.51hejia.com/index/1560">雅立淋浴房</a></li>
+          <li><a target="_blank" title="元硕碳晶" href="http://shops.youhui.51hejia.com/index/656/723">元硕碳晶</a></li>
+          <li><a target="_blank" title="佳饰木业" href="http://shops.youhui.51hejia.com/index/627">佳饰木业</a></li>
+          <li><a target="_blank" title="帮太橱柜" href="http://shops.youhui.51hejia.com/index/1484/3850">帮太橱柜</a></li>
+          <li><a target="_blank" title="盼良实业" href="http://shops.youhui.51hejia.com/index/1216/2155">盼良实业</a></li>
+          <li><a target="_blank" title="志邦厨柜" href="http://shops.youhui.51hejia.com/index/3287/4047">志邦厨柜</a></li>
+          <li><a target="_blank" title="品智家具" href="http://shops.youhui.51hejia.com/index/4953/4219">品智家具</a></li>
+          <li><a target="_blank" title="天盟装饰" href="http://shops.youhui.51hejia.com/index/1322/4106">天盟装饰</a></li>
+          <li><a target="_blank" title="宁基家具" href="http://shops.youhui.51hejia.com/index/3389/3959">宁基家具</a></li>
+          <li><a target="_blank" title="起鑫贸易" href="http://shops.youhui.51hejia.com/index/150">起鑫贸易</a></li>
+          <li><a target="_blank" title="增木商贸" href="http://shops.youhui.51hejia.com/index/4796/3965">增木商贸</a></li>
+          <li><a target="_blank" title="世筑建筑" href="http://shops.youhui.51hejia.com/index/3434/1848">世筑建筑</a></li>
+          <li><a target="_blank" title="创易实业" href="http://shops.youhui.51hejia.com/index/">创易实业</a></li>
+          <li><a target="_blank" title="佳枫家具" href="http://shops.youhui.51hejia.com/index/4824/4046">佳枫家具</a></li>
+          <li><a target="_blank" title="家巍（上海）" href="http://shops.youhui.51hejia.com/index/3326/1562">家巍（上海）</a></li>
+          <li><a target="_blank" title="福络建材" href="http://shops.youhui.51hejia.com/index/5050/4364">福络建材</a></li>
+          <li><a target="_blank" title="多尔贝家居" href="http://shops.youhui.51hejia.com/index/3316/1989">多尔贝家居</a></li>
+          <li><a target="_blank" title="文诺装饰" href="http://shops.youhui.51hejia.com/index/2467">文诺装饰</a></li>
+          <li><a target="_blank" title="奇天木业" href="http://shops.youhui.51hejia.com/index/127/4617">奇天木业</a></li>
+          <li><a target="_blank" title="雁塔灯饰" href="http://shops.youhui.51hejia.com/index/2070/234">雁塔灯饰</a></li>
+          <li><a target="_blank" title="喜临门家具" href="http://shops.youhui.51hejia.com/index/635/4628">喜临门家具</a></li>
+          <li><a target="_blank" title="热丽碳晶" href="http://shops.youhui.51hejia.com/index/5143">热丽碳晶</a></li>
+          <li><a target="_blank" title="上海中正梁实业" href="http://shops.youhui.51hejia.com/index/5258">上海中正梁实业</a></li>
+          <li><a target="_blank" title="宗匠实木家具" href="http://shops.youhui.51hejia.com/index/4192">宗匠实木家具</a></li>
+          <li><a target="_blank" title="广州好莱客创意家居" href="http://shops.youhui.51hejia.com/index/1915">广州好莱客创意家居</a></li>
+          <li><a target="_blank" title="四合木业" href="http://shops.youhui.51hejia.com/index/5259">四合木业</a></li>
+
+          <li><a target="_blank" title="宁波欧派橱柜" href="http://shops.youhui.51hejia.com/index/222/4636">宁波欧派橱柜</a></li>
+          <li><a target="_blank" title="宁波科隆世家橱柜" href="http://shops.youhui.51hejia.com/index/3557/3683">宁波科隆世家橱柜</a></li>
+          <li><a target="_blank" title="宁波雅洁橱柜" href="http://shops.youhui.51hejia.com/index/319/3966">宁波雅洁橱柜</a></li>
+          <li><a target="_blank" title="宁波欣堡森橱柜" href="http://shops.youhui.51hejia.com/index/4665/3700">宁波欣堡森橱柜</a></li>
+          <li><a target="_blank" title="宁波奥华吊顶" href="http://shops.youhui.51hejia.com/index/2890/927">宁波奥华吊顶</a></li>
+          <li><a target="_blank" title="宁波法狮龙吊顶" href="http://shops.youhui.51hejia.com/index/3033/1071">宁波法狮龙吊顶</a></li>
+          <li><a target="_blank" title="宁波美赫吊顶" href="http://shops.youhui.51hejia.com/index/3089/1189">宁波美赫吊顶</a></li>
+          <li><a target="_blank" title="宁波泛美地板" href="http://shops.youhui.51hejia.com/index/2288/4214">宁波泛美地板</a></li>
+          <li><a target="_blank" title="宁波大卫地板" href="http://ningbo.youhui.51hejia.com/coupon/3139">宁波大卫地板</a></li>
+          <li><a target="_blank" title="宁波宏鹏地板" href="http://ningbo.youhui.51hejia.com/coupon/3838">宁波宏鹏地板</a></li>
+          <li><a target="_blank" title="宁波红利地板" href="http://ningbo.youhui.51hejia.com/coupon/1208">宁波红利地板</a></li>
+          <li><a target="_blank" title="宁波志豪木业" href="http://ningbo.youhui.51hejia.com/coupon/2329">宁波志豪木业</a></li>
+          <li><a target="_blank" title="宁波罗马利奥瓷砖" href="http://shops.youhui.51hejia.com/index/4612/3608">宁波罗马利奥瓷砖</a></li>
+          <li><a target="_blank" title="宁波皇朝名家私" href="http://shops.youhui.51hejia.com/index/664/4011">宁波皇朝名家私</a></li>
+          <li><a target="_blank" title="宁波简欧家具" href="http://shops.youhui.51hejia.com/index/2957/1050">宁波简欧家具</a></li>
+
+          <li><a target="_blank" title="宁波颐品堂家具" href="http://ningbo.youhui.51hejia.com/coupon/3684">宁波颐品堂家具</a></li>
+          <li><a target="_blank" title="宁波欧迪曼妮家具" href="http://shops.youhui.51hejia.com/index/3797/2383">宁波欧迪曼妮家具</a></li>
+          <li><a target="_blank" title="宁波柔然壁纸" href="http://shops.youhui.51hejia.com/index/2210/3179">宁波柔然壁纸</a></li>
+          <li><a target="_blank" title="宁波蓝集墙艺" href="http://ningbo.youhui.51hejia.com/coupon/3558">宁波蓝集墙艺</a></li>
+          <li><a target="_blank" title="宁波龙冉壁纸" href="http://shops.youhui.51hejia.com/index/2809/3909">宁波龙冉壁纸</a></li>
+          <li><a target="_blank" title="宁波左尚名舍定制衣柜" href="http://shops.youhui.51hejia.com/index/3217/4413">宁波左尚名舍定制衣柜</a></li>
+          <li><a target="_blank" title="宁波中意灯饰" href="http://shops.youhui.51hejia.com/index/4555/3489">宁波中意灯饰</a></li>
+          <li><a target="_blank" title="宁波飞雕电器" href="http://shops.youhui.51hejia.com/index/254/4063">宁波飞雕电器</a></li>
+          <li><a target="_blank" title="宁波三菱电机中央空调" href="http://ningbo.youhui.51hejia.com/coupon/3704">宁波三菱电机中央空调</a></li>
+          <li><a target="_blank" title="宁波锦江百浪" href="http://shops.youhui.51hejia.com/index/4965/4239">宁波锦江百浪</a></li>
+          <li><a target="_blank" title="宁波皇明太阳能" href="http://shops.youhui.51hejia.com/index/173/1159">宁波皇明太阳能</a></li>
+          <li><a target="_blank" title="宁波米喏厨电" href="http://shops.youhui.51hejia.com/index/4815/4015">宁波米喏厨电</a></li>
+          <li><a target="_blank" title="宁波美佳楼梯" href="http://shops.youhui.51hejia.com/index/4891/4215">宁波美佳楼梯</a></li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+
+<link href="http://js.51hejia.com/css/2010/brandstyle.css?2010082609" rel="stylesheet" type="text/css" />
+
+<div class="b_width960 clearfix margin10">
+  <div class="b_links">
+    <h3>友情链接</h3>
+    <ul class="clearfix">
+      <% frs = hejia_promotion_items(54759, :attributes => ["title", "url", "image_url", "description"]) %>
+      <% for r in  frs %>
+        <li>
+          <a href="<%= r["url"] %>" style="color:#000" target="_blank" title="<%= r["title"] %>"><%= r["title"] %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<!--script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HF"></script-->
+<iframe width="0" scrolling="no" height="0" frameborder="0" noresize="" name="framelink" id="framelink" border="0" src=""></iframe>
+<script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HA"></script>

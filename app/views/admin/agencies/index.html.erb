@@ -1,0 +1,35 @@
+<%= show_flash_message %>
+<p><%= link_to "新建经销商", new_admin_agency_path, :target => '_blank' %></p>
+
+<% form_tag admin_agencies_path, :method => :get do %>
+  <%= text_field_tag :title, params[:title], :size => 8 %>
+  <%= submit_tag "查询" %>
+<% end %>
+
+<%= will_paginate @agencies  %>
+<div>
+  <table>
+    <tr>
+      <th>编号</th>
+      <th>经销商</th>
+      <th>电话</th>
+      <th>联系地址</th>
+      <th>所属城市</th>
+      <th>所属品牌</th>
+      <th>所属品类</th>
+      <th>操作</th>
+    </tr>
+    <% @agencies.each do |agency| -%>
+      <tr>
+        <td><%= agency.id %></td>
+        <td><%= agency.title %></td>
+        <td><%= agency.telephone %></td>
+        <td><%= agency.address %></td>
+        <td><%= agency.city %></td>
+        <td> <%= agency.tagged_brand.brand.name_zh %></td>
+        <td><%= agency.tagged_brand.tag.TAGNAME %></td>
+        <td><%= link_to "编辑", edit_admin_agency_path(agency)  %> | <%= link_to "删除", admin_agency_path(agency), :method => :delete, :confirm => "您确认删除#{agency.title}吗？"  %></td>
+      </tr>
+    <% end -%>
+  </table>
+</div>

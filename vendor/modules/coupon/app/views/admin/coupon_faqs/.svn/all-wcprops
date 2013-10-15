@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/new.html.erb
+END
+_sub_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/_sub_menu.html.erb
+END
+group.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/group.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/show.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/views/admin/coupon_faqs/index.html.erb
+END

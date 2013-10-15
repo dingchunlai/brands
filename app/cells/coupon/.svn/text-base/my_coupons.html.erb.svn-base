@@ -1,0 +1,26 @@
+<div class="djq_rcur margin10">
+  <h3>我的<%= Coupon.human_name %></h3>
+  <div class="djq_rcurtxt">
+    <div class="djq_youhq">
+      <dl>
+        <dt><span>取消</span><%= Coupon.human_name %>名称</dt>
+        <%@my_coupons.each do |coupon|%>
+          <dd>
+            <span><a href='javascript://'><img class='remove_my_coupon' coupon-id='<%=coupon.id%>' src='http://img3.51hejia.com/img/brandimg/djq_icon02.gif' /></a></span>
+            <a href='/coupon/<%=coupon.id%>' target='_blank'><%=coupon.title%></a>
+          </dd>
+        <%end%>
+      </dl>
+      <p>
+        共计<span id="my_coupons_counter"><%=@my_coupons.length%></span>张<%= Coupon.human_name %>
+        <!-- ，打印需1张A4纸 -->
+      </p>
+      <div class="djq_youhq_btn" style="width: 171px;">
+        <a href="<%=coupon_preview_path%>" target="_blank">预览</a>
+        <!-- <a href="#" target="_blank">下载</a> -->
+        <a href="<%=coupon_preview_path(:print => 'true')%>" target="_blank">打印</a>
+        <a href="javascript://" class="my_coupons_remove_all">清空</a>
+      </div>
+    </div>
+  </div>
+</div>

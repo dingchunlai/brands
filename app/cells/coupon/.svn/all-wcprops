@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon
+END
+my_coupons.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon/my_coupons.html.erb
+END
+interested_coupons.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon/interested_coupons.html.erb
+END
+one_week_top.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon/one_week_top.html.erb
+END
+hot_coupons.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon/hot_coupons.html.erb
+END
+owned_browsed_coupons.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/app/cells/coupon/owned_browsed_coupons.html.erb
+END

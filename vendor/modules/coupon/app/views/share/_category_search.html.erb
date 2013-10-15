@@ -1,0 +1,136 @@
+    <script type="text/javascript">
+     jQuery(function($){
+      $("div[id^='diyq_select']").each(function(){
+        var id = $(this).attr("id").replace("diyq_select", "");
+        $("#diyq_select"+ id +" h4").toggle(
+        function(){
+          $(this).addClass("diyq_selectclose");
+          $(this).removeClass("diyq_selectopen");
+          $("#diyq_select"+ id +" ul").slideUp(300);
+        },
+        function(){
+          $(this).addClass("diyq_selectopen");
+          $(this).removeClass("diyq_selectclose");
+          $("#diyq_select"+ id +" ul").slideDown(300);
+        });		
+      });	
+
+      $("li[id^='diyq_selectnav']").each(function(){
+        var id = $(this).attr("id").replace("diyq_selectnav", "");
+        $("#diyq_selectnav"+ id).mouseover(function(){
+          $("#diyq_selectnav"+ id).css("position","relative");
+          $("#diyq_selectnav"+ id +" h5").show();
+          $("#diyq_selectnav"+ id +" dl").show();
+        });	
+        $("#diyq_selectnav"+ id).mouseout(function(){
+            $("#diyq_selectnav"+ id).css("position","static");
+            $("#diyq_selectnav"+ id +" h5").hide();
+            $("#diyq_selectnav"+ id +" dl").hide();
+          });		
+       });	
+
+       $("li[id^='diyq1_selectnav']").each(function(){
+        var id = $(this).attr("id").replace("diyq1_selectnav", "");
+        $("#diyq1_selectnav"+ id).mouseover(function(){
+          $("#diyq1_selectnav"+ id).css("position","relative");
+          $("#diyq1_selectnav"+ id +" h5").show();
+          $("#diyq1_selectnav"+ id +" dl").show();
+        });	
+        $("#diyq1_selectnav"+ id).mouseout(function(){
+            $("#diyq1_selectnav"+ id).css("position","static");
+            $("#diyq1_selectnav"+ id +" h5").hide();
+            $("#diyq1_selectnav"+ id +" dl").hide();
+          });		
+       });	
+
+    });
+    </script>
+    <%  pro_categories = promotion_items("抵用券:频道首页:推广分类") %>
+    <div class="diyq_select margin10">
+      <h3>所有现金券分类</h3>
+      <div class="diyq_selecttxt">
+        <% 
+          i = 0
+          pro_categories.each_with_index do |category, index| 
+        %>
+        <div id="diyq_select<%= index %>">
+          <h4 class="<%= [1,2,3,4,6,7].include?(index) ? 'diyq_selectopen' : 'diyq_selectclose' %>"><%= category.description %></h4>
+          <ul class="clearfix" style="<%= [1,2,3,4,6,7].include?(index) ? 'display: block;' : 'display: none;'  %>">
+            <% 
+              promotion_items("抵用券:频道首页:推广分类:#{category.title}").each do |item|
+                url = 
+                  item.content.strip.include?('品类') ? "/0-0-0-0-0-#{item.description}-0.html" : "/0-0-0-#{item.description}-0-0-0.html" 
+            %>
+            <li id="diyq_selectnav<%= i %>"> <a href="<%= url %>" target="_blank"><%= item.title %></a>
+              <h5><a href="<%= url %>" target="_blank"><%= item.title %></a></h5>
+              <dl class="clearfix">
+                <dt><strong>所有品牌</strong>（下载数）</dt>
+                <% 
+                  ids = 
+                    item.description.blank? ? [] : 
+                      (item.content.strip.include?('行业') ? Coupon.by_tag_id(item.description).by_city(@city.id).valid.map(&:brand_id) : Coupon.by_production_category_id(item.description).by_city(@city.id).valid.map(&:brand_id)).uniq
+                  brands = Brand.find ids
+                    unless brands.blank?
+                %>
+                <% 
+                  brands.first(30).each do |brand|
+                %>
+                  <dd><a href="/0-0-0-0-<%= brand.id %>-0-0.html" target="_blank"><%= brand.name_zh %></a>
+                    <span>(<%= Coupon.for_brand_downloads_count(brand.id, @city.id) %>)</span></dd>
+                <% 
+                    end 
+                  end 
+                %>
+              </dl>
+            </li>
+            <%
+                i = i + 1
+              end 
+            %>
+          </ul>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="diyq_select margin10">
+      <h3>购买区域分类</h3>
+      <div class="diyq_selecttxt">
+        <div id="diyq_select3000">
+          <h4 class="diyq_selectopen">地区</h4>
+          <ul class="clearfix" style="display: block;">
+            <% @city.districts.each do |district| %>
+              <li> <a href="/<%=district.id %>-0-0-0-0-0-0.html" target="_blank"><%= district.name %></a> </li>
+            <% end %>
+          </ul>
+        </div>
+        <div id="diyq_select4000">
+          <h4 class="diyq_selectclose">商圈</h4>
+          <ul class="clearfix" style="display: none;">
+            <% BusinessZone.with_city(@city.id).each do |bus| %>
+              <li> <a href="/0-<%= bus.id %>-0-0-0-0-0.html" target="_blank"><%= bus.name %></a> </li>
+            <% end %>
+          </ul>
+        </div>
+        <div id="diyq_select5000">
+          <h4 class="diyq_selectclose">卖场地标</h4>
+          <ul class="clearfix" style="display: none;">
+            <% Market.with_city(@city.id).each_with_index do |market, index| %>
+              <% if market.market_shops.size == 1 %>
+                <% shop = market.market_shops.first %>
+                <li> <a href="/0-0-<%= shop.id %>-0-0-0-0.html" target="_blank"><%= shop.name %></a></li>
+              <% else %>
+                <li id="diyq1_selectnav<%= index %>"> <a href="#" target="_blank"><%= market.name %></a>
+                  <h5><a href="#" target="_blank"><%= market.name %></a></h5>
+                  <dl class="clearfix">
+                    <dt><strong>卖场分点</strong></dt>
+                    <% market.market_shops.each do |shop| %>
+                      <dd><a href="/0-0-<%= shop.id %>-0-0-0-0.html" target="_blank"><%= shop.name %></a></dd>
+                    <% end %>
+                  </dl>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>

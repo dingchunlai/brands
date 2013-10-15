@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title>权限管理-beta</title>
+<style type="text/css">
+  *{paddding:0;margin:0;}
+  body { color:#333; font-size:12px; }
+  a {  }
+  #container{ width: 900px; margin: 0 auto; }
+  h1 { color: #369; display: block; margin: 5px; font-weight:bold;}
+  .item {
+      float: left;
+      line-height: 40px;
+      font-size: 14px;
+      width: 200px;
+      margin: 5px;
+      padding-left: 10px;
+      border: 1px outset #fcfcfc;
+      background-color: #ffdbbd;
+  }
+  .item h2 { color: #444; font-weight: bold; font-size: 12px; float: left; }
+  .item a { font-size:12px; color: #449; float: right; padding-right: 10px;}
+
+</style>
+</head>
+<body>
+<div id="container">
+  <h1>权限角色列表</h1>
+    <% @roles.sort.each do |role| %>
+        <div class="item">
+        <h2><%= role %></h2>
+
+        <% if can? :show, :web_permissions %>
+          <%= link_to "编辑", admin_web_permission_path(:id => role)%>
+        <% else %>
+          &nbsp;
+        <% end %>
+      </div>
+  <% end %>        
+</div>
+</body>
+</html>

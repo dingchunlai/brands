@@ -1,0 +1,25 @@
+<div class="yg_process_pic">
+  <h3 class="yg_process_h3"><span class="f_l">油漆工艺图片</span><a title="更多" target="_blank" href="/pictures" class="f_r">更多&gt;&gt;</a></h3>
+  <ul class="yg_process_pic_list clearfix">
+    <% @pictures.each do |picture|%>
+      <li>
+        <a href="<%= picture_path(picture.ID)%>" target="_blank" title="<%= hexie_dls(picture.NAME) %>">
+          <img src="<%=get_img_url picture.ID%>" alt="<%= hexie_dls(picture.NAME) %>" /></a>
+        <a href="<%= picture_path(picture.ID)%>" target="_blank" title="<%= hexie_dls(picture.NAME) %>"><%=truncate(hexie_dls(picture.NAME), :length => 15, :omission => '')%></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<% yg_link = hejia_promotion_items(55405,:select =>'title,url') %>
+<div class="yg_yqgy yg_current">
+  <div class="b_links">
+    <h3>友情链接</h3>
+    <ul class="clearfix">
+      <% yg_link.each do |lk|%>
+        <li><a target="_blank" href="<%= lk.url %>"><%= lk.title %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

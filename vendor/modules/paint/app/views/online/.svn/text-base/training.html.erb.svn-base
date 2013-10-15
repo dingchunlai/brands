@@ -1,0 +1,60 @@
+<% title "【油漆工】油漆工在线培训业务_提供油漆工在线培训服务_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_6 %>
+<% description PAINT_DESCRIPTION_6 %>
+<!--content_code-->
+<%= render :partial => '/shared/top_location', :locals => { :location => "油工培训申请", :location_end => nil }%>
+<!--content_code_end-->
+<!--content_code-->
+
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current">
+      <h3>在线培训</h3>
+    </div>
+    <div class="yg_current yg_smbg">
+      <div class="yg_zaixpxtit">
+        <%= render :partial => '/explanation/training_top'%>
+      </div>
+      <script type="text/javascript">
+$(function(){
+	$(".yg_zaixpxtxt:gt(0)").hide();
+	$(".yg_zaixpxtab li:first").addClass("yg_zaixpxtabcur");
+	$(".yg_zaixpxtab li").click(
+		function(){
+			$(this).addClass("yg_zaixpxtabcur")
+				.siblings().removeClass("yg_zaixpxtabcur");
+			$(".yg_zaixpxtxt").eq($(this).index())
+				.siblings().hide().end().show();
+					}
+	);
+	if($("#dongtai").attr("data-login") == 'true' ){
+		$("#dongtai_login_show").hide();
+	}else{
+		$("#dongtai_login_show").show();
+	}
+});
+</script>
+      <div class="yg_zaixpxtab">
+        <ul class="clearfix">
+          <li class="yg_zaixpxtabcur">静态培训</li>
+          <li>动态培训</li>
+        </ul>
+      </div>
+      <% if  @is_login %>
+	  	<%= render :partial => '/explanation/training_member'%>
+	  <% else%>
+	   	<%= render :partial => '/explanation/training_client'%>
+	  <% end %>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+         <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+	</div>
+</div>
+<!--content_code_end-->

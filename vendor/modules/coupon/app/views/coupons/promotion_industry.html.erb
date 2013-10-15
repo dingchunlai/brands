@@ -1,0 +1,6 @@
+<% 
+  unless @coupons.empty? 
+    tag_id = @coupons.first.tag_id
+%>
+<%= render :partial => '/share/coupon', :collection => @coupons %><div class="clear" style="height:30px;"><a href="/0-0-0-<%= tag_id %>-0-0-0.html" target="_blank" style="display:block;background:url( http://img3.51hejia.net/img/diyongquan/diyq_rboxbg3.gif) -81px -226px no-repeat;width:75px;height:23px;line-height:23px;text-align:center;float:right;color:#730101;margin-right:10px;">更多</a></div>
+<% end %>

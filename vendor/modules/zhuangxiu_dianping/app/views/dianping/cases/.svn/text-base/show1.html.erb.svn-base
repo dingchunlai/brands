@@ -1,0 +1,8 @@
+<% city_name = CITIES[@user_city_code.to_i] %>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:案例图片终端页") %>
+<% @title = html_metadata.title % {:case_name => @case.NAME} %>
+<% @description = html_metadata.description  %>
+<% @keywords = html_metadata.keywords % {:case_name => @case.NAME} %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > #{link_to '装修案例',firm_cases_url(:firm_id => @firm.id)} > #{@case.NAME}" %>
+<% firm_sub_menu %>
+<%= render :partial => "/dianping/decoration_diaries/case_and_diary" %>

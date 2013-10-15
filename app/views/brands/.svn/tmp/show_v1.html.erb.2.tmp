@@ -1,0 +1,167 @@
+<div class="b_width680 f_l margin10">
+  <h3 class="bp_left_tit"><%=@brand.name_zh %>品牌点评</h3>
+  <div class="bp_left_text01">
+    <dl>
+      <dt class="f_l"><%if @brand_logo %><%= get_brand_logo(@brand , @brand_detail, @brand_logo, 185) %><%end%></dt>
+      <dd class="f_l"><div class="bp_text01_nr01" onmouseover="this.className='bp_text01_nr02'" onmouseout="this.className='bp_text01_nr01'"><%= @brand_detail.comment ? truncate_u(@brand_detail.comment,180) : "" %><div><%= @brand_detail.comment %></div></div></dd>
+    </dl>
+    <div class="bp_left_zx clear">
+      <ul>
+        <li class="bp_left_zxli"><span><strong><%=@brand.name_zh %>最新消息：</strong></span></li>
+        <%if @new_info && @new_info.size > 0 %><li><%@new_info.each do |info|%><%=link_to_with_title info.TITLE, get_article_link(info), :truncate => 20,:target => "_blank" %><%end%></li><%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="b_width680 f_l margin10">
+  <div class="bp_zx_left f_l">
+    <h3 class=" bp_left_tit02"><%=@brand.name_zh %><% unless @p_category_id %><%= @tag ? @tag.TAGNAME : ""  %><% else %><%= @category.name %><% end %>每月热点</h3>
+    <%if @hot_news %>
+      <div class="bp_left_text02 clearfix">
+        <h4><%= link_to_with_title @hot_news.TITLE,get_article_link(@hot_news), :truncate => 20,:target => "_blank" %></h4>
+        <div class="bp_left_text02_img f_l">
+          <%=link_to image_tag(@hot_news.article_promotion_info.picture ? @hot_news.article_promotion_info.picture.public_filename : 'http://d.51hejia.com/api/images/none.gif'),get_article_link(@hot_news),:target => '_blank' %>
+        </div>
+        <p class="f_l"><a href="<%=get_article_link(@hot_news) %>" target="_blank"><%=truncate_u(@hot_news.SUMMARY,145,"")%></a></p>
+        <div class="clear"></div>
+      </div>
+    <%end%>
+  </div>
+  <div class="bp_zx_right f_r">
+    <h3 class=" bp_left_tit03"><%=@brand.name_zh %><% unless @p_category_id %><%= @tag ? @tag.TAGNAME : ""  %><% else %><%= @category.name %><% end %>评测/导购</h3>
+    <%if  @pince_daogou_info && @pince_daogou_info.size > 0%>
+      <div class="bp_left_text03">
+        <ul><%@pince_daogou_info.first(6).each do |article| -%>
+            <li><%=link_to_with_title article.TITLE, get_article_link(article), :truncate => 17, :target => "_blank" %></li>
+          <%end -%>
+          <li class="bp_left_text03_more">
+            <% unless @p_category_id %>
+                <%=link_to ">>更多", pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true), :target => "_blank" %>
+            <% else %>
+                <%=link_to ">>更多", second_category_articles_path(:subdomain => false,:category_url =>params[:category_url], :permalink => @brand.permalink, :trailing_slash => true), :target => "_blank" %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    <%end%>
+  </div>
+</div>
+<%if @combination_case%>
+  <div class="b_width680 f_l margin10">
+    <h3 class="bp_left_tit"><%=@brand.name_zh %><% unless @p_category_id %><%= @tag ? @tag.TAGNAME : "" %><% else %><%= @category.name %><% end %>组合案例</h3>
+    <div class="bp_left_text04 clearfix">
+      <div class="bp_left_text04_img f_l">
+        <%if @combination_case.master_picture %>
+          <%= image_tag(@combination_case.master_picture.public_filename)	 %>
+        <%end%>
+      </div>
+      <h4 class="f_l"><%=truncate_u(@combination_case.title,	18,	"") %></h4>
+      <div class="bp_text04_nr01" onmouseover="this.className='bp_text04_nr02'" onmouseout="this.className='bp_text04_nr01'">
+        <%if @combination_case.content %>
+          <%=truncate_u(@combination_case.content,	130,	"") %>
+          <div><%=@combination_case.content %></div>
+        <%end %>
+      </div>
+    </div>
+  </div>
+<%end%>
+<%if @products && @products.size > 0%>
+  <div class="b_width680 f_l margin10">
+    <h3 class="bp_left_tit"><span class="bp_left_tit_span f_r">
+        <% unless @p_category_id %>
+        <%=link_to ">>更多", pinpai_productions_path(@brand.permalink, :subdomain => false, :trailing_slash => true), :target => "_blank" %></span><%=@brand.name_zh%><%=@tag.TAGNAME%>单品推荐</h3>
+        <% else %>
+        <%=link_to ">>更多", second_category_productions_path(:category_url=>params[:category_url],:permalink =>@brand.permalink, :subdomain => false, :trailing_slash => true), :target => "_blank" %></span><%=@brand.name_zh%><% unless @p_category_id %><%=@tag.TAGNAME%><% else %><%= @category.name %><% end %>单品推荐</h3>
+        <% end %>
+    <div class="bp_left_text05 clearfix">
+      <ul class="clearfix">
+        <% unless @p_category_id %>
+            <%@products.each do |product|%><li>
+                <%= link_to  show_production_master_picture(product), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id), :alt => product.name , :target => "_blank" %>
+                <%= link_to_with_title  product.name, pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => product.id) ,:truncate => 16 , :target => "_blank" %><p>
+                  <%= link_to  truncate_u(product.description, 45, ""), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id) , :target => "_blank" %>
+              </li><%end%>
+        <% else %>
+           <%@products.each do |product|%><li>
+            <%= link_to  show_production_master_picture(product), second_category_production_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink, :id => product.id), :alt => product.name , :target => "_blank" %>
+            <%= link_to_with_title  product.name, second_category_production_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink,:id => product.id) ,:truncate => 16 , :target => "_blank" %><p>
+              <%= link_to  truncate_u(product.description, 45, ""), second_category_production_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink, :id => product.id) , :target => "_blank" %>
+          </li><%end%>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<%end%>
+<!--问答信息-->
+
+<div class="b_width680 f_l margin10">
+  <h3 class="bp_left_tit">
+    <span class="bp_left_tit_span f_r">
+      <%=link_to ">>更多", "http://wb.51hejia.com/list/sort/0.html?wd=#{u(@brand.name_zh)}", :target => "_blank"%>
+    </span>
+    <div class="bp_left_search f_r">
+        <form action="http://zhannei.baidu.com/cse/search" target="_blank">
+          <input name="s" type="hidden" value="7289350921164188503" />
+          <input type="text" name="q" size="30" style="width:115px;border:1px solid #e0e0e0;height:23px;height:21px;line-height:22px;margin-right:3px;" />
+          <input type="submit" value="搜索" class="b_search_btn" />
+        </form>
+    </div>
+    <%=@brand.name_zh%><% unless @p_category_id %><%= @tag ? @tag.TAGNAME : ""  %><% else %><%= @category.name %><% end %>互动点评
+  </h3>
+
+  <div class="bp_left_text06 clearfix">
+    <ul>
+      <%@questions.each do |item|%>
+        <li><table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="40">[问]</td>
+              <td width="468"><%=link_to_with_title item.subject, get_wb_question_link(item.id), :truncate => 30,:target => "_blank" %></td>
+              <td width="150" align="right"><%=item.user ? h(item.user.USERNAME) : "和家网友"%></td>
+            </tr>
+            <%if item.first_answer %>
+              <tr>
+                <td valign="top"><span>[答]</span></td>
+                <td colspan="2"><p><%= item.first_answer ? truncate_u(item.first_answer.content,50,'...') : "还没有人回答，赶紧抢沙发吧" %></p></td>
+              </tr>
+            <%end%>
+          </table>
+        </li>
+      <%end%>
+    </ul>
+  </div>
+</div>
+
+<%if @brand.documents && @brand.documents.size > 0%>
+  <div class="b_width680 f_l margin10">
+    <div class="bp_zx_left f_l">
+      <h3 class=" bp_left_tit02"><span class="bp_left_tit_span f_r"><%= link_to ">>更多", pinpai_documents_path(@brand.permalink, :subdomain => false, :trailing_slash => true), :target => "_blank" %></span><%=@brand.name_zh%>资料下载</h3>
+      <div class="bp_left_text02">
+        <ul class="bp_left_text02_down">
+          <%if @brand.documents %>
+            <%@brand.documents.first(5).each do |document|%>
+              <li>
+                <span><%= link_to "我要下载", document.download_link, :target => '_blank' %></span>
+                <%= link_to_with_title document.name, document.download_link, :truncate => 10, :target => '_blank' %>
+              </li>
+            <%end%>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+    <div class="bp_zx_right f_r">
+      <h3 class=" bp_left_tit03"><%=@brand.name_zh %>联系方式</h3>
+      <div class="bp_left_text03">
+        <div class="bp_left_text02_contact" style="height:auto;"><span><%=@brand_detail.contact %></span></div>
+      </div>
+    </div>
+  </div>
+<%else%>
+  <div class="b_width680 f_l margin10">
+    <h3 class="bp_left_tit"><%=@brand.name_zh %>联系方式</h3>
+    <div class="bp_left_text04">
+      <div class="bp_left_text02_contact" style="height:auto;"><span><%=@brand_detail.contact  %></span></div>
+    </div>
+  </div>
+<%end%>
+
+<!--img alt="stat" src="<%#= pinpai_stat_path(:subdomain => false, :permalink => @brand.permalink) %>" style="display: none;" /-->

@@ -1,0 +1,63 @@
+<% if left == "home" %>
+  <!-- 抵用券后台首页左侧菜单  -->
+  <%= menu(["#{Distributor.human_name}管理", admin_distributors_path]) if(can?(:read, Distributor) || can?(:read_owned_distributors, Distributor)) %> 
+  <%= menu(["#{Coupon.human_name}管理", admin_coupons_path]) if(can?(:read, Coupon) || can?(:read_owned_coupons, :coupons)) %>
+  <%= menu(["#{PrintRecord.human_name}管理", admin_print_records_path]) if(can?(:read, PrintRecord)) %>
+  <%= menu(['自定义', admin_cities_path]) if(can?(:read, City)) %>
+  <%= menu(["#{SalesProfile.human_name}管理", admin_sales_profiles_path]) if(can?(:read, SalesProfile)) %>
+<% else %>
+  <% nu = [] %>
+  <% if left == "distributor" %>
+    <!-- 经销商左侧菜单  -->
+    <%
+      nu << "#{Distributor.human_name}管理" 
+      nu << ["#{Distributor.human_name}列表", admin_distributors_path] if(can?(:read, Distributor) || can?(:read_owned_distributors, Distributor))
+      nu << ["新建#{Distributor.human_name}", new_admin_distributor_path] if can?(:create, Distributor)
+      nu << ["#{DistributorAccount.human_name}配置", show_settings_admin_distributor_path(params[:id])] if can?(:manage_distributor_account_profile, :distributors) and params[:id]
+      nu << ["#{DistributorAccount.human_name}行业品牌设定", industry_brand_setting_admin_distributor_path(params[:id])] if can?(:manage_distributor_account_profile, :distributors) and params[:id]
+      nu << ["建材公司上传图片管理", admin_hy_images_path] if can?(:manage_hy_images, :distributors)
+    %>
+  <% elsif left == "coupon" %>
+    <!-- 抵用券左侧菜单  -->
+    <%
+      nu << "#{Coupon.human_name}管理"
+      nu << ["#{Coupon.human_name}列表", admin_coupons_path] if(can?(:read, Coupon) || can?(:read_owned_coupons, :coupons))
+      nu << ["数据统计", data_admin_coupons_path] if can?(:data, Coupon)
+      nu << ["排 序", sort_admin_coupons_path] if can?(:sort, Coupon)
+      nu << ["投诉管理", admin_complaints_path] if can?(:read, Complaint)
+      nu << ["设置默认说明", set_admin_coupons_path] if can?(:set, Coupon)
+      nu << ["线上数量设置", on_line_display_amount_admin_coupons_path] if can?(:on_line_display_amount, Coupon)
+      nu << ["添加 #{Coupon.human_name}", new_admin_coupon_path] if can?(:create, Coupon)
+      nu << ["#{OfferCoupon.human_name}管理", admin_offer_coupons_path] if can?(:read, OfferCoupon)
+      nu << ["#{CouponLeafletPoint.human_name}管理", admin_coupon_leaflet_points_path] if can?(:read, CouponLeafletPoint)
+    %>
+  <% elsif left == "print_record" %>
+    <!-- 打印设置左侧菜单  -->
+    <%
+      nu << "#{PrintRecord.human_name}管理"
+      nu << ["#{PrintRecord.human_name}列表", admin_print_records_path] if(can?(:read, PrintRecord))
+      nu << ["线下管理", admin_offlines_path] if(can?(:read, OfflineAddress)) 
+      nu << ["打印属性管理", edit_admin_print_properties_path] if(can?(:edit, :print_properties))
+    %>
+  <% elsif left == "city" %>
+    <!-- 自定义左侧菜单  -->
+    <%
+      nu << "自定义管理"
+      nu << ["#{Province.human_name}管理", admin_provinces_path] if(can?(:read, Province))
+      nu << ["#{City.human_name}管理", admin_cities_path] if(can?(:read, City))
+      nu << ["#{District.human_name}管理", admin_districts_path] if(can?(:read, District))
+      nu << ["#{BusinessZone.human_name}管理", admin_business_zones_path] if(can?(:read, BusinessZone))
+      nu << ["#{Market.human_name}管理", admin_markets_path] if(can?(:read, Market))
+      nu << ["#{MarketShop.human_name}管理", admin_market_shops_path] if(can?(:read, MarketShop))
+      nu << ["#{CouponFaq.human_name}管理", admin_coupon_faqs_path] if(can?(:read, CouponFaq))
+    %>
+  <% elsif left == "sales_profile" %>
+    <!-- 业务员左侧菜单  -->
+    <%
+      nu << '业务员管理'
+      nu << ["业务员列表", admin_sales_profiles_path] if can?(:read, SalesProfile)
+      nu << ["业务员合同分配", assign_contracts_admin_sales_profiles_path] if can?(:assign_contracts, :coupon_sales)
+    %>
+  <% end %>
+  <%= menu(*nu) if nu.size > 0 %>
+<% end %>

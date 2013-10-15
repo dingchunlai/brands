@@ -1,0 +1,47 @@
+<%
+    if @can_create
+       button = ['创建门店', new_distributor_user_shop_path]
+    else
+      button = ['<strike>创建门店</strike>', '#']
+    end
+%>
+<%= top_bar :title => "#{Distributor::Shop.human_name}管理",
+  :button => button,
+  :breadcrumbs => [
+  ['首页', distributor_user_index_path],
+  ["#{Distributor::Shop.human_name}管理", distributor_user_shops_path]
+]
+%>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first" width="177">店面名称</th>
+      <th>城市</th>
+      <th>地区</th>
+      <th>商圈</th>
+      <th class="last" colspan="2">管理</th>
+    </tr>
+    <%@shops.each do |shop|%>
+      <tr>
+        <td class="first style1">
+          <%= shop.name %>
+        </td>
+        <td> <%=shop.city_name%> </td>
+        <td> <%=shop.district%> </td>
+        <td> <%=shop.business_zone%> </td>
+        <td class="last">
+          <%= link_to '查看', distributor_user_shop_path(shop) %>  
+          <%= link_to '编辑', edit_distributor_user_shop_path(shop) %>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+
+  <% unless @shops.empty? %>
+    <%= will_paginate @shops , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+  <% end %>
+
+</div>

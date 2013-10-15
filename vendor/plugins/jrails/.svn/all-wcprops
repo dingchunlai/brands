@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails
+END
+README.rdoc
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/README.rdoc
+END
+VERSION.yml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/VERSION.yml
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/init.rb
+END
+jrails.gemspec
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/jrails.gemspec
+END
+CHANGELOG
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/CHANGELOG
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/install.rb
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/LICENSE
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/jrails/Rakefile
+END

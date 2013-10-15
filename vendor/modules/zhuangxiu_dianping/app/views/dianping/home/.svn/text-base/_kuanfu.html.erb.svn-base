@@ -1,0 +1,19 @@
+<% ad_id = INDEX_AD_MAPPING[city][title] %>
+<% if ad_id.respond_to?(:each) %>
+  <div id="newsSlider" class="news_slider f_r">
+    <div class="container">
+      <ul class="slides">
+        <% ad_id.each do |id| %>
+          <li><%= render_ad(id) %></li>
+        <% end %>
+      </ul>
+    </div>
+    <ul class="pagination">
+      <% ad_id.size.times do |n| %>
+        <li><a href="#"><%= n + 1 %></a></li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <%= render_ad(ad_id) %>
+<% end %>

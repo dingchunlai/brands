@@ -1,0 +1,111 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '卖场分店管理页',
+            :button => ['分店列表', admin_market_shops_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['Market_shops', admin_market_shops_path(:market_id => @market_shop.market_id)]
+            ]
+%>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<% form_for @market_shop, :url => admin_market_shops_path do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">创建卖场分店</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last"><%= f.text_field :name, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last"><%= f.select :city_id, @cities.collect { |item| [item.name, item.id] }.unshift(["请选择", nil]), :selected =>  @market_shop.city_id, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :district_id %></strong></td>
+          <td class="last"><%= f.select :district_id, @districts.collect { |item| [item.name, item.id] }.unshift(["请选择", nil]), :selected => @market_shop.district_id, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :business_zone_id %></strong></td>
+          <td class="last"><%= f.select :business_zone_id, @business_zones.collect { |item| [item.name, item.id] }.unshift(["请选择", nil]), :selected => @market_shop.business_zone_id, :class => "text" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :market_id %></strong></td>
+          <td class="last"><%= f.select :market_id, Market.all.collect { |item| [item.name, item.id] }.unshift(["请选择", nil]), :selected => @market_shop.market_id ,:class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :address %></strong></td>
+          <td class="last"><%= f.text_field :address, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :telphone %></strong></td>
+          <td class="last"><%= f.text_field :telphone, :class => "text" %></td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function() {
+
+        var city_id = "market_shop_city_id";
+        var district_id = "market_shop_district_id";
+        var business_zone_id = "market_shop_business_zone_id";
+
+        $("#" + city_id).change(function(){
+            if ($(this).val() == "") { return null; }
+            $('#' + district_id + ' option').remove();
+            $('#' + district_id).append($('<option value="">loading...</option>'));
+            $.ajax({
+                url: '/remote/districts/',
+                type: 'get',
+                data: {'id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert("请联系管理员");
+                },
+
+                success: function(data) {
+                    $('#' + district_id + ' option').remove();
+                    //if (data.length == 0) $('#' + district_id).append($('<option value="">没有地区</option>'));
+                    $('#' + district_id).append($('<option value="">请选择</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#' + district_id);
+                    }
+                }
+            });
+        });
+
+        $("#" + district_id).change(function(){
+            if ($(this).val() == "") { return null; }
+            $('#' + business_zone_id + ' option').remove();
+            $('#' + business_zone_id).append($('<option value="">loading...</option>'));
+            $.ajax({
+                url: '/remote/business_zones/',
+                type: 'get',
+                data: {'id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert("请联系管理员");
+                },
+
+                success: function(data) {
+                    $('#' + business_zone_id + ' option').remove();
+                    $('#' + business_zone_id).append($('<option value="">请选择</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#' + business_zone_id);
+                    }
+                }
+            });
+        });
+
+    });
+</script>

@@ -1,0 +1,74 @@
+<script type="text/javascript">
+	jQuery(function($){
+		$(".yg_web_linfo dd").hide();
+		$(".yg_web_ldt01").mouseover(
+			function(){
+				$(".yg_web_ldd01").show();
+					}
+									)
+		$(".yg_web_ldt01").mouseout(
+			function(){
+				$(".yg_web_ldd01").hide();
+					}
+									)
+		$(".yg_web_ldd01").mouseover(
+			function(){
+				$(".yg_web_ldd01").show();
+					}
+									)
+		$(".yg_web_ldd01").mouseout(
+			function(){
+				$(".yg_web_ldd01").hide();
+					}
+									)
+		$(".yg_web_ldt02").mouseover(
+			function(){
+				$(".yg_web_ldd02").show();
+					}
+									)
+		$(".yg_web_ldt02").mouseout(
+			function(){
+				$(".yg_web_ldd02").hide();
+					}
+									)
+		$(".yg_web_ldd02").mouseover(
+			function(){
+				$(".yg_web_ldd02").show();
+					}
+									)
+		$(".yg_web_ldd02").mouseout(
+			function(){
+				$(".yg_web_ldd02").hide();
+					}
+									)
+					});
+</script>
+<div class="yg_web_lbox margin10">
+  <h2><%= @paint_worker.USERBBSNAME %>个人主页</h2>
+  <div class="yg_web_limg"><a href="<%= paint_worker_admin_path %>" target="_self"><%= image_tag get_avatar_img(@paint_worker.painter.avatar_file_name) %></a></div>
+  <div class="yg_web_linfo">
+    <h3>油工个人信息</h3>
+	<dl>
+          <dt class="yg_web_ldt01">修改信息<small>&#9660;</small></dt>
+          <dd class="yg_web_ldd01">
+            <ul>
+              <li>· <a href="/paint_worker/admin_edit" target="_self" title="修改个人信息">修改个人信息</a></li>
+              <li>· <a href="/paint_worker/edit_password" target="_self" title="密码修改">密码修改</a></li>
+            </ul>
+          </dd>
+          <dt class="yg_web_ldt02">案例管理<small>&#9660;</small></dt>
+          <dd class="yg_web_ldd02">
+            <ul>
+              <li>· <a href="/cases/admin" target="_self" title="案例列表">案例列表</a></li>
+              <li>· <a href="/paint_cases/new" target="_self" title="发表案例">发表案例</a></li>
+              <li>· <a href="/paint_cases/draft" target="_self" title="草稿箱">草稿箱</a></li>
+            </ul>
+          </dd>
+        </dl>
+  </div>
+</div>
+<div class="yg_web_lbox">
+  <div class="yg_web_lbtn"> <a href="/paint_worker/help" target="_self" <%= "class = 'yg_menu_cur'" if color_member_help %>  title="帮助中心">帮助中心</a>
+  <a href="/shigonggongju" target="_self" title="施工工具">施工工具</a>
+  <a href="/training" target="_self" title="在线培训">在线培训</a> </div>
+</div>

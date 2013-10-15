@@ -1,0 +1,128 @@
+<% title "#{@article.TITLE}_油漆工知识_和家网油漆施工频道" %>
+<% keywords "#{@article.TITLE}" %>
+<% description "#{@article.TITLE}" %>
+<script type="text/javascript">
+$(document).ready(function(){
+  var link = $(".next_page").attr("href")
+  function get_next_page(){
+   if (link == undefined) {
+    return false
+  }else {
+    return true
+  }		
+}
+function next_page_show(){
+ if(get_next_page()){
+  $("#cont_next_show").attr("href",link);
+  $(".yg_cont_page").show();
+  $(".yg_cont_txt img").attr("title","点击进入下一页").attr("alt","点击进入下一页").attr("style","cursor:pointer;");
+} 
+}
+next_page_show();
+$(".yg_cont_txt img").click(function(){
+ if(get_next_page()){
+  location.href = link
+}
+});
+});
+</script>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/articles' target='_self' title='#{@location}'>#{@location}</a>", :location_end => '正文' }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_cont_tit">
+      <h2><%= @article.TITLE %></h2>
+      <span><%= @article.CREATETIME.strftime("%Y-%m-%d %H:%M") %>&nbsp;&nbsp;&nbsp;作者：<%= @article.AUTHOR %>&nbsp;&nbsp;&nbsp;来源：<%= @article.SOURCE %></span>
+      <div class="yg_cont_keys">
+      	关键字：<%#= get_article_keyword(@article.KEYWORD1)%>
+      	<% for paint_keyword in @article.paint_keywords %>
+      		<%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %>&nbsp;
+      	<% end %>
+      </div>
+      <div class="yg_cont_page" style="display:none;"><a href="#" target="_self" title="点击图片，进入下一页" id="cont_next_show">点击图片，进入下一页</a></div>
+      <% unless @article.SUMMARY.blank? %>
+      <div class="yg_cont_lead">
+       <%if @article.insert_summary.to_i == 1%>
+       <strong>导语：</strong><%= @article.SUMMARY %>
+       <%end%>
+     </div>
+     <% end %>
+   </div>
+   <div class="yg_cont_txt">
+    <%=@article_page %>
+  </div>
+  <div class="pagination"><%= will_paginate @article_page %></div>
+  <div class="yg_cont_related">
+    <span class="f_l"><%= get_previous_article(@article) %></span>
+    <span class="f_r"><%= get_next_article(@article) %></span>
+  </div>
+  <div style="clear:both"></div>
+  
+<style type="text/css">
+  .djq_contblink{border:1px solid #dedede;background:#ebebeb;margin:10px 15px;height: 26px;line-height: 16px;}
+</style>
+<div class="djq_contblink">
+  <!-- Baidu Button BEGIN -->
+  <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+    <span class="bds_more">分享到：</span>
+    <a class="bds_qzone"></a>
+    <a class="bds_tsina"></a>
+    <a class="bds_tqq"></a>
+    <a class="bds_renren"></a>
+    <a class="shareCount"></a>
+  </div>
+  <!-- Baidu Button END -->
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=608544" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+  
+</div>
+
+<div class="yg_p1_r f_r">
+  <div class="yg_p1_rad margin10">
+   <%= render :partial => "/shared/right_top_img"%>
+ </div>
+ <div class="yg_current">
+  <%= render :partial => "/shared/help"%>
+</div>
+<div class="yg_current">
+  <%#= render :partial => "/shared/paint_top10"%>
+  <% paint_workers_top10 = PaintWorker.paint_top10.first(5) %>
+  <h3>推荐油工</h3>
+  <div class="yg_tjyg">
+    <ul>
+      <% paint_workers_top10.each do |worker|%>
+      <li>
+        <div class="yg_tjygimg f_l"><a href="<%= get_paint_worker_url(worker.id)%>" target="_self" title="<%= worker.USERBBSNAME %>"><%= image_tag get_avatar_img(worker.painter.avatar_file_name)  %></a></div>
+        <div class="yg_tjygtxt f_r"> <span>姓名：<%= worker.USERBBSNAME %></span> <span>证书等级：<%= Painter::GRADE.index worker.painter.grade %></span> <a >经典案例</a></div>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="yg_current">
+  <h3>推荐文章</h3>
+  <div class="yg_help">
+    <ul>
+      <% for article in PaintKeywordArticle.articles("PV desc") %>
+        <li>
+          <%= link_to(article.title, article.detail_url, :target => "_blank") %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="yg_current">
+  <h3>热门标签</h3>
+  <div class="yg_hot">
+    <% for paint_keyword in PaintKeyword.find(:all,:limit => 35) %>
+    <%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %>  
+    <% end %>
+  </div>
+</div>
+</div>
+</div>
+<!--content_code_end-->

@@ -1,0 +1,103 @@
+<%
+   @title = '【小天书】菜鸟装修快速通道 装修过程6步走_和家网'
+   @keywords = '装修过程,装修流程,装修步骤,装修顺序,装修清单,装修项目'
+   @description = '在“菜鸟装修快速通道”中，我们将装修过程严格按照流程顺序分为了6个步骤。每个步骤中都详细介绍了需要准备的细节和具体操作中的注意事项以及检测的办法等几十篇及精华文章。并附上非常有权威的验收表和使用的材料清单。即使从未装修过的业主，按照这些步骤和验收表，也将轻轻松松完成装修。'
+%>
+<link href="http://zt.51hejia.com/zhuanti/cainiao/buzhou.css" type="text/css" rel="stylesheet" />
+<body class="body_zhu">
+<div class="width960">
+  <div class="div1_cainiao"></div>
+  <div class="div2_cainiao">
+    <div class="div2_font_cainiao">在“装修快捷通道”中，我们将装修严格按照流程顺序分为了6个步骤。每个步骤中都详细介绍了需要准备的细节和具体操作中的注意事项以及检测的办法等几十篇文章。并附上非常有权威的验收表。即使从未装修过的业主，按照这些步骤和验收表，也将轻轻松松完成装修。</div>
+  </div>
+  <div class="div3_cainiao">
+    <div class="f_l">
+      <h3 class="div3_shigongqian_cainiao">装修施工前</h3>
+      <p class="font_div3_shigongqian_cainiao box">市场上常见的装修方式有哪些？设计师应该给业主哪些图纸？设计费是如何收取的？标准装修合同是什么样的？怎样签合同不上当？如何看预算是否合理?……</p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>16篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',arranged_path,:target =>'_blank',:title =>'装修施工前',:class =>'enter f_l' %> </div>
+    <div class="f_l margl40">
+      <h3 class="div3_shigongqian_cainiao">水电工程</h3>
+      <p class="font_div3_shigongqian_cainiao box">水电隐蔽工程包括哪些施工项目？需要购买哪些材料？验收时要注意什么？如何选购水管电线？还有哪些产品需要在水电施工中安装确认？如何辨别优劣呢？……</p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>30篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',waterandelectricity_path,:target =>'_blank',:title =>'水电工程',:class =>'enter f_l' %> </div>
+    <div class="f_l margl40">
+      <h3 class="div3_shigongqian_cainiao">泥木工程</h3>
+      <p class="font_div3_shigongqian_cainiao box">泥木工程包括哪些施工项目？需要购买哪些材料？怎样辨别瓷砖优劣？如何能把瓷砖贴好？门套该怎样做？吊顶如何安装施工？泥工木工怎样验收最实用？……</p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>28篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',earthwork_path,:target =>'_blank',:title =>'泥木工程',:class =>'enter f_l' %> </div>
+  </div>
+  <div class="div4_cainiao"></div>
+  <div class="div5_cainiao">
+    <div class="f_l">
+      <h3 class="div3_shigongqian_cainiao">家具软装</h3>
+      <p class="font_div3_shigongqian_cainiao box">家具按材质有哪些分类？如何挑选各类家具？沙发有哪些种类？沙发面料材质优缺点比较？如何挑选一款好沙发？床垫的分类有哪些？怎样挑选一款适合自己的床垫？……</p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>16篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',furniture_path,:target =>'_blank',:title =>'家具软装',:class =>'enter f_l' %> </div>
+
+    <div class="f_l margl40">
+      <h3 class="div3_shigongqian_cainiao">收尾工程</h3>
+      <p class="font_div3_shigongqian_cainiao width252">收尾工程有哪些施工项目？需要购买哪些材料？有哪些常见的施工要点？怎样验收最实用？座便器优劣如何鉴别？浴室柜龙头怎样挑选？如何挑选好地板？开关插座有哪些类型？……</p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>26篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',ending_path,:target =>'_blank',:title =>'收尾工程',:class =>'enter f_l' %> </div>
+
+    <div class="f_l margl40">
+      <h3 class="div3_shigongqian_cainiao">油漆工程</h3>
+      <p class="font_div3_shigongqian_cainiao box">油漆工程包括哪些施工项目？需要购买哪些材料？墙面的基层处理如何做？乳胶漆怎样刷最标准？如何给木器上漆效果好？标准墙纸铺贴过程是怎样的？油漆工艺如何验收没猫腻…… </p>
+      <div class="font_div4_shigongqian_cainiao f_l">有<span>24篇</span>你必须掌握的知识文章</div>
+      <%= link_to '点击了解更多',paint_path,:target =>'_blank',:title =>'油漆工程',:class =>'enter f_l' %> </div>
+
+  </div>
+  <div class="div6_cainiao"></div>
+</div>
+<!--statistics_code-->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(
+    ['_setAccount', 'UA-7619267-1'],
+    ['_setDomainName', '.51hejia.com'],
+    ['_addOrganic', "baidu", "kw"],
+    ['_addOrganic', "baidu", "word"],
+    ['_addOrganic', "soso", "w"],
+    ['_addOrganic', "3721", "name"],
+    ['_addOrganic', "yodao", "q"],
+    ['_addOrganic', "vnet", "kw"],
+    ['_addOrganic', "sogou", "query"],
+    ['_trackPageview']
+  );
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-12518263-3']);
+
+    ['_addOrganic', "baidu", "kw"];
+    ['_addOrganic', "baidu", "word"];
+    ['_addOrganic', "soso", "w"];
+    ['_addOrganic', "3721", "name"];
+    ['_addOrganic', "yodao", "q"];
+    ['_addOrganic', "vnet", "kw"];
+    ['_addOrganic', "sogou", "query"];
+
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F413eb88661221537985a18b6638be957' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!--end_statistics_code-->
+</body>

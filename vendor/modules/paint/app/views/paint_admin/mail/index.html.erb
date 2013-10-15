@@ -1,0 +1,20 @@
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>基本设置</h1>
+  <div class="breadcrumbs">邮件配置/ 基本设置</div>
+</div>
+<%= show_flash_message%>
+<div>
+	<% form_tag "/paint_admin/mail/update_config", :method => "post" do%>
+	<p>默认发送时间
+	<% 1.upto(24) do |i|%>
+	<input type="checkbox" name="send_times[]" value="<%=i%>" <%= "checked" if @send_time.include?(i.to_s) %> ><%=i%>:00
+	<% end %>
+	<br>
+	<p>会员申请<input type="text" id="application" name="application" value="<%=@application%>"></p><br>
+	<p>在线培训<input type="text" id="study" name="study" value="<%= @study %>"></p><br>
+	<p>在线派遣<input type="text" id="answer" name="answer" value="<%= @answer %>"></p><br>
+	<p>案例审核<input type="text" id="cases" name="cases" value="<%= @cases %>"></p><br>
+	<p><%= submit_tag "提交修改", :disable_with => "提交中..."%></p>
+	<% end %>
+</div>

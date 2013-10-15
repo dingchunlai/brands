@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/636/51hejia/repos/brands/release/app/views/shared/tags
+END
+_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/app/views/shared/tags/_menu.html.erb
+END
+_promotion_categories.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/636/51hejia/repos/brands/release/app/views/shared/tags/_promotion_categories.html.erb
+END
+_tag.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/94/51hejia/repos/brands/release/app/views/shared/tags/_tag.html.erb
+END

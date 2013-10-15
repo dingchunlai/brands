@@ -1,0 +1,263 @@
+<% content_for :html_head do %>
+    <% set_coupon_page_meta_data @coupon.seo_title, @coupon.seo_keywords, @coupon.seo_description %>
+    <link href="http://js.51hejia.net/css/zxdpcss.css?201011051" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="http://js.51hejia.net/colorbox/exp1/colorbox.css" type="text/css"/>
+    <script type="text/javascript" src="http://js.51hejia.net/js/jquery.colorbox-min.js"></script>
+    <%= javascript_include_tag 'jrails' %>
+<% end %>
+
+<script type="text/javascript" language="javascript">
+  $(document).ready(function(){
+    $("#login_form").submit(function() {
+      if($("#user_name").val()== ""||$("#user_name").val().length ==0  ){
+        alert("请输入用户名");
+
+      }else if($("#password").val()== ""||$("#password").val().length ==0 ){
+        alert("请输入密码");
+      }else{
+        $("#login_submit").attr("disabled","disabled");
+        $.ajax({
+          type: "POST",
+          url:"/sessions/user_login",
+          dataType:"script",
+          data: jQuery(this).serialize(),
+          success: function(html){
+            $("#login_submit").removeAttr("disabled");
+            if(html == "error"){
+              alert("用户名或密码错误");
+              $("#password").val("");
+            }else if(html == "freeze"){
+              alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+              $("#password").val("");
+            }else{
+              $("#login").css("display","none");
+              $("#cookie_id").val(html);
+              $("#user_id").val(html);
+            }
+          }
+        });
+      };
+      return false;
+    });
+  });
+</script>
+
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页", coupon_index_path %> >
+    <span><%= @coupon.title %></span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_l djq_tousuhack f_l">
+    <%= (@coupon.complaints_count > 0 and @coupon.complaints_count <=3) ? '<div class="djq_tousuicon"></div>' : '' %>
+
+    <div class="djq_conttit clearfix">
+      <div class="djq_conttit_l f_l">
+        <h2><%= @coupon.title %></h2>
+        <span>有效期：<%= @coupon.activity_end_at %></span></div>
+      <div class="djq_conttit_r f_r">
+        <h3>商户信息</h3>
+        <span>名称：
+          <label>
+            <% if @decofirm.nil? %>
+              <% if @coupon.distributor.class_name == "HuiYuan" %>
+                <%= link_to @coupon.distributor.title, distributor_show_path(@coupon.distributor)%>
+              <% else %>
+                <%= @coupon.distributor.title %>
+              <% end %>
+            <% else %>
+                <%= link_to @coupon.distributor.title, coupon_decofirm_path(:id => @decofirm.id)%>
+            <% end %>
+          </label>
+        </span>
+        <address>
+          地址：<%= @coupon.distributor_shop.address %>
+        </address>
+        <span>联系方式：<%= @coupon.distributor_shop.telphone %></span></div>
+    </div>
+    <div class="djq_conttxt">
+      <% if @coupon.image_url.to_s.blank? %>
+          <img src="http://img.51hejia.net/api/images/0004/9455/1.jpg" width="800"/>
+      <% else %>
+          <img src="<%= cloud_fs_domain("image") %><%= @coupon.image_url %>"/>
+      <% end %>
+      <% if @coupon.activity_end_at.to_date < Time.zone.today %>
+          <div class="djq_expired"></div>
+      <% end %>
+      <% unless @coupon.distributor.class_name.blank? %>
+          <div class="djq_tagsiconbig"><p class="<%= @coupon.distributor.class_name.gsub("Distributor::", "").underscore %>_big"></p></div>
+      <% end %>
+      <%
+         # fetch tag color from redis
+         tag = @coupon.tag
+         tag_color = "#0096af"
+         begin
+             city_print_properties = YAML::load($redis.get("coupon:print_properties:#{@city.name}"))
+             tag_color = city_print_properties['industry_color'][tag.short_name]
+         rescue
+
+         end
+      %>
+      <div class="djq_colorbar" style="background:<%= "#{tag_color}"%>;">如需更多优惠信息，敬请登录 <a href="http://www.51hejia.com" target="_blank" style="color:white;text-decoration:underline;">www.51hejia.com</a></div>
+    </div>
+    <div class="djq_contbottom margin10">
+      <div class="djq_contbbtn">
+        <a href="<%= new_coupon_download_path(:id => @coupon.id) %>" target="_blank" class="djq_contbbtn01" title="免费短信下载"></a>
+        <a href="<%= coupon_print_path(:id => @coupon.id) %>" target="_blank" class="djq_contbbtn02" title="打印"></a>
+        <a class="djq_contbbtn03" title="抵用券编号: <%= @coupon.id %>"></a>
+        <a href="<%= coupon_recommended_path(:id => @coupon.id) %>" target="_blank" class="djq_contbbtn04" title="告诉朋友"></a>
+      </div>
+      <div class="djq_contblink clearfix">
+        <table width="450" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align='right'>分享到：</td>
+            <td>
+              <a rel="nofollow" class="djq_contblink01" href="javascript:window.open('http://v.t.sina.com.cn/share/share.php?title='+encodeURIComponent(document.title.substring(0,76))+'&url='+encodeURIComponent(location.href)+'&rcontent=','sina','scrollbars=no,width=600,height=450,left=75,top=20,status=no,resizable=yes'); void 0">新浪微博</a>
+              <a rel="nofollow" class="djq_contblink02" href="javascript:void(function() {var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function() {if(!window.open(r,'douban','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)) {setTimeout(x,0)}else{x()}})()">豆瓣网</a>
+              <a rel="nofollow" class="djq_contblink03" href="javascript:window.open('http://share.renren.com/share/buttonshare.do?link='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title), 'renren', 'width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes');void(0)">人人网</a>
+              <a rel="nofollow" class="djq_contblink04" href="javascript:window.open('http://shuqian.qq.com/post?from=3& title='+encodeURIComponent(document.title)+'&uri='+encodeURIComponent(document.location.href)+'&jumpback=2&noui=1','qq','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'); void(0)">QQ书签</a>
+              <a rel="nofollow" class="djq_contblink05" href="javascript:window.open('http://www.kaixin001.com/repaste/share.php?rtitle='+encodeURIComponent(document.title)+'&rurl='+encodeURIComponent(document.location.href)+'&rcontent=','kaixin','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'); void(0)">开心网</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="gsl_wyly" id="remarks_div">
+        <div class="gsl_wyly_tit">
+          <h3>网友评论</h3>
+          <span><a href="#" target="_self" title="返回顶部">返回顶部</a></span>
+          <span><a href="#pinglun" class="tianjia_pinglun" target="_self" title="添加评论">添加评论</a></span>
+        </div>
+        <div id="remarks">
+          <%= render :partial => @remarks %>
+        </div>
+        <% unless @remarks.empty? %>
+            <div class="pagination clear">
+              <%= will_paginate @remarks, :class => "pagination", :previous_label => "上一页", :next_label => "下一页" -%>
+            </div>
+        <% end %>
+      </div>
+
+      <a name="pinglun"></a>
+
+      <div class="gsl_wyly_lyk clear">
+        <h3 class="pinglunbiaoti">我要添加评论</h3>
+        <input type="hidden" id="cookie_id" value="<%= current_user.USERBBSID if user_logged_in? && current_user %>"/>
+
+        <div id="login">
+          <% unless current_user %>
+              <a href="javascript://" class="the_login_dialog" style="display:block;padding:20px 0 0 20px;" onclick="$('.the_login_dialog').colorbox({ href: '/sessions/pop_login', width: 700, height: 330, scrolling: false, opacity: 0.2});">友情提示：您还未登陆，请点击此处登陆后发表评论，谢谢！</a>
+          <% end %>
+        </div>
+        <hr/>
+        <div>
+          <% form_for @remark, :url => coupon_remarks_path, :html => {:id => "remark_form_0", :class => 'remark_form'} do |f| %>
+              <%= f.error_messages %>
+              <div style="color:red;font-weight:bold;margin-left: 10px;" id="error_message_for_comment"><%= flash[:notice] %></div>
+              <%= f.hidden_field :resource_type %>
+              <%= f.hidden_field :resource_id %>
+              <input type="hidden" id="remark_id" name="remark_id" value="0"/>
+              <table width="670" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="gsl_wyly_qy"><%= f.text_area :content, :style => 'height: 120px' %>
+                  </td>
+                </tr>
+              </table>
+              <div id="simple_remark">
+                <div style="text-align:center;margin-bottom:10px;">
+                  <%= f.submit "确认提交", :id => "submit_comment", :class => "gsl_wyly_btn" %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="djq_r f_r">
+    <div class="djq_rcur margin10">
+      <h3>我要投诉</h3>
+
+      <div class="djq_rcurtxt">
+        <div class="djq_huod_info"> 
+          <span>
+            <strong>电话投诉：</strong>400-602-5151
+            <%= link_to '如何投诉', coupon_help_path, :class => 'djq_tous_hack', :target => '_blank' %>
+          </span>
+          <span>
+            <strong>网上投诉：</strong><br/>
+            <%= link_to "点击此处投诉该#{Coupon.human_name}", new_complaint_path(:id => @coupon.id), :style => 'text-decoration:underline;color:#f60' %>
+            <%= link_to '帮助中心', coupon_help_path, :class => 'djq_tous_hack', :target => '_blank' %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="djq_rcur margin10">
+      <h3>关注此<%= Coupon.human_name %>的用户还下载过</h3>
+
+      <div class="djq_rcurtxt">
+        <ul class="djq_zxyh_list">
+          <% Coupon.with_period({:limit => 5}).with_city(@city.id).each do |coupon| %>
+              <li>
+                <span><%= link_to truncate_u(coupon.title, 12, ''), coupon_show_path(coupon), :target => '_blank' %></span>
+
+                <p>满<%= coupon.discount_amount %>元抵用现金<%= coupon.return_amount %>元</p>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="djq_rcur margin10">
+      <h3>温馨提醒</h3>
+
+      <div class="djq_rcurtxt">
+        <%= @coupon.usage %>
+      </div>
+    </div>
+    <%= render :partial => '/share/common_faq' %>
+  </div>
+</div>
+<!--content_code_end-->
+<!--stags_code-->
+<script type="text/javascript" src="http://js.51hejia.net/jquery/jFav_v1.0.js"></script>
+<!--[if IE]>
+<script src="http://js.51hejia.net/js/iepng.js" type="text/javascript"></script>
+<script type="text/javascript">
+    EvPNG.fix('p');  //EvPNG.fix('包含透明PNG图片的标签'); 多个标签之间用英文逗号隔开。
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    $(function() {
+      
+    $('.djq_rcurtxt ol').addClass('djq_wenxtx');
+
+    $('form.remark_form').live('submit', function(){
+      var content = $.trim($(this).find('input[type=text], textarea').val());
+      if ($.trim($("#login").html())!=''){
+        alert('请先登录再提交评论！');
+        return false;
+      }
+      if (content == ''){
+        alert('请填写评论内容！');
+        return false;
+      }
+      jQuery.ajax({
+        data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('WxcFbgc2Z2M3mgljhzZq3kYF696PRPOcd4ARZzkfCeU='),
+        dataType:'script', type:'post', url:'/coupon/coupon_remarks'
+      });
+      return false;
+    });
+
+    //我要添加回复
+    $('a.reply_button').live('click', function(){
+      $('div.diary_contwbpingl').css('display', 'none');
+      $(this).parent('').parent('').find('div.diary_contwbpingl').css('display', 'block');
+      //('div.diary_contwbpingl').css('display', 'block');
+    });
+        //加入收藏夹
+        $('a.djq_contbbtn03').jFav();
+
+    });
+</script>

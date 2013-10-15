@@ -1,0 +1,23 @@
+<% @title = "海尔上海展厅信息——海尔整套家电互动专区" %>
+<div class="width960 margin10">
+  <table width="950" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+    <tr>
+      <td><img src="http://img3.51hejia.net/all_zhuanti/haierzt/img/dizhi_01.gif" width="950" height="653" /></td>
+    </tr>
+    <tr>
+      <td><div align="center">
+          <p align="center"><strong><img src="http://img3.51hejia.net/all_zhuanti/haierzt/img/dizhi_02.jpg" width="950" height="652" /><br />
+            </strong></p>
+        </div></td>
+    </tr>
+    <tr>
+      <td><img src="http://img3.51hejia.net/all_zhuanti/haierzt/img/dizhi_03.jpg" width="950" height="653" /></td>
+    </tr>
+    <tr>
+      <td><img src="http://img3.51hejia.net/all_zhuanti/haierzt/img/dizhi_04.jpg" width="950" height="652" /></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</div>

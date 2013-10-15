@@ -1,0 +1,124 @@
+<% city_name = CITIES[@user_city_code.to_i] %>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:设计师终端页") %>
+<% @title = html_metadata.title % {:designer_name => @designer.DESNAME} %>
+<% @description = html_metadata.description  %>
+<% @keywords = html_metadata.keywords % {:designer_name => @designer.DESNAME} %>
+<%# location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > #{link_to '设计师',firm_designers_url(:firm_id => @firm.id)} > #{@designer.DESNAME}" %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > #{link_to '设计师',firm_designers_url(:firm_id => @firm.id)} > 设计师信息" %>
+
+<% content_for (:head) do %>
+  <%= render :partial => "dianping/shared/firm_factory_pop"%>
+  <%= javascript_include_tag 'jrails'%>
+  <% css_url "zx_diary.css" %>
+  <% dp_js 'dianping/designers/show.js'%>
+  <% stylesheet "http://js.51hejia.com/css/api/colorbox.css?1291024352" %>
+  <% javascript 'http://js.51hejia.com/js/jquery.colorbox-min.js'%>
+<% end %>
+
+<% firm_sub_menu %>
+<!--content_code-->
+<div class="width960 clearfix">
+  <div class="zxdp2011_continfotit">
+    <h3 class="f_l">设计师案例</h3>
+  </div>
+</div>
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => "dianping/firms/firm_info" %>
+    <%#= render :partial => 'dianping/firms/firm_basic_info' %>
+    <%= render :partial => 'dianping/shared/firm_promotion_coupon',:locals => {:is_case_diary => true} %>
+    <% cache "dianping:firm:designer:show:#{@designer.id}:right", :expires_in => 5.minutes do %>
+      <%= render :partial => '/dianping/designers/other_designers' %>
+    <% end %>
+  </div>
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2011_sjsxx f_l">
+      <div class="zxdp2011_sjsxximg f_l"><%= link_to designer_avatar(@designer), firm_url(:id => @case.deco_firm.id,:trailing_slash => "/"), :title => truncate_u(@designer.DESNAME,8)%></div>
+      <div class="zxdp2011_sjsxxtxt f_l">
+        <h3>设计师：<%= truncate_u(@designer.DESNAME,3)%></h3>
+        <p>设计费：<%= @designer.desfee_text %></p>
+        <p>擅长风格：<%= @designer.style_text %></p>
+        <p>从业年限：<%= @designer.desage_text %></p>
+      </div>
+    </div>
+    <% unless @designer.DESRESUME.blank? %>
+      <script type="text/javascript">
+
+      </script>
+    <% end -%>
+    <div class="zxdp2011_sjsanli f_r">
+      <h3>设计理念...</h3>
+      <p><%= !@designer.DESRESUME.blank? ? @designer.DESRESUME : "暂无简介" %></p>
+      <% unless @designer.DESRESUME.blank? %><div class="sjs_btn"><a href="#" target="_self">[查看详细内容]</a></div><% end -%>
+    </div>
+    <div class="djq_contblink clear">
+      <table width="430" border="0" cellspacing="0" cellpadding="0" class="f_l">
+        <%= render :partial => "shared/shared_connection" %>
+      </table>
+    </div>
+    <div class="zxdp2011_sjszxal clear">
+      <h3>设计师最新案例...</h3>
+      <dl>
+        <dt>· <%= @case.NAME%></dt>
+        <dd>导读：<%=h @case.INTRODUCE%></dd>
+      </dl>
+    </div>
+    <div class="zxdp2011_focus">      
+      <div class="zxdp2011_focusimg v_show clearfix">
+        <div class="zxdp2011_focusbighack f_l">
+          <div class="zxdp2011_focusbig clearfix">
+            <% @case.photos.each do |ph| %>
+              <div><img src="<%= ph.get_photo_url %>" alt="<%= ph.description %>"/>
+                <p><%= ph.description %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="change_btn"> <span class="prev"><small>▲</small></span><span class="next"><small>▼</small></span> </div>
+        <div class="zxdp2011_focussmall v_content f_r">
+          <div class="v_content_list">
+            <ul>
+              <% @case.photos.each do |ph| %>
+                <li><img src="<%= ph.get_photo_url %>" alt="<%= ph.description %>"/></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="zxdp2011_sjslsal">
+      <h3>设计师历史案例...</h3>
+      <ul class="clearfix">
+        <% cache "dianping:firm:designer:show:#{@designer.id}:bottom", :expires_in => 5.minutes do %>
+          <% @cases.each do |c| %>
+            <li><%= link_to image_tag(c.master_picture_url,:alt=>c.NAME), c.url, :target => "_blank" %><%= link_to c.NAME, c.url, :target => "_blank" %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="diary_contlist" id="diary_contlist">
+      <!--show diary bodies-->
+      <ul class="clear">
+        <li class="diary_body" id="diary_body">
+          <div class="diary_contlistpingl"><span class="open"><a>评论(<%= @case.show_remarks.count %>)<small>&#9660;</small></a></span></div>
+          <div class="diary_contwb"><% unless current_user %><span class="the_login_dialog" style="display:block;padding:20px 0 0 20px;">友情提示：您还未登陆，请<a style="color:blue;cursor:pointer;text-decoration:underline;">"点击此处"</a>登陆后发表评论，谢谢！</span><% end %>
+            <div class="diary_contwbpingl">
+              <form action="" class="remark_form">
+                <input type="hidden" id="user_id" value="<%= current_user.USERBBSID if user_logged_in? %>"/>
+                <input type="hidden" id="resource_id" value="<%= @case.ID %>"/>
+                <input type="hidden" id="resource_type" value="HejiaCase" />
+                <input type="text" id="remark_content" class="zx_diary_iptsty" size="50"/>
+                <input name="" type="button" value="评论" class="zx_diary_btnsty diary_post_remark" />
+              </form>
+            </div>
+            <div class="diary_hackwk" id="diary_hackwk">
+              <%= render :partial => "case_remarks", :locals => { :cases => @case }%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<%= increase_pv_image_tag "hejia_case", @case.ID %>
+<div style="display:none;" deco_frim_popedom="<%= @designer.deco_firm.popedom%>" id="hejia_case_show"></div>

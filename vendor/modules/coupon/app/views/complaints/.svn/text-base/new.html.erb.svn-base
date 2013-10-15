@@ -1,0 +1,168 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<%= javascript_include_tag "jrails" %>
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页", coupon_index_path %> >
+    <span><%= @coupon.title %></span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_tigong_hack">
+    <% form_for @complaint do |f| %>
+        <%= f.error_messages %>
+        <table width="800" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td valign="top" align="right" width="160"><%= Coupon.human_name %>编号<span>*</span>：</td>
+            <td colspan="3"><%= @coupon.code %><%= f.hidden_field :coupon_code %><%= f.hidden_field :coupon_id %></td>
+          </tr>
+          <tr>
+            <td colspan="4"><h3>填写投诉内容</h3></td>
+          </tr>
+          <tr>
+            <td valign="top" align="right" width="160"><span>*</span>主题：</td>
+            <td colspan="3"><%= f.text_field :title, :class => "text",:size=>35, :maxlength => 100 %> <div><p id="msg_for_title"></p></div></td>
+          </tr>
+          <tr>
+            <td width="160" align="right" valign="top"><span>*</span>内容：</td>
+            <td colspan="3" valign="top"><%= f.text_area :body, :class => "text", :rows => 5 %><div><p id="msg_for_body"></p></div></td>
+          </tr>
+          <tr>
+            <td colspan="4"><h3>请填写联系方式</h3></td>
+          </tr>
+          <tr>
+            <td valign="top" align="right" width="160"><span>*</span>您的姓名：</td>
+            <td><%= f.text_field :name, :class => "text", :size => 20, :maxlength => 30%><div><p id="msg_for_name"></p></div></td>
+            <td valign="top" align="right" width="160"><span>*</span>您的手机：</td>
+            <td><%= f.text_field :telphone, :class => "text", :size => 20, :maxlength => 15 %><div><p id="msg_for_telphone"></p></div></td>
+          </tr>
+          <tr>
+            <td valign="top" align="right" width="160">您的邮箱：</td>
+            <td><%= f.text_field :email, :class => "text", :size => 20, :maxlength => 100 %><div><p id="msg_for_email"></p></div></td>
+            <td valign="top" align="right" width="160">您的单位或者地址：</td>
+            <td><%= f.text_field :address, :class => "text", :size => 20, :maxlength => 150 %></td>
+          </tr>
+          <tr>
+            <td valign="top" align="right" width="160"><span>*</span>验证码：</td>
+            <td colspan="3" class="djq_tigong_hack02"><input type="text" name="image_code" size="4" id="complaint_image_code"/>
+              <img id="image_code_area" src="http://api.51hejia.com/user/get_image_code?<%= Time.now.to_i %>" width="100" height="80" style="vertical-align:middle;" onclick="this.src += (new Date()).getTime();" />
+              <div><p id="msg_for_image_code"></p></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" align="center">填好后，请点击
+              <input name="" type="submit" class="djq_tigong_btn" value="提交"/>
+              如不满意，请点击
+              <input name="" type="reset" class="djq_tigong_btn" value="重写"/></td>
+          </tr>
+        </table>
+    <% end %>
+  </div>
+
+</div>
+<script type="text/javascript">
+  $(function() {
+     
+    var reg =/^0{0,1}(13[0-9]|15[7-9]|15[0-2]|18[7-9])[0-9]{8}$/;
+    $('#complaint_title').blur(function(){
+        if ($(this).val() == "") {
+            $('#msg_for_title').text("主题不能为空");
+            $('#msg_for_title').addClass("djq_alert");      
+        } else {
+            $('#msg_for_title').text("");
+            $('#msg_for_title').removeClass("djq_alert");
+        }
+    });
+    $('#complaint_body').blur(function(){
+        if ($(this).val() == "") {
+            $('#msg_for_body').text("投诉内容不能为空");
+            $('#msg_for_body').addClass("djq_alert");
+        } else {
+            $('#msg_for_body').text("");
+            $('#msg_for_body').removeClass("djq_alert");
+        }
+    });
+      
+    $('#complaint_name').blur(function(){
+        if ($(this).val() == "") {
+            $('#msg_for_name').text("请填写姓名");
+            $('#msg_for_name').addClass("djq_alert");
+        } else {
+            $('#msg_for_name').text("");
+            $('#msg_for_name').removeClass("djq_alert");
+        }
+    });
+
+    $('#complaint_telphone').blur(function(){
+        if (!reg.test($(this).val())) {
+            $('#msg_for_telphone').html("请正确的手机号码");
+            $('#msg_for_telphone').addClass("djq_alert");
+        } else {
+            $('#msg_for_telphone').text("");
+            $('#msg_for_telphone').removeClass("djq_alert");
+        }
+    });
+
+    $('#complaint_email').blur(function(){
+        if ($(this).val() != "") {
+            if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test($(this).val())) {
+                $('#msg_for_email').html("请填写正确的邮件");
+                $('#msg_for_email').addClass("djq_alert");
+            } else {
+                $('#msg_for_email').text("");
+                $('#msg_for_email').removeClass("djq_alert");
+            }
+        }
+    });
+
+    $('#complaint_image_code').blur(function(){
+        if ($(this).val() == "") {
+            $('#msg_for_image_code').text("请填写验证码");
+            $('#msg_for_image_code').addClass("djq_alert");
+        } else {
+            $('#msg_for_image_code').text("");
+            $('#msg_for_image_code').removeClass("djq_alert");
+        }
+    });
+
+    $("#new_complaint").submit(function(){
+        var result = true;
+        if ($("#complaint_title").val() == "") {
+            $('#msg_for_title').text("主题不能为空");
+            $('#msg_for_title').addClass("djq_alert");
+            result = false;
+        }
+        if ($("#complaint_body").val() == "") {
+            $('#msg_for_body').text("投诉内容不能为空");
+            $('#msg_for_body').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#complaint_name').val() == "") {
+            $('#msg_for_name').text("请填写姓名");
+            $('#msg_for_name').addClass("djq_alert");
+            result = false;
+        }
+        if (!reg.test($('#complaint_telphone').val())) {
+            $('#msg_for_telphone').html("请正确的手机号码");
+            $('#msg_for_telphone').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#complaint_image_code').val() == "") {
+            $('#msg_for_image_code').text("请填写验证码");
+            $('#msg_for_image_code').addClass("djq_alert");
+            result = false;
+        }
+//        if ($('#complaint_email').val() != "") {
+//            if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test($(this).val())) {
+//                $('#msg_for_email').html("请填写正确的邮件");
+//                $('#msg_for_email').addClass("djq_alert");
+//                result = false;
+//            }
+//        }
+        if (!result) { return result; }
+        jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'/coupon/complaints'}); return false;
+
+    });
+
+  });
+</script>
+<!--content_code_end-->

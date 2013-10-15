@@ -1,0 +1,28 @@
+<!--show diary bodies-->
+<ul class="clear">
+  <% diary_posts.each do |diary_post| %>
+    <li class="diary_body" id="diary_body">
+      <div class="diary_contlisttime"><%= diary_post.created_at.strftime("%Y-%m-%d") %>-发表</div>
+      <div class="zx_diaryfbglimg"><%= add_domain_for_diary(remove_external_links(whitelist_strip_tags(diary_post.body, :tags => ["pre", "script", "style", "span"], :include => false))) %></div>
+      <div class="diary_contlistpingl"><span class="open"><a>评论(<%= diary_post.ordered_remarks.size %>)<small>&#9660;</small></a></span></div>
+      <div class="diary_contwb">
+        <% unless current_user %><span class="the_login_dialog" style="display:block;padding:20px 0 0 20px;">友情提示：您还未登陆，请<a style="color:blue;cursor:pointer;text-decoration:underline;">"点击此处"</a>登陆后发表评论，谢谢！</span><% end %>
+        <div class="diary_contwbpingl">
+          <form action="" class="remark_form">
+            <input type="hidden" id="user_id" value="<%= current_user.USERBBSID if user_logged_in? %>"/>
+            <input type="hidden" id="resource_id" value="<%= diary_post.id %>"/>
+            <input type="hidden" id="resource_type" value="DecorationDiaryPost" />
+            <input type="text" id="remark_content" class="zx_diary_iptsty" size="50"/>
+            <input name="" type="button" value="评论" class="zx_diary_btnsty diary_post_remark" />
+          </form>
+        </div>
+        <div class="diary_hackwk" id="diary_hackwk">
+          <%= render :partial => "diary_post_remarks", :locals => { :diary_post => diary_post }%>
+        </div>
+      </div>
+    </li>
+  <% end if diary_posts %>
+</ul>
+<div class="clear">
+  <%= will_paginate diary_posts, :prev_label=> "上一页", :next_label=> "下一页"  %>
+</div>

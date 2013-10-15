@@ -1,0 +1,57 @@
+<%= top_bar :title => '密码修改',
+            :button => ['返回首页', distributor_user_index_path],
+            :breadcrumbs => [
+              ['首页', distributor_user_index_path]
+            ]
+%>
+<%= flash.now[:notice]%>
+<%
+  form_for 'account',:url => distributor_user_dashboards_path, :html => { :id => "frm_modify_pwd" } do |f|
+%>
+  <%= f.error_messages %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">修改密码</th>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong>新密码：</strong></td>
+      <td class="last"><%= f.password_field :password, :class => "text", :id => "password" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong>密码确认：</strong></td>
+      <td class="last"><%= f.password_field :password_confirmation, :class => "text", :id => "password_confirm" %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= f.submit '确认' %></td>
+    </tr>
+  </table>
+</div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+       $("#frm_modify_pwd").submit(function(){
+            if ($("#password").val() == '') {
+                alert('新密码不能为空');
+                $("#password").focus();
+                return false;
+            }
+
+           if ($("#password_confirm").val() == '') {
+                alert('新密码不能为空');
+                $("#password_confirm").focus();
+                return false;
+           }
+
+           if ($("#password").val() != $("#password_confirm").val()) {
+                alert('两次输入的密码不一致，请确认');
+                $("#password").focus();
+                return false;
+           }
+           return true;
+       });
+    });
+</script>

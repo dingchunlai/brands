@@ -1,0 +1,44 @@
+<% if @cases.size > 0 || @photos.size  > 0  %>
+<div class="zxdp2010_anltup clear margin10">
+   <div class="zxdp2010_attab">
+     <ul class="clearfix">
+	    <% if @cases.size > 0 %>
+         <li>设计案例</li>
+	    <% end -%>
+       <!-- 这里的施工图片要求不显示,所以就让条件不成立-->
+	    <% if false && @photos.size > 0 %>
+         <li>施工图片</li>
+		<% end -%>
+     </ul>
+   </div>
+   <div class="zxdp2010_atcont">
+	<% if @cases.size > 0 %>
+     <div class="zxdp2010_atbox">
+       <div class="zxdp2010_more"><%= link_to "更多&gt;&gt;",firm_cases_url(:firm_id => @firm.id) %></div>
+       <ul class="clearfix">
+		<% @cases.each do |deco_case|%>
+         <li>
+            <%= link_to image_tag(deco_case.master_picture_url, :alt => deco_case.NAME), case_url(:id => deco_case.id ), :target => "_blank"%>
+            <%= link_to truncate_u(deco_case.NAME,14), case_url(:id => deco_case.id ), :target=>"_blank", :title => deco_case.NAME%>
+		</li>
+		<% end -%>
+       </ul>
+     </div>
+	<% end -%>
+        <!-- 这里的施工图片要求不显示,所以就让条件不成立-->
+	<% if false && @photos.size > 0%>
+         <div class="zxdp2010_atbox"  style="display: none;">
+           <div class="zxdp2010_more"><%= link_to "更多&gt;&gt;", firm_construction_photos_url(:firm_id => @firm.id) %></div>
+           <ul class="clearfix light_box_pictures" id="photos">
+            <% @photos.each do |photo|%>
+              <li>
+                <%= link_to image_tag(photo.image.url(:medium),:title => photo.title), photo.image.url(:original)%>
+                <%=  truncate_u(photo.title, 14)%>
+              </li>
+            <% end -%>
+           </ul>
+         </div>
+ 	<% end -%>
+  </div>
+ </div>
+<% end -%>

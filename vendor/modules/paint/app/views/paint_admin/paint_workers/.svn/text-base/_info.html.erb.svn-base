@@ -1,0 +1,74 @@
+<script>
+  $(document).ready(function(){
+	$(".worker_table tr:odd").addClass("odd");
+	$(".worker_table tr:even").addClass("even");
+	$('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+  });
+</script>
+<style type="text/css">
+	.worker_table td{height:30px;line-height:30px;padding:0 4px;}
+	.worker_table .odd{background:#fff;}
+	.worker_table .even{background:#dedede;}
+</style>
+<% applicants_show = (!@status.nil? && @status.to_i == 2) ? true : false%>
+<% form_tag "/paint_admin/paint_workers/accept",:method => "post" do%>
+<table width="880" class="worker_table">
+	<tr align="center">
+		<% if applicants_show%>
+		<td>
+			<input type="checkbox" id="select_all">
+		</td>
+		<% end %>
+		<td>姓名</td>
+		<td>区域</td>
+		<td>城市</td>
+		<td>等级</td>
+		<% if !applicants_show%>
+			<td>技术分</td>
+			<td>服务分</td>
+		<% end %>
+		<td>手机</td>
+		<td>邮箱</td>
+		<td>身份证</td>
+		<td>添加日期</td>
+		<td align="center">操作</td>
+	</tr>
+	<% @paint_workers.each do |worker|%>
+	<tr align="center">
+		<% if applicants_show %><td><input type="checkbox" name="painter_ids[]" class="check_box" value="<%=worker.painter.id%>"></td><% end %>
+		<td><%= worker.USERBBSNAME %></td>
+		<td><%= Province.region_for_province[Province.name_for_code(worker.painter.province)]%></td>
+		<td><%= City.name_for_code(worker.painter.city) %></td>
+		<td><%= Painter::GRADE.index worker.painter.grade%></td>
+		<% if !applicants_show%>
+			<th><%= worker.painter.skill_score %></th>
+			<th><%= worker.painter.service_score %></th>
+		<% end %>
+		<td><%= worker.USERBBSMOBELTELEPHONE %></td>
+		<td><%= truncate(worker.USERBBSEMAIL, :length => 16, :omission => '') %></td>
+		<td><%= worker.painter.id_number %></td>
+		<td><%= worker.painter.created_at.strftime("%Y-%m-%d") %></td>
+		<% if worker.painter.painters_status.to_i == 1%>
+			<td>
+			<% if can? :update, :paint_workers %><%= link_to "编辑" , edit_paint_admin_paint_worker_path(worker.id)%>|<% end %>
+			<% if can? :destroy, :paint_workers %><%= link_to " 撤销" , paint_admin_paint_worker_path(worker.id),:method => :DELETE, :confirm => '确定撤销'%>|<% end %>
+			<% if can? :update, :paint_workers %><%= link_to "修改密码",edit_password_paint_admin_paint_worker_path(worker.id)%>|<% end %>
+			<% if can? :create, :paint_cases %><%= link_to "添加案例","/paint_admin/paint_cases/new?paint_worker_id=#{worker.id}",:target=>:blank%>|<% end %>
+			<%= link_to "派遣","/paint_admin/online/send_new?paint_worker_id=#{worker.id}",:target=>:blank%>
+			</td>
+		<% else%>
+			<td>
+			<% if can? :accept, :paint_workers %><a href="/paint_admin/paint_workers/accept?painter_ids[]=<%=worker.painter.id%>">审核通过</a>&nbsp;|&nbsp;<% end %>
+			<% if can? :overrule, :paint_workers %><a href="/paint_admin/paint_workers/overrule?painter_id=<%=worker.painter.id%>">未通过</a><% end %>
+			</td>
+		<% end %>
+	</tr>
+	<% end %>
+</table>
+<% if applicants_show && !@paint_workers.blank?%>
+	<input type="submit" value="批量通过" id="accept_ids">
+<% end %>
+<%= will_paginate @paint_workers ,:prev_label=> '上一页',:next_label=> '下一页',:class => 'digg_pagination'%>
+<% end %>

@@ -1,0 +1,22 @@
+<div>
+    <% form_for :franchisee, :url => ajax_post_path(:permalink => @brand.permalink, :t => "franchisee"), :html => {:method => :post, :id => "ajax_post"} do |f| %>
+       <p> 姓    名: <%= f.text_field :name %> <span style="color:red;"> * <span></p>
+       <p> 联系方式: <%= f.text_field :contact  %> <span style="color:red;"> * <span> </p>
+       <p> 所在地区: <%= f.text_field :city %>  <span style="color:red;"> * <span> </p>
+       <p> 附    言: <%= f.text_field :attach_comments %> <span style="color:red;"> * <span> </p>
+       <p> <%= submit_tag "提交" %> </p>
+    <% end %>
+</div>
+<script type="text/javascript">
+        $('#ajax_post').submit(function(event){
+            event.preventDefault();
+            if($('#franchisee_name').val() && $('#franchisee_contact').val() && $('#franchisee_city').val() && $('#franchisee_attach_comments').val()){
+                $.post($(this).attr('action'), $('#ajax_post').serialize(), function(date){
+                    alert(date['message']);
+                    $.fn.colorbox.close();
+                }, 'json');
+            }else{
+                alert('请输入数据 ... !');
+            }
+        })
+</script>

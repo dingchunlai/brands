@@ -1,0 +1,12 @@
+if @coupon_download.errors.empty?
+  page[:new_coupon_download].reset
+  js_str =<<-EOF
+
+      $(".djq_tancboxbg").show();
+      $(".djq_tancbox").show();
+      $(".djq_tancicon span").text('#{@coupon_download.mobile}');
+EOF
+  page << js_str
+else
+  page.replace_html :msg_for_mobile, "号码错误"
+end

@@ -1,0 +1,6 @@
+<% content_for :sub_menu do %>
+	<% if can? :read, :paint_workers %><li><%= link_to "油漆工查询" ,paint_admin_paint_workers_path%></li><% end %>
+	<% if can? :applicants, :paint_workers %><li><%= link_to "油漆工开通" ,applicants_paint_admin_paint_workers_path%></li><% end %>
+	<% if can? :create, :paint_workers %><li><%= link_to "油漆工添加" ,new_paint_admin_paint_worker_path %></li><% end %>
+	<% if can? :recycle, :paint_workers %><li><%= link_to "回收站" , recycle_paint_admin_paint_workers_path %></li><% end %>
+<% end %>

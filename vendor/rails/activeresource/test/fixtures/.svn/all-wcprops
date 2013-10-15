@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures
+END
+person.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures/person.rb
+END
+street_address.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures/street_address.rb
+END
+beast.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures/beast.rb
+END
+customer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures/customer.rb
+END
+proxy.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activeresource/test/fixtures/proxy.rb
+END

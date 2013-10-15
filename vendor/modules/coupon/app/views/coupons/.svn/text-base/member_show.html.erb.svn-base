@@ -1,0 +1,267 @@
+<% content_for :html_head do %>
+  <% set_coupon_page_meta_data @coupon.seo_title, @coupon.seo_keywords, @coupon.seo_description %>
+  <link href="http://js.51hejia.net/css/zxdpcss.css?201011051" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="http://js.51hejia.net/colorbox/exp1/colorbox.css" type="text/css"/>
+  <script type="text/javascript" src="http://js.51hejia.net/js/jquery.colorbox-min.js"></script>
+
+  <link href="http://js.51hejia.net/css/zxdp20101111.css?<%= Time.now.day %>" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://js2.51hejia.com/js/loopedslider.min.js" type=text/javascript></script>
+  <%=
+  stylesheet_link_tag(
+    jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0', :resource => :css),
+    jquery_resource(:plugin => 'jgrowl', :version => '1.2.4', :resource => :css)
+  )
+%>
+  <link href="http://js.51hejia.net/css/jquery.lightbox-0.5.css?<%= Time.now.day %>" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://js.51hejia.net/js/jquery.lightbox-0.5-fix-jrails.min.js?<%= Time.now.day %>" type="text/javascript"></script>
+  <%= javascript_include_tag 'jrails' %>
+<% end %>
+<!--location_code-->
+<% 
+default_impression_text = '不多于5个字'
+distributor = @coupon.distributor
+images = Distributor::UploadPicture.audited_by_distributor(distributor.id)
+hash_images = images.group_by(&:image_type)
+coupon_ids = distributor.coupons.map &:id 
+coupons_size = coupon_ids.size 
+shop = @coupon.distributor_shop
+coupon_tag = @coupon.tag
+%>
+<%= render :partial => 'navigation' %>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="diyq_conttit margin10 clearfix">
+    <h2><%= distributor.short_title %><%= Coupon.human_name %></h2>
+    <div class="diyq_listtab f_r">
+      <ul class="clearfix">
+        <li><a href="#a1">商家信息</a></li>
+        <li><a href="#a3">评 论</a></li>
+        <li class="active">现金券(<%= coupons_size %>)</li>
+      </ul>
+    </div>
+  </div>
+  <a id="a1" name="a1">&nbsp;</a>
+  <div class="diyq_list_l f_l">
+    <div class="clearfix margin10">
+      <div class="diyq_sjxx f_l">
+        <% unless hash_images["Distributor::PictureType::Shop"]  %>
+          <img src="http://img3.51hejia.com/img/zxdpimg/nopic03.jpg" width="368" height="198"/>
+        <% else %>
+          <img src="<%= cloud_fs_domain('image') %><%= hash_images["Distributor::PictureType::Shop"].first.image_url %>" width="368" height="198"/>
+        <% end %>
+        <h3>商家信息</h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td valign="top">名称：</td>
+            <td width="150"><%= truncate(distributor.title, 12, '') %></td>
+            <td width="60" valign="top">联系方式：</td>
+            <td width="80" valign="top"><p><%= shop.telphone %></p></td>
+          </tr>
+          <tr>
+            <td valign="top">地址：</td>
+            <td width="150" valign="top"><%= shop.address %></td>
+            <td width="60" valign="top">经营范围：</td>
+            <td width="80"><%= @coupon.production_categories.first(2).collect{|p| '<p>' + p.short_name + '</p>'} %> </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zxdp2010_yinxiang f_r" id="deco_impression" style="overflow:hidden;">
+        <h3>您对 <%= distributor.short_title  %> 的印象是</h3>
+        <div class="tag_cloud zxdp2010_yxcont" id="deco_impression_cloud" style="text-align:center">
+          <% distributor.impressions({:limit => 12}).each do |e|%>
+            <div>
+              <%= link_to h(e), save_distributor_impression_path(:id => distributor.id), :class => 'impression' %>
+            </div>
+          <%end%>
+        </div>
+        <div class="zxdp2010_yxinput">
+          <% form_tag save_distributor_impression_path(:id => distributor.id), :id => 'impression_form' do %>
+            请输入您的印象词：<%= text_field_tag :title, default_impression_text %>
+            <%= submit_tag '提 交', :class => 'djq_yb_rbtn' %>
+          <% end %>
+        </div>
+        <div class="zxdp2010_yxkeys"> <strong>最新添加印象：</strong> 
+          <span id="new_impression">
+            <%
+            distributor.latest_impression.first(5).each do |impression|
+              impression = h impression
+            %>
+              <%= content_tag :span, impression, :title => impression %>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="diyq_contbox3"><img src="http://img3.51hejia.com/img/diyongquan/diyq_phone2.gif" />
+      <div class="coupon"><img src="<%= cloud_fs_domain('image')%><%= @coupon.show_image_url%>" /></div>
+      <div class="num clearfix"><div style="width: 480px;text-align: center;" class="f_l">当前可用<span><%= @coupon.sell_style == 1 ? @coupon.existing_number : @coupon.virtual_existing_number.to_i %></span>张  总发行<span><%= @coupon.total_issue_number %></span>张</div><em class="f_r">有效期：<%= @coupon.activity_began_at.to_date.strftime("%Y年%m月%d日") %>至<%= @coupon.activity_end_at.to_date.strftime("%Y年%m月%d日") %></em></div>
+      <p>以下内容将通过手机短信的形式，发送到您指定的手机：</p>
+      <div class="sms"><%= @coupon.sms_msg %></div>
+      <div class="down diyq_listbtn"><% if @coupon.sell_style == 1 && @coupon.existing_number == 0 %><span style="border: 1px solid #CF5A6C;color: #CCCCCC;padding:5px;">短信下载</span><% else %><a href="javascript:void(0);" data-id="<%= @coupon.id %>" data-title="<%= @coupon.title %>">短信下载</a><% end %> </div>
+    </div>
+    <div class="diyq_contbox4"> <strong>使用说明</strong>
+      <%= @coupon.usage %>
+    </div>
+    <div class="diyq_contbox5 margin10">
+      <div class="djq_contblink clearfix">
+        <table width="450" border="0" cellspacing="0" cellpadding="0">
+          <%= render :partial => "shared/shared_connection" %>
+        </table>
+      </div>
+    </div>
+    <% if hash_images["Distributor::PictureType::Case"] %>
+      <div class="diyq_contbox9 diyq_listrbox margin10">
+        <h3>产品案例图片</h3>
+        <ul class="clearfix">
+          <% hash_images["Distributor::PictureType::Case"].each do |item| %>
+            <li><a href="<%= cloud_fs_domain('image') %><%= item.image_url %>" style="text-decoration:none;" title="<%= item.name %>" id="case_img_box_<%= item.id %>" rel="lightbox">
+                <% id, ext = item.image_url.split(".") %>
+                <img src="<%= cloud_fs_domain('image') %><%= id + "_132x94" + (ext.to_s.blank? ? "" : ".#{ext}") %>" width="132" height="94" />
+                <span><%= item.name %></span></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if hash_images["Distributor::PictureType::Glory"] %>
+      <div class="diyq_contbox9 diyq_listrbox">
+        <h3>资质证书</h3>
+        <ul class="clearfix">
+          <% hash_images["Distributor::PictureType::Glory"].each do |item| %>
+            <li><a href="<%= cloud_fs_domain('image') %><%= item.image_url %>" style="text-decoration:none;" title="<%= item.name %>" id="glory_img_box_<%= item.id %>" rel="lightbox">
+                <% id, ext = item.image_url.split(".") %>
+                <img src="<%= cloud_fs_domain('image') %><%= id + "_132x94" + (ext.to_s.blank? ? "" : ".#{ext}") %>" width="132" height="94" />
+                <span><%= item.name %></span></a></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <a name="a3" id="a3">&nbsp;</a>
+    <div class="margin10">
+      <%= render :partial => "coupon_remark" %>
+      <%= render :partial => 'login_ajax' %>
+    </div>
+    <%= render_cell :coupon, :interested_coupons, :city_id => @city.id, :limit => 4 %>
+  </div>
+  <div class="diyq_list_r f_r">
+    <div class="diyq_contbox8 diyq_listrbox margin10">
+      <h3>口碑印象排行榜</h3>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th>品牌口碑</th>
+          <th align="center">得票数</th>
+        </tr>
+        <%
+        distributor.top_impressions.each do |impression|
+          unless impression[:name].blank? && impression[:score].blank?
+          %>
+            <tr>
+              <td ><%= h impression[:name] %></td>
+              <td align="center"><%= impression[:score] %></td>
+            </tr>
+          <%
+          end
+        end
+      %>
+      </table>
+    </div>
+    <%= render :partial => "promotion_browsed" %>
+    <%= render_cell :coupon, :hot_coupons, :tag_id => @coupon.tag_id, :city_id => @city.id, :limit => 3 %>
+    <%= render :partial => "featured_distributor" %>
+    <%= render_cell :coupon, :owned_browsed_coupons, :browsed_coupons => cookies[:browsed_coupons] %>
+  </div>
+</div>
+<div class="diyq_hotline"></div>
+<%= render :partial => '/share/common_help' %>
+<!-- 添加到下载脚本 -->
+<%= render :partial => '/share/coupon_download_pop' %>
+<% content_for :html_body_end do %>
+  <!-- 此页面样式于别页面页面有点差异  -->
+  <style type="text/css">
+    .tag_cloud{
+      padding:0;
+    }
+  </style>
+  <%=
+  javascript_include_tag(
+    jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0'),
+    jquery_resource(:plugin => 'jgrowl', :version => '1.2.4')
+  )
+%>
+  <script type="text/javascript">
+
+    function initLightBox(id){
+      $(id).lightBox(
+      {
+        overlayBgColor: "#000",
+        overlayOpacity: 0.5,
+        fixedNavigation: false,
+        imageLoading:'http://img.51hejia.com/lightbox/lightbox-ico-loading.gif',
+        imageBtnPrev:'http://img.51hejia.com/lightbox/lightbox-btn-prev.gif',
+        imageBtnNext:'http://img.51hejia.com/lightbox/lightbox-btn-next.gif',
+        imageBtnClose:'http://img.51hejia.com/lightbox/lightbox-btn-close.gif',
+        imageBlank:'http://img.51hejia.com/lightbox/lightbox-blank.gif',
+        maxImageWidth:500,
+        containerBorderSize: 10,
+        txtImage: 'Image',
+        txtOf: 'of'
+      });
+    }
+    initLightBox("a[id^='case_img_box_']");
+    initLightBox("a[id^='glory_img_box_']");
+
+    $(function(){
+
+      // 添加印象
+      function addImpression(impression) {
+        $.ajax({
+          url: $('#impression_form').attr('action'),
+          type: "POST",
+          data: $.param({title: impression}),
+          dataType: "json",
+
+          error: function(request) {
+            var msg;
+            try {
+              //              msg = request.responseText;
+              msg = eval('(' + request.responseText + ')').join('<br/>');
+            } catch(e) {
+              msg = '未知错误，请稍后再尝试。';
+            }
+            //            $.jGrowl(msg, {header: '出错啦'});
+            alert(msg);
+          },
+          success: function(data) {
+            $("#new_impression").text(data.join(" "));
+            alert("印象添加成功!");
+            //           $.jGrowl('印象添加成功', {header: '感谢您的参与'});
+          }
+
+        });
+      }
+
+      // 添加印象form
+      $('#impression_form').submit(function(event) {
+        event.preventDefault();
+        var textField = $(this).find(':text'),
+        impression = $.trim(textField.val());
+        textField.val('<%= default_impression_text %>');
+        if (impression != '' && impression != '<%= default_impression_text %>') addImpression(impression);
+        return false;
+      }).find(':text').
+        focus(function() { if( $.trim($(this).val()) == '<%= default_impression_text %>' ) $(this).val('') }).
+        blur(function() { if( $.trim($(this).val()) == '' ) $(this).val('<%= default_impression_text %>') });
+
+      //　印象 A Ｌianjie　
+      $('.impression').click(function(event) {
+        addImpression($(this).text());
+        event.preventDefault();
+        // return false;
+      });
+      
+      $('.tag_cloud').tagCloud();
+
+    });
+    
+  </script>
+<% end %>

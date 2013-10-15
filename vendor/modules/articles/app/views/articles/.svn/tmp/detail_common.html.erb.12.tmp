@@ -1,0 +1,50 @@
+<script language="javascript">
+  function setFocus2(p,y,o,m)//(y)id标签下的 (p)内容,对应li的id为(o)(m)
+  {
+    selectLayer2(p,y,o,m);
+  }
+  function selectLayer2(p,y,o,m)
+  {
+    for (var i=0;i<document.getElementById(y).getElementsByTagName(p).length;)
+    {
+      document.getElementById(o+i).style.display="none";
+      i++;
+    }
+    document.getElementById(o+m).style.display="block";
+  }
+</script>
+<%#= render :partial => 'articles/detail/dianxing_menu' if @article.channel_sign == 'dianxing' %>
+<% if @channel %>
+  <% if ["diban","cizhuan","youqituliao","chugui","chufangdianqi","zhaomingpindao","jiadian","jiajuchanpin","buyi","kongtiao","cainuan","shuichuli","pinpaiku"].include?(@channel) %>
+    <%= render :partial => 'articles/common/top_menu' %>
+  <% elsif ["zhuangxiu","xiaohuxing","bieshu","chufang","keting","weiyu","woshi","shufang","beijingqiang","ertongfang","huayuanshenghuo","gongyu"].include?(@channel) %>
+    <%= render :partial => 'articles/zhuangxiu/top_menu' %>
+  <% end %>
+<% end %>
+
+<div class="width960" style="margin-bottom: 10px;">
+  <%= render_ad 80881, "装修资讯-首页-通栏1+", "afp" %>
+  <!--embed align="middle" width="960" height="85" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" name="gamefile" quality="high" id="gamefile" src="http://js.51hejia.com/flash/zd.swf"-->
+</div>
+
+<div class="f2" id="f2">
+  <div class="mapsite">
+    <p> <%=@article.route_sign(@is_preview)%> </p>
+  </div>
+  <div class="f2_content">
+
+    <%= adspace("#{@tag_name}-文章终端页-大旗1", "", '<div style="padding: 5px;"></div>') unless @tag_name.blank? %>
+
+    <%= render :partial => 'articles/detail/content' %>
+
+    <%=render :partial => 'articles/common/bottom'%>
+
+  </div>
+
+  <%=render :partial => 'articles/common/right'%>
+
+</div><!--f2-->
+
+<div class=" clear clearfix">
+</div>
+

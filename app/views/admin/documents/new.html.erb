@@ -1,0 +1,28 @@
+<% is_new_record = @document.new_record? %>
+<% form_for @document, :url => (is_new_record && admin_brand_documents_path || admin_document_path(@document)), :html => {:method => (is_new_record && :post || :put), :multipart => true}  do |f| %>
+  <fieldset>
+    <legend>添加资料</legend>
+    <table>
+      <tr>
+      <tr>
+        <th>名称</th>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <th>链接地址</th>
+        <td><%= f.text_field :url %></td>
+      </tr>
+      <tr>
+        <th>资料文件</th>
+        <td><%= f.file_field :uploaded_data %></td>
+      </tr>
+        <td colspan="2"><%= submit_tag '保存' %></td>
+      </tr>
+      </tr>
+        <td colspan="2">
+          <p class="notic">注意：链接地址和资料文件各选一个即可。</p>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>

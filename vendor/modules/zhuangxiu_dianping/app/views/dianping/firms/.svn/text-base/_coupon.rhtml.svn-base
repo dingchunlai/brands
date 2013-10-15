@@ -1,0 +1,61 @@
+<% @event = @firm.events.find(:first,:order => "created_at desc", :limit =>1 ) %>
+<% @coupon = fetch_firm_coupon(@firm.id) %>
+
+<% if @coupon.nil? and @event %>
+  <% @active = "event" %>
+<% else %>
+  <% @active = "coupon" %>
+<% end %>
+
+<div class="zxdp2010_info zxdp2011_info margin10 f_l">
+  <div class="zxdp2011_info_tit">
+    <% if @active == "event" %>
+      <a href="javascript:void(0)" class="active">活动信息</a>&nbsp;
+    <% else %>
+      <a href="javascript:void(0)" class="active">现金券</a>&nbsp;
+      <% if @event %>
+        |&nbsp;<a href="javascript:void(0)">活动信息</a>
+      <% end %>
+    <% end %>
+  </div>
+  <ul>
+    <% if @active == "event" %>
+      <li>
+        <a href="<%= two_coupon_urls(@user_city_code,@event) %>" target="_blank"><img src="<%= @event.banner %>" alt="<%= @event.title %>" /></a>
+        <div class="zxdp2010_infomenu zxdp2011_info_tit_a clearfix">
+          <%= link_to(@event.title, two_coupon_urls(@user_city_code,@event), :popup => true) %>
+        </div>
+      </li>
+    <% else %>
+      <li>
+        <% if @coupon %>
+          <div class="f_l">
+            <img src="<%= "http://assets5.image.51hejia.com/#{@coupon.show_image_url}" %>" width="130" height="90" />
+          </div>
+          <p>总发行 <%= @coupon.total_issue_number %> 张</p>
+          <p>当前可用 <%= @coupon.virtual_existing_number %> 张</p>
+          <p>有效期限：</p>
+          <p><%= @coupon.activity_began_at("%Y.%m.%d") %>-<%= @coupon.activity_end_at("%Y.%m.%d") %></p>
+          <p class="down diyq_listbtn">
+            <a class="zxdp2011_info_tit_btn" href="javascript:void(0);" data-id="<%= @coupon.id %>" data-title="<%= @coupon.title %>">短信下载</a>
+          </p>
+          <div class="zxdp2010_infomenu zxdp2011_info_tit_a clearfix">
+            <%= link_to(truncate_u(strip_tags(@coupon.title),25), firm_coupon_path(@coupon), :popup => true) %>
+          </div>
+        <% else %>
+          <div style="border-bottom: 1px dashed rgb(222, 222, 222); text-align: center; height: 35px; line-height: 25px;">
+            暂无信息
+          </div>
+        <% end %>
+      </li>
+      <% if @event %>
+        <li style="display: none;">
+          <a href="<%= two_coupon_urls(@user_city_code,@event) %>" target="_blank"><img src="<%= @event.banner %>" alt="<%= @event.title %>" /></a>
+          <div class="zxdp2010_infomenu zxdp2011_info_tit_a clearfix">
+            <%= link_to(@event.title, two_coupon_urls(@user_city_code,@event), :popup => true) %>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

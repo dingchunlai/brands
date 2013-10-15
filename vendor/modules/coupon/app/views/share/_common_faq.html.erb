@@ -1,0 +1,12 @@
+<div class="djq_rcur margin10">
+  <h3>常见问题Q&A </h3>
+  <div class="djq_went_more"><a href="<%= coupon_help_path %>" target="_blank">More&gt;&gt;</a></div>
+  <div class="djq_rcurtxt">
+    <ul class="djq_went_list">
+      <% promotion_items("品牌库:抵用券:首页:常见问题Q&A").each do |item| %>
+        <li><%= link_to item.title, item.url, :target => "_blank" %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

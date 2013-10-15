@@ -1,0 +1,223 @@
+<%=include_jquery_easy_validator%>
+<%=include_jquery_autocomplete%>
+
+
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+
+<% form_for [:distributor_user, @coupon], :html => {:id=>'coupon_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image')}  do |f|%>
+  <%= f.error_messages %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2"><%= Coupon.human_name %>信息管理</th>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :contract_id %></strong></td>
+        <td class="last">
+          <%= f.select :contract_id, @coupon.contract_options, {}, :reg => '^\S+$', :tip => "经销商合同必须选择" %>
+          <%= f.hidden_field :distributor_id %>
+        </td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :shop_id %></strong></td>
+        <td class="last"><%= f.select :shop_id, Distributor::Shop.by_distributor(@coupon.distributor_id).map{|r| [r.name, r.id]}.unshift(['请选择', '']), {}, :reg => '^\w+$', :tip => "必须选择"%></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :tag_id %></strong></td>
+        <td class="last"><%= f.select :tag_id, ['请选择',''],{}, :reg => '^\w+$', :tip => "必须选择" %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :brand_id %></strong></td>
+        <td class="last">
+          <%= f.select :brand_id, ['请选择',''],{}, :reg => '^\w+$', :tip => "必须选择" %>
+     </td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><span id="pc_msg" style="color: red;"></span><strong><%= f.label :production_category_id %></strong></td>
+        <td class="last" id="production_category_ids_td">
+          <%#=production_category_check_box_tags(@coupon)%>
+        </td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :discount_amount %></strong></td>
+        <td class="last"><%= f.text_field :discount_amount, :reg => '^[1-9]\d*$', :tip => "满多少金额必须填写数字" %>元启用</td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :return_amount %></strong></td>
+        <td class="last"><%= f.text_field :return_amount, :reg => '^[1-9]\d*$', :tip => "抵用多少金额必须填写数字" %>元</td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :total_issue_number %></strong></td>
+        <td class="last"><%= f.text_field :total_issue_number, :reg => '^[1-9]\d*$', :tip => "必须填写数字" %> * 请填写数字</td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :activity_began_at %></strong></td>
+        <td class="last"><%= f.text_field :activity_began_at, :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => '必选' %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :activity_end_at %></strong></td>
+        <td class="last"><%= f.text_field :activity_end_at, :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => '必选' %></td>
+      </tr>
+     <tr>
+        <td class="first" width="172"><span id="print_image_url_msg" style="color:red;"></span><strong><%= f.label :print_image_url %></strong></td>
+        <td class="last">
+          <img id="print_image_thumb" width="290" height="213" alt="打印图片预览" />
+          <span id="print_image_upload_button"></span>(尺寸: 290px * 213px) 300 dpi
+          <%= f.text_field :print_image_url, :style => "display:none;", :reg => '^.*$', :tip => '必选' %>
+        </td>
+      </tr>
+      <tr class="bg">
+        <td class="first"></td>
+        <td class="last"><%= f.submit @coupon.new_record? ? "添 加" : "修改" %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+<script src="http://js.51hejia.net/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<script src="http://js.51hejia.net/js/brands/uploadify/coupon_image.js?<%=Time.now.to_i%>" type="text/javascript"></script>
+<script type="text/javascript">
+    var industries = <%= @industries.to_json%>;
+    var brands = <%= @brands.to_json%>;
+    var industry_index = 0;
+    var brand_index = 0;
+    <% if @coupon.new_record? %>
+    var industry_id = '';
+    var brand_id = '';
+    var pc_ids = [];
+    <% else %>
+    var industry_id = '<%= @coupon.tag_id %>';
+    var brand_id = '<%= @coupon.brand_id %>';
+    var pc_ids = <%= @coupon.production_categories.map(&:id).to_json %>;
+    <% end %>
+    // 初始化行业
+    $('#coupon_tag_id option').remove();
+    $('#coupon_tag_id').append($('<option value="">请选择</option>'));
+    $.each(industries, function(i, industry) {
+        if (industry[0].toString() == industry_id.toString()) { industry_index = i + 1; }
+        $('<option value="' + industry[0] + '">' + industry[1] + '</option>').appendTo($('#coupon_tag_id'));
+    });
+
+    $(function() {
+        set_image($('#print_image_thumb'), $('#coupon_print_image_url'));
+        //加载日期元素插件
+        $("#coupon_activity_began_at").datepicker({dateFormat: 'yy-m-d'});
+        $("#coupon_activity_end_at").datepicker({dateFormat: 'yy-m-d'});
+
+        $("input[type=checkbox][name^='production_category_ids']").live("click", function(){
+            $("#pc_msg").html('');
+        });
+        
+        //品牌/行业-品类联动
+        $('#coupon_brand_id').change(function() { get_production_categories(); });
+
+        //行业-品牌联动选择
+        $('#coupon_tag_id').change(function() {
+            var tag_id = $(this).val();
+            if (tag_id == '') return;
+            $('#coupon_brand_id option').remove();
+            $('#coupon_brand_id').append($('<option value="">请选择</option>'));
+            $.each(brands[tag_id.toString()], function(i, brand) {
+                if (brand[0].toString() == brand_id.toString()) { brand_index = i+1; }
+                $('<option value="' + brand[0] + '">' + brand[1] + '</option>').appendTo($('#coupon_brand_id'));
+            });
+            if (brand_index != 0) {
+                $('#coupon_brand_id').get(0).selectedIndex = brand_index;
+                $('#coupon_brand_id').trigger("change");
+            }
+        });
+
+        if (industry_index != 0) {
+            $('#coupon_tag_id').get(0).selectedIndex = industry_index;
+            $('#coupon_tag_id').trigger("change");
+        }
+
+        function get_production_categories() {
+            if ($('#coupon_brand_id>option:selected').val() == '') { return; }
+            $('#production_category_ids_td').text('').empty();
+            $('#production_category_ids_td').text('品类查询中...');
+            $.ajax({
+                url: '/categories/for_tag_and_brand',
+                type: 'get',
+                data: {'tag_id' : $('#coupon_tag_id').val(), 'brand_id' : $('#coupon_brand_id').val() },
+                dataType: 'json',
+
+                error: function(request) {
+                    alert('查询出错，请联系管理员！');
+                },
+
+                success: function(data) {
+                    $('#production_category_ids_td').text('').empty();
+                    if (data.length == 0) $('#production_category_ids_td').text('没有搜索到任何品类');
+                    for (var i = 0; i < data.length; i++) {
+                        var str = '';
+                        if ($.inArray(data[i][1], pc_ids) >=0) {
+                            str = '<input name="production_category_ids[]" type="checkbox" value="' + data[i][1] + '" checked="true"/> <span>' + data[i][0] + '</span>';
+                        } else {
+                            str = '<input name="production_category_ids[]" type="checkbox" value="' + data[i][1] + '" /> <span>' + data[i][0] + '</span>';
+                        }
+                        $(str).appendTo('#production_category_ids_td');
+                    }
+                }
+            });
+        }
+
+        $("#coupon_form").submit(function() {
+            $("#print_image_url_msg").html('');
+            var isSubmit = true;
+            if ($("input[type=checkbox][name^='production_category_ids']").length == 0) {
+                $("#pc_msg").html('请选择品类(顺序: 行业 -> 品牌)');
+                isSubmit = false;
+            } else {
+                var checked = $.grep($("input[type=checkbox][name^='production_category_ids']"), function(n, i) {
+                    return $(n).attr("checked");
+                });
+                if (checked.length <= 0) {
+                     $("#pc_msg").html('请选择品类');
+                    isSubmit = false;    
+                }
+            }
+
+            if ($("#coupon_print_image_url").val() == "") {
+                $("#print_image_url_msg").html('请上传图片');
+                isSubmit = false;
+            }
+
+            $(this).find("[reg],[url]:not([reg])").each(function() {
+                if ($(this).attr("reg") == undefined) {
+                    if (!ajax_validate($(this))) {
+                        isSubmit = false;
+                    }
+                } else {
+                    if (!validate($(this))) {
+                        isSubmit = false;
+                    }
+                }
+            });
+            if (typeof(isExtendsValidate) != "undefined") {
+                if (isSubmit && isExtendsValidate) {
+                    return extendsValidate();
+                }
+            }
+            if (isSubmit) {
+                return confirm('确定相关信息填写正确?');
+            } else {
+                return false;
+            }
+        });
+    });
+
+    function set_image(image_obj, obj) {
+        var src = 'http://js.51hejia.com/img/nil.gif';
+        if ($.trim(obj.val()) != '') {
+            src = ($("#coupon_form").attr("data-assetsurl") + obj.val()).replace(".com//", ".com/");
+        }
+        image_obj.attr('src', src);
+    }
+
+    function set_defualt(obj) {
+        obj.attr('src', "http://js.51hejia.com/img/nil.gif");
+    }
+</script>

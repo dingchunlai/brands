@@ -1,0 +1,7 @@
+<% content_for (:head) do %>
+  <% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+  <% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+  <% dp_js 'dianping/home/gongdi.js'%>
+<% end %>

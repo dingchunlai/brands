@@ -1,0 +1,32 @@
+<%= top_bar :title       => '抵用券佣金管理页',
+            :button      => ['创建抵用券佣金', new_admin_coupon_commission_path(:coupon_id => @coupon_commission.coupon_id)],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['抵用券佣金管理', admin_coupon_commissions_path(:coupon_id => @coupon_commission.coupon_id)]
+            ]
+%>
+<div class="searchbar">
+  <div style="color: #358; font-size: 13px;"><%= @coupon.title %> -- <%= @coupon.code %></div>
+</div>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">抵用券佣金信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponCommission.human_attribute_name("coupon_id") %></strong></td>
+      <td class="last"><%= @coupon_commission.coupon_id %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= CouponCommission.human_attribute_name("commission") %></strong></td>
+      <td class="last"><%= @coupon_commission.commission %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponCommission.human_attribute_name("activity_in") %></strong></td>
+      <td class="last"><%= @coupon_commission.activity_in %></td>
+    </tr>
+
+  </table>
+</div>

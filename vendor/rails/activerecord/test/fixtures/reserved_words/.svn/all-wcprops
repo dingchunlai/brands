@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words
+END
+distincts_selects.yml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words/distincts_selects.yml
+END
+group.yml
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words/group.yml
+END
+select.yml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words/select.yml
+END
+values.yml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words/values.yml
+END
+distinct.yml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/test/fixtures/reserved_words/distinct.yml
+END

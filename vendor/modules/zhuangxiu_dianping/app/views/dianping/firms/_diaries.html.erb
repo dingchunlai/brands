@@ -1,0 +1,18 @@
+<% if @diaries.size > 0 %>
+  <div class="zxdp2010_anltup margin10 clear">
+    <div class="zxdp2010_attab">
+      <h3>网友日记</h3>
+    </div>
+    <div class="zxdp2010_more"><%= link_to "更多&gt;&gt;", firm_decoration_diaries_url(:firm_id => @firm.id)%></div>
+    <div class="zxdp2010_atcont">
+      <ul class="clearfix">
+        <% @diaries.each do |diary|%>
+          <li>
+            <%= link_to image_tag(diary.master_picture.url("150x112"), :alt => diary.title), decoration_diary_url(:id => diary.id), :target => "_blank"%>
+            <%= link_to truncate_u(diary.title,18), decoration_diary_url(:id => diary.id), :target=>"_blank", :title => diary.title %>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+  </div>
+<% end -%>

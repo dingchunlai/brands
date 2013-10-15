@@ -1,0 +1,150 @@
+<% stylesheet "http://assets.taobaocdn.com/app/chl/info/info_detail.css"%>
+  <div id="infoDetail">
+      <div class="grid-c crumb-nav" id="DetailTop"> <span>您当前的位置：</span><em><a href="http://a.taobao.com">淘宝资讯</a></em> 
+	<em><a href="http://info.taobao.com/list/life/19/15/1915aa61-84a5-4a4b-a296-2411a2820e86_1.php">居家频道</a></em>
+	<em><%= link_to TaobaoArticle::KEYWORD.invert[@keyword_id.to_i], taobao_articles_path(@keyword_id)%></em>
+	　正文 <span class="want-contribute"><a href="http://tougao.taobao.com" target="_blank" class="contribute">我要投稿</a></span> <span class="want-subscribe"><a href="http://my.a.taobao.com/my_subscribed_inf.htm" target="_blank" class="contribute">我要订阅</a></span> <span class="goto-portaluc"><a href="http://my.a.taobao.com" target="_blank" class="contribute">个人中心</a></span> </div>
+      <!-- detail content start -->
+      <div class="grid-c2-s8f">
+        <div class="col-main">
+          <div class="main-wrap">
+            <div class="detail-box">
+              <!-- Detail Start -->
+              <div class="detail-context">
+                <div class="info-big-title">
+                  <h1><%=h @article.title%></h1>
+                  <p class="info-subheader">
+										作者：<%=h @article.AUTHOR %>
+										<span><%= @article.CREATETIME.strftime("%Y-%m-%d") %></span> 来源： <%=h @article.SOURCE %>
+	 								</p>
+                  
+                </div>
+                <div class="info-main-text" id="art-content">
+                  <p>【导语】<%=h @article.SUMMARY%></p>
+                 	 <%=@article_page %>
+							        <%=@article.content.CONTENT.gsub(/src=\"/,"src=\"http://www.51hejia.com").gsub(/\{==PAGE-BREAK==\}/,"") %>
+                </div>
+                <!-- start: 上一篇和下一篇-->
+                <ol id='sub-con-nav'>
+                  <li>
+                    <% if @pre_article %>
+											<label>上一篇:</label>	
+											<%=  link_to @pre_article.title, taobao_article_path(@keyword_id, @pre_article.id) %>
+											<% end -%>
+                    </li>
+                  <li>
+										<% if @next_article %>
+                    	<label>下一篇:</label>
+											<%=  link_to @next_article.title, taobao_article_path(@keyword_id, @next_article.id) %>
+										<% end -%>
+									</li>
+                </ol>
+                <!-- end: 上一篇和下一篇-->
+                
+              </div>
+              <!-- Detail remark Start -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sub">
+          <div class="sub-module">
+            <h3>头条推荐</h3>
+            <div class="sub-module-bd top-tj-bd">
+              <ul class="top-tj-list">
+                <% @pro_articles.each do |article|%>
+								<li><%= link_to h(article.title), article.url, :target=>"_blank" %></li>
+								<% end -%>
+              </ul>
+              <!-- w3.news.cnb.yahoo.com uncompressed/chunked Wed Jan 5 08:53:38 CST 2011 -->
+            </div>
+          </div>
+          <div class="sub-module">
+            <h3>焦点推荐</h3>
+            <div class="sub-module-bd focus-tj-bd">
+              <ul class="focus-pic-list">
+               		<% @focus.each do |topic|%>
+			            <li>
+										<%= link_to image_tag("http://d.51hejia.com/api/#{topic.image_url}",:alt=>topic.title, :size => "110x90"), topic.url %>
+										<span><%= link_to topic.title, topic.url %></span>
+									</li>
+									<% end -%>
+              </ul>
+            </div>
+          </div>
+          <!--Start:24Hour点击排行榜-->
+          <!--Start:点击排行-->
+          <div class="sub-module">
+            <h3>装修资讯</h3>
+            <div class="sub-module-bd">
+              <p class="hours-rank-title"><span class="topic-title">标题</span></p>
+              <ol class="hours-rank-list">
+								<% @deco_infos.each do |deco_info|%>
+									<li>
+										<span style="width:100%"><%= link_to truncate_u(deco_info.title,20,"..."), deco_info.url, :target=>"_blank" %></span>
+									</li>
+								<% end -%>
+              </ol>
+            </div>
+          </div>
+          <!--End:点击排行-->
+          <!--End:24Hour点击排行榜-->
+          <div class="sub-module">
+            <h3>时尚家居</h3>
+            <div class="sub-module-bd poster-tj-bd">
+              <ul class="poster-list">
+              		<%  @jiajus.each do |picture|%>
+			            <li>
+					<%= link_to image_tag("http://d.51hejia.com/api/#{picture.image_url}", :size => "110x90"),picture.url %>
+					<span><%= link_to truncate_u(picture.title,9), picture.url %></span>
+					</li>
+									<% end -%>    </ul>
+            </div>
+          </div>
+          <!--Start:论坛-->
+          <!--End:论坛-->
+          <!-- Start:编辑推荐 -->
+          <div class="sub-module">
+            <h3>空间搭配</h3>
+            <div class="sub-module-bd poster-tj-bd">
+              <ul class="focus-pic-list">
+						<%  @kongjian.each do |picture|%>
+							 <li>
+					<%= link_to image_tag("http://d.51hejia.com/api/#{picture.image_url}", :size => "110x90"),picture.url %>
+					<span><%= link_to truncate_u(picture.title,9), picture.url %></span>
+					</li>
+					<% end -%>
+              </ul>
+            </div>
+          </div>
+          <!-- End:编辑推荐 -->
+          <!--Start:帮派-->
+          <div class="sub-module">
+            <h3>建材导购  </h3>
+            <div class="sub-module-bd poster-tj-bd">
+              <ul class="top-tj-list">
+										<%  @daogou.each do |picture|%>
+											 <li>
+								
+									<span><%= link_to truncate_u(picture.title,22,"..."), picture.url %></span>
+									</li>
+									<% end -%>
+              </ul>
+            </div>
+          </div>
+				
+          <!--End:帮派-->
+          <!--Start:试用中心-->
+          <div class="sub-module">
+            <h3>互动中心  </h3>
+            <div id="detail-try" class="sub-module-bd poster-tj-bd">
+            			<% @hudong.each do |article|%>
+			            <li><span><%= link_to truncate_u(article.title,20), article.url%></span></li>
+									<% end -%>
+
+            </div>
+          </div>
+          <!--End:试用中心-->
+        </div>
+      </div>
+    </div>
+</div>

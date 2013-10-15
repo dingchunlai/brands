@@ -1,0 +1,71 @@
+<% title "【油漆工】认证油工_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_3 %>
+<% description PAINT_DESCRIPTION_3 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/renzhengyougong' target='_self' title='认证油工列表'>认证油工列表</a>", :location_end => "更多认证油工信息" }%>
+<script type="text/javascript">
+  	$(document).ready(function(){
+		$("#province").change(function(){
+			$.getJSON("/paint_workers/get_paint_cities",{province: $("#province").val()}, function(data){
+				$(".this_city").empty();
+				$("<option value=''>请选择</option>").appendTo(".this_city");
+				$.each(data,function(i){
+					 $("<option value='"+ data[i][0] +"'>"+ data[i][1] +"</option>").appendTo(".this_city");
+				});
+			});
+		});
+	});
+</script>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current" style="position:relative;">
+      <h3>认证油工列表</h3>
+	  <div style="position:absolute;top:0;right:10px;height:36px;line-height:36px;">
+		<form action="/renzhengyougong/all" method="get">
+		  	<select name="province" id="province" style="width:80px">
+				<option value="">省份</option>
+				<% Province.get_province_jinshuazi.each do |k,v| %>
+					<option value="<%= v %>" <%= 'selected' if @province == v %>><%= k %></option>
+				<% end %>
+			</select>
+			<select name="city" id="city" class="this_city" style="width:80px;">
+				<option value="">城市</option>
+				<% City.get_cities_for_province_jinshuazi(@province).each do |k,v| %>
+					<option value="<%= k %>" <%= "selected='selected'" if @city == k %>><%= v %></option>
+				<% end %>
+			</select>
+          <input name="" type="submit" value="搜索" class="yg_smss_inputbtn" />
+        </form>
+		</div>
+	  <div class="yjy_list clearfix">
+		<table width="680" border="0" cellspacing="0" cellpadding="0" class="margin10">
+		  <tr>
+		    <td width="180"><strong>城市</strong></td>
+		    <td width="180"><strong>师傅姓名</strong></td>
+		    <td width="180"><strong>证书等级</strong></td>
+		    <td><strong>证书编号</strong></td>
+		  </tr>
+		  <% @paint_workers.each do |paint_worker|%>
+		  <tr>
+		    <td><%= City.name_for_code(paint_worker.painter.city) %></td>
+		    <td><a href="<%= get_paint_worker_url(paint_worker.id)%>"><%= paint_worker.USERBBSNAME %></a></td>
+		    <td><%= Painter::GRADE.index(paint_worker.painter.grade) %></td>
+		    <td><%= paint_worker.painter.certificate_number %></td>
+		  </tr>
+		  <% end %>
+		</table>
+		<div class="pagination"><%= will_paginate @paint_workers %></div>
+      </div>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

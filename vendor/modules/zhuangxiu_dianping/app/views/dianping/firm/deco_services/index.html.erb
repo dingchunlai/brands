@@ -1,0 +1,44 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:公司服务承诺列表页") %>
+<% if html_metadata %>
+  <% @title = html_metadata.title % {:firm_name => @firm.name_zh} %>
+  <% firm_sub_menu  %>
+  <% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 服务承诺列表"%>
+<% else %>
+  <% @title = @firm.name_zh %>
+  <% firm_sub_menu  %>
+  <% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 服务承诺列表"%>
+<% end %>
+
+<%= render :partial => "dianping/shared/firm_factory_pop"%>
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sjlnlist">
+      <h3>服务承诺</h3>
+      <div class="zxdp2010_sjslisthack"></div>
+      <ul class="margin10 clearfix">
+        <% @deco_services.each do |service|%>
+          <li>
+            <div class="zxdp2010_sjslistimg f_l">
+              <%= link_to image_tag(service.master_picture.url,:alt => service.title), deco_service_url(:id => service.id), :target => "_blank"%>
+            </div>
+            <div class="zxdp2010_sjlnlisttxt f_r">
+              <div class="zxdp2010_sjlntit clearfix">
+                <h4><%= link_to h(service.title) , deco_service_url(:id => service.id), :target => "_blank" %></h4>
+                <span class="f_r"> <label><%= service.remarks_count %></label> 人点评  <label><%= service.pv %></label> 人浏览过</span>
+              </div>
+              <p><%= truncate_u(service.content,200,"...")%></p>
+              <div class="zxdp2010_sjlntime f_r">
+                <label><%= service.created_at.to_date%></label>
+              </div>
+            </div>
+          </li>
+        <% end -%>
+      </ul>
+      <div class="zxdp2010_sjsnum f_l">共有<span><%= @deco_services.total_entries %></span>个<%= @firm.name_abbr %>的服务承诺 </div>
+      <%= will_paginate @deco_services %>
+    </div>
+  </div>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>

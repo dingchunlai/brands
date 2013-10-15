@@ -1,0 +1,66 @@
+<% title "【油漆工】个人信息修改_#{@paint_worker.USERBBSNAME}_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/messages_cn.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.validator.setDefaults({ 
+			onkeyup: false
+		});
+		$(".edit_paint_worker").validate();
+	});
+</script>
+<%= render :partial => '/shared/top_location', :locals => { :location => (link_to "#{@paint_worker.USERBBSNAME}的主页" ,paint_worker_admin_path,:target => '_self'), :location_end => "个人信息修改" }%>
+<div class="width960 margin10 clearfix">
+  <div class="yg_web_l f_l">
+  	<%= render :partial => '/shared/front_admin_left'%>
+  </div>
+ 	<div class="yg_web_r f_r"> 
+    <div class="yg_web_rbox margin10"> 
+      <div><%=render :partial => '/shared/front_admin_top', :locals => { :top_name => "个人信息修改" }%></div>
+	  <div class="yg_web_infofb"> 
+		<% form_for  @paint_worker, :url => "/paint_worker/admin_update" do |f| %>
+		<%= f.error_messages%>
+       <table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+		  <tr> 
+		    <td align="right">用户名：</td> 
+		    <td width="160"><%= @paint_worker.USERNAME %></td> 
+		    <td>&nbsp;</td> 
+		  </tr>
+		  <tr> 
+		    <td align="right">姓名：</td> 
+		    <td width="160"><%= @paint_worker.USERBBSNAME %></td> 
+		    <td>&nbsp;</td> 
+		  </tr>  
+		  <tr> 
+		    <td align="right">电子邮箱：</td> 
+		    <td><%= f.text_field :USERBBSEMAIL,:size=>20 ,:class => "required email" %></td> 
+		    <td><span>（请填写您常用的邮箱）</span></td> 
+		  </tr> 
+		  <tr> 
+		    <td align="right">手机：</td> 
+		    <td><%= f.text_field :USERBBSMOBELTELEPHONE,:size=>20, :class => "required"  %></td> 
+		    <td><span>（请填写您常用的手机号码）</span></td> 
+		  </tr> 
+		  <tr> 
+		    <td align="right">礼品寄送地址：</td> 
+		    <td><% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+			    	<%= painter_fields.text_field :address ,:size=>20 , :class => "required" %>
+				<% end %></td> 
+		    <td><span>（请填写您方便接收礼品的地址）</span></td> 
+		  </tr> 
+		  <tr> 
+		    <td align="right">您的密码：</td> 
+		    <td><input name="password" type="password" class="required" /></td> 
+		    <td><span style="color:red"><%= show_flash_message%></span><span>（请输入您的密码确认）</span></td> 
+		  </tr> 
+		  <tr> 
+		    <td colspan="3" align="center"><%= f.submit "确认修改" %></td> 
+		    </tr> 
+		</table> 
+        <% end %>
+      </div> 
+    </div> 
+  </div> 
+</div>

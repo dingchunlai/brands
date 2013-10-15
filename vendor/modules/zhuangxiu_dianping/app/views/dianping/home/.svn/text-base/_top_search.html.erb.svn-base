@@ -1,0 +1,87 @@
+<% has_district = has_district.nil? ? false : has_district %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="120"><span>我的预算是</span></td>
+    <td>
+      <% prices = [12117].include?(@user_city_code.to_i) ? NINBO_PRICE.sort : DecoFirm::PRICE.sort %>
+      <% prices.each do |k, v| %>
+        <% if controller_name == "decoration_diaries" %>
+          <%= link_to v,search_diaries_for_options(:price => k), :target => "_blank"%>
+        <% elsif controller_name == "cases" %>
+          <%= link_to v,search_cases_for_options(:price => k), :target => "_blank"%>
+        <% else %>
+          <%= link_to v,search_firm_for_options(:price => k), :target => "_blank"%>
+        <% end %>
+      <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td><span>我喜欢的风格</span></td>
+    <td>
+      <% DecoFirm::STYLES.sort.each do |k, v| %>
+        <% if controller_name == "decoration_diaries" %>
+          <a href="<%= search_diaries_for_options(:style => k) %>" target ="_blank"><%= v %></a>
+        <% elsif controller_name == "cases" %>
+          <a href="<%= search_cases_for_options(:style => k) %>" target ="_blank"><%= v %></a>
+        <% else %>
+          <a href="<%= search_firm_for_options(:style => k)%>" target="_blank"><%= v %></a>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><span>预期装修方式</span></td>
+    <td>
+      <% models = Marshal.load(Marshal.dump(DecoFirm::MODELS))%>
+      <% models.delete(models.index("装修监理"))%>
+      <% models.sort.each do |k, v| %>
+        <% if controller_name == "decoration_diaries" %>
+          <a href="<%= search_diaries_for_options(:model => k) %>" target ="_blank"><%= v %></a>
+        <% elsif controller_name == "cases" %>
+          <a href="<%= search_cases_for_options(:model => k) %>" target ="_blank"><%= v %></a>
+        <% else %>
+          <a href="<%= search_firm_for_options(:model => k)%>" target="_blank"><% if v == "设计工作室" %><em class="font_style_2011"><%= v %></em><% else %><%= v %><% end %></a>
+        <% end %>
+      <% end %>
+      <% if @user_city_code.to_i == 11910 %>
+        <%= link_to "装修监理", "http://zt.51hejia.com/zhuanti/laotian/index.html" ,:target =>"_blank"%>
+      <% end %>
+      <% if controller_name != "decoration_diaries" && controller_name != "cases" %>
+        <a href="<%= decoration_url(:trailing_slash => "/") %>" target="_blank"><em class="font_style_2011">工装</em></a>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><span>我的房型是</span></td>
+    <td>
+      <% DecoFirm::ROOM.sort.each do |k, v| %>
+        <a href="<%= search_room_url(@user_city_code, v, controller_name) %>" target="_blank"><%= v %></a>
+      <% end %>
+    </td>
+  </tr>
+  <% if has_district %>
+    <% unless @user_city_code.to_i == 11910%>
+      <tr>
+        <td><span>我的区县是</span></td>
+        <td>
+
+          <% if @user_city_code.to_i == 12117 %>
+            <%= link_to "市区", firms_url(:trailing_slash => true), :target => "_blank" %>
+            <% DIANPING_INDEX_TOP_SEARCH[TAGURLS[@user_city_code.to_i]].each do |district| %>
+              <%= link_to district[0], search_firm_for_options(:district => district[1]), :target => "_blank" %>
+            <% end %>
+          <% else %>
+            <% areas = HejiaTag.urban_areas(@user_city_code)%>
+            <% c_areas =  areas.size >=7 ? areas[0..6] : areas%>
+            <% c_areas.each do |area| %>
+              <a href="<%= search_firm_for_options( :district => area.TAGID)%>" target="_blank"><%= truncate(area.TAGNAME,:length => 2 ,:omission => '') %></a>
+            <% end %>
+            <% if areas.size >= 7 %><%= link_to "更多",firms_url(:trailing_slash => true) ,:target=> "_blank"%><% end %>
+          <% end %>
+
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

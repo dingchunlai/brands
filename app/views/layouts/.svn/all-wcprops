@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/736/51hejia/repos/brands/release/app/views/layouts
+END
+application.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/app/views/layouts/application.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/618/51hejia/repos/brands/release/app/views/layouts/index.html.erb
+END
+admin.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/app/views/layouts/admin.html.erb
+END
+zhuanti.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/app/views/layouts/zhuanti.rhtml
+END
+huodong.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/736/51hejia/repos/brands/release/app/views/layouts/huodong.rhtml
+END
+admin_v2.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/524/51hejia/repos/brands/release/app/views/layouts/admin_v2.html.erb
+END

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+  function close_lee_dialog(){
+    var height = 600;
+    $("#floatBoxBg").animate({opacity:"0"},"normal",function(){$(this).hide();});
+    $("#floatBox").animate({top:($(document).scrollTop()-(height=="auto"?300:parseInt(height)))+"px"},"normal",function(){$(this).hide();});
+  }
+  function EncodeURI(str){
+    var   m="",sp="!'()*-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~"
+    for(var   i=0;i<str.length;i++){
+    if(sp.indexOf(str.charAt(i))!=-1){
+    m+=str.charAt(i)
+    }else{
+    var   n=str.charCodeAt(i)
+    var   t="0"+n.toString(8)
+    if(n>0x7ff)
+    m+=("%"+(224+parseInt(t.slice(-6,-4),8)).toString(16)+"%"+(128+parseInt(t.slice(-4,-2),8)).toString(16)+"%"+(128+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0x7f)
+    m+=("%"+(192+parseInt(t.slice(-4,-2),8)).toString(16)+"%"+(128+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0x3f)
+    m+=("%"+(64+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0xf)
+    m+=("%"+n.toString(16)).toUpperCase()
+    else
+    m+=("%"+"0"+n.toString(16)).toUpperCase()
+    }
+    }
+    return   m;
+}
+</script>
+<div style="height:530px;">
+  <div style="padding-bottom: 15px;">
+    
+      关键词：<%=text_field_tag :search_text, @search_text,:style => "width:70px;" %>
+      品类：<%=text_field_tag :search_type, @search_type,:style => "width:50px;" %>
+      时间：<%=select_tag :search_interval, options_for_select([['一个月内',1],['三个月内',3],['半年内',6],['一年内',12]], @search_interval)%>
+      <input type="button" value="搜索" onclick="open_lee_dialog('/admin_v2/promotion_collections/resource_list?item_type=<%=@item_type%>&search_text=' + EncodeURI($('#search_text').val()) + '&search_type=' + EncodeURI($('#search_type').val()) + '&search_interval=' + $('#search_interval').val());" />
+
+    <%=mypage_entries_info(@rs)%>　
+    <%total_page = (@rs.total_entries.to_f/@rs.per_page.to_f).ceil%>
+    <%if @rs.current_page == 1%>
+      <span disabled>上一页</span>　
+    <%else%>
+      <a href="javascript://" onclick="open_lee_dialog('/admin_v2/promotion_collections/resource_list?item_type=<%=@item_type%>&page=<%=@rs.current_page-1%>&search_text=<%=u(@search_text)%>&search_type=<%=u(@search_type)%>&search_interval=<%=@search_interval%>');">上一页</a>　
+    <%end%>
+    <%if @rs.current_page == total_page%>
+      <span disabled>下一页</span>
+    <%else%>
+      <a href="javascript://" onclick="open_lee_dialog('/admin_v2/promotion_collections/resource_list?item_type=<%=@item_type%>&page=<%=@rs.current_page+1%>&search_text=<%=u(@search_text)%>&search_type=<%=u(@search_type)%>&search_interval=<%=@search_interval%>');">下一页</a>
+    <%end%>
+  </div>
+  <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#CCCCCC">
+    <tr style="height: 20px;">
+      <th>编号</th>
+      <th>标题</th>
+      <th>创建日期</th>
+    </tr>
+    <%@rs.each do |r|%>
+      <tr style="height: 20px;">
+        <td><%=r["id"]%></td>
+        <td style="text-align: left;">
+          <%=link_to r["title"], 'javascript://', :title => "点击选取该资源",:onclick => "$('#item_resource_id').val('#{r["id"]}');close_lee_dialog();"%>
+        </td>
+        <td><%=r.created_at.to_s[0..9]%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>

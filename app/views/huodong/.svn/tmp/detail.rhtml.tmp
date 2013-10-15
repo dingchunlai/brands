@@ -1,0 +1,161 @@
+<%
+@page_title = @event.subject
+@page_meta_keywords = @event.html_keywords
+@page_meta_desc = @event.html_description
+%>
+
+<div class="b_width960 margin10">
+  <div class="">
+    位置导航：<a href="/huodong" target="_blank">活动首页</a> >
+    <a href="<%=list_url('', @event.first_tag.TAGURL)%>" target="_blank"><%=@event.first_tag.TAGNAME%></a> >
+    <%=@event.short_subject%></div>
+</div>
+
+<div class="b_width960 clearfix">
+  <div class="b_hd_cont f_l">
+    <h3>热点活动 - <%=@event.short_subject%></h3>
+    <div class="b_hd_conttit clearfix">
+      <div class="b_hd_contimg f_l">
+        <a href="<%=@event.url%>" target="_blank">
+          <img alt="<%=@event.subject%>" border="0" src="<%=@event.image(150)%>" /></a>
+        <span>组织者：<%=@event.organizer%></span>
+      </div>
+      <div class="b_hd_conttxt <%=  Time.now<@event.ends_at ? "b_hd_conttxt01" : "b_hd_conttxt02"%> f_r">
+        <h4><%=@event.subject%></h4>
+        <em>【活动主题】</em>
+        <span>【活动时间】<%=@event.duration%></span>
+        <span>【活动地点】<%=@event.location%></span>
+        <span>【咨询联系】<%=@event.phone_numbers%></span>
+      </div>
+    </div>
+    <div class="b_hd_continfo">
+      <%=@event.content%>
+      <div style="text-align: right; background-color: white; padding:5px;">
+        <% unless @event.next_event_link.blank? %>
+          下一个活动： <%= @event.next_event_link %>
+        <% end %>
+        <% if @event.id == 436 %>
+          <form onsubmit="return submitForm(this);" enctype="multipart/form-data" method="post" action="http://bm.51hejia.com/index/form_process">
+            <div class="b_hd_baoming">
+              <p>		请填写以下个人信息，以便获取最多优惠信息。</p>
+              <div>
+                <label>姓名：</label>
+                <input type="text" id="c1" name="c1" />*
+              </div>
+              <div>
+                <label>电话：</label>
+                <input type="text" id="c2" name="c2" /> *
+              </div>
+              <div>
+                <label>邮箱：</label>
+                <input type="text" name="c3" id="c3" /> *（和家网定期抽奖幸运网友）
+              </div>
+              <div class="b_hd_baoming_botton">
+                <input type="hidden" name="formid" value="378" />
+                <input type="submit" name="" value="提交" />
+              </div>
+            </div>
+          </form>
+          <script type="text/javascript">
+            function ge(id) {
+              return document.getElementById(id);
+            }
+            function trim(str) {
+              return str.replace(/^\s*(.*?)[\s\n]*$/g, '$1');
+            }
+            function submitForm(form) {
+              if (trim(ge("c1").value) == "") {
+                alert("您必须填写【姓名】！")
+                return false;
+              }
+              if (trim(ge("c2").value) == "") {
+                alert("您必须填写【电话】！")
+                return false;
+              }
+              if (!trim(ge("c2").value).match(/^\d{11}$/)) {
+                alert("【电话】号码必须为11位数字！")
+                return false;
+              }
+              if (trim(ge("c3").value) == "") {
+                alert("您必须填写【邮箱】！")
+                return false;
+              }
+              return true;
+            }
+          </script>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="b_hd_side margin10 f_r">
+    <div class="b_hdside_box01 margin10">
+      <h3>火热活动进行中</h3>
+      <%=render :partial => "huodong/list/hot_event", :object => @hot_events[0]%>
+    </div>
+    <div class="b_hdside_box02 margin10">
+      <%=render :partial => "huodong/list/hot_event", :object => @hot_events[1]%>
+    </div>
+    <!--div class="b_hdside_box03 margin10">
+      <h3>近期活动预告</h3>
+      <ul>
+<%# @unstart_events.each do |event| %>
+          <li><a href="<%#= event.url %>" target="_blank" title="<%#= event.subject %>">
+<%#= ul(event.subject,18) %></a></li>
+<%# end %>
+      </ul>
+    </div-->
+    <div class="b_hdside_box02 margin10">
+      <%=render :partial => "huodong/list/hot_event", :object => @hot_events[2]%>
+    </div>
+    <div class="b_hdside_box02">
+      <%=render :partial => "huodong/list/hot_event", :object => @hot_events[3]%>
+    </div>
+    <div class="b_hdside_box02">
+      <%=render :partial => "huodong/list/hot_event", :object => @hot_events[4]%>
+    </div>
+  </div>
+  <%unless @event.location_latlng.blank?%>
+    <div class="b_hd_cont f_l">
+      <h3>活动地图</h3>
+      <div id="google_map" style="height: 500px;" class="b_hd_contmap">
+
+      </div>
+    </div>
+  <%end%>
+
+  <!--
+  <div class="b_hd_cont f_l">
+    <h3>向组织者提问</h3>
+    <div class="b_hd_conttw">
+      <form action="" method="get">
+        <textarea name="" cols="" rows=""></textarea>
+        <div class="b_hd_contlogin">用户名：<input type="text" size="12" />
+          密码：<input type="password" size="12" />
+          <input name="" type="checkbox" value="" /> 匿名 <a href="#" target="_blank" class="b_hd_conta01">忘记密码</a> | <a href="#" target="_blank">注册</a>
+        </div>
+        <div class="b_hd_contbtn"><input name="" type="submit" value="提交问题" />
+        </div>
+      </form>
+    </div>
+    <div class="b_hd_conthf">
+      <h4>下玄月 提问</h4>
+      <p>第一次去看海,偶要慎重的考虑一哈子.。。。。。顺便问有体重100KG以上的男士一道去么？</p>
+      <span>发帖时间：2010-7-15  16：34</span>
+    </div>
+    <div class="b_hd_conthfmenu"><span><a href="#" target="_blank">沙发↑</a></span><a href="#" target="_blank">评分</a> | <a href="#" target="_blank">引用</a> | <a href="#" target="_blank">回复</a> | <a href="#" target="_blank">举报</a></div>
+    <div class="b_hd_conthf">
+      <h4>下玄月 提问</h4>
+      <p>第一次去看海,偶要慎重的考虑一哈子.。。。。。顺便问有体重100KG以上的男士一道去么？</p>
+      <span>发帖时间：2010-7-15  16：34</span>
+      <div class="b_hd_conthftxt">
+        <h5>下玄月 回答</h5>
+        <p>第一次去看海,偶要慎重的考虑一哈子.。。。。。顺便问有体重100KG以上的男士一道去么？第一次去看海,偶要慎重的考虑一哈子.。。。。。顺便问有体重100KG以上的男士一道去么？第一次去看海,偶要慎重的考虑一哈子.。。。。。顺便问有体重100KG以上的男士一道去么？</p>
+        <span>发帖时间：2010-7-15  16：34</span>
+      </div>
+    </div>
+    <div class="b_hd_conthfmenu"><span><a href="#" target="_blank">沙发↑</a></span><a href="#" target="_blank">评分</a> | <a href="#" target="_blank">引用</a> | <a href="#" target="_blank">回复</a> | <a href="#" target="_blank">举报</a></div>
+  </div>
+  -->
+</div>
+
+<%=GoogleMapAPI.show_map(@event.location_latlng.first, @event.location_latlng.second, 'google_map', :title => @event.subject) unless @event.location_latlng.blank?%>

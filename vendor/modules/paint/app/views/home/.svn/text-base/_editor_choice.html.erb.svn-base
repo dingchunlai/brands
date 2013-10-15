@@ -1,0 +1,17 @@
+<% editor =  hejia_promotion_items(HOME_EDITOR_CHOICE, :attributes => ['title','url','image_url','description'],:limit => 4) %>
+<h3>油漆工艺编辑推荐</h3>
+<% if editor.size > 0%>
+<div class="yg_bjtj_txt clearfix">
+  <div class="yg_bjtjimg f_l"><a href="<%= editor[0].url %>" target="_blank"><img src="<%= get_api_img_url(editor[0].image_url) %>" /></a></div>
+  <div class="yg_bjtjtxt f_r">
+    <h4><a href="<%= editor[0].url %>" target="_blank" title="<%= editor[0].title %>"><%= editor[0].title %></a></h4>
+    <p><%= truncate(editor[0].description, :length => 60,:omission => '') %><a href="<%= editor[0].url %>" target="_blank">【详细】</a></p>
+  </div>
+  <ul class="yg_bjtjlist">
+  	<% editor[1..3].each do |e|%>
+    <li>·<a href="<%= e.url %>" target="_blank" title="<%= e.title %>"><%= e.title %></a></li>
+	<% end %>
+  </ul>
+</div>
+<% end %>
+

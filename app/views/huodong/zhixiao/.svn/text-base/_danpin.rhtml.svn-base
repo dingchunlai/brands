@@ -1,0 +1,13 @@
+<div>
+  <ul class="clearfix">
+    <%PromotionCollection.published_items_for("直销:热销单品:#{danpin}") do |item|%>
+      <li><a href="<%=item.resource.url%>" target="_blank">
+          <img src="<%=cloud_fs_url_for(item.resource.image_url)%>" alt="<%=item.resource.title%>" /></a>
+        <h4><a href="<%=item.resource.url%>" title="<%=item.resource.title%>" target="_blank"><%=item.resource.title%></a></h4>
+        <span>
+          <label>原价：￥<%=item.resource.description.split("\n")[0]%></label>
+          <br/>
+          现价：￥<strong><%=item.resource.description.split("\n")[1]%></strong></span></li>
+    <%end%>
+  </ul>
+</div>

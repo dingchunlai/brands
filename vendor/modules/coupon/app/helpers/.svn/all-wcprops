@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/helpers
+END
+application_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/helpers/application_helper.rb
+END
+coupons_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/helpers/coupons_helper.rb
+END
+coupon_application_controller_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/helpers/coupon_application_controller_helper.rb
+END

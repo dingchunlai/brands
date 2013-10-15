@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque
+END
+errors.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/errors.rb
+END
+plugin.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/plugin.rb
+END
+helpers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/helpers.rb
+END
+tasks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/tasks.rb
+END
+version.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/version.rb
+END
+server.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/server.rb
+END
+failure.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/failure.rb
+END
+worker.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/worker.rb
+END
+job.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/job.rb
+END
+stat.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/lib/resque/stat.rb
+END

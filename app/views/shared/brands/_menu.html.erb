@@ -1,0 +1,22 @@
+<ul class="vertical" style="padding-left: 10px; padding-top: 20px;">
+  <% if @brand && !@brand.new_record? %>
+      <li><%= link_to '基本信息', edit_admin_brand_path(@brand) %></li>
+      <li><%= link_to '资料管理', admin_brand_documents_path(@brand) %></li>
+    <% 
+      unless @brand.tags_for.blank? 
+        @tag = @tag ? @tag : @brand.tags_for[0]
+    %>
+      <li><%= link_to '详细信息', detail_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '经销商', admin_brand_agencies_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '产品管理', admin_brand_productions_path(@brand, :tag_id => @tag.TAGID)  %></li>
+      <li><%= link_to '组合案例', admin_brand_production_combinations_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '参数设置', rating_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '推广位', promotion_pages_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '互动点评', admin_brand_comments_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '编辑SEO', html_meta_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '模板管理', template_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '品牌印象', impressions_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+      <li><%= link_to '关联品类', second_category_admin_brand_path(@brand, :tag_id => @tag.TAGID) %></li>
+    <% end %>
+  <% end %>
+</ul>

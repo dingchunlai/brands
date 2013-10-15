@@ -1,0 +1,10 @@
+<% content_for :sub_menu do %>
+	<% if can? :manage, :paint_admins %><li><a href="/paint_admin/paint_admins" <%= active_top_menu "paint_admins"%>>帐户管理</a></li><% end %>
+	<% if can? :read, :paint_workers %><li><a href="/paint_admin/paint_workers" <%= active_top_menu "paint_workers"%>>油漆工管理</a></li><% end %>
+	<% if can? :read, :paint_cases %><li><a href="/paint_admin/paint_cases" <%= active_top_menu "paint_cases"%>>案例管理</a></li><% end %>
+	<li><a href="/paint_admin/online/send_index" <%= active_top_menu "online"%> >在线申请</a></li>
+	<% if can? :read, :contacts %><li><a href="/paint_admin/contacts" <%= active_top_menu "contacts"%>>联络列表</a></li><% end %>
+	<% if can? :manage, :mail %><li><a href="/paint_admin/mail" <%= active_top_menu "mail"%>>基本设置</a></li><% end %>
+	<% if can? :manage, :export_xls %><li><a href="/paint_admin/export" <%= active_top_menu "export_xls"%>>数据导出</a></li><% end %>
+	<% if can? :read, :paint_log %><li><a href="/paint_admin/log" <%= active_top_menu "paint_log"%>>系统日志</a></li><% end %>
+<% end %>

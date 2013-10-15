@@ -1,0 +1,54 @@
+<%= top_bar :title => '地区管理页',
+            :button => ['创建地区', new_admin_district_path(:city_id => params[:city_id])],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['地区管理', admin_districts_path(:city_id => params[:city_id])]
+            ]
+%>
+<div class="select-bar">
+  <%= select_tag "city_id", options_for_select(City.find(:all).collect{ |city| [city.name, city.id] }, params[:city_id].to_i), :onchange=> "location.href='#{admin_districts_path}?city_id=' + this.options[this.selectedIndex].value;" %>
+</div>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<div class="table">
+	<img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+	<img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+	<table class="listing" cellpadding="0" cellspacing="0">
+	  <tr>
+        <th class="first">编号</th>
+	    <th><%= District.human_attribute_name("name")%></th>
+        <th><%= District.human_attribute_name("pinyin")%></th>
+        <th><%= District.human_attribute_name("code_name")%></th>
+        <th><%= District.human_attribute_name("business_zones_count")%></th>
+        <th><%= District.human_attribute_name("city_id")%></th>
+	<th colspan=4 class="last">操作</th>
+	  </tr>
+	<% @districts.each_with_index do |district, index| %>
+	  <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+        <td height="25"><%= district.id%></td>
+	    <td><%= district.name %></td>
+        <td><%= district.pinyin %></td>
+        <td><%= district.code_name %></td>
+        <td><%= district.business_zones_count %></td>
+        <% if can? :read, City %>
+            <td><%= link_to district.city.name, admin_city_path(district.city_id) %></td>
+        <% end %>
+        <% if can? :read, district %>
+            <td><%= link_to '查看', admin_district_path(district) %></td>
+        <% end %>
+        <% if can? :update, district %>
+            <td><%= link_to '修改', edit_admin_district_path(district) %></td>
+        <% end %>
+        <% if can? :read, BusinessZone %>
+            <td><%= link_to '商圈列表', admin_business_zones_path(:district_id => district) %></td>
+        <% end %>
+        <% if can? :create, BusinessZone %>
+            <td><%= link_to '添加商圈', new_admin_business_zone_path(:district_id => district) %></td>
+        <% end %>
+	  </tr>
+	<% end %>
+	</table>
+	<% unless @districts.empty? -%>
+	<%= will_paginate @districts, :class => "digg_pagination" -%>
+	<% end -%>
+</div>

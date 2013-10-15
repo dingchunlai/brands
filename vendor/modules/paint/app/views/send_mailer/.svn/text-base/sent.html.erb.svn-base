@@ -1,0 +1,30 @@
+<% paint_workers = PaintWorker.mail_show %>
+<div>
+<h1>油漆工申请列表</h1>
+<table border="1">
+	<tr>
+		<td>用户名</td>
+		<td>姓名</td>
+		<td>性别</td>
+		<td>城市</td>
+		<td>等级</td>
+		<td>手机</td>
+		<td>邮箱</td>
+		<td>身份证</td>
+		<td>申请日期</td>
+	</tr>
+	<% paint_workers.each do |worker| %>
+	<tr>
+		<td><%= worker.USERNAME %></td>
+		<td><%= worker.USERBBSNAME %></td>
+		<td><%= Painter::GENDER.index(worker.painter.gender) %></td>
+		<td><%= City.name_for_code(worker.painter.city) %></td>
+		<td><%= Painter::GRADE.index(worker.painter.grade)%></td>
+		<td><%= worker.USERBBSMOBELTELEPHONE %></td>
+		<td><%= worker.USERBBSEMAIL %></td>
+		<td><%= worker.painter.id_number %></td>
+		<td><%= worker.painter.created_at.strftime("%Y-%m-%d") %></td>
+	</tr>
+	<% end %>
+</table>
+</div>

@@ -1,0 +1,36 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '城市管理页',
+            :button => ['城市列表', admin_cities_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['Cities', admin_cities_path]
+            ]
+%>
+<% form_for(@city, :url => admin_city_path(@distributor)) do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">修改城市信息</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last"><%= f.text_field :name, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :province_id %></strong></td>
+          <td class="last"><%= f.select :province_id, Province.find(:all).collect { |item| [item.name, item.id] }, :include_blank => "请选择", :selected => @city.province_id, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :pinyin %></strong></td>
+          <td class="last"><%= f.text_field :pinyin, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>

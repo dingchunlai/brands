@@ -1,0 +1,31 @@
+<script type="text/javascript" src="http://js2.51hejia.com/js/jquery/plugins/cookie/1.0.0/jquery.cookie.min.js"></script>
+<div class="zxdp2011_dpss">
+  <% if defined?(is_case_diary) %>
+    <div class="zxdp2011_daohang clear">
+      <ul>
+        <li><%= link_to "对这家装修公司感兴趣 看公司资料...", firm_path(@firm.id), :target => "_blank"%></li>
+        <% if controller.controller_name != "designers" && @firm.designers %>
+          <li><%= link_to "喜欢这套案例图片 关注设计师...", firm_designers_url(:firm_id => @firm.id), :target => "_blank"%></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%
+  coupon = fetch_firm_coupon(@firm.id)
+  unless coupon.blank?
+    coupons = coupon.distributor.coupons.valid
+  %>
+    <div class="zxdp2011_daohang clear">
+      <ul>
+        <li><div class="zxdp2011_cxhd margin10"><h3>这家公司提供<span><%= coupons.to_a.sum(&:total_issue_number) %></span>张现金券 还剩<span><%= coupons.to_a.sum(&:virtual_existing_number) %></span>张</h3></div>
+          <label><a href="http://<%= TAGURLS[@user_city_code.to_i] %>.youhui.51hejia.com/coupon/help#11" target="_blank">(什么叫现金券？)</a></label>
+        </li>
+      </ul>
+    </div>
+    <div class="diyq_listimg diyqimg" data-img="<%= coupon.show_image_url %>"> <img src="<%= "http://assets5.image.51hejia.com/#{coupon.show_image_url}" %>" /> </div>
+    <div class="zxdp2011_yyxz clearfix">
+      <div class='diyq_listbtn'><a href="javascript:void(0);" data-id="<%= coupon.id  %>" data-title="<%= coupon.title %>">下载现金券</a></div>
+    </div>
+    <%= render :partial => '/share/coupon_download_pop' %>
+  <% end -%>
+</div>

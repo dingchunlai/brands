@@ -1,0 +1,36 @@
+<%= top_bar :title       => '现金券发行量管理管理页',
+            :button      => ['新建记录', new_admin_coupon_issue_num_stat_path(:coupon_id => params[:coupon_id])],
+            :breadcrumbs => [
+                    ['管理首页', coupon_admin_index_path],
+                    ['现金券发行量管理列表', admin_coupon_issue_num_stats_path]
+            ]
+%>
+<div>
+  现金券: <%= @coupon.title %>
+  --总发行量: <font color=blue><%= @coupon.total_issue_number %></font>
+  --实际剩余量:<font color=red><%= @coupon.existing_number %></font>
+  --虚似剩余量: <font color=green><%= @coupon.virtual_existing_number %></font>
+</div>
+<%= flash[:notice] %>
+<div class="clearfix"></div>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th><%= CouponIssueNumStat.human_attribute_name("coupon_id") %></th>
+      <th>操作<%= CouponIssueNumStat.human_attribute_name("counts") %></th>
+      <th>日期</th>
+    </tr>
+    <% @coupon_issue_num_stats.each_with_index do |coupon_issue_num_stat, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td><%= coupon_issue_num_stat.coupon_id %></td>
+          <td><%= coupon_issue_num_stat.op_type == "add" ? "<span style='font-weight:bold; color:red'>＋</span>" : "<span style='font-weight:bold; color:green'>－</span>" %><%= coupon_issue_num_stat.counts %></td>
+          <td><%= coupon_issue_num_stat.created_at.strftime("%Y-%m-%d") %></td>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @coupon_issue_num_stats.empty? -%>
+      <%= will_paginate @coupon_issue_num_stats, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

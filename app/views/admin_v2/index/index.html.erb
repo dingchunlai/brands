@@ -1,0 +1,77 @@
+<div class="page_navigate page_padding">
+  <span>当前位置：</span> 首页
+  <br /><br />
+</div>
+
+<%= show_flash_message %>
+<div>
+  <%    
+    all_tags = Tag.all_categories
+    used_tags = Tag.used_categories  
+  %>
+  <table>
+    <tr>
+      <th><h3>品类</h3></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td style="width: 60px;">已启用:</td>
+      <td>
+        <ul class="horizontal">
+          <% 
+            used_tags.each_with_index do |tag, index|
+          %>
+            <li><%= link_to tag.TAGNAME, manage_admin_tag_path(tag) %></li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>未启用:</td>
+      <td>
+        <ul class="horizontal">
+          <% (all_tags - used_tags).each do |tag| %>
+            <li><%= link_to tag.TAGNAME, manage_admin_tag_path(tag) %> (<%= link_to (tag.enabled? ? '停用' : '启用'), admin_tag_path(tag), :method => :put %>)</li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+<br />
+<div>
+  <h3>品牌快搜</h3>
+  <% form_tag search_brands_by_name_admin_brands_path, :id => "brand_search" do %>
+    <%= text_field_tag :brand_name %>
+    <%= submit_tag "搜索" %>
+  <% end %>
+</div>
+<div>
+  <table>
+    <tr id="search_content"></tr>
+  </table>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $("#brand_search").submit(function(event){
+      event.preventDefault();
+      if($("#brand_name").val().length <= 0){
+        alert("请输入查询条件");
+        return false
+      }else{
+        $.post($('#brand_search').attr("action"), { "brand_name" : $('#brand_name').val()}, function(data){
+          $('#search_content').empty();
+          var dom = $('#search_content');
+          if(data.length == 0){
+            $('<td />').html("暂无此品牌信息").appendTo(dom);
+          }else{
+            $.each(data, function(index){
+              $('<td />').html($('<a />').attr('href', '/admin_v2/brands/' + data[index].id + '/manage').html(data[index].name_zh)).appendTo(dom);
+            });
+          }
+        });
+      }
+    });
+  });
+</script>

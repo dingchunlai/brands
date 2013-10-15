@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Untitled Document</title>
+	</head>
+	<body>
+	<table border="1">
+	<tr>
+		<td>申请时间</td>
+		<td>区域</td>
+		<td>省份</td>
+		<td>城市</td>
+		<td>姓名</td>
+		<td>电话</td>
+		<td>房型</td>
+		<td>类型</td>
+		<td>面积</td>
+		<td>购买油漆</td>
+		<td>油漆品牌</td>
+		<td>电子邮件</td>
+		<td>备注</td>
+		<td>期望油工</td>
+		<td>期望时间</td>
+		<td>分配经销商</td>
+		<td>经销商电话</td>
+		<td>经销商邮箱</td>
+	</tr>
+	<% @sends.each do |s| %> 
+	<tr>
+		<td><%= s.created_at.strftime("%Y%m%d%H%M%S") %></td>
+		<td><%= Province.region_for_province[Province.name_for_code(s.province)]%></td>
+		<td><%= Province.name_for_code(s.province) %></td>
+		<td><%= City.name_for_code(s.city) %></td>
+		<td><%= s.people %></td>
+		<td><%= s.phone %></td>
+		<td><%= PaintSend::ROOM.index(s.room.to_i) %></td>
+		<td><%= s.send_type %></td>
+		<td><%= s.area %></td>
+		<td><%= s.is_buy.to_i == 1 ? "是" : "否" %></td>
+		<td><%= PaintSend::BRANDS.index(s.brand.to_i) %></td>
+		<td><%= s.email %></td>
+		<td><%= s.remark %></td>
+		<td><%= s.paint_worker_name %></td>
+		<td><%= s.hope_date.strftime("%Y年%m月") unless s.hope_date.nil? %></td>
+		<td><%= s.paint_worker.painter.dealers unless s.paint_worker.nil? %></td>
+		<td><%= s.paint_worker.painter.dealers_phone unless s.paint_worker.nil? %></td>
+		<td><%= s.paint_worker.painter.dealers_email unless s.paint_worker.nil? %></td>
+	</tr>
+	<% end %>
+	</table>
+	</body>
+</html>

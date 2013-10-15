@@ -1,0 +1,22 @@
+<% dp_js 'dianping/yuyue.js'%>
+<%
+  top_applicants = applicant_top_firm(@user_city_code.to_i)
+  this_style = true if defined?(cad)
+%>	
+<div class="<%= this_style ? 'zxdp2010_yyphb' : 'zxdp2010_cur'%> margin10">
+  <h3>本月预约排行榜</h3>
+  <div class="<%= 'zxdp2010_txt' unless this_style%> zxdp2010_kbtop right_applicant_2011">
+    <ul>
+      <% top_applicants.each do |applicant|%>
+        <li>
+          <span class="zxdp2010_kbspan21"><a href="<%= firm_url(:id => applicant.deco_firm.id,:trailing_slash => "/")%>" target="_blank"><%= applicant.deco_firm.name_abbr %></a></span>
+          <span class="zxdp2010_kbspan22"><%= applicant.count %>单</span>
+          <span class="zxdp2010_kbspan18">
+            <%= link_to "我要预约",new_dianping_applicant_path(:deco_firm_id => applicant.deco_firm.id), :title =>"免费预约量房",:id=>"applicant" ,:class => "applicant" %>
+          </span>
+        </li>
+      <% end %>
+      <% unless this_style %><li><a href="/companies" target="_blank" class="f_r">查看全部公司预约情况&gt;&gt;</a></li><% end %>
+    </ul>
+  </div>
+</div>

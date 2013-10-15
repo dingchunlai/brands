@@ -1,0 +1,691 @@
+<link href="http://www.51hejia.com/zhuanti/dlswj201209/diaocha2.css" rel="stylesheet" type="text/css"/>
+<div class="head1440">
+  <div class="headbox">
+    <div class="btn_a1">
+      <a target="_blank" title="什么是水性木器漆" href="http://www.51hejia.com/youqituliao/20120618/679951/"></a></div>
+    <div class="btn_a2">
+      <a target="_blank" title="什么是金刷子认证油漆工" href="http://www.51hejia.com/youqituliao/20120614/679921"></a></div>
+  </div>
+</div>
+<div class="contentbox">
+<div class="content958">
+<script type="text/javascript" >
+	function paint_questionnaire_create()
+	{
+		if(Validator.Validate(document.getElementById('questionnaire_form'),3) == true)
+		{
+			alert("谢谢您的参与，获奖名单将于活动期间每周一发布，请随时关注");
+			document.getElementById('weibo_share').click();
+			jQuery.ajax(
+				{
+					data:$("#questionnaire_form").serialize(), 
+					dataType:'text', 
+					type:'post', 
+					url:'/paint_questionnaires',
+					success: function(data)
+					{
+						if(data == "success")
+						{
+							window.location.href = "http://www.yougong.51hejia.com"
+						}
+					}
+				}
+			);
+		}
+	}
+</script>
+<%= link_to "微博分享","http://service.weibo.com/share/share.php?url=#{@url.to_s}&title=#{@title.to_s}&pic=#{@pic.to_s}", :target => "_blank", :id => "weibo_share", :style => "display:none;" %>
+<% form_for @paint_questionnaire, :html => {:id => "questionnaire_form", :onsubmit => "return Validator.Validate(this,3)"} do |f| %>
+    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+    <h1>1.您近期是否有装修计划？<input class="kong" name="paint_questionnaire[c1]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c1 in PaintQuestionnaire::C1 %>
+          <% if c1 == PaintQuestionnaire::C1.last %>
+              <li><label><%= f.radio_button :c1, c1, :onclick => "one_hide();" %><%= c1 %></label></li>
+          <% else %>
+              <li><label><%= f.radio_button :c1, c1, :onclick => "one_show();" %><%= c1 %></label></li>
+          <% end %>
+      <% end %>
+    </ul>
+    <div style="margin-left:20px;" class="hide" id="div_one">
+      <h1>1.1
+        您最近即将/正在进行墙面涂刷工程吗？<input id="div_one_1_input" class="kong" name="paint_questionnaire[c2]" dataType="" msg="请作答后提交"/>
+      </h1>
+      <ul>
+        <% for c2 in PaintQuestionnaire::C2 %>
+            <li><label><%= f.radio_button :c2, c2 %><%= c2 %></label></li>
+        <% end %>
+      </ul>
+      <h1>1.2
+        您最近即将/正在进行家具涂刷工程吗？<input id="div_one_2_input" class="kong" name="paint_questionnaire[c3]" dataType="" msg="请作答后提交"/>
+      </h1>
+      <ul>
+        <% for c3 in PaintQuestionnaire::C3 %>
+            <li><label><%= f.radio_button :c3, c2 %><%= c3 %></label></li>
+        <% end %>
+      </ul>
+    </div>
+    <script type="text/javascript">
+        function one_show() {
+            document.getElementById("div_one").className = "show";
+            $("#div_one_1_input").attr("dataType", "Group")
+            $("#div_one_2_input").attr("dataType", "Group")
+        }
+        function one_hide() {
+            document.getElementById("div_one").className = "hide";
+            $("#div_one_1_input").attr("dataType", "")
+            $("#div_one_2_input").attr("dataType", "")
+        }
+    </script>
+    <h1>2.在墙面/木器涂刷方面，您最想从网络了解的信息是什么？（多选）<input class="kong" name="c4[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c4 in PaintQuestionnaire::C4 %>
+          <li>
+            <% if c4 == PaintQuestionnaire::C4.last %>
+                <label><%= check_box_tag "c4[]", c4, nil, :onclick => "change_dataType(this,'field_c4')" %><%= c4 %></label>
+                <%= text_field_tag :field_c4, nil, :class => "txtbox", :dataType => "", :msg => "请注明其它", :maxlength => 100 %>
+            <% else %>
+                <label><%= check_box_tag "c4[]", c4 %><%= c4 %></label>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    <h1>3.您在选择油漆工时，通常会通过以下哪种途径？（多选）<input class="kong" name="c5[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c5 in PaintQuestionnaire::C5 %>
+          <li>
+            <% if c5 == PaintQuestionnaire::C5.last %>
+                <label><%= check_box_tag "c5[]", c5, nil, :onclick => "change_dataType(this,'field_c5')" %><%= c5 %></label>
+                <%= text_field_tag :field_c5, nil, :class => "txtbox", :dataType => "", :msg => "请注明其它", :maxlength => 100 %>
+            <% else %>
+                <label><%= check_box_tag "c5[]", c5 %><%= c5 %></label>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    <h1>4.如果您要在网上寻找油漆工，您通常会关注哪些信息？（多选）<input class="kong" name="c6[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c6 in PaintQuestionnaire::C6 %>
+          <li>
+            <% if c6 == PaintQuestionnaire::C6.last %>
+                <label><%= check_box_tag "c6[]", c6, nil, :onclick => "change_dataType(this,'field_c6')" %><%= c6 %></label>
+                <%= text_field_tag :field_c6, nil, :class => "txtbox", :dataType => "", :msg => "请注明其它", :maxlength => 100 %>
+            <% else %>
+                <label><%= check_box_tag "c6[]", c6 %><%= c6 %></label>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    <h1>5.在您选择油漆工时，您比较看重以下哪些方面？（多选）<input class="kong" name="c7[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c7 in PaintQuestionnaire::C7 %>
+          <li>
+            <% if c7 == PaintQuestionnaire::C7.last %>
+                <label><%= check_box_tag "c7[]", c7, nil, :onclick => "change_dataType(this,'field_c7')" %><%= c7 %></label>
+                <%= text_field_tag :field_c7, nil, :class => "txtbox", :dataType => "", :msg => "请注明其它", :maxlength => 100 %>
+            <% else %>
+                <label><%= check_box_tag "c7[]", c7 %><%= c7 %></label>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    <h1>6.您对经过职业认证的油工感兴趣吗？<input class="kong" name="paint_questionnaire[c8]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c8 in PaintQuestionnaire::C8 %>
+          <li><label><%= f.radio_button :c8, c8 %><%= c8 %></label></li>
+      <% end %>
+    </ul>
+    <h1>7.如果有一个通过职业考核认证的油工，您会优先雇佣吗？<input class="kong" name="paint_questionnaire[c9]" dataType="Group" msg="请作答后提交"/>
+    </h1>
+    <ul>
+      <% for c9 in PaintQuestionnaire::C9 %>
+          <% if ["A.肯定会", "B.可能会"].include?(c9) %>
+              <li><label><%= f.radio_button :c9, c9, :onclick => "ishow2(this);" %><%= c9 %></label></li>
+          <% else %>
+              <li><label><%= f.radio_button :c9, c9, :onclick => "ishow(this);" %><%= c9 %></label></li>
+          <% end %>
+      <% end %>
+    </ul>
+    <!--7.1隐藏选项-->
+    <div style="margin-left:20px;" class="hide" id="showdiv">
+      <h1 id="show_div_h1">7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）</h1>
+      <ul class="margin_left45">
+        <% for c91 in PaintQuestionnaire::C91 %>
+            <li>
+              <% if c91 == PaintQuestionnaire::C91.last %>
+                  <label><%= check_box_tag "c91[]", c91, nil, :onclick => "change_dataType(this,'field_c91')" %><%= c91 %></label>
+                  <%= text_field_tag :field_c91, nil, :class => "txtbox", :maxlength => 100 %>
+              <% else %>
+                  <label><%= check_box_tag "c91[]", c91 %><%= c91 %></label>
+              <% end %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <script type="text/javascript">
+        function ishow(e) {
+            if (e.checked == true) {
+                document.getElementById("showdiv").className = "show";
+                $("#show_div_h1").html("7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）<input class='kong' name='c91[]'  dataType='Group' msg='请作答后提交' />");
+            }
+            else {
+                document.getElementById("showdiv").className = "hide";
+                $("#show_div_h1").html("7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）");
+            }
+        }
+        function ishow2(e) {
+            if (e.checked == true) {
+                document.getElementById("showdiv").className = "hide";
+                $("#show_div_h1").html("7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）");
+            }
+            else {
+                document.getElementById("showdiv").className = "show";
+                $("#show_div_h1").html("7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）<input class='kong' name='c91[]'  dataType='Group' msg='请作答后提交' />");
+            }
+        }
+
+        function change_dataType(e, id) {
+            if (e.checked == true) {
+                $("#" + id + "").attr("dataType", "Require")
+            }
+            else {
+                $("#" + id + "").attr("dataType", "")
+                $("#" + id + "").next().remove();
+            }
+        }
+    </script>
+    <style type="text/css">
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+    <!--7.1隐藏选项END-->
+    <h1>8.您认为油漆工职业考试，应该通过哪几项才有一定保障？（多选）<input class="kong" name="c10[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c10 in PaintQuestionnaire::C10 %>
+          <li><label><%= check_box_tag "c10[]", c10 %><%= c10 %></label></li>
+      <% end %>
+    </ul>
+    <h1>9.请问您知道水性木器漆吗？<input class="kong" name="paint_questionnaire[c11]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c11 in PaintQuestionnaire::C11 %>
+          <li><label><%= f.radio_button :c11, c11 %><%= c11 %></label></li>
+      <% end %>
+    </ul>
+    <h1>10.您在最终决定选择了水性木器漆或油性木器漆中的一种时候，以下哪些是您主要考虑的因素？（多选）<input class="kong" name="c12[]" dataType="Group" msg="请作答后提交"/>
+    </h1>
+    <ul>
+      <% for c12 in PaintQuestionnaire::C12 %>
+          <li><label><%= check_box_tag "c12[]", c12 %><%= c12 %></label></li>
+      <% end %>
+    </ul>
+    <h1>11.请问您觉得在专卖店里的哪些木器漆的产品演示工具能够增加您对产品的可信度？<input class="kong" name="paint_questionnaire[c13]" dataType="Group" msg="请作答后提交"/>
+    </h1>
+    <ul>
+      <% for c13 in PaintQuestionnaire::C13 %>
+          <li><label><%= f.radio_button :c13, c13 %><%= c13 %></label></li>
+      <% end %>
+    </ul>
+    <h1>12.除了油漆产品之外，您还希望从油漆专卖店得到哪些相关服务呢？（多选）<input class="kong" name="c14[]" dataType="Group" msg="请作答后提交"/></h1>
+    <ul>
+      <% for c14 in PaintQuestionnaire::C14 %>
+          <li><label><%= check_box_tag "c14[]", c14 %><%= c14 %></label></li>
+      <% end %>
+    </ul>
+
+    <!--投票-->
+    <div>
+      <img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_14.png"/>
+    </div>
+    <div class="yg_vote margin10" id="paint_rating">
+      <table width="190" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+        <tr>
+          <td>
+            <label class="b_text_score f_r"><span></span></label>
+            <h5></h5>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <%
+         rating_max = [@paint_rating.good, @paint_rating.soso, @paint_rating.bad].max
+         good_persent, soso_persent, bad_persent =
+                 if rating_max < 100
+                   [@paint_rating.good, @paint_rating.soso, @paint_rating.bad]
+                 else
+                   [@paint_rating.good, @paint_rating.soso, @paint_rating.bad].map { |n|
+                     (100.0 * n / rating_max).round
+                   }
+                 end
+      %>
+      <table width="190" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+        <tr>
+          <td valign="bottom" height="107" align="center">
+            <span class="b_cylinder_g" style="height:<%= good_persent %>px;"></span></td>
+          <td valign="bottom" height="107" align="center">
+            <span class="b_cylinder_n" style="height:<%= soso_persent %>px;"></span></td>
+          <td valign="bottom" height="107" align="center">
+            <span class="b_cylinder_b" style="height:<%= bad_persent %>px;"></span></td>
+        </tr>
+        <tr>
+          <td height="24" align="center" id="good_rate_count"><%= @paint_rating.good %>票</td>
+          <td height="24" align="center" id="soso_rate_count"><%= @paint_rating.soso %>票</td>
+          <td height="24" align="center" id="bad_rate_count"><%= @paint_rating.bad %>票</td>
+        </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:20px; font-size:13px; font-weight:bold; color:#039;">
+        <input class="kong" name="paint_questionnaire[c15]" dataType="Group" msg="请作答后提交"/>
+        <ul>
+          <li>
+            <% for c15 in PaintQuestionnaire::C15 %>
+                <label>
+                  <%= f.radio_button :c15, c15 %><%= c15 %>
+                </label>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--投票END-->
+    <div style="margin:20px 0px;"><img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_26.jpg"/></div>
+    <h1>感谢您参与本次油漆施工需求在线调查，请您完整填写以下基本信息，谢谢您的合作！<br/>个人信息只用于兑奖通知，我们会妥善保管。</h1>
+    <ul>
+      <li>
+        性别:<input class="kong" name="paint_questionnaire[gender]" dataType="Group" msg="请选择您的性别"/>
+        <% for gender in ["男", "女"] %>
+            <label><%= f.radio_button :gender, gender %><%= gender %></label>
+        <% end %>
+      </li>
+    </ul>
+    <ul>
+      <li>年龄:<input class="kong" name="paint_questionnaire[age]" dataType="Group" msg="请选择您的年龄"/>
+        <% for age in PaintQuestionnaire::AGE %>
+            <label><%= f.radio_button :age, age %><%= age %></label>
+        <% end %>
+      </li>
+    </ul>
+    <ul>
+      <li>学历:<input class="kong" name="paint_questionnaire[education]" dataType="Group" msg="请选择您的学历"/>
+        <% for education in PaintQuestionnaire::EDUCATION %>
+            <label><%= f.radio_button :education, education %><%= education %></label>
+        <% end %>
+      </li>
+    </ul>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#paint_questionnaire_province").change(function () {
+                if ($("#paint_questionnaire_province").val().length == 0) {
+                    $("#paint_questionnaire_city").empty();
+                    $("<option value=''>省份</option>").appendTo("#paint_questionnaire_city");
+                } else {
+                    $.getJSON("/paint_questionnaires/get_city_json", {province:$("#paint_questionnaire_province").val()}, function (data) {
+                        $("#paint_questionnaire_city").empty();
+                        $("<option value=''>市/地区</option>").appendTo("#paint_questionnaire_city");
+                        $.each(data, function (i) {
+                            $("<option value='" + data[i][0] + "'>" + data[i][1] + "</option>").appendTo("#paint_questionnaire_city");
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+    <ul>
+      <li style="margin-bottom: 18px;">
+        <div style="float:left;">
+          地区:
+          <select name="paint_questionnaire[province]" id="paint_questionnaire_province" style="width:70px;" msg="请选择您在的省份" datatype="Require">
+            <option value="" selected="selected">省份</option>
+            <% provinces = ActiveRecord::Base.connection.select_all("SELECT * FROM 51hejia_php.public_provinces order by name asc") %>
+            <% for province in provinces %>
+                <option value="<%= province["real_name"] %>"><%= province["name"] %></option>
+            <% end %>
+          </select>
+          <select name="paint_questionnaire[city]" id="paint_questionnaire_city" style="width:70px;" dataType="Require" msg="请选择您在的市/地区">
+            <option selected="selected" value="">市/地区</option>
+          </select>
+          <%= check_box_tag "province_city_qita", "qita", nil, :onclick => "qita_pc()" %>其它
+        </div>
+        <div style="float: left; margin-left: 15px; height: 20px; line-height: 30px;" id="province_city_qita_span" class="hide">
+          省份<%= text_field_tag :province, nil, :class => "txtbox", :dataType => "", :msg => "请填写省份", :maxlength => 30 %>
+          市/地区<%= text_field_tag :city, nil, :class => "txtbox", :dataType => "", :msg => "请填写市/地区", :maxlength => 30 %>
+        </div>
+      </li>
+    </ul>
+    <script type="text/javascript">
+        function qita_pc() {
+            if ($("#province_city_qita").attr("checked") == true) {
+                $("#province").attr("dataType", "Require")
+                $("#city").attr("dataType", "Require")
+                $("#paint_questionnaire_province").attr("dataType", "")
+                $("#paint_questionnaire_city").attr("dataType", "")
+                document.getElementById("province_city_qita_span").className = "show";
+            }
+            else {
+                $("#province").attr("dataType", "")
+                $("#city").attr("dataType", "")
+                $("#paint_questionnaire_province").attr("dataType", "Require")
+                $("#paint_questionnaire_city").attr("dataType", "Require")
+                document.getElementById("province_city_qita_span").className = "hide";
+            }
+        }
+    </script>
+    <ul>
+      <li>家庭人数:<input class="kong" name="paint_questionnaire[family_number]" dataType="Group" msg="请选择您的家庭人数"/>
+        <% for fn in PaintQuestionnaire::FN %>
+            <label><%= f.radio_button :family_number, fn %><%= fn %></label>
+        <% end %>
+      </li>
+    </ul>
+    <ul>
+      <li>家庭月收入:<input class="kong" name="paint_questionnaire[income]" dataType="Group" msg="请选择您的家庭月收入"/>
+        <% for income in PaintQuestionnaire::INCOME %>
+            <label><%= f.radio_button :income, income %><%= income %></label>
+        <% end %>
+      </li>
+    </ul>
+
+    <ul>
+      <li>
+        邮箱地址:<%= f.text_field :email, :class => "txtbox", :dataType => "Email", :msg => "请正确填写邮箱" %>
+      </li>
+      <!--li>
+          手机号码:<%#= f.text_field :mobile_phone, :class => "txtbox", :dataType => "Mobile", :msg => "请正确填写手机号码" %>
+        </li-->
+    </ul>
+    <ul style="text-align:center; margin-top:50px;">
+      <%#= f.submit "提交并分享", :class => "tab_btn" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="button" value="提交并分享" class="tab_btn" onclick="paint_questionnaire_create()"/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="reset" value="重 置" class="tab_btn" onclick="$('#show_div_h1').html('7.1 您不会选择优先雇佣通过职业考核认证的油工的主要顾虑是什么？（多选）');document.getElementById('showdiv').className = 'hide';"/>
+    </ul>
+    </div>
+<% end %>
+
+</div>
+
+
+<script type="text/javascript">
+    Validator = {
+        Require:/.+/,
+        Email:/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+        Mobile:/^\d{11}$/,
+        Phone:/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/,
+        Url:/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/,
+        IdCard:"this.IsIdCard(value)",
+        Currency:/^\d+(\.\d+)?$/,
+        Number:/^\d+$/,
+        Zip:/^[1-9]\d{5}$/,
+        QQ:/^[1-9]\d{4,8}$/,
+        Integer:/^[-\+]?\d+$/,
+        Double:/^[-\+]?\d+(\.\d+)?$/,
+        English:/^[A-Za-z]+$/,
+        Chinese:/^[\u0391-\uFFE5]+$/,
+        Username:/^[a-z]\w{3,}$/i,
+        UnSafe:/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/,
+        IsSafe:function (str) {
+            return !this.UnSafe.test(str);
+        },
+        SafeString:"this.IsSafe(value)",
+        Filter:"this.DoFilter(value, getAttribute('accept'))",
+        Limit:"this.limit(value.length,getAttribute('min'),  getAttribute('max'))",
+        LimitB:"this.limit(this.LenB(value), getAttribute('min'), getAttribute('max'))",
+        Date:"this.IsDate(value, getAttribute('min'), getAttribute('format'))",
+        Repeat:"value == document.getElementsByName(getAttribute('to'))[0].value",
+        Range:"getAttribute('min') < (value|0) && (value|0) < getAttribute('max')",
+        Compare:"this.compare(value,getAttribute('operator'),getAttribute('to'))",
+        Custom:"this.Exec(value, getAttribute('regexp'))",
+        Group:"this.MustChecked(getAttribute('name'), getAttribute('min'), getAttribute('max'))",
+        ErrorItem:[document.forms[0]],
+        ErrorMessage:["以下原因导致提交失败：\t\t\t\t"],
+        Validate:function (theForm, mode) {
+            var obj = theForm || event.srcElement;
+            var count = obj.elements.length;
+            this.ErrorMessage.length = 1;
+            this.ErrorItem.length = 1;
+            this.ErrorItem[0] = obj;
+            for (var i = 0; i < count; i++) {
+                with (obj.elements[i]) {
+                    var _dataType = getAttribute("dataType");
+                    if (typeof(_dataType) == "object" || typeof(this[_dataType]) == "undefined")  continue;
+                    this.ClearState(obj.elements[i]);
+                    if (getAttribute("require") == "false" && value == "") continue;
+                    switch (_dataType) {
+                        case "IdCard" :
+                        case "Date" :
+                        case "Repeat" :
+                        case "Range" :
+                        case "Compare" :
+                        case "Custom" :
+                        case "Group" :
+                        case "Limit" :
+                        case "LimitB" :
+                        case "SafeString" :
+                        case "Filter" :
+                            if (!eval(this[_dataType])) {
+                                this.AddError(i, getAttribute("msg"));
+                            }
+                            break;
+                        default :
+                            if (!this[_dataType].test(value)) {
+                                this.AddError(i, getAttribute("msg"));
+                            }
+                            break;
+                    }
+                }
+            }
+            if (this.ErrorMessage.length > 1) {
+                mode = mode || 1;
+                var errCount = this.ErrorItem.length;
+                switch (mode) {
+                    case 2 :
+                        for (var i = 1; i < errCount; i++)
+                            this.ErrorItem[i].style.color = "red";
+                    case 1 :
+                        alert(this.ErrorMessage.join("\n"));
+                        this.ErrorItem[1].focus();
+                        break;
+                    case 3 :
+                        for (var i = 1; i < errCount; i++) {
+                            try {
+                                var span = document.createElement("SPAN");
+                                span.id = "__ErrorMessagePanel";
+                                span.style.color = "red";
+                                this.ErrorItem[i].parentNode.appendChild(span);
+                                span.innerHTML = this.ErrorMessage[i].replace(/\d+:/, "*");
+                            }
+                            catch (e) {
+                                alert(e.description);
+                            }
+                        }
+                        this.ErrorItem[1].focus();
+                        break;
+                    default :
+                        alert(this.ErrorMessage.join("\n"));
+                        break;
+                }
+                return false;
+            }
+            return true;
+        },
+        limit:function (len, min, max) {
+            min = min || 0;
+            max = max || Number.MAX_VALUE;
+            return min <= len && len <= max;
+        },
+        LenB:function (str) {
+            return str.replace(/[^\x00-\xff]/g, "**").length;
+        },
+        ClearState:function (elem) {
+            with (elem) {
+                if (style.color == "red")
+                    style.color = "";
+                var lastNode = parentNode.childNodes[parentNode.childNodes.length - 1];
+                if (lastNode.id == "__ErrorMessagePanel")
+                    parentNode.removeChild(lastNode);
+            }
+        },
+        AddError:function (index, str) {
+            this.ErrorItem[this.ErrorItem.length] = this.ErrorItem[0].elements[index];
+            this.ErrorMessage[this.ErrorMessage.length] = this.ErrorMessage.length + ":" + str;
+        },
+        Exec:function (op, reg) {
+            return new RegExp(reg, "g").test(op);
+        },
+        compare:function (op1, operator, op2) {
+            switch (operator) {
+                case "NotEqual":
+                    return (op1 != op2);
+                case "GreaterThan":
+                    return (op1 > op2);
+                case "GreaterThanEqual":
+                    return (op1 >= op2);
+                case "LessThan":
+                    return (op1 < op2);
+                case "LessThanEqual":
+                    return (op1 <= op2);
+                default:
+                    return (op1 == op2);
+            }
+        },
+        MustChecked:function (name, min, max) {
+            var groups = document.getElementsByName(name);
+            var hasChecked = 0;
+            min = min || 1;
+            max = max || groups.length;
+            for (var i = groups.length - 1; i >= 0; i--)
+                if (groups[i].checked) hasChecked++;
+            return min <= hasChecked && hasChecked <= max;
+        },
+        DoFilter:function (input, filter) {
+            return new RegExp("^.+\.(?=EXT)(EXT)$".replace(/EXT/g, filter.split(/\s*,\s*/).join("|")), "gi").test(input);
+        },
+        IsIdCard:function (number) {
+            var date, Ai;
+            var verify = "10x98765432";
+            var Wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+            var area = ['', '', '', '', '', '', '', '', '', '', '', '北京', '天津', '河北', '山西', '内蒙古', '', '', '', '', '', '辽宁', '吉林', '黑龙江', '', '', '', '', '', '', '', '上海', '江苏', '浙江', '安微', '福建', '江西', '山东', '', '', '', '河南', '湖北', '湖南', '广东', '广西', '海南', '', '', '', '重庆', '四川', '贵州', '云南', '西藏', '', '', '', '', '', '', '陕西', '甘肃', '青海', '宁夏', '新疆', '', '', '', '', '', '台湾', '', '', '', '', '', '', '', '', '', '香港', '澳门', '', '', '', '', '', '', '', '', '国外'];
+            var re = number.match(/^(\d{2})\d{4}(((\d{2})(\d{2})(\d{2})(\d{3}))|((\d{4})(\d{2})(\d{2})(\d{3}[x\d])))$/i);
+            if (re == null) return false;
+            if (re[1] >= area.length || area[re[1]] == "") return false;
+            if (re[2].length == 12) {
+                Ai = number.substr(0, 17);
+                date = [re[9], re[10], re[11]].join("-");
+            }
+            else {
+                Ai = number.substr(0, 6) + "19" + number.substr(6);
+                date = ["19" + re[4], re[5], re[6]].join("-");
+            }
+            if (!this.IsDate(date, "ymd")) return false;
+            var sum = 0;
+            for (var i = 0; i <= 16; i++) {
+                sum += Ai.charAt(i) * Wi[i];
+            }
+            Ai += verify.charAt(sum % 11);
+            return (number.length == 15 || number.length == 18 && number == Ai);
+        },
+        IsDate:function (op, formatString) {
+            formatString = formatString || "ymd";
+            var m, year, month, day;
+            switch (formatString) {
+                case "ymd" :
+                    m = op.match(new RegExp("^((\\d{4})|(\\d{2}))([-./])(\\d{1,2})\\4(\\d{1,2})$"));
+                    if (m == null) return false;
+                    day = m[6];
+                    month = m[5] * 1;
+                    year = (m[2].length == 4) ? m[2] : GetFullYear(parseInt(m[3], 10));
+                    break;
+                case "dmy" :
+                    m = op.match(new RegExp("^(\\d{1,2})([-./])(\\d{1,2})\\2((\\d{4})|(\\d{2}))$"));
+                    if (m == null) return false;
+                    day = m[1];
+                    month = m[3] * 1;
+                    year = (m[5].length == 4) ? m[5] : GetFullYear(parseInt(m[6], 10));
+                    break;
+                default :
+                    break;
+            }
+            if (!parseInt(month)) return false;
+            month = month == 0 ? 12 : month;
+            var date = new Date(year, month - 1, day);
+            return (typeof(date) == "object" && year == date.getFullYear() && month == (date.getMonth() + 1) && day == date.getDate());
+            function GetFullYear(y) {
+                return ((y < 30 ? "20" : "19") + y) | 0;
+            }
+        }
+    }
+</script>
+<!--表单验证END-->
+
+<div style="position: absolute; right: 5px; top: 359.5px;" id="right-float-box">
+  <table border="0" width="97" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr>
+      <td>
+        <a href="#" style="border:none;"><img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_04.gif"/></a>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_06.gif"/></td>
+    </tr>
+    <tr>
+      <td class="xuanfu">
+        <ul class="xuanfu_ul">
+          <li>参加“油漆工需求线上调查”活动，并且微薄分享+@三位好友，将获30元手机充值卡一张</li>
+          <h1>活动时间：</h1>
+          <li>11.1-1.31</li>
+          <h1>获奖方式：</h1>
+          <li>1.从完成问卷并微博分享的网友中每周随机抽取5名幸运网友</li>
+          <li>2.每周一公布获奖名单。</li>
+          <li>3.获奖信息会通过微博私信通知网友，请随时关注</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_09.gif"/></td>
+    </tr>
+    <tr>
+      <td class="xuanfu">
+        <ul>
+          <li><%= link_to("@可乐妹妹VS薯条弟弟","http://weibo.com/u/1663328524", :target => "_blank") %></li>
+          <li><%= link_to("@G12-小妖","http://weibo.com/111860907", :target => "_blank") %></li>
+          <li><%= link_to("@细水的长流","http://weibo.com/kiteche", :target => "_blank") %></li>
+          <li><%= link_to("@90度沸点","http://weibo.com/u/2487857862", :target => "_blank") %></li>
+          <li><%= link_to("@一步而立","http://weibo.com/u/1793307320", :target => "_blank") %></li>
+          <li><%= link_to("@乱头阿娘","http://weibo.com/u/2608767467", :target => "_blank") %></li>
+          <li><%= link_to("@凤凰飞天西湖畔","http://weibo.com/u/2608737931", :target => "_blank") %></li>
+          <li><%= link_to("@粉红色耳朵","http://weibo.com/u/2608753757", :target => "_blank") %></li>
+          <li><%= link_to("@YOYO丶晓琳","http://weibo.com/2882292414", :target => "_blank") %></li>
+          <li><%= link_to("@譚寶寶-","http://weibo.com/u/2175339314", :target => "_blank") %></li>
+          <li><%= link_to("@SONYCL","http://weibo.com/1406506487", :target => "_blank") %></li>
+          <li><%= link_to("@Rosemary_点点","http://weibo.com/1973632685", :target => "_blank") %></li>
+          <li><%= link_to("@蜗牛的家7710","http://weibo.com/1437702981", :target => "_blank") %></li>
+          <li><%= link_to("@huhu_夢","http://weibo.com/2178914251", :target => "_blank") %></li>
+          <li><%= link_to("@姚艾玛","http://weibo.com/emmyao", :target => "_blank") %></li>
+          <li><%= link_to("@杨一Yungye","http://weibo.com/maotouyi", :target => "_blank") %></li>
+          <li><%= link_to("@jacky分享","http://weibo.com/2625039232", :target => "_blank") %></li>
+          <li><%= link_to("@叫我小互","http://weibo.com/2826762884", :target => "_blank") %></li>
+          <li><%= link_to("@童年心愿树","http://weibo.com/2924751734", :target => "_blank") %></li>
+          <li><%= link_to("@梵蒂冈de小猫","http://weibo.com/1952674565", :target => "_blank") %></li>
+          <li><%= link_to("@童年许愿墙","http://weibo.com/2920641492", :target => "_blank") %></li>
+          <li><%= link_to("@刺眼的光线","http://weibo.com/1767768872", :target => "_blank") %></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="http://www.51hejia.com/zhuanti/dlswj201209/images/wenjuan_11.png"/></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script language="JavaScript" type="text/javascript" src="http://www.51hejia.com/zhuanti/dlswj201209/js/float.js"></script>
+<script type="text/javascript">
+    $("#right-float-box").float({position:"rm", delay:500});
+</script>

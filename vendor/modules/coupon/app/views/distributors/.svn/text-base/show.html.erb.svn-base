@@ -1,0 +1,175 @@
+<%  default_impression_text, coupon, tag = '不多于5个字', @distributor.coupons.first, @distributor.coupons.first.tag  %>
+<% content_for :html_head do %>
+  <% set_coupon_page_meta_data @distributor.title, @distributor.title, @distributor.title %>
+  <%=
+    stylesheet_link_tag(
+      jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0', :resource => :css),
+      jquery_resource(:plugin => 'jgrowl', :version => '1.2.4', :resource => :css)
+    )
+  %>
+  <link href="http://js.51hejia.com/css/djq_yb.css" rel="stylesheet" type="text/css" />
+<% end %>
+<% content_for :html_body_end do %>
+  <!-- 此页面样式于别页面页面有点差异  -->
+  <style type="text/css">
+    .tag_cloud{
+      padding:0;
+    }
+  </style>
+  <%=
+    javascript_include_tag(
+      jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0'),
+      jquery_resource(:plugin => 'jgrowl', :version => '1.2.4')
+    )
+  %>
+  <script type="text/javascript">
+    $(function(){
+      // 添加印象
+      function addImpression(impression) {
+        $.ajax({
+          url: $('#impression_form').attr('action'),
+          type: "POST",
+          data: $.param({title: impression}),
+          dataType: "json",
+
+          error: function(request) {
+            var msg;
+            try {
+//              msg = request.responseText;
+              msg = eval('(' + request.responseText + ')').join('<br/>');
+            } catch(e) {
+              msg = '未知错误，请稍后再尝试。';
+            }
+            $.jGrowl(msg, {header: '出错啦'});
+          },
+          success: function(data) {
+            $("#new_impression").text(data.join(" "));
+            $.jGrowl('印象添加成功', {header: '感谢您的参与'});
+          }
+
+        });
+      }
+
+      // 添加印象form
+      $('#impression_form').submit(function(event) {
+        event.preventDefault();
+        var textField = $(this).find(':text'),
+            impression = $.trim(textField.val());
+        textField.val('<%= default_impression_text %>');
+        if (impression != '' && impression != '<%= default_impression_text %>') addImpression(impression);
+        return false;
+      }).find(':text').
+        focus(function() { if( $.trim($(this).val()) == '<%= default_impression_text %>' ) $(this).val('') }).
+        blur(function() { if( $.trim($(this).val()) == '' ) $(this).val('<%= default_impression_text %>') });
+
+      //　印象 A Ｌianjie　
+      $('.impression').click(function(event) {
+        addImpression($(this).text());
+        event.preventDefault();
+        // return false;
+      });
+      
+      $('.tag_cloud').tagCloud();
+
+    });
+    
+  </script>
+<% end %>
+  <%= render :partial => 'distributors/head'  %>
+  <%= render :partial => 'distributors/left'  %>
+  <!-- about firm impression -->
+  <div class="djq_yb_r f_r">
+    <div class="djq_yb_rbox djq_yb_rbox1 f_l margin10" id="deco_impression">
+      <h3>您对 <%= @distributor.short_title %> 的印象是</h3>
+      <div class="tag_cloud djq_yb_ryinx">
+        <% @distributor.impressions({:limit => 12}).each do |e|%>
+          <div> 
+            <%= link_to h(e), save_distributor_impression_path(:id => @distributor.id), :class => 'impression' %> 
+          </div>
+        <%end%>
+      </div>
+
+      <div class="djq_yb_rtianj">
+        <% form_tag save_distributor_impression_path(:id => @distributor.id), :id => 'impression_form' do %>
+          请输入您的印象词：<%= text_field_tag :title, default_impression_text %>
+          <%= submit_tag '', :class => 'djq_yb_rbtn' %>
+        <% end %>
+      </div>
+      <div class="djq_yb_rxyinx">
+        <strong>最新添加印象：</strong>
+        <span id="new_impression">
+          <%
+            @distributor.latest_impression.each do |impression|
+              impression = h impression
+          %>
+            <%= content_tag :span, impression, :title => impression %>
+          <% end %>
+        </span>
+      </div>
+    </div>
+    <div class="djq_yb_rbox djq_yb_rbox2 f_r margin10">
+      <h3><%= @distributor.short_title %>口碑排行</h3>
+      <ul>
+        <li><span class="width1 color align">品牌口碑</span><span class="width2 color">得票数</span><span class="width2 color">支持率</span></li>
+        <% 
+          @distributor.top_impressions.each do |impression| 
+            unless impression[:name].blank? && impression[:score].blank?
+        %>
+          <li>
+            <span class="width1 align"><%= h impression[:name] %></span>
+            <span class="width2"><%= impression[:score] %></span>
+            <span class="width2"><%= impression[:percent] %></span>
+          </li>
+        <% 
+            end 
+          end 
+        %>
+      </ul>
+    </div>
+    <div class="djq_yb_rbox djq_yb_rbox3 clear margin10">
+      <h3>无条件现金抵用券</h3>
+      <div class="djq_yb_rmore">
+        <% if @distributor.coupons.size > 1 %>
+          <a href="<%= distributor_index_path(:id => @distributor.id) %>" target="_blank">
+            查看本店其余 <strong><%= @distributor.coupons.size %></strong> 张现金抵用券>>
+          </a>
+        <% end %>
+      </div>
+      <div class="djq_yb_rdjq f_l">
+        <% if coupon.image_url.to_s.blank? %>
+          <img src="http://img.51hejia.com/api/images/0004/9455/1.jpg" width="800"/>
+        <% else %>
+          <img src="<%= cloud_fs_domain("image") %><%= coupon.image_url %>"/>
+        <% end %>
+      </div>
+      <div class="djq_yb_rsysm f_r">
+        <h4>使用说明</h4>
+          <%= coupon.usage %>
+      </div>
+      <div class="djq_contbottom clear">
+        <%
+           # fetch tag color from redis
+           tag_color = "#0096af"
+           begin
+               city_print_properties = YAML::load($redis.get("coupon:print_properties:#{@city.name}"))
+               tag_color = city_print_properties['industry_color'][tag.short_name]
+           rescue
+
+           end
+        %>
+        <div class="djq_yb_rdjqmore" style="background:<%= "#{tag_color}"%>;">如需更多优惠信息，敬请登录 <a href="http://www.51hejia.com" target="_blank" style="color:white;text-decoration:underline;">www.51hejia.com</a></div>
+        <div class="djq_contbbtn">
+          <a href="<%= new_coupon_download_path(:id => coupon.id) %>" target="_blank" class="djq_contbbtn01" title="免费短信下载"></a>
+          <a href="<%= coupon_print_path(:id => coupon.id) %>" target="_blank" class="djq_contbbtn02" title="打印"></a>
+          <a class="djq_contbbtn03" title="抵用券编号: <%= coupon.id %>"></a>
+          <a href="<%= coupon_recommended_path(:id => coupon.id) %>" target="_blank" class="djq_contbbtn04" title="告诉朋友"></a>
+        </div>
+      </div>
+    </div>
+    <div class="djq_yb_rbox djq_yb_rbox4">
+      <% unless @distributor.description.blank? %>
+        <%= @distributor.description %>
+      <% end %>
+    </div>
+  </div>
+</div>

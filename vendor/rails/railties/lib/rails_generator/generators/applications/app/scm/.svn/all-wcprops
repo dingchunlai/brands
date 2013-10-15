@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/lib/rails_generator/generators/applications/app/scm
+END
+scm.rb
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/lib/rails_generator/generators/applications/app/scm/scm.rb
+END
+git.rb
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/lib/rails_generator/generators/applications/app/scm/git.rb
+END
+svn.rb
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/railties/lib/rails_generator/generators/applications/app/scm/svn.rb
+END

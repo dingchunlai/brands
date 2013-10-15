@@ -1,0 +1,28 @@
+.clear { clear: both; }
+
+body, ul, li, nav, header { border: none }
+header, nav { display: block; margin: 0; padding: 0; }
+
+body { font-family: '宋体'; font-size: 12px; font-weight: normal }
+/*
+table { width: 100% }
+*/
+a:visited { color: blue; }
+a:hover { text-decoration: underline }
+
+#content { margin: 20px 0 0 }
+
+nav { border-bottom: 1px solid blue; padding: 5px 0 3px 5px; }
+nav ul, .horizontal { display: block; list-style: none; margin: 0; padding: 0; }
+nav li, .horizontal li { display: block; float: left; color: blue; margin: 0 20px 0 0; padding: 0 3; }
+nav li.last, .horizontal li.last { margin-right: 0; }
+nav a { text-decoration: none; line-height: 18px }
+
+a.current { color: orange }
+
+.notice, .alert {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.alert {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+
+img.demo { max-width: 300px; max-height: 300px; }
+.tool_span {width: 100%; text-align: center;}

@@ -1,0 +1,320 @@
+<% title "【油漆施工】油漆工艺_油漆施工注意些什么_金刷子油漆工推荐_和家网油漆施工频道" %>
+<% keywords "油漆施工,油漆工艺,油漆工,金刷子" %>
+<% description "油漆施工频道倡导“三分涂料七分涂装”油漆施工理念，为业主介绍经过严格油漆施工培训和指导的金刷子认证油漆工。同时，用户可了解最新最全的油漆施工工艺、查找优秀的油漆施工案例、阅读网友分享的装修日记，并可在线申请成为会员。我们也联合品牌厂商为广大油漆工提供专业培训的机会" %>
+<% javascript 'paint/home.js'%>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#province").change(function() {
+			$.getJSON("/paint_workers/get_paint_cities", {
+				province : $("#province").val()
+			}, function(data) {
+				$(".this_city").empty();
+				$("<option value=''>请选择</option>").appendTo(".this_city");
+				$.each(data, function(i) {
+					$("<option value='" + data[i][0] + "'>" + data[i][1] + "</option>").appendTo(".this_city");
+				});
+			});
+		});
+	}); 
+</script>
+<div class="b_width960 margin10 clearfix">
+	<%= render_ad 81895, "油漆施工-首页-通栏2 ", "afp" %>
+</div>
+<div class="width960 margin10 clearfix">
+	<div class="yg_p1_l f_l">
+		<div class="yg_p1l_l f_l margin10">
+			<div style="margin-bottom:20px;">
+				<a href="/renzhengyougong"><img src="http://js.51hejia.com/img/yougong201206/xssq.jpg" /></a>
+			</div>
+			<div class="yg_p1l_zyrk margin10">
+				<h3>帮助中心</h3>
+				<div class="yg_pxrk">
+					<div class="yg_pxrkimg">
+						<a target="_self" href="/home/help"><img src="http://js.51hejia.com/img/brandimg/ad03.jpg" /></a>
+					</div>
+					<ul>
+						<li>
+							·<a title="关于频道" target="_blank" href="/home/help#about_pindao">关于频道</a>
+						</li>
+						<li>
+							·<a title="关于预约" target="_blank" href="/home/help#about_yuyue">关于预约</a>
+						</li>
+						<li>
+							·<a title="关于认证油工" target="_blank" href="/home/help#about_yougong">关于认证油工</a>
+						</li>
+						<li>
+							·<a title="关于客户服务" target="_blank" href="/home/help#about_kefu">关于客户服务</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="yg_p1l_r f_r margin10">
+			<div class="yg_slide margin10">
+				<%= render :partial => 'focus_img'%>
+			</div>
+			<div class="yg_content margin10 clearfix">
+				<h3>油漆工艺编辑推荐</h3>
+				<div class="yg_editor_txt">
+					<div class="yg_editor_img f_l">
+						<a target="_blank" href="http://wb.51hejia.com/q/298960.html"><img src="http://d.51hejia.com/api/images/0006/9005/QQ截图20110614150447.jpg" /></a>
+					</div>
+					<div class="yg_editor_des f_l">
+						<h4><a title="如何挑选好刷子" target="_blank" href="http://wb.51hejia.com/q/298960.html">如何挑选好刷子</a></h4>
+						<p>
+							在各大油漆施工网站论坛浏览的时候，发现大家都在关注如何选择一把好刷子的问题，那刷油漆的工具&mdash;&mdash;刷子究竟应该如何选择？我的<a target="_blank" href="http://wb.51hejia.com/q/298960.html">【详细】</a>
+						</p>
+					</div>
+					<ul class="yg_editor_list">
+						<li>
+							·<a title="油工自爆猫腻 3招辨别油工好坏" target="_blank" href="http://www.51hejia.com/youqituliao/20120419/679447">油工自爆猫腻 3招辨别油工好坏</a>
+						</li>
+						<li>
+							·<a title="和气小姐选颜色 11个浅调墙面呈现" target="_blank" href="http://www.51hejia.com/youqituliao/20130306/682966">和气小姐选颜色 11个浅调墙面呈现</a>
+						</li>
+						<li>
+							·<a title="油工也考证！网友与证人油工零接触" target="_blank" href="http://www.51hejia.com/youqituliao/20120330/679283">油工也考证！网友与证人油工零接触</a>
+						</li>
+						<li>
+							·<a title="专业才靠谱 马路油工坑你没商量" target="_blank" href="http://b.51hejia.com/pinpaiku/20110107/649468">专业才靠谱 马路油工坑你没商量</a>
+						</li>
+						<li>
+							·<a title="认准专业油工 施工安心更放心" target="_blank" href="http://www.51hejia.com/youqituliao/20110803/668862">认准专业油工 施工安心更放心</a>
+						</li>
+						<li>
+							·<a title="艺多不压身 专业培训课程油工亲体验" target="_blank" href="http://www.51hejia.com/youqituliao/20110803/668866">艺多不压身 专业培训课程油工亲体验</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="yg_jdal margin10">
+				<h3>油漆工成功案例</h3>
+				<div class="yg_more"></div>
+				<ul class="clearfix">
+					<li>
+						·<a title="油工也考证！ 网友亲身经历验证认证油工的专业" target="_blank" href="http://www.51hejia.com/youqituliao/20120330/679283">油工也考证！ 网友亲身经历验证</a>
+					</li>
+					<li>
+						·<a title="网友寻找油漆工4大途径和注意事项" target="_blank" href="http://www.yougong.51hejia.com/youqishigong/20130425/683600">网友寻找油漆工4大途径和注意事项</a>
+					</li>
+					<li>
+						·<a title="老房整容 只翻新墙面就判若两家" target="_blank" href="http://b.51hejia.com/pinpaiku/20101129/646300">老房整容 只翻新墙面就判若两家</a>
+					</li>
+					<li>
+						·<a title="金装墙漆+优质木器漆 刷出爱琴海" target="_blank" href="http://b.51hejia.com/pinpaiku/20100930/641550">金装墙漆+优质木器漆 刷出爱琴海</a>
+					</li>
+					<li>
+						·<a title="幻彩翻新 旧房三日变脸不是不可" target="_blank" href="http://www.yougong.51hejia.com/646299">幻彩翻新 旧房三日变脸不是不可</a>
+					</li>
+					<li>
+						·<a title="金刷子认证油工业主专访" target="_blank" href="http://www.51hejia.com/youqituliao/20120607/679863">金刷子认证油工业主专访</a>
+					</li>
+				</ul>
+			</div>
+			<div class="yg_content margin10">
+				<h3><span class="f_l">油漆工知识</span><a target="_blank" href="/articles" class="f_r"> &gt;&gt;更多</a></h3>
+				<div class="yg_list_a f_l">
+					<% paint_keywords = PaintKeyword.find(:all,:limit => 12) %>
+					        <% for paint_keyword in paint_keywords %>
+					        <% if paint_keyword == paint_keywords.last %>
+					        	<%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %>
+					        <% else %>
+        						<%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %> |
+        					<% end%>
+        			<% end %>
+				</div>
+			</div>
+		</div>
+		<div class="f_l yg_process">
+			<h3>金刷子油漆工推荐服务流程</h3>
+			<div class="yg_service"><img src="http://js.51hejia.com/img/yougong201206/service.jpg" />
+			</div>
+		</div>
+	</div>
+	<div class="yg_p1_r f_r">
+		<div class="yg_painting margin10">
+			<h3>三分涂料七分涂装</h3>
+			<div id="imager_div">
+				<object width="226" height="156" type="application/x-shockwave-flash" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+					<param value="http://js.51hejia.com/img/homeimg/lifeflash.swf" name="movie" />
+					<param value="high" name="quality" />
+					<param value="#F4FAFA" name="bgcolor" />
+					<param value="always" name="allowscriptaccess" />
+					<param value="opaque" name="wmode" />
+					<param value="p_array=http://js.51hejia.com/img/brandimg/yg_flash1.jpg|http://js.51hejia.com/img/brandimg/yg_flash2.jpg|http://js.51hejia.com/img/brandimg/yg_flash3.jpg&amp;txt_array=扮靓美居 远离漆病|安居要找好产品好油工|找对油工坐享“漆”成&amp;link_array=/shigonggongyi|/shigonggongyi|/shigonggongyi" name="flashvars" />
+					<embed width="226" height="156" flashvars="p_array=http://js.51hejia.com/img/brandimg/yg_flash1.jpg|http://js.51hejia.com/img/brandimg/yg_flash2.jpg|http://js.51hejia.com/img/brandimg/yg_flash3.jpg&amp;txt_array=扮靓美居 远离漆病|安居要找好产品好油工|找对油工坐享“漆”成&amp;link_array=/shigonggongyi|/shigonggongyi|/shigonggongyi" wmode="opaque" allowscriptaccess="always" bgcolor="#F4FAFA" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="http://js.51hejia.com/img/homeimg/lifeflash.swf">
+				</object>
+			</div>
+			<script src="http://js.51hejia.com/js/sinaflash.js?12345" type="text/javascript"></script>
+			<script type="text/javascript" language="javascript">
+				var swf = new sinaFlash("http://js.51hejia.com/img/homeimg/lifeflash.swf", "", "226", "156", "8", "#F4FAFA", true, "high");
+				swf.addParam("allowScriptAccess", "always");
+				swf.addParam("wmode", "opaque");
+				swf.addVariable("p_array", "http://js.51hejia.com/img/brandimg/yg_flash1.jpg|http://js.51hejia.com/img/brandimg/yg_flash2.jpg|http://js.51hejia.com/img/brandimg/yg_flash3.jpg");
+				swf.addVariable("txt_array", "扮靓美居 远离漆病|安居要找好产品好油工|找对油工坐享“漆”成");
+				swf.addVariable("link_array", "/shigonggongyi|/shigonggongyi|/shigonggongyi");
+				swf.write("imager_div");
+
+			</script>
+		</div>
+		<div>
+			<a href="/paint_questionnaires/new" target="_blank"><img src="http://js.51hejia.com/img/yougong201206/yg_ad.jpg" /></a>
+		</div>
+		<div class="yg_vote margin10" id="paint_rating">
+			<%= render :partial => "paint_rating", :locals => {:paint_rating => @paint_rating} %>
+		</div>
+
+		<div class="yg_painting margin10">
+			<h3>专家在线</h3>
+			<div class="yg_expert">
+				<a target="_blank" href="http://wb.51hejia.com/expert_index/7372654.html"><img src="http://js.51hejia.com/img/yougong201206/yg_wt.jpg" /></a>
+				<ul>
+					<li>
+						<h4><span>问：</span><a target="_blank" href="http://wb.51hejia.com/q/388420.html">一般油工和金刷子认证油工的区别？</a></h4>
+						<p>
+							<span>答：</span><a target="_blank" href="http://wb.51hejia.com/q/388420.html">从字面上就是一个有认证，一个没有认证。认证了的油工是专业机构经过一段时间的培训……</a>
+						</p>
+					</li>
+					<li>
+						<h4><span>问：</span><a target="_blank" href="http://wb.51hejia.com/q/395664.html">选择油工时怎么判断他是合格油工？</a></h4>
+						<p>
+							<span>答：</span><a target="_blank" href="http://wb.51hejia.com/q/395664.html">合格认证油漆工=理论考试+实操鉴定+职业道德鉴定。判断油漆工师傅的档次要看他是否……</a>
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="width960 margin10 clearfix">
+	<div class="yg_star f_l">
+		<h3 class="f_l">当月明星油漆工</h3>
+		<form action="/renzhengyougong/all" method="get">
+			<p class="f_r">
+				更多油工：
+				<select name="province" id="province">
+					<option value="">省份</option>
+					<% Province.get_province_jinshuazi.each do |k,v| %>
+					<option value="<%= v %>"><%= k %></option>
+					<% end %>
+				</select>
+				<select name="city" id="city" class="this_city">
+					<option value="">城市</option>
+				</select>
+				<input name="" type="submit" value="搜 索" class="search" />
+			</p>
+		</form>
+	</div>
+	<div class="yg_star_people f_l">
+		<p class="f_l"><img src="http://js.51hejia.com/img/yougong201206/star_pic.jpg" />
+		</p>
+		<ul class="f_l">
+			<% PaintWorker.paint_top10.first(3).each do |worker|%>
+			<li>
+				<div class="yg_star_people_pic f_l">
+					<a href="<%= get_paint_worker_url(worker.id)%>" target="_self" title="<%= worker.USERBBSNAME %>"><%= image_tag get_avatar_img(worker.painter.avatar_file_name) %></a>
+					<a target="_blank" href="/paiqian?id=<%= worker.USERBBSID %>" class="same_bg">我要约TA</a>
+					<a target="_blank" href="<%= get_paint_worker_url(worker.id)%>" class="same_bg">我的案例</a>
+				</div>
+				<div class="yg_star_people_des f_l">
+					<p>
+						姓名：<%= worker.USERBBSNAME %>
+					</p>
+					<p>
+						城市：<%= Province.name_for_code(worker.painter.province) %> <%= City.name_for_code(worker.painter.city) %>
+					</p>
+					<p>
+						油工等级：<%= Painter::GRADE.index worker.painter.grade%>
+					</p>
+					<p>
+						从业年限：<%= worker.painter.job_year %>年
+					</p>
+					<p>
+						证书编号：<%= worker.painter.certificate_number %>
+					</p>
+					<p>
+						综合评价：
+					</p>
+					<p>
+						技术分：<%= worker.painter.skill_score %>分
+					</p>
+					<p>
+						服务分：<%= worker.painter.service_score %>分
+					</p>
+				</div>
+			</li>
+			<% end %>
+		</ul>
+	</div>
+</div>
+
+<div class="width960 margin10 clearfix">
+	<div class="yg_wood f_l">
+		<h3><span class="f_l">木器漆</span><a target="_blank" href="http://www.yougong.51hejia.com/木器漆/articles" class="f_r">&gt;&gt;更多</a></h3>
+		<div class="yg_wood_content f_l">
+			<h4><a target="_blank" href="http://www.yougong.51hejia.com/article/649120">拒绝被忽悠 识破马路游击队油工</a></h4>
+			<div class="yg_wood_detail f_l">
+				<a target="_blank" href="http://www.yougong.51hejia.com/article/649120" class="detail_img f_l"><img src="http://js.51hejia.com/img/yougong201206/pic_01.jpg"></a>
+				<p class="detail_p f_l">
+					网友默默是设计专业出身，在装修新家时也花样百出，他精心画草图设计北欧风情的卧室家具。为图方便，他找了小区旁边一个“野路子”施工队上门来做木工和涂刷木器漆。没想到，噩梦开始了。野路子油工把家具涂刷的坑洼不平不算，颜色也不均，美容失败。<a target="_blank" href="http://www.yougong.51hejia.com/article/649120">【详细】</a>
+				</p>
+			</div>
+			<ul class="yg_wood_list f_l">
+				<li>
+					·<a title="装修效果有保障 认证油工来帮忙" target="_blank" href="http://www.yougong.51hejia.com/article/649151">装修效果有保障 认证油工来帮忙</a>
+				</li>
+				<li>
+					·<a title="旧物变废为宝 优质施工给家具减" target="_blank" href="http://www.yougong.51hejia.com/article/648705">旧物变废为宝 优质施工给家具减</a>
+				</li>
+				<li>
+					·<a title="马路游击队不靠谱 不规范油工亲" target="_blank" href="http://www.yougong.51hejia.com/article/649008">马路游击队不靠谱 不规范油工亲</a>
+				</li>
+				<li>
+					·<a title="既是家具又是艺术品 木器涂装风" target="_blank" href="http://www.yougong.51hejia.com/article/646225">既是家具又是艺术品 木器涂装风</a>
+				</li>
+				<li>
+					·<a title="因人而异 家具涂装风格与木器漆" target="_blank" href="http://www.yougong.51hejia.com/article/646252">因人而异 家具涂装风格与木器漆</a>
+				</li>
+				<li>
+					·<a title="家庭装修中常用的油漆类型" target="_blank" href="http://www.yougong.51hejia.com/article/398384">家庭装修中常用的油漆类型</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div style="margin-left:10px;" class="yg_wood f_l">
+		<h3><span class="f_l">墙面漆</span><a target="_blank" href="http://www.yougong.51hejia.com/墙面漆/articles" class="f_r">&gt;&gt;更多</a></h3>
+		<div class="yg_wood_content f_l">
+			<h4><a target="_blank" href="http://www.yougong.51hejia.com/article/649151">装修效果有保障 认证油工来帮忙</a></h4>
+			<div class="yg_wood_detail f_l">
+				<a target="_blank" href="http://www.yougong.51hejia.com/article/649151" class="detail_img f_l"><img src="http://js.51hejia.com/img/yougong201206/pic_02.jpg"></a>
+				<p class="detail_p f_l">
+					买了套二手房做新房，旧翻新的基础工程中，最让我满意的就是墙面。现在家里墙壁已经刷完，用我家油工的话说，这将是这房子最白的几天，先不说入住后很难处处保持，就是接下来的各种材料安装，也不免有些粉尘灰土，只是看不出来罢了。<a target="_blank" href="http://www.yougong.51hejia.com/article/649151">【详细】</a>
+				</p>
+			</div>
+			<ul class="yg_wood_list f_l">
+				<li>
+					·<a title="拒绝被忽悠 识破马路游击队油工" target="_blank" href="http://www.yougong.51hejia.com/article/649120">拒绝被忽悠 识破马路游击队油工</a>
+				</li>
+				<li>
+					·<a title="墙头合唱团 高性价比饰物改装卧室" target="_blank" href="http://www.yougong.51hejia.com/article/648783">墙头合唱团 高性价比饰物改装卧室</a>
+				</li>
+				<li>
+					·<a title="择漆如择妻 高素质团队做坚强后盾" target="_blank" href="http://www.yougong.51hejia.com/article/649153">择漆如择妻 高素质团队做坚强后盾</a>
+				</li>
+				<li>
+					·<a title="拒绝奸商“漆”骗 实惠耐用墙面漆推荐" target="_blank" href="http://www.yougong.51hejia.com/article/640975">拒绝奸商“漆”骗 实惠耐用墙面漆推荐</a>
+				</li>
+				<li>
+					·<a title="看看自己OUT没 最IN的80后装修趋势秀" target="_blank" href="http://www.yougong.51hejia.com/article/645701">看看自己OUT没 最IN的80后装修趋势秀</a>
+				</li>
+				<li>
+					·<a title="" target="_blank" href="http://www.yougong.51hejia.com/article/645700">装修警惕油漆陷阱 当心被漆骗</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="width960 margin10 clearfix">
+	<%= render :partial => "pictures"%>
+</div>

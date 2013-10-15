@@ -1,0 +1,8 @@
+<% first_all = (u_like.to_i + u_nolike.to_i) %>
+<% if %[plan_first plan_second plan_third plan_four].include? item %>
+<div class="q_like"><a class="q_vote_a" style="cursor:pointer;" data-remote=<%= "#{haier_waterheater_rating_path(:item =>item,:like =>'1')}" %>></a><div id="<%= item %>_like"><span class="q_vote" style="width:<%= first_all == 0 ? 0 : ((u_like.to_f / first_all.to_f) * 100.0).round %>px;"></span><span class="font_w"><%= u_like %></span></div></div>
+<div class="q_unlike"><a class="q_vote_a" style="cursor:pointer;" data-remote=<%= "#{haier_waterheater_rating_path(:item =>item,:like =>'0')}" %>></a><div id="<%= item %>_nolike"><span class="q_vote" style="width:<%= first_all == 0 ? 0 : ((u_nolike.to_f / first_all.to_f) * 100.0).round %>px;"></span><span class="font_w"><%= u_nolike %></span></div></div>
+<% elsif %w[wasterecovery zerowater solarenergy resolveplan].include? item %>
+<div class="cs_3_like"><a style="cursor:pointer;" class="q_vote_a" data-remote=<%= "#{haier_waterheater_rating_path(:item =>item,:like =>'1')}" %>></a><div id="<%= item %>_like"><span class="q_vote" style="width:<%= first_all == 0 ? 0 : ((u_like.to_f / first_all.to_f) * 60.0).round %>px;"></span><span class="font_w"><%= u_like %></span></div></div>
+<div class="cs_3_unlike"><a style="cursor:pointer;" class="q_vote_a" data-remote=<%= "#{haier_waterheater_rating_path(:item =>item,:like =>'0')}" %>></a><div id="<%= item %>_nolike"><span class="q_vote" style="width:<%= first_all == 0 ? 0 : ((u_nolike.to_f / first_all.to_f) * 60.0).round %>px;"></span><span class="font_w"><%= u_nolike %></span></div></div>
+<% end %>

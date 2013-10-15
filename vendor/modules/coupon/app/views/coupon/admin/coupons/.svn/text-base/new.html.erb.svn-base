@@ -1,0 +1,59 @@
+<h1>New coupon</h1>
+
+<% form_for(@coupon) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :money_reach %><br />
+    <%= f.text_field :money_reach %>
+  </p>
+  <p>
+    <%= f.label :money_refund %><br />
+    <%= f.text_field :money_refund %>
+  </p>
+  <p>
+    <%= f.label :coupon_shop %><br />
+    <%= f.text_field :coupon_shop %>
+  </p>
+  <p>
+    <%= f.label :agency %><br />
+    <%= f.text_field :agency %>
+  </p>
+  <p>
+    <%= f.label :sms_msg %><br />
+    <%= f.text_field :sms_msg %>
+  </p>
+  <p>
+    <%= f.label :activity_began_at %><br />
+    <%= f.datetime_select :activity_began_at %>
+  </p>
+  <p>
+    <%= f.label :activity_end_at %><br />
+    <%= f.datetime_select :activity_end_at %>
+  </p>
+  <p>
+    <%= f.label :usage %><br />
+    <%= f.text_field :usage %>
+  </p>
+  <p>
+    <%= f.label :offline_event %><br />
+    <%= f.check_box :offline_event %>
+  </p>
+  <p>
+    <%= f.label :offline_address %><br />
+    <%= f.text_field :offline_address %>
+  </p>
+  <p>
+    <%= f.label :offline_out_count %><br />
+    <%= f.text_field :offline_out_count %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', coupons_path %>

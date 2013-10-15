@@ -1,0 +1,11 @@
+    <div class="diyq_listrbox diyq_listrboxb">
+      <h3>您浏览过的<%= Coupon.human_name %></h3>
+      <ul>
+        <% 
+           @browsed_coupons && @browsed_coupons.each do |coupon| 
+        %>
+          <li><span><a href="<%= coupon_show_path(coupon) %>" target="_blank">[<%= coupon.brand_industry_name %>]</a></span> <%= link_to truncate(coupon.title, 7, ''), coupon_show_path(coupon), :target => '_blank' %></a></li>
+        <% end %>
+      </ul>
+    </div>
+

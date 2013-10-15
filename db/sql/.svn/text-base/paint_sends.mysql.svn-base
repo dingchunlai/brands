@@ -1,0 +1,16 @@
+CREATE TABLE paint_sends(
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    people VARCHAR(50) ,
+    phone VARCHAR(50),
+    email VARCHAR(50),
+    province VARCHAR(50),
+    city VARCHAR(50),
+    AREA VARCHAR(50),
+    room VARCHAR(50),
+    hope_date DATETIME,
+    paint_worker_id INT(11),
+    remark VARCHAR(255),
+    created_at DATETIME DEFAULT NULL,
+    updated_at DATETIME DEFAULT NULL ,
+    PRIMARY KEY (id)
+)

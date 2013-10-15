@@ -1,0 +1,172 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:优惠券列表页") %>
+<% @title = html_metadata.title %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords %>
+
+<% location "优惠券列表"%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+
+<link href="http://js.51hejia.com/css/diyongquan.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://js2.51hejia.com/js/jquery/plugins/cookie/1.0.0/jquery.cookie.min.js"></script>
+<!--header_code_end-->
+<style type="text/css" media="screen">
+  #cont_m_5 a{
+    display:block;
+    float:left;
+    margin-left:5px;
+  }
+</style>
+<style type="text/css" media="screen">
+	a.case_title{
+		display:block;
+		height:18px;
+		overflow:hidden;
+	}
+</style>
+<style type="text/css" media="screen">
+	#firm-big-star{
+		height:20px;
+	}
+	.big-star p{overflow:hidden;}
+	#praise_tip{
+		width:50px;
+		height:13px;
+		position:absolute;
+		left:31px;
+		top:-10px;
+		color:#F99027;
+		display:none;
+		line-height:18px;
+
+	}
+	.zxdp2011_pingfen{
+		position:relative;
+	}
+	.zxdp2011_secmenu{
+		overflow: visible;
+	}
+</style>
+<!--end_secmenu_code-->
+<style type="text/css" media="screen">
+  .ui-autocomplete-loading { background: white url('http://js.51hejia.com/img/ajax-loader.gif') right center no-repeat; }
+  label.error {
+    float: none; color: red; padding-left: 1.5em; vertical-align: top;
+    background :url(http://js.51hejia.com/img/icons/alert.gif) no-repeat left center;
+  }
+  .zxdp2010_attab li{font-size:14px;}
+  .width960 .jGrowl.center {
+    top: 200px;
+  }
+  div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer{
+    background-color:#FFDE7B;
+    color:#000;
+  }
+  body > div.jGrowl.center {
+    top:40%;
+  }
+
+  .zxdp2010_rongyzs li{
+    text-align:left;
+  }
+  .zxdp2010_infomenu .a{
+    color: #333333;
+    display: block;
+    float: left;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    width: 70px;
+  }
+
+  .zxdp2010_infomenu .a span {
+    color: #8F0924;
+  }
+  .width960 .zxdp2010_slidesmallimg li img{
+    opacity: 1;
+  }
+  .big-star{
+
+  }
+  .big-star p{
+    background: url(http://img3.51hejia.com/img/zxdpimg/pj_stars02.gif)  no-repeat scroll left -13px transparent;
+    height:13px;
+    width:18px;
+    margin:0;
+  }
+  .big-star p.one{
+    background: url(http://img3.51hejia.com/img/zxdpimg/pj_stars02.gif) no-repeat scroll 0 0 transparent;
+  }
+  #firm-big-star{
+    height: 13px;
+    margin-top:6px;
+
+  }
+  .zxdp2011_pingfen span{
+    padding:0;
+  }
+</style>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <!-- 左边部分 -->
+  <div class="zxdp2010_l f_l">
+    <script type="text/javascript">
+        $(function(){
+          $(".diyq_listtxt ul:first").show();
+                                  
+          $(".diyq_listimg").mouseover(
+                function(){
+                    if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+                                      });	
+          $(".diyq_listimg").mouseout(
+                function(){
+                    $(".diyq_coupon").hide();
+                                      });	
+          $(".diyq_coupon").mouseover(
+                function(){
+                    if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+                                      });	
+          $(".diyq_coupon").mouseout(
+                function(){
+                    $(".diyq_coupon").hide();
+                                      });
+          
+          $(".diyq_listbtn a").click(
+          function(){
+                  $(".diyq_sms").show(300);
+                  $(".diyq_smscont").show(300);
+                                  });
+                                          
+          $(".diyq_smscloseup a").click(
+          function(){
+                  $(".diyq_smscont").hide(300);
+                                  });	
+          $(".diyq_smsexpand a").click(
+          function(){
+                  $(".diyq_smscont").show(300);
+                                        });	
+        });
+      </script>
+    <div class="diyq_list zxdp2011_dyqlieb clear">
+      <div class="diyq_listtxt clearfix">
+      <% cache @fragment_key, :expires_in => 5.minutes do %>
+        <ul class="clearfix" style="display:block;">
+          <% @coupons.each do |coupon| %>
+            <%= render :partial => 'coupon', :locals => {:coupon => coupon} %>
+          <% end %>
+        </ul>
+        <div class="pagination f_r"><%= will_paginate @coupons, :params => {:trailing_slash => true }%></div>
+      <% end -%>
+      </div>
+    </div>
+  </div>
+  <!-- 右边部分 -->
+  <%= render :partial => "dianping/shared/dianping_right_list"%>
+</div>
+<!--end_content_code-->
+<!-- coupon_image_hover -->
+<%= render :partial => '/share/coupon_image_hover' %>
+<!-- coupon_download_pop -->
+<%= render :partial => '/share/coupon_download_pop' %>

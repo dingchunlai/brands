@@ -1,0 +1,20 @@
+<% existing_amount = coupon.virtual_existing_number.to_i <= 0 ? 0 : coupon.virtual_existing_number.to_i %>
+<li>
+  <div class="diyq_listno">NO.<%= coupon.code %></div>
+  <div class="diyq_listtit"><%= link_to coupon.brand_industry_name, firm_coupon_path(coupon), :target => '_blank' %></div>
+  <div class="diyq_listimg" data-img="<%= coupon.show_image_url%>"><a href="<%= firm_coupon_path(coupon) %>" target="_blank" >
+    <img src="<%= "http://assets5.image.51hejia.com/#{coupon.list_thumbnail_url}" %>" width="132" height="94" />
+  </a></div>
+  <p class="clear"><strong>总发行<%= coupon.total_issue_number %>张 当前可用<%= existing_amount %>张</strong></p>
+  <p>经营范围：<%= coupon.production_categories.first(2).collect{|p| p.short_name + " "} %> </p>
+  <p>使用地址：<%= coupon.distributor_shop.address %> </p>
+  <div class="diyq_listbtn"><a href="javascript:void(0);" data-id="<%= coupon.id %>" data-title="<%= coupon.title %>">短信下载</a></div>
+  <div class="diyq_listdiy"> <strong>抵用</strong>
+    <div class="f_r">
+      <% coupon.return_amount.to_s.split("").each do |i| %><label class="img<%= i %>"></label><% end %>
+      <label class="yuan"></label>
+    </div>
+  </div>
+  <% if Coupon.on_line_display_amount > existing_amount %><div class="diyq_listshx"><span><%= existing_amount %></span></div><% end -%>
+</li>
+

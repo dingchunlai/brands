@@ -1,0 +1,65 @@
+<script type="text/javascript">
+$(function(){
+	$(".yg_web_rtxt03box:gt(0)").hide();
+	$(".yg_web_rtab02 li:first").addClass("yg_web_rtab01cur");
+	$(".yg_web_rtab02 li").mouseover(
+		function(){
+			$(this).addClass("yg_web_rtab01cur")
+				.siblings().removeClass("yg_web_rtab01cur");
+			$(".yg_web_rtxt03box").eq($(this).index())
+				.siblings().hide().end().show();
+					}
+						)
+			}
+)
+</script>
+<div class="yg_web_rtab02">
+<ul class="clearfix">
+  <li class="yg_web_rtab01cur">我的案例</li>
+  <li>经典案例</li>
+</ul>
+</div>
+<div class="yg_web_rtxt03">
+<div class="yg_web_rtxt03box">
+  <h4><span><a href="<%= get_my_case_url(@paint_worker.id, nil) %>" target="_blank" title="更多">更多&gt;&gt;</a></span><strong>我的案例</strong></h4>
+  <ul>
+  	<% cases = my_cases(@paint_worker)%>
+  	<% cases.each_with_index do |my_case, index| %>
+    <li class="clearfix">
+      <div class="yg_web_rtxt03img f_l">
+        <a href="<%= get_paint_case_url my_case.id%>" target="_blank" title="<%= my_case.title %>">
+          <img src="<%= my_case.pictures.blank? ? 'http://img3.51hejia.com/img/brandimg/jinshuazi.jpg' : my_case.pictures.first.url %>" />
+        </a>
+      </div>
+      <div class="yg_web_rtxt03txt f_l">
+      	<h5><a href="<%= get_paint_case_url my_case.id%>" target="_blank" title="<%= my_case.title %>"><%= my_case.title %></a></h5>
+        <p><%= truncate(strip_tags(my_case.content),:length => 90 ,:omission => '') %></p>
+      </div>
+      <div class="yg_web_rtxt03zt f_r">
+        <p class="yg_web_rtxt03zt01">已评分</p>
+      </div>
+    </li>
+	<% end %>
+  </ul>
+</div>
+<div class="yg_web_rtxt03box">
+  <h4><span><a href="<%= get_my_case_url(@paint_worker.id, 'essence')%>" target="_blank" title="更多">更多&gt;&gt;</a></span><strong>经典案例</strong></h4>
+  <ul>
+  	<% essence = essence_case_with(@paint_worker) %>
+	<% essence.each_with_index do |my_case, index| %>
+    <li class="clearfix">
+      <div class="yg_web_rtxt03img f_l">
+        <a href="<%= get_paint_case_url my_case.id%>" target="_blank" title="<%= my_case.title %>"><img src="<%= my_case.pictures.blank? ? 'http://img3.51hejia.com/img/brandimg/jinshuazi.jpg' : my_case.pictures.first.url %>" /></a>
+      </div>
+      <div class="yg_web_rtxt03txt f_l">
+      	<h5><a href="<%= get_paint_case_url my_case.id%>" target="_blank" title="<%= my_case.title %>"><%= my_case.title %></a></h5>
+        <p><%= truncate(strip_tags(my_case.content),:length => 90 ,:omission => '') %></p>
+      </div>
+      <div class="yg_web_rtxt03zt f_r">
+        <p class="yg_web_rtxt03zt01">已评分</p>
+      </div>
+    </li>
+	<% end %>
+  </ul>
+</div>
+</div>

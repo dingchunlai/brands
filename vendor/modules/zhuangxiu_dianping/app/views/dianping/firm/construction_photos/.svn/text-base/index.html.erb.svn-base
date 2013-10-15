@@ -1,0 +1,53 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:公司施工图片列表页") %>
+<% @title = html_metadata.title % {:firm_name => @firm.name_zh} %>
+<% firm_sub_menu %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 施工图片列表"%>
+<% javascript 'http://js.51hejia.com/js/jquery.lightbox-0.5.min.js'%>
+<% stylesheet 'http://js.51hejia.com/css/jquery.lightbox-0.5.css'%>
+<% content_for :head do %>
+  <script type="text/javascript" charset="utf-8">
+    jQuery(document).ready(function($) {
+      // 施工图片的lightbox
+      function initLightBox(id){
+        $(id).lightBox(
+        {
+          imageLoading:'http://img.51hejia.com/lightbox/lightbox-ico-loading.gif',
+          imageBtnPrev:'http://img.51hejia.com/lightbox/lightbox-btn-prev.gif',
+          imageBtnNext:'http://img.51hejia.com/lightbox/lightbox-btn-next.gif',
+          imageBtnClose:'http://img.51hejia.com/lightbox/lightbox-btn-close.gif',
+          imageBlank:'http://img.51hejia.com/lightbox/lightbox-blank.gif',
+          maxImageWidth:500
+        });
+      }
+      // initLightBox("#photos a");
+      initLightBox(".light_box_pictures a")
+    });
+  </script>
+<% end -%>
+<%= render :partial => "dianping/shared/firm_factory_pop" %>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <% cache "dianping:firm:#{params[:firm_id]}:#{controller.controller_name}:#{params[:page]}" , :expires_in => 5.minutes do%>
+    <div class="zxdp2010_l f_l">
+      <div class="zxdp2010_sjlnlist zxdp2010_sgtplist">
+        <h3>施工图片</h3>
+        <div class="zxdp2010_sjslisthack"></div>
+        <div class="zxdp2010_zxallist">
+          <ul class="margin10 clearfix light_box_pictures">
+            <% @photos.each do |photo|%>
+              <li>
+                <%= link_to image_tag(photo.image.url(:medium),:title => photo.title), photo.image.url(:original)%>
+                <%=  truncate_u(photo.title, 14)%>
+              </li>
+            <% end -%>
+          </ul>
+        </div>
+        <div class="zxdp2010_sjsnum f_l">共有<span><%= @photos.total_entries%></span>套<%= @firm.name_abbr%>的施工图片 </div>
+        <%= will_paginate @photos%>
+      </div>
+    </div>
+  <% end -%>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>

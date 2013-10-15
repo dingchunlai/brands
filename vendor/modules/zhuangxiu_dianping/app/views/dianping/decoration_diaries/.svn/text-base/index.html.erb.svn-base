@@ -1,0 +1,105 @@
+<!--content_code-->
+<% city_name = CITIES[@user_city_code.to_i]%>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:日记列表页") %>
+<% @title = case
+when @room.to_i > 0 : "#{ROOM[@room.to_i]}装修-装修日记-#{city_name}和家网装修点评"
+when @style.to_i > 0 : "#{STYLES[@style.to_i]}装修-装修日记-#{city_name}和家网装修点评"
+when @price.to_i > 0 : ([CITIES[12117]].include?(city_name) ? NINBO_PRICE[@price.to_i] : PRICE[@price.to_i]) + "装修-装修日记-#{city_name}和家网装修点评"
+when @model.to_i > 0 : "#{SHANGHAI_MODELS[@model.to_i]}装修-装修日记-#{city_name}和家网装修点评"
+else
+  "#{city_name}#{html_metadata.title}"
+end %>
+<% @description = "#{city_name}最大的装修日记库,提供最全的装饰日记,装潢日记,记录网友装修点滴细节,为您提供最新、最全面的装修参考。" %>
+<% @keywords = "装修日记,装饰日记,装潢日记" %>
+
+<%
+if @room.to_i > 0 || @style.to_i > 0 || @price.to_i > 0 || @model.to_i > 0
+  location "#{link_to '装修日记列表',decoration_diaries_url(:trailing_slash => true)} > #{STYLES[@style.to_i]}" unless @style.to_i == 0
+  unless @model.to_i == 0
+    if @model.to_i == 4
+      location "#{link_to '装修日记列表',decoration_diaries_url(:trailing_slash => true)} > 设计工作室"
+    else
+      location "#{link_to '装修日记列表',decoration_diaries_url(:trailing_slash => true)} > #{MODELS[@model.to_i]}"
+    end
+  end
+  location "#{link_to '装修日记列表',decoration_diaries_url(:trailing_slash => true)} > #{ROOM[@room.to_i]}" unless @room.to_i == 0
+  location "#{link_to '装修日记列表',decoration_diaries_url(:trailing_slash => true)} > #{(@user_city_code.to_i == 12117) ? DecoFirm::NINBO_PRICE[@price.to_i] : DecoFirm::PRICE[@price.to_i]}" unless @price.to_i == 0
+else
+  location "装修日记列表"
+end
+%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sousuo02 margin10">
+      <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+    </div>
+    <% if @user_city_code.to_i == 11910 %>
+      <div class="ad margin10"><%= adspace("#{city_name}站-装修日记列表页-大旗帜1", '', '') %></div>
+    <% end %>
+    <div class="zxdp2010_comlist">
+      <div class="zxdp2010_comlisttit margin10">
+        <div class="list_r_tr f_l"> <ul>
+            <li class="diary_list_search_2011">当前搜索结果：</li>
+          </ul>
+        </div>
+        <div class="list_r_tr f_r">
+          <ul>
+            <li>排序： </li>
+            <li class="<%= @order.to_i == 0 ? 'list_r_tr_on' : 'list_r_tr_off' %>" ><%= link_to "最新" ,search_diaries_for_options(:order => 0,:condition => params[:condition])%></li>
+            <li class="<%= @order.to_i == 1 ? 'list_r_tr_on' : 'list_r_tr_off' %>"><%= link_to "精华" ,search_diaries_for_options(:order => 1,:condition => params[:condition])%></li>
+          </ul>
+        </div>
+      </div>
+      <div class="zxdp2010_sjlnlist">
+        <ul class="margin10 clearfix">
+          <% @diaries.each do |diary| %>
+            <li>
+              <div class="zxdp2010_sjslistimg f_l"><%= link_to image_tag(diary.master_picture.url("140x106"), :alt => diary.title ) ,diary_url(diary), :target => "_blank" %></div>
+              <div class="zxdp2010_sjlnlisttxt zxdp2011_rijilist f_r">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="2"><h4><%= link_to truncate(h(diary.title),:length => 25,:omission => '')  ,diary_url(diary), :target => "_blank" %><%= show_icon_diary diary,@user_city_code %></h4></td>
+                  </tr>
+                  <tr>
+                    <td valign="top">
+                      <p><%= truncate(strip_tags(diary.content).gsub(/<|>/,""),:length => 56 ,  :omission => '……')%></p>
+                      <em>装修风格：<%= link_to STYLES[diary.style.to_i],search_diaries_for_options(:style => diary.style.to_i), :target => "_blank"%>&nbsp;&nbsp;装修户型：<%= link_to ROOM[diary.room.to_i],search_diaries_for_options(:room => diary.room.to_i), :target => "_blank"%>&nbsp;&nbsp;合同总价：<%= diary.deal_price %>万</em>
+                    </td>
+                    <td valign="top">
+                      <div class="zxdp2011_yuyue">
+                        <%= link_to  image_tag("http://js.51hejia.com/img/zxdpimg/zxdp2011_rjibtn.gif") , firm_factories_url(:firm_id => diary.deco_firm.id, :trailing_slash => "/"), :target => "_blank" %>
+                        <em>施工：<%= link_to truncate(diary.deco_firm.name_abbr, :length => 4 ,:omission => '')  ,firm_url(:id => diary.deco_firm.id,:trailing_slash => "/"), :target => "_blank" %></em>
+                        <em>业主：<%= link_to truncate( diary.user_name,:length => 4,:omission => '') ,diary_url(diary), :target => "_blank" %></em>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><em>发表：<%=diary.created_at.strftime("%Y-%m-%d")%>&nbsp;&nbsp;更新：<%=diary.order_time.nil? ? diary.updated_at.strftime("%Y-%m-%d") : diary.order_time.strftime("%Y-%m-%d")%>&nbsp;&nbsp;日记：(<%= diary.decoration_diary_posts.size%>)篇 阅读：(<%= diary.pv || 0 %>)  点评(<%= diary.remarks_count %>)</em></td>
+                  </tr>
+                </table>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <div class="pagination"> <%= will_paginate @diaries ,:params => {:trailing_slash => true }%></div>
+      </div>
+    </div>
+  </div>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => "dianping/shared/yuyue" %>
+    <% if @user_city_code.to_i == 12301 %>
+      <%= render :partial => "dianping/shared/right_list_afp" %>
+    <% end %>
+    <%= render :partial => "dianping/decoration_diaries/condition_diaries", :locals => {:name => "装修日记Top10", :diaries => @topten_diaries} unless @topten_diaries.blank? %>
+    <%= render :partial => "dianping/decoration_diaries/condition_diaries", :locals => {:name => "装修日记Hot10", :diaries => @hotten_diaries} unless @hotten_diaries.blank? %>
+    <%= render :partial => "dianping/shared/dianping_help" %>
+    <% if @user_city_code.to_i != 12301 %>
+      <%= render :partial => "dianping/shared/right_list_afp" %>
+    <% end %>
+  </div>
+</div>
+<!--end_content_code-->

@@ -1,0 +1,52 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】帮助中心_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+  <script type="text/javascript" src=" http://ajax.googleapis.net/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://js.51hejia.net/js/djq_tab.js"></script>
+<% end %>
+
+<a name="a01" id="a01"></a>
+<div class="width960 margin10 clearfix">
+  <div class="djq_l f_l">
+    <div class="djq_lcur margin10">
+      <h3>常见问题 Q&A </h3>
+      <div class="djq_lcurtxt">
+        <div class="djq_help_tab">
+          <ul class="clearfix">
+            <%
+              groups = FaqGroup.all.first(8) 
+              groups.each do |group| 
+            %>
+              <li><%= group.name %></li>
+            <% end %> 
+          </ul>
+        </div>
+        <div class="djq_help_cont">
+          <% groups.each do |group| %>
+            <dl>
+              <% 
+                group.coupon_faqs.each_with_index do |faq, index| 
+                index_value = index + 1
+              %>
+                <dt><%= index_value %>：<a href="#<%= group.id %><%= index_value %>"><%= faq.question %></a></dt>
+              <% end %>
+              <% 
+                group.coupon_faqs.each_with_index do |faq, index| 
+                index_value = index + 1
+              %>
+            <dd>
+            <h4><a name="<%= group.id %><%= index_value %>"></a><%= index_value %>、<%= faq.question %></h4>
+              <p><%= truncate_u(faq.answer, 10000, '') %></p>
+              <span><a href="#a01" target="_self">返回页首</a></span></dd>
+            <% end %>
+            </dl>
+          <% end %>
+       </div>
+      </div>
+    </div>
+  </div>
+  <div class="djq_r f_r">
+    <%= render :partial => '/share/popularity_week', :locals => {:tag_id => 0} %>
+    <%= render :partial => '/share/latesd_coupons' %>
+    <%= render :partial => '/share/recommended_coupons' %>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Untitled Document</title>
+	</head>
+	<body>
+		<table border="1">
+			<tr style="background:#666">
+				<td>省份</td>
+				<td>城市</td>
+				<td>服务中心名称</td>
+				<td>服务中心地址</td>
+				<td>电话</td>
+				<td>联系人</td>
+				<td>添加时间</td>
+			</tr>
+			<% @contacts.each do |contact|%>
+			<tr>
+				<td><%= Province.name_for_code(contact.province) %></td>
+				<td><%= City.name_for_code(contact.city) %></td>
+				<td><%= contact.contact_name %></td>
+				<td><%= contact.address %></td>
+				<td><%= contact.phone %></td>
+				<td><%= contact.contact_people %></td>
+				<td><%= contact.created_at.strftime("%Y-%m-%d") %></td>
+			</tr>
+			<% end %>
+		</table>	
+	</body>
+</html>

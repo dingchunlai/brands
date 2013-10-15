@@ -1,0 +1,54 @@
+<%=include_jquery_easy_validator%>
+<%= top_bar :title => '业务员管理页',
+            :button => ['业务员列表', admin_sales_profiles_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['业务员列表', admin_sales_profiles_path],
+              ['编辑附属信息']
+            ]
+%>
+<% form_for(@sales_profile, :url => admin_sales_profile_path(@sales_profile)) do |f| %>
+  <%= f.error_messages %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2">修改业务员信息</th>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :user_id %></strong></td>
+        <td class="last"><%= @sales_profile.user.rname %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :manager_id %></strong></td>
+        <td class="last"><%= f.select :manager_id, RadminUser.with_manager_sales.map{|c| [c.rname, c.id]}.unshift(['-请选择-', '']), :class => "text" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+        <td class="last"><%= f.select :city_id, City.used_cities.map{|c| [c.name, c.id]}.unshift(['-请选择-', '']), {}, :class => "text", :reg => '^\S+$', :tip => "城市必选" %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :qq %></strong></td>
+        <td class="last"><%= f.text_field :qq, :class => "text", :reg => '[1-9][0-9]{4,}', :tip => '格式错误' %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :email %></strong></td>
+        <td class="last"><%= f.text_field :email, :class => "text", :reg => '\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*', :tip => "请正确输入邮箱地址" %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :mobile %></strong></td>
+        <td class="last"><%= f.text_field :mobile, :class => "text", :reg => '\d{11}', :tip => "请正确输入手机号码" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :telephone %></strong></td>
+        <td class="last"><%= f.text_field :telephone %></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><%= f.submit '提交' %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>

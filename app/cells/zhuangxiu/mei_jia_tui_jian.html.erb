@@ -1,0 +1,12 @@
+<ul class="sidebox_3" >
+  <h3>装修美家推荐</h3>
+  <% @zhuangxiu_diaries.each do |r| %>
+    <li class="clearfix">
+      <%= promotion_image_tag r %>
+      <div class="listright">
+        <a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><h4><%= r["title"] %></h4></a>
+        <p><%= truncate_u(r["description"], 42, "...") %>[<a href="<%= r["url"] %>" target="_blank">详细</a>]</p>
+      </div>
+    </li>
+  <% end %>
+</ul>

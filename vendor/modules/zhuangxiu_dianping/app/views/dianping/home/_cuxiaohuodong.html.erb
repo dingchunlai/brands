@@ -1,0 +1,9 @@
+<h3>促销活动</h3>
+<div class="zxdp2010_more"><a href="<%= coupons_url(:trailing_slash => "/")%>" target="_blank">更多&gt;&gt;</a></div>
+<div class="zxdp2010_txt zxdp2010_kbtop">
+<ul>
+	<% hejia_promotion_items(ZHUANGXIU_DIANPING_INDEX_PROMOTED[TAGURLS[@user_city_code.to_i]]['促销活动'], :attributes => ['title','url','image_url'],:limit => 4).each do |cuxiao| %>
+  <li><a href="<%= cuxiao.url%>" target="_blank"><%= cuxiao.title%></a></li>
+	<% end %>
+</ul>
+</div>

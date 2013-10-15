@@ -1,0 +1,18 @@
+<div class="diyq_listrbox diyq_listrboxc margin10">
+  <h3>精选商家</h3>
+  <ul>
+    <% 
+      promotion_items("抵用劵:终端页:#{@city.pinyin}:精选商家").each do |item| 
+       distributor = Distributor.find_by_id item.title 
+        unless distributor.blank?
+    %>
+    <li><span>共
+      <label><%= distributor.coupons.size %></label>
+      张<%= Coupon.human_name %></span> <a href="<%= coupon_show_path(distributor.coupons.first)  %>" target="_blank"><%= distributor.short_title %></a></li>
+    <% 
+        end
+      end 
+    %>
+  </ul>
+</div>
+

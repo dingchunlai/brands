@@ -1,0 +1,10 @@
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页", coupon_index_path %> > <span><%= @distributor.short_title %></span></div>
+</div>
+<div class="width960 clearfix margin10">
+  <div class="djq_yb_banner margin10">
+    <h2><%= @distributor.title %></h2>
+    <div class="djq_yb_bannernum">您是第<span><%= @distributor.pv %></span>位关注者</div>
+  </div>
+
+

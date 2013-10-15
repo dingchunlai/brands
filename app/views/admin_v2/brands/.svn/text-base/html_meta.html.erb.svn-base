@@ -1,0 +1,48 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %><% end %> 
+    > <% if @htmlmetadata.new_record? %> 新建SEO页面 <% else %> 编辑SEO页面 <% end %>
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+<% form_for @htmlmetadata, :url => update_html_meta_admin_brand_path(@brand), :html => {:method => :post, :id => "html_meta"} do |f| %>
+  <table>
+    <tr>
+      <th>title</th>
+      <td><%= f.text_field :title, :size => 110 %></td>
+    </tr>
+    <tr>
+        <th>keywords</th>
+        <td><%= f.text_field :keywords, :size => 110 %></td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td><%= f.text_area :description, :rows => 4, :cols => 80 %></td>
+    </tr>
+    <tr>
+      <td>
+      <%= hidden_field_tag :html_url, @brand_url %>
+      <%= hidden_field_tag :tag_id, @tag.TAGID %><%= hidden_field_tag :brand_id, @brand_id %>
+      </td>
+      <td><%= submit_tag "保存" %></td>
+    </tr>
+  </table>
+<% end %>
+<script type="text/javascript">
+  $('#html_meta').submit(function(event){
+    if($('#html_meta_title').val() == ''){
+      alert('请输入页面标题信息');
+      return false;
+    }
+    if($('#html_meta_description').val() == ''){
+      alert('请输入页面描述信息');
+      return false;
+    }
+    if($('#html_meta_keywords').val() == ''){
+      alert('请输入页面关键字信息');
+      return false;
+      }
+    });
+</script>

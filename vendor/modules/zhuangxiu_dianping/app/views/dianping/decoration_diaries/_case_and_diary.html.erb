@@ -1,0 +1,48 @@
+<% content_for (:head) do %>
+  <link href="http://js.51hejia.com/css/zx_diary.css" media="screen" rel="stylesheet" type="text/css" />
+  <% dp_js 'dianping/decoration_diaries/decoration_diaries.js' %>
+  <% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+  <% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+  <% javascript 'http://js.51hejia.com/js/jquery.colorbox-min.js'%>
+  <% stylesheet "http://js.51hejia.com/css/api/colorbox.css" %>
+<% end %>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <%= render :partial => '/dianping/decoration_diaries/case_diary_right' %>
+  <!--zxdp2010_l code-->
+  <div class="zxdp2010_l f_l">
+    <%# cache "diary:itself_informations:#{@diary_id}:case", :expires_in => 5.minutes  do %>
+      <%#= render :partial => '/dianping/decoration_diaries/case_info' unless @case.blank? %>
+    <%# end %>
+    <div class="djq_contblink f_l"  style="margin-left:10px;_display:inline; width: 425px;">
+      <table width="425" border="0" cellspacing="0" cellpadding="0" class="f_l">
+        <%= render :partial => 'shared/shared_connection' %>
+      </table>
+    </div>
+    <div class="zxdp_wytpbtn f_l">当前票数：<span><%= @diary.votes_sum %></span>  当月票数：<span><%= @diary.votes_current_month %></span> <img src="http://img2.51hejia.com/img/zxdpimg/wytp_btn.gif" /></div>
+    <%= render :partial => '/dianping/decoration_diaries/diary_info' %>
+  </div>
+  <!--zxdp2010_l code-->
+</div>
+<%= increase_pv_image_tag "decoration_diary", @diary.id %>
+<div style="display:none;" deco_frim_popedom="<%= @firm.popedom %>" id="decoration_diary_show"></div>
+<script type="text/javascript">
+  $(function(){
+    $(".zxdp_wytpbtn img").click(function(){
+      $.ajax({
+        url: "/decoration_diaries/to_vote_for_me",
+        type: 'GET',
+        data: "reviewid="+<%= @diary.id %>,
+        success: function(data){
+          alert(data["message"]);
+        },
+        error: function(request){
+          alert("对不起，您今天的投票次数已达到上限！");
+        }
+      });
+    });
+  });
+</script>
+

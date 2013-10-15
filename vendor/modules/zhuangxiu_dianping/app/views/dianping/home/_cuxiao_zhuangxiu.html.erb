@@ -1,0 +1,21 @@
+<h3 class="zxdp2011_cur_h3">
+  <ul id="curul">
+    <li class="h3_tabnow" onmouseover="tabChange('curul',1,'zxdp2011_cur','curli','h3_tabnow')" id="curli1">促销活动</li>
+    <li id="curli2" onmouseover="tabChange('curul',2,'zxdp2011_cur','curli','h3_tabnow')">装修专题</li>
+  </ul>
+</h3>
+<div class="zxdp2010_txt zxdp2010_kbtop" id="zxdp2011_cur1">
+  <ul>
+    <% cu_xiao_huo_dong(@user_city_code).each do |cuxiao| %>
+      <li><a href="<%= cuxiao.url%>" target="_blank"><%= cuxiao.title%></a></li>
+    <% end %>
+  </ul>
+</div>
+<div class="zxdp2010_txt zxdp2010_kbtop" id="zxdp2011_cur2">
+  <ul>
+    <% ben_di_zi_xun(@user_city_code).each do |information| %>
+      <li>· <a href="<%= information.url %>" target="_blank"><%= information.title %></a></li>
+    <% end %>
+    <%= content_tag :li, link_to(">> 更多", theme_path, :target => '_blank'), :style => "text-align: right;" %>
+  </ul>
+</div>

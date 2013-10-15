@@ -1,0 +1,109 @@
+<!-- Add For Coupon  -->
+<% content_for :html_head do %>
+  <script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+  <script src="http://js.51hejia.com/js/brands/uploadify/brand_detail.js?<%=Time.now.to_i%>" type="text/javascript"></script>
+<% end %>
+
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> 
+  <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 编辑详细信息页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<% form_for :brand_detail, :url => update_detail_admin_brand_path(@brand.id), :html => {:id => 'brand_form', :method => :post, :multipart => true, 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image')} do |f| %>
+  <fieldset>
+    <input type='hidden' name='tag_id' value='<%=@tag_id %>'>
+    <table>
+     <tr>
+        <th>官方网站地址</th>
+        <td><%= f.text_field :website %></td>
+      </tr>
+      <tr>
+        <th>品牌点评</th>
+        <td><%= f.text_area :comment, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>品牌概要</th>
+        <td><%= f.text_area :description, :class => 'mceEditor' %></td>
+      </tr>
+       <tr>
+        <th>品牌故事</th>
+        <td><%= f.text_area :story, :class => 'mceEditor'%> </td>
+      </tr>
+      <tr>
+        <th>品牌历程</th>
+        <td><%= f.text_area :history, :class => 'mceEditor'%> </td>
+      </tr>
+      <tr>
+        <th>联系方法</th>
+        <td><%= f.text_area :contact, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>销售网络</th>
+        <td><%= f.text_area :sale_network, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>门店展示</th>
+        <td><%= f.text_area :demonstration, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>工程案例</th>
+        <td><%= f.text_area :cases, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>售后服务</th>
+        <td><%= f.text_area :service, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>技术特点</th>
+        <td><%= f.text_area :specialty, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>LOGO图片</th>
+        <td>
+          <% if @brand_logo %>
+            <%= image_tag @brand_logo.public_filename %>
+          <% else %>
+            <p>此品牌还没有logo图片</p>
+          <% end %>
+	    <%= file_field_tag 'logo' %>
+        </td>
+      </tr>
+      <tr>
+        <th>印刷图片</th>
+        <td style="text-align: left">
+          <img id="image_thumb" width="110" height="110" alt="主题图片预览" />
+          <span id="image_upload_button"></span>
+          <%= f.text_field :print_image_url, :style=>"display:none;"%>
+        </td>
+      </tr>
+
+      <tr>
+      	<td>&nbsp;</td>
+        <td><%= submit_tag '保存' %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
+<%= render :partial => 'shared/enable_tinymce' %>
+
+<script type="text/javascript">
+  $(function(){
+    set_main_image();
+  })
+
+  function set_main_image(){
+    if ($.trim($("#brand_detail_print_image_url").val())=="")
+      $("#image_thumb").attr('src', "http://js.51hejia.com/img/nil.gif");
+    else
+      $("#image_thumb").attr('src', ($("#brand_form").attr("data-assetsurl") + $("#brand_detail_print_image_url").val()).replace(".com//",".com/"));
+  }
+
+  function set_default(){
+    $("#image_thumb").attr('src', "http://js.51hejia.com/img/nil.gif");  
+  }
+</script>

@@ -1,0 +1,84 @@
+<style type="text/css">
+  li .diary_contlistpingl span a{
+    padding:0 0 0 28px;
+    cursor:pointer;
+  }
+  li .diary_contwb{
+    display:block;
+  }
+  li .diary_contlistpingl{
+    display:block;
+  }
+  .diary_contwbtxt .diary_reply_remark span label a{
+    padding:0 0 0 28px;
+    cursor:pointer;
+  }
+  .diary_contwbtxt .diary_reply_content .diary_contwbhfinput{
+    display:none;
+  }
+  .diary_contwbtxt .diary_reply_remark{
+    display:block;
+  }
+  .djq_contblink{
+    border:1px solid #dedede;
+    background:#ebebeb;
+    margin:4px 0;
+    width:479px;
+  }
+  .djq_contblink table{
+    margin:0 auto;
+  }
+  .djq_contblink td{
+    padding:0 5px;
+    height:32px;
+  }
+  .djq_contblink a,.djq_contblink a:hover{
+    display:block;
+    float:left;
+    height:22px;
+    line-height:22px;
+    margin:5px;
+    color:#666;
+  }
+  .djq_contblink01{
+    background:url(http://img3.51hejia.com/img/brandimg/djq_icon06.gif) no-repeat;
+    padding-left:25px;
+  }
+  .djq_contblink02{
+    background:url(http://img3.51hejia.com/img/brandimg/djq_icon06.gif) -95px 0 no-repeat;
+    padding-left:25px;
+  }
+  .djq_contblink03{
+    background:url(http://img3.51hejia.com/img/brandimg/djq_icon06.gif) -202px 0 no-repeat;
+    padding-left:25px;
+  }
+  .djq_contblink04{
+    background:url(http://img3.51hejia.com/img/brandimg/djq_icon06.gif) -302px 0 no-repeat;
+    padding-left:25px;
+  }
+  .djq_contblink05{
+    background:url(http://img3.51hejia.com/img/brandimg/djq_icon06.gif) -398px 0 no-repeat;
+    padding-left:25px;
+  }
+	a.show_all_remark{display:block;color:#f60;background:#d3d3d3;border:1px solid #d3d3d3;height:24px;line-height:24px;text-align:center;margin:2px 20px;cursor:pointer;}
+	a:hover.show_all_remark{color:#f60;background:#efefef;text-decoration:none;cursor:pointer;}
+</style>
+
+<div class="djq_contblink f_l">
+  <table width="450" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align='right'>分享到：</td>
+      <td>
+        <a rel="nofollow" class="djq_contblink01" href="javascript:window.open('http://v.t.sina.com.cn/share/share.php?title='+encodeURIComponent(document.title.substring(0,76))+'&url='+encodeURIComponent(location.href)+'&rcontent=','sina','scrollbars=no,width=600,height=450,left=75,top=20,status=no,resizable=yes'); void 0">新浪微博</a>
+        <a rel="nofollow" class="djq_contblink02" href="javascript:void(function() {var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function() {if(!window.open(r,'douban','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)) {setTimeout(x,0)}else{x()}})()">豆瓣网</a>
+        <a rel="nofollow" class="djq_contblink03" href="javascript:window.open('http://share.renren.com/share/buttonshare.do?link='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title), 'renren', 'width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes');void(0)">人人网</a>
+        <a rel="nofollow" class="djq_contblink04" href="javascript:window.open('http://shuqian.qq.com/post?from=3& title='+encodeURIComponent(document.title)+'&uri='+encodeURIComponent(document.location.href)+'&jumpback=2&noui=1','qq','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'); void(0)">QQ书签</a>
+        <a rel="nofollow" class="djq_contblink05" href="javascript:window.open('http://www.kaixin001.com/repaste/share.php?rtitle='+encodeURIComponent(document.title)+'&rurl='+encodeURIComponent(document.location.href)+'&rcontent=','kaixin','width=930,height=470,left=50,top=50,toolbar=no,menubar=no,location=no,scrollbars=yes,status=yes,resizable=yes'); void(0)">开心网</a>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="diary_contpaix zxdp2010_rjpaix f_r">
+  <strong>阅读方式：&nbsp;</strong><span class="diary_posts_on"><input type="hidden" id="diary_id" value="<%= diary.id %>"/><input type="hidden" id="deco_firm_id" value="<%= diary.deco_firm_id %>"/><input type="hidden" id="page" value="<%= page %>"/><a style="cursor:pointer;">正序</a></span><span class="diary_posts_off"><input type="hidden" id="diary_id" value="<%= diary.id %>"/><input type="hidden" id="deco_firm_id" value="<%= diary.deco_firm_id %>"/><input type="hidden" id="page" value="<%= page %>"/><a style="cursor:pointer;">倒序</a></span>
+</div>
+<%= render :partial => "diary_post_show", :locals => { :diary_posts => diary_posts }%>

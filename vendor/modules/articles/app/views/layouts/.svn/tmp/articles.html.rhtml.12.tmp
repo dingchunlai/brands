@@ -1,0 +1,671 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title><%= @article.seo_title %></title>
+    <meta name="keywords" content="<%= @article.seo_keywords.gsub(/;/, ",") %>"/>
+    <meta name="description" content="<%= @article.seo_description %>"/>
+    <link href="http://js.51hejia.com/css/2010/header.css?1230" rel="stylesheet" type="text/css"/>
+    <link href="http://js.51hejia.com/css/zb20120510.css" rel="stylesheet" type="text/css"/>
+    <% if @article.template_name == 'jushang' %>
+      <link href="http://js.51hejia.com/css/zhuangxiu1123.css?111" rel="stylesheet" type="text/css"/>
+      <link href="http://js.51hejia.com/css/zhuangxiu1123-b.css" rel="stylesheet" type="text/css"/>
+    <% else %>
+      <link href="http://js.51hejia.com/css/zhuangxiu1023-2_bak.css" rel="stylesheet" type="text/css"/>
+    <% end %>
+    <link href="http://js.51hejia.com/css/tanchuall.css" rel="stylesheet" type="text/css"/>
+    <script src="http://js.51hejia.com/js/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="http://js.51hejia.com/js/jquery/plugins/tmpl/1.0.0/jquery.tmpl.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+    <!--script src="http://js.51hejia.com/js/zb-ad.js" type="text/javascript"></script-->
+    <link href="http://js.51hejia.com/css/zb20120510.css" rel="stylesheet" type="text/css"/>
+    <link href="http://js.51hejia.com/css/baoming/baoming.css" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+      .intextarea .keywlinks {
+        color: #016B93;
+        border-bottom: dashed 1px #016B93;
+        padding: 0 2px 2px 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="all clearfix">
+      <div style="float:left;">
+        <%= render_ad 81263, "装修资讯-终端页-顶部对联1", "afp" %>
+      </div>
+      <div style="float:left;<% 'width:480px;' if @article.template_name == 'jushang' %>">
+        <%= render_ad 81261, "装修资讯-终端页-顶部大旗1", "afp" %>
+      </div>
+      <div style="float:left;">
+        <%= render_ad 81265, "装修资讯-终端页-顶部对联2", "afp" %>
+      </div>
+      <% if @article.template_name == "zhuangxiu" %>
+        <div style="width:960px; margin:5px auto 0px auto;">
+          <%= render_ad 81521, "图文资讯-终端页-顶部通栏1", "afp" %>
+        </div>
+      <% end %>
+      <div style="clear:both"></div>
+      <%= render_shared_header :ga_ids => ['UA-7619267-1'] %>
+
+      <div id="index_top_ad1" style="width:960px; margin:5px auto 5px auto;">
+        <%= adspace("#{@article.sort_name}-文章终端页-通栏1") %>
+      </div>
+      <% if false # @article.template_name == "zhuangxiu"       %>
+        <div id="index_top_ad2" style="width:960px; margin:5px auto 5px auto;display: none;">
+          <%= adspace("装修资讯-终端页-通栏1B") %>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            function autoad() {
+              $("#index_top_ad1").toggle();
+              $("#index_top_ad2").toggle();
+              $autofun = setTimeout(autoad, 3000);//此处不可使用setinterval,setinterval是重复执行传入函数,这会引起第二次划入时停止失效
+            }
+
+            ;
+            autoad();
+          })
+        </script>
+      <% end %>
+
+      <%= yield %>
+      <%= render_shared_footer :without_tracking_code => true %>
+
+      <%= yield :html_body_end %>
+    </div>
+
+
+    <% if ["zhuangxiu", "xiaohuxing", "bieshu", "chufang", "keting", "weiyu", "woshi", "shufang", "beijingqiang", "ertongfang", "huayuanshenghuo", "gongyu", "hunfang", "jushang"].include?(@channel) %>
+      <div class="bmform">
+        <script>
+          $(document).ready(function () {
+            $("#name_zh").blur(function () {
+              if ($.trim($(this).val()) == '') {
+                $(this).val('最多填写3家公司,用空格间隔公司名');
+              }
+            });
+            $("#sub").click(function () {
+              if ($("#style").val() == '') {
+                alert("请选择风格");
+                return false;
+              }
+              if ($("#room").val() == '') {
+                alert("请选择房型!");
+                return false;
+              }
+              if ($.trim($("#area").val()) == '') {
+                alert("房型面积不能为空!");
+                return false;
+              }
+              if (isNaN($("#area").val())) {
+                alert("非法的房型面积！");
+                return  false;
+              }
+              if ($("#budget").val() == '') {
+                alert("请选择预算数额!");
+                return false;
+              }
+              if ($.trim($("#names").val()) == '') {
+                alert("请填写称呼!");
+                return false;
+              }
+
+              if ($.trim($("#phone").val()) == '') {
+                alert("请填写联系电话!");
+                return false;
+              }
+              if (isNaN($("#phone").val())) {
+                alert("非法的电话号码!");
+                return false;
+              }
+              var address_value = $("#address").val() + "(文章标题：<%= @article.title %>)" + "(文章地址：<%= request.host + request.path %>)"
+              $("#address").val(address_value);
+              return true;
+            });
+          })
+        </script>
+        <form method="post" action="http://<%= TAGURLS[@city_id] + "." %>zhaobiao.51hejia.com/zxinfo/add/">
+          <a class="bmclose" target="_blank"><img src="http://js.51hejia.com/img/close_icon.jpg"/></a>
+
+          <h3>温馨温润乡村居 实木带来自然风采</h3>
+
+          <p>您喜欢这篇文章中的设计,<br/>
+            快速发布招标,坐等优质装修公司找您!</p>
+          <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+              <tr>
+                <td align="right" style="vertical-align: middle;">称呼：</td>
+                <td colspan="3" align="left"><input type="text" id="names" name="name"/></td>
+              </tr>
+              <tr>
+                <td align="right" style="vertical-align: middle;">电话：</td>
+                <td colspan="3" align="left"><input type="text" id="phone" name="phone"/></td>
+              </tr>
+              <tr>
+                <td align="right" style="vertical-align: middle;">面积：</td>
+                <td class="area" style="font-weight: bold; font-family: tahoma; font-size: 14px;">
+                  <input type="text" id="area" name="area"/>
+                  <span>m</span><sup>2</sup>
+                </td>
+                <td align="right" width="50" style="vertical-align: middle;">预算：</td>
+                <td align="left">
+                  <select id="budget" name="budget">
+                    <option value="">请选择</option>
+                    <option value="8万以下">8万以下</option>
+                    <option value="8-15万">8-15万</option>
+                    <option value="15-30万">15-30万</option>
+                    <option value="30万以上">30万以上</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align="right">需求：</td>
+                <td colspan="3"><textarea id="bak" name="bak" cols="" rows=""></textarea></td>
+              </tr>
+            </tbody>
+          </table>
+          <input id="from_type" name="from_type" type="hidden" value="2"/>
+          <input id="from_id" name="from_id" type="hidden" value=""/>
+          <input type="hidden" name="real_province" value=""/>
+          <input type="hidden" name="real_city" value=""/>
+          <script type="text/javascript">
+            var timestamp = (new Date()).valueOf();
+            var url = document.domain + '?from_id=' + timestamp;
+            $("#from_id").val(url);
+          </script>
+          <div class="form_btn">
+            <input type="submit" onclick="_gaq.push(['_trackEvent','效果', '免费招标',$('#from_id').val(), 1]);" value="" id="sub" name="" class="zhaobiao_form_btn"/>
+          </div>
+          <div class="form_phone"><img width="170" height="22" src="http://js.51hejia.com/tuku/webroot/img/phone.jpg"/>
+          </div>
+        </form>
+        <iframe name="hideiframe" width="0" height="0" style="display: none;"></iframe>
+      </div>
+      <div class="bmbg"></div>
+    <% end %>
+    <script type="text/javascript">
+      //点图片往后翻页
+      $(document).ready(function () {
+        if ($('.next_page').attr('href') != undefined) {
+          $('img[src*="UserFiles"], img[src*="/images/binary"]').each(function () {
+            $(this).attr('alt', '点击图片看下一页').attr('title', '点击图片看下一页').css('cursor', 'pointer');
+            if ($('#n_page').html() == '' && $('.next_page').length > 0) {
+              var html_str = "<a href='" + $('.next_page').attr('href') + "'>点击图片，进入下一页</a>" +
+                "&nbsp;&nbsp;&nbsp;<a href='http://zhaobiao.51hejia.com/' style='color: red; font-weight: normal; line-height: 12px; font-size: 12px;'" +
+                " target='_blank'>看过此文章的人，有<strong><span style='font-size:15px;'>" + <%= @article.number %> +"</span></strong>个人正在……</a>"
+              $('#n_page').html(html_str);
+            }
+          });
+          $('img[src*="UserFiles"], img[src*="/images/binary"]').live('click', function () {
+            location.href = $('.next_page').attr('href');
+          });
+        }
+      });
+    </script>
+
+    <% unless @contents_already_has_link %>
+      <script type="text/javascript" src="http://js.51hejia.net/js/article_keywords.js?20110304"></script>
+    <% end %>
+    <script type="text/javascript">
+      $('input[name=real_city]').val(remote_ip_info.city);
+      $('input[name=real_province]').val(remote_ip_info.province);
+    </script>
+    <% if @id == 679383 %>
+      <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HN"></script>
+    <% end %>
+    <% if @id == 679247 %>
+      <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HO"></script>
+    <% end %>
+    <script type="text/javascript" src="http://api.51hejia.com/statistics?code=zd-swf&style=eject&source=<%= request.host + request.path %>"></script>
+    <script type="text/javascript" src="http://api.51hejia.com/statistics?code=gongyi_ad_gif&style=eject&source=http://www.51hejia.com/articles/show"></script>
+    <% if @id == 680442 %>
+      <div style="width:500px;" class="bmform">
+        <script type="text/javascript">
+          function ge(id) {
+            return document.getElementById(id);
+          }
+          function trim(str) {
+            return str.replace(/^\s*(.*?)[\s\n]*$/g, '$1');
+          }
+          function submitForm(form) {
+            var valReturn = true;
+            if (trim(ge("c1").value) == "") {
+              alert("您必须填写【姓名】！")
+              valReturn = false;
+            }
+
+            if (trim(ge("c2").value) == "") {
+              alert("您必须填写【手机】！")
+              valReturn = false;
+            }
+
+            if (!trim(ge("c2").value).match(/^\d{11}$/) && trim(ge("c2").value) != "") {
+              alert("【手机】号码必须为11位数字！")
+              valReturn = false;
+            }
+
+            if (trim(ge("c3").value) == "") {
+              alert("您必须填写【房型】！")
+              valReturn = false;
+            }
+            if (trim(ge("c4").value) == "") {
+              alert("您必须填写【房型面积】！")
+              valReturn = false;
+            }
+            if (trim(ge("c5").value) == "") {
+              alert("您必须填写【房型地址】！")
+              valReturn = false;
+            }
+            return valReturn;
+          }
+        </script>
+        <form onsubmit="return submitForm(this);" target="hideiframe" enctype="multipart/form-data" method="post" action="http://bm.51hejia.com/index/form_process">
+          <table width="500" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+              <tr>
+                <td width="100" align="right"><span>姓名：</span></td>
+                <td><input type="text" id="c1" name="c1"/></td>
+              </tr>
+              <tr>
+                <td align="right"><span>手机：</span></td>
+                <td><input type="text" id="c2" name="c2"/></td>
+              </tr>
+              <tr>
+                <td align="right"><span>房型：</span></td>
+                <td><input type="text" id="c3" name="c3"/>（例如公寓、复式、别墅）</td>
+              </tr>
+              <tr>
+                <td align="right"><span>房型面积：</span></td>
+                <td><input type="text" id="c4" name="c4"/></td>
+              </tr>
+              <tr>
+                <td align="right"><span>房型地址：</span></td>
+                <td><input type="text" id="c5" name="c5"/>（例如：上海市徐汇区宜山路439号301室）</td>
+              </tr>
+              <tr>
+                <td align="right"><span>装修预算：</span></td>
+                <td><select id="c6" name="c6">
+                    <option value="5-8万">5-8万</option>
+                    <option value="8-12万">8-12万</option>
+                    <option value="12-15万">12-15万</option>
+                    <option value="15万以上">15万以上</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <td align="right"><span>装修需求：</span></td>
+                <td><input type="text" id="c7" name="c7"/></td>
+              </tr>
+              <tr>
+                <td align="right"></td>
+                <td>（例如：我比较偏爱田园、地中海风格，平时喜欢看书，希望家里能有个休闲书房，还有经常会下厨，不想家里到处都是油烟味。）</td>
+              </tr>
+              <tr>
+                <td align="center" colspan="2">
+                  <input type="hidden" value="281" name="formid"/>
+                  <input type="hidden" value="和家网" id="c10" name="c10"/>
+                  <input type="submit" value="提交报名信息" name=""/>
+                  <input type="reset" class="bmclose" value="关闭" name=""/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+
+      </div>
+      <div class="bmbg"></div>
+      <script type="text/javascript">
+        $(".WQbaomingbox").click(function () {
+          $(".bmbg").show();
+          $(".bmform").show();
+        });
+        $(".bmclose").click(function () {
+          $(".bmbg").hide();
+          $(".bmform").hide();
+        })
+      </script>
+    <% end %>
+    <style type="text/css">
+      .footer_ad {
+        z-index: 9999;
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
+        _position: absolute;
+        _left: expression(eval(document.documentElement.scrollLeft));
+        _top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+        background: url(http://js.51hejia.com/img/ad_bg.gif) no-repeat top center;
+      }
+
+      .footer_ad .footer_ad_img {
+        width: 1000px;
+        height: 84px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .footer_ad a.footer_ad_close {
+        width: 16px;
+        height: 16px;
+        margin: 0px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        background: url(http://js1.51hejia.com/img/zxdpimg/contrast_li_close.jpg) no-repeat;
+        z-index: 99;
+      }
+
+      .footer_ad a.footer_ad_link {
+        display: block;
+        width: 1000px;
+        height: 84px;
+        margin: 0 auto;
+      }
+    </style>
+    <div class="footer_ad" id="footer_ad">
+      <div class="footer_ad_img">
+        <%= render_ad(81059, '装修资讯-首页-飘带底', 'afp') %>
+        <a class="footer_ad_close" href="javascript:void(0);" onclick="$('#footer_ad').hide();"></a>
+      </div>
+    </div>
+    <% if @article.template_name == "jushang" %>
+      <% if render_ad(82301, '居尚-左漂浮', 'afp').include?("<span>") %>
+        <div style="left: 0px; position: absolute; top: 100px;" id="ALayer1">
+          <div align="left">
+            <img border="0" style="cursor:pointer" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif">
+              <%= render_ad(82301, '居尚-左漂浮', 'afp') %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <% if render_ad(82297, '图文资讯-左漂浮', 'afp').include?("<span>") %>
+        <div style="left: 0px; position: absolute; top: 100px;" id="ALayer1">
+          <div align="left">
+            <img border="0" style="cursor:pointer" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif">
+              <%= render_ad(82297, '图文资讯-左漂浮', 'afp') %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if @article.template_name == "jushang" %>
+      <% if render_ad(82303, '居尚-右漂浮', 'afp').include?("<span>") %>
+        <div style="right: 0px; position: absolute; top: 100px;" id="ALayer2">
+          <div align="right"><img border="0" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif">
+          </div>
+          <%= render_ad(82303, '居尚-右漂浮', 'afp') %>
+        </div>
+      <% end %>
+    <% else %>
+      <% if render_ad(82299, '图文资讯-右漂浮', 'afp').include?("<span>") %>
+        <div style="right: 0px; position: absolute; top: 100px;" id="ALayer2">
+          <div align="right"><img border="0" onclick="closeBanner();" src="http://js.51hejia.com/img/dl_close.gif">
+          </div>
+          <%= render_ad(82299, '图文资讯-右漂浮', 'afp') %>
+        </div>
+      <% end %>
+    <% end %>
+    <% if render_ad(82301, '居尚-左漂浮', 'afp').include?("<span>") || render_ad(82303, '居尚-右漂浮', 'afp').include?("<span>") || render_ad(82297, '图文资讯-左漂浮', 'afp').include?("<span>") || render_ad(82299, '图文资讯-右漂浮', 'afp').include?("<span>") %>
+      <script type="text/javascript">
+        if (remote_ip_info.city == '上海') {
+          lastScrollY = 0;
+          function heartBeat() {
+            var diffY;
+            if (document.documentElement && document.documentElement.scrollTop) {
+              diffY = document.documentElement.scrollTop;
+            }
+            else if (document.body) {
+              diffY = document.body.scrollTop
+            }
+            else {
+            }
+            percent = .1 * (diffY - lastScrollY);
+            if (percent > 0) {
+              percent = Math.ceil(percent);
+            }
+	
+            else {
+              percent = Math.floor(percent);
+            }
+            document.getElementById("ALayer1").style.top = parseInt(document.getElementById("ALayer1").style.top) + percent + "px";
+            document.getElementById("ALayer2").style.top = parseInt(document.getElementById("ALayer1").style.top) + percent + "px";
+            lastScrollY = lastScrollY + percent;
+          }
+	
+          window.setInterval("heartBeat()", 1);
+          function closeBanner() {
+            document.getElementById("ALayer1").style.display = 'none';
+            document.getElementById("ALayer2").style.display = 'none';
+          }
+        }
+      </script>
+    <% end %>
+    <% unless @article.baoming_keyword_links.blank? %>
+      <div class="tanchuall" style="display:none">
+        <input type="reset" class="tanchuall_close" value="关闭" name="">
+          <div class="tanchuall_box1"></div>
+          <form action="http://bm.51hejia.com/index/zixun1" method="post" enctype="multipart/form-data" onSubmit="return submitForm(this);">
+            <div  style=" margin-bottom:10px;">
+              <p class="biaoti_bg"><img src="http://js.51hejia.com/tuku/webroot/img/tanchuall_title.png" />
+              </p>
+            </div>
+            <table class="line_height" width="402" cellspacing="0" cellpadding="0" border="0" style="color:#333;">
+              <tbody>
+                <tr>
+                  <td width="1" class="tanchuall_right"></td>
+                  <td width="75" class="tanchuall_right"><span>*</span>姓名：</td>
+                  <input type="hidden" name="from_term" value="资讯-文章页-通栏下1" />
+                  <td width="100">
+                    <input type="text" class="txt kuangao" name="name" id="bm_name" style="width:96px;">
+                  </td>
+                  <td width="1" class="tanchuall_right"></td>
+                  <td width="116" class="tanchuall_right"><span>*</span>电话：</td>
+                  <td width="100">
+                    <input type="text" class="txt kuangao" name="phone" id="bm_phone" style="width:96px;">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tanchuall_right">&nbsp;</td>
+                  <td class="tanchuall_right"><span>*</span>装修面积：</td>
+                  <td>
+                    <input type="text" class="txt kuangao"  name="area" id="bm_area"  style="width:96px;"/>
+                  </td>
+                  <td class="tanchuall_right">&nbsp;</td>
+                  <td class="tanchuall_right">期望风格：</td>
+                  <td>
+                    <select name="style" id="bm_style" style="width:102px;padding:2px 0;" class="border_select">
+                      <option value="">请选择</option>
+                      <option value="现代简约">现代简约</option>
+                      <option value="欧式">欧式</option>
+                      <option value="美式">美式</option>
+                      <option value="中式">中式</option>
+                      <option value="地中海">地中海</option>
+                      <option value="混搭">混搭</option>
+                      <option value="北欧（宜家）">北欧（宜家）</option>
+                      <option value="新古典">新古典</option>
+                      <option value="东南亚">东南亚</option>
+                      <option value="日式">日式</option>
+                      <option value="韩式田园">韩式田园</option>
+                      <option value="欧美乡村">欧美乡村</option>
+                    </select></td>
+                </tr>
+                <tr>
+                  <td class="tanchuall_right">&nbsp;</td>
+                  <td class="tanchuall_right"><span>*</span>房型：</td>
+                  <td>
+                    <select name="room" id="bm_room" style="width:102px; padding:2px 0;" class="border_select">
+                      <option value="">请选择</option>
+                      <option value="小户型">小户型</option>
+                      <option value="两居室">两居室</option>
+                      <option value="三居室">三居室</option>
+                      <option value="复式">复式</option>
+                      <option value="别墅">别墅</option>
+                      <option value="挑高/LOFT">挑高/LOFT</option>
+                      <option value="四合院">四合院</option>
+                    </select></td>
+                  <td class="tanchuall_right">&nbsp;</td>
+                  <td class="tanchuall_right"><span>*</span>楼盘名称：</td>
+                  <td>
+                    <input type="text" value="" style="width:96px; " id="bm_address" class="txt kuangao" name="address">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tanchuall_right">&nbsp;</td>
+                  <td class="tanchuall_right"><span>*</span>装修区域：</td>
+                  <td colspan="4">
+                    <select id="firm_city" name="firm_city" style="width:75px;padding:2px 0;" class="border_select">
+                      <option value="">省/市</option><option data_id="12" value="安徽">A安徽</option><option data_id="1" value="北京">B北京</option><option data_id="22" value="重庆">C重庆</option><option data_id="13" value="福建">F福建</option><option data_id="19" value="广东">G广东</option><option data_id="20" value="广西">G广西</option><option data_id="28" value="甘肃">G甘肃</option><option data_id="24" value="贵州">G贵州</option><option data_id="3" value="河北">H河北</option><option data_id="16" value="河南">H河南</option><option data_id="21" value="海南">H海南</option><option data_id="17" value="湖北">H湖北</option><option data_id="18" value="湖南">H湖南</option><option data_id="8" value="黑龙江">H黑龙江</option><option data_id="7" value="吉林省">J吉林省</option><option data_id="10" value="江苏">J江苏</option><option data_id="14" value="江西">J江西</option><option data_id="6" value="辽宁">L辽宁</option><option data_id="5" value="内蒙古">N内蒙古</option><option data_id="30" value="宁夏">N宁夏</option><option data_id="29" value="青海">Q青海</option><option data_id="9" value="上海">S上海</option><option data_id="23" value="四川">S四川</option><option data_id="15" value="山东">S山东</option><option data_id="4" value="山西">S山西</option><option data_id="27" value="陕西">S陕西</option><option data_id="2" value="天津">T天津</option><option data_id="31" value="新疆">X新疆</option><option data_id="26" value="西藏">X西藏</option><option data_id="25" value="云南">Y云南</option><option data_id="11" value="浙江">Z浙江</option>
+                    </select>
+                    <select class="border_select" style="width:75px;" id="firm_district" name="firm_district">
+                      <option value="">市/地区</option>
+                    </select>
+                    <select class="border_select" style="width:75px;" id="firm_area" name="firm_area">
+                      <option value="">县/市</option>
+                    </select></td>
+                </tr>
+                <tr>
+                  <td class="tanchuall_right" >&nbsp;</td>
+                  <td class="tanchuall_right" ><img  src="http://js.51hejia.com/tuku/webroot/img/tanchuall_yusuan.png" /></td>
+                  <td colspan="4" style="font-size:12px; color:#666666;">
+                    <input type="text" style="width:96px; margin-right:2px;" name="budget" id="bm_budget" class="txt kuangao" />
+                    <span style="margin-right:5px;">万</span>例如：10万  20万</td>
+                </tr>
+                <tr>
+                  <td width="1" class="tanchuall_right"></td>
+                  <td colspan="5" style="line-height:20px; padding:0px 8px 0 2px; color:#666;"><img style="float:left; margin-right:2px;" src="http://js.51hejia.com/tuku/webroot/img/tanchuall_tip.png" /><span>小贴士：</span>经验显示，平均价位为<span>1000元-1500元/㎡</span>的装修费用，装修质量更有保障，同时方便我们为您约到更好的设计师。</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="tanchuall_box2">
+              <p style="text-align: center;">
+                <input type="submit" value="确定" name="" class="confirm" id="applicant_submit" style="text-align:center;">
+              </p>
+            </div>
+          </form>
+          <div style="width:100%; height:30px; background-color:#fffae6;"></div>
+      </div>
+
+
+
+      <script type="text/javascript">
+        function ge(id) {
+          return document.getElementById(id);
+        }
+
+        function trim(str) {
+          return str.replace(/^\s*(.*?)[\s\n]*$/g, '$1');
+        }
+
+        function submitForm(form) {
+          if (trim(ge("bm_name").value) == "") {
+            alert("您必须填写【姓名】！")
+            return false;
+          }
+          if (trim(ge("bm_phone").value) == "") {
+            alert("您必须填写【电话】！")
+            return false;
+          }
+          if (!trim(ge("bm_phone").value).match(/^\d{11}$/)) {
+            alert("【电话】号码必须为11位数字！")
+            return false;
+          }
+          if (trim(ge("bm_area").value) == "") {
+            alert("您必须填写【装修面积】！")
+            return false;
+          }
+          if (!trim(ge("bm_area").value).match(/^[1-9][0-9]*$/)) {
+            alert("【装修面积】必须为大于0整数数字！")
+            return false;
+          }
+          if (trim(ge("bm_room").value) == "") {
+            alert("您必须选择【房型】！")
+            return false;
+          }
+          if (trim(ge("bm_address").value) == "") {
+            alert("您必须填写【楼盘名称】！")
+            return false;
+          }
+          if (trim(ge("firm_city").value) == "") {
+            alert("您必须选择装修区域【省份】！")
+            return false;
+          }
+          if (trim(ge("firm_district").value) == "") {
+            alert("您必须选择装修区域【城市】！")
+            return false;
+          }
+          if (trim(ge("bm_budget").value) == "") {
+            alert("您必须填写【装修预算】！")
+            return false;
+          }
+          if (!trim(ge("bm_budget").value).match(/^[1-9][0-9]*$/))
+          {
+            if(ge("bm_budget").value <= 0 || ge("bm_budget").value >= 1000)
+            {
+              alert("【装修预算】必须是大于0小于1000的整数！")
+              return false;            
+            }
+          }
+
+          return true;
+        }
+      </script>
+
+      <script type="text/javascript">
+        $(".tanchuall_open").click(function() {
+          $(".tanchuall_bg").show();
+          $(".tanchuall").show();
+        });
+        $(".tanchuall_close").click(function() {
+          $(".tanchuall_bg").hide();
+          $(".tanchuall").hide();
+        })
+
+        $("#firm_city").change(function() {
+          if ($("#firm_city").val().length == 0) {
+            $("#firm_district").empty();
+            $("<option value=''>市/地区</option>").appendTo("#firm_district");
+          } else {
+            $.ajax({
+              type:'get',
+              url:document.URL+'/get_cities',
+              data:'provinces_id=' + $("#firm_city option:selected").attr('data_id'),
+              dataType:'json',
+              success:function(data){
+                $("#firm_district").empty();
+                $("<option value=''>市/地区</option>").appendTo("#firm_district");
+                $.each(data, function(i) {
+                  $("<option value='" + data[i][0] + "' data_id='" + data[i][1] + "'>" + data[i][0] + "</option>").appendTo("#firm_district");
+                });
+              }
+            })
+          }
+        });
+
+        $("#firm_district").change(function() {
+          if ($("#firm_district").val().length == 0) {
+            $("#firm_area").empty();
+            $("<option value=''>县/市</option>").appendTo("#firm_area");
+          } else {
+            $.ajax({
+              type:'get',
+              url:document.URL+'/get_districts',
+              data:'citys_id=' + $("#firm_district option:selected").attr('data_id'),
+              dataType:'json',
+              success:function(data){
+                $("#firm_area").empty();
+                $("<option value=''>县/市</option>").appendTo("#firm_area");
+                $.each(data, function(i) {
+                  $("<option value='" + data[i][0] + "' data_id='" + data[i][1] + "'>" + data[i][0] + "</option>").appendTo("#firm_area");
+                });
+              }
+            })
+          }
+        });
+
+      </script>
+      <div class="tanchuall_bg" style="display:none;"></div>
+    <% end  %>
+  </body>
+</html>

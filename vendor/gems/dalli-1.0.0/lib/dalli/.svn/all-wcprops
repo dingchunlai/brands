@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli
+END
+options.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/options.rb
+END
+client.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/client.rb
+END
+ring.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/ring.rb
+END
+version.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/version.rb
+END
+server.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/server.rb
+END
+socket.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/lib/dalli/socket.rb
+END

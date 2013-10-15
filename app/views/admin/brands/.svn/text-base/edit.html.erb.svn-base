@@ -1,0 +1,44 @@
+<%= show_flash_message %>
+<% form_for :brand, :url => (@brand.new_record? && admin_brands_path || admin_brand_path(@brand)), :html => { :method => (@brand.new_record? && 'post' || 'put')} do |f| %>
+  <fieldset>
+    <legend>编辑<%= @brand.new_record? ? '品牌信息' : @brand.name_zh %></legend>
+    <table>
+      <tr>
+        <th>所属行业</th>
+        <td><%= category_checkbox_list @brand.tags, 'brand' %></td>
+      </tr>
+      <tr>
+        <th>所属品类</th>
+        <td><table>
+            <% Tag.all_categories.each do |tag| %>
+              <tr><td><%= tag.TAGNAME  %> </td><td><%= production_category_checkbox_list tag.TAGID, @brand.production_categories, 'brand' %></td></tr>
+            <% end %>
+            </table>
+        </td>
+      </tr>
+     <tr>
+        <th>名称</th>
+        <td><%= f.text_field :name_zh %></td>
+      </tr>
+      <tr>
+        <th>拼音或英文名</th>
+        <td><%= f.text_field :name_en %></td>
+      </tr>
+      <tr>
+        <th>站内URL地址</th>
+        <td>
+          <% if staff_logged_in? && session[:is_hejia_admin] %>
+            <%= f.text_field :permalink %>
+          <% else %>
+            <%= f.text_field :permalink, :disabled => (@brand.new_record? ? false : true) %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= submit_tag '保存' %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
+
+<%= render :partial => 'shared/enable_tinymce' %>

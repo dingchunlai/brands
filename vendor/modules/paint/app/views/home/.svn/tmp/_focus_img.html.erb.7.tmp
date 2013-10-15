@@ -1,0 +1,22 @@
+<% focus_img =  hejia_promotion_items(HOME_FOCUS_IMG, :attributes => ['title','url','image_url'],:limit => 3) %>
+    <div id="newsSlider">
+      <div class="container">
+        <ul class="slides">
+        <%focus_img.each do |focus|%>
+		  <li>
+		  	<% if focus.url.blank?%>
+			<%= image_tag(get_api_img_url(focus.image_url),:alt=> focus.title)%>
+			<% else %>
+			<%= link_to image_tag(get_api_img_url(focus.image_url),:alt=> focus.title) , focus.url ,:target => '_blank'%>
+		    <% end %>	
+		  </li>
+        <% end %>
+		</ul>
+      </div>
+      <div class="validate_Slider"></div>
+      <ul class="pagination">
+      	<% 1.upto(focus_img.size) do |i|%>
+        <li><a href="javascript:void(0)"><%=i%></a></li>
+        <% end %>
+      </ul>
+ </div>

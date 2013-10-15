@@ -1,0 +1,60 @@
+<div class="page_navigate page_padding">
+  <%= yield :navigation %>
+  <br />
+  <table>
+    <% if @brand.new_record? %>
+      <tr>
+        <td>品类: </td>
+        <td>
+          <%
+              Tag.categories.each do |tag| 
+              class_css = (@tag && (tag.TAGID.to_i == @tag.TAGID)) ? 'current' : ''
+          %>
+            <%= link_to tag.TAGNAME, new_admin_brand_path(:tag_id => tag.TAGID), :class => class_css %>
+          <% 
+              end
+          %>添加品牌时请关联品类
+        </td>
+      </tr>
+    <% else %>
+    <tr>
+      <td>品牌: </td> 
+      <td><%= @brand.name_zh %> &nbsp; 
+        <% 
+          unless @brand.tags_for.blank?
+            @brand.tags_for.each do |tag|
+              class_css = (@tag && (tag.TAGID.to_i == @tag.TAGID)) ? 'current' : ''
+        %>
+            <%= link_to tag.TAGNAME, manage_admin_brand_path(@brand, :tag_id => tag.TAGID), :class => class_css %>
+        <% 
+            end 
+          else
+        %>
+        <%= link_to  "请先绑定品类", edit_admin_brand_path(@brand) %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>状态: </td>
+      <td>
+        <%= @brand.status_zh  %> (<%= link_to (@brand.is_hidden ? "启用" : "禁用"), (@brand.is_hidden ? display_admin_brand_path(@brand) : hide_admin_brand_path(@brand)), :method => :post %>)
+      </td>
+    </tr>
+    <tr>
+      <td>站内URL: </td>
+      <td><%= @brand.permalink  %></td>
+    </tr>
+    <% 
+        unless @tagged_brand.blank? 
+    %>
+      <tr>
+        <td>当前模板: </td>
+        <td><%= @tagged_brand.template_name %></td>
+      </tr>
+    <% 
+      end 
+    %>
+    <% end %>
+  </table>
+  <br />
+</div>

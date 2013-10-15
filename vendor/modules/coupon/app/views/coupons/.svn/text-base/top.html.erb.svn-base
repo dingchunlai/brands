@@ -1,0 +1,75 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】排行榜_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<script type="text/javascript">
+  jQuery(function($){
+//抵用券关键词搜索
+    $('form[name=keyword_search]').submit(function() {
+        var tf_keyword = $(this).find('input[name=keyword]');
+        var kw = $.trim(tf_keyword.val());
+        tf_keyword.val(kw);
+        if (kw == '<%= coupon_searh_explain %>' || kw == '') {
+            alert('请输入搜索关键词！');
+        } else {
+            window.open('/kw-' + kw + '-0.html', '_top');
+        }
+        return false;
+    });
+  });
+</script>
+<div class="width960 margin10 clearfix">
+  <div class="djq_l f_l">
+    <div class="djq_find">
+      <div class="djq_findicon f_l">快速查找</div>
+      <div class="djq_findsearch f_r">
+        <form name="keyword_search" method="get">
+          <input type="text" name="keyword" class="djq_findinput" title="<%= coupon_searh_explain %>" value="<%= coupon_searh_explain %>" onfocus="if(this.value=='<%= coupon_searh_explain %>') this.value='';" onblur="if(this.value=='')this.value='<%= coupon_searh_explain %>';"/>
+          <input type="button" class="djq_findbtn" onclick="$('form[name=keyword_search]').submit();"/>
+       </form>
+      </div>
+    </div>
+  </div>
+  <div class="djq_hangye clear clearfix">
+    <div class="djq_hangyetop f_l">排行榜</div>
+    <div class="djq_hangyetxt f_r">
+      <%
+        tags = Tag.all_categories
+        tags.each_with_index do |tag, index|
+          top_index = index + 1 
+      %>
+        <a href="#top0<%= top_index %>" target="_self"><%= tag.TAGNAME %></a>
+      <% end %>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="width960 margin10 clearfix">
+  <div class="djq_paihb">
+    <dl class="clearfix">
+      <% 
+        tags.each_with_index do |tag, index| 
+          tag_index = index + 1
+      %>
+      <dd><a name="top0<%= tag_index %>" id="top0<%= tag_index %>"></a><div class="djq_rcur margin10">
+        <h3><%= tag.TAGNAME %><%= Coupon.human_name %>人气排行榜</h3>
+      <div class="djq_rcurtxt" style="height: 310px;">
+        <ul class="djq_went_list">
+          <%
+           Coupon.with_tag_city(tag.TAGID, @city.id, 10).each do |coupon|
+          %>
+            <li><span>截止 <%= coupon.activity_end_at %></span>
+              <%= link_to truncate(coupon.title, 14, ''), coupon_show_path(coupon), :target => '_blank' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      </div></dd>
+      <% end%>
+    </dl>
+  </div>
+</div>
+
+<div class="djq_topback"><span id="djq_shang"></span></div>
+<!--content_code_end-->

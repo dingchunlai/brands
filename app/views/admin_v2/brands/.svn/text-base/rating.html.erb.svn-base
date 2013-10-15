@@ -1,0 +1,126 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 参数设置页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+<%= show_flash_message %>
+<fieldset>
+  <legend>口碑数据</legend>
+  <% form_for :rating, @brand_rating, :url => rating_admin_brand_path(@brand) do |f| %>
+    <input type='hidden' name='tag_id' value='<%=@tag_id %>'>
+  <fieldset style="width: 340px; height: 155px; float: left;">
+    <legend>排行参与票数</legend>
+    <ul class="horizontal">
+      <li><%= f.label :good, '推  荐：'   %><%= f.text_field :good %></li>
+      <li><%= f.label :soso, '中  立：'   %><%= f.text_field :soso %></li>
+      <li><%= f.label :bad,  '不推荐：' %><%= f.text_field :bad %></li>
+    </ul>
+  </fieldset>
+  <fieldset style="width: auto;">
+    <legend>评分细项票数</legend>
+    <table>
+      <tbody>
+        <% {'质量' => :quality, '售后' => :service, '口碑' => :reputation, '性价比' => :cost, '知名度' => :known}.each do |name, attribute| %>
+          <tr>
+            <th><%= name %>：</th>
+            <td>
+              <ul class="horizontal">
+                <% attr_name = "#{attribute}_good".to_sym %>
+                <li><%= f.label attr_name, '好:'%><%= f.text_field attr_name %></li>
+                <% attr_name = "#{attribute}_bad".to_sym %>
+                <li><%= f.label attr_name, '坏：'%><%= f.text_field attr_name %></li>
+              </ul>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </fieldset>
+  <%= submit_tag '保存' %>
+<% end %>
+</fieldset>
+<br />
+<fieldset>
+  <legend>品牌关注度</legend>
+  <% form_tag pv_weight_admin_brand_path(@brand) do  %>
+  <fieldset>
+    <legend>关注度基数</legend>
+    基数：<%= text_field_tag :number, @brand.pv_weight(@tag_id) %>
+    <%= hidden_field_tag :tag_id, @tag_id %>
+    <%= submit_tag "保存" %>
+  </fieldset>
+  <% end %>
+  <% form_tag update_pv_admin_brand_path(@brand) do  %>
+  <fieldset>
+    <legend>修改月份关注度值</legend>
+    总关注度：<%= @brand.pv(@tag_id) %><br /> 
+      近三月关注度值：
+      [<%= Time.now.strftime("%Y年%m月") %> : <%= @brand.last_month_pv(@tag_id, Time.now.strftime("%Y%m")) %>], 
+      [<%= 1.month.ago.strftime("%Y年%m月") %> : <%= @brand.last_month_pv(@tag_id, 1.month.ago.strftime("%Y%m")) %>],
+      [<%= 2.month.ago.strftime("%Y年%m月") %> : <%= @brand.last_month_pv(@tag_id, 2.month.ago.strftime("%Y%m")) %>]
+    <br />
+    选择月份：<%= text_field_tag :date_time %> &nbsp;&nbsp;<label></label><br />
+    <span id="pv_value">
+    原关注度：<label id="old_pv"><%= @brand.last_month_pv(@tag_id)  %></label><br /> 
+    新关注度：<%= text_field_tag :month_pv %><%= submit_tag "保存" %></span><br />
+    注：选择月份后(如：201009表示2010年9月份), 会出现当前月份对应的关注度值, 如果要修改当前月份关注度值, 请在新关注度值输入框内填入新的关注度值，点击保存后，将会替换原有月份的关注度值
+    <%= hidden_field_tag :tag_id, @tag_id %>
+    <%= hidden_field_tag :month_pv_path, month_pv_admin_brand_path(@brand) %>
+  </fieldset>
+  <% end %>
+</fieldset>
+<br />
+<fieldset>
+  <legend>购买意向</legend>
+  <% 
+    unless @tagged_brand.blank? 
+      form_tag attention_admin_brand_path(@brand) do 
+  %> 
+    <% TaggedBrand::ITEM_VOTES.each do |key, value| %>
+      <%= value %>: <%= text_field_tag key, @tagged_brand.vote_count_for(key)  %><br />
+    <% end %>
+    <%= hidden_field_tag :tagged_brand_id, @tagged_brand.id %>
+    <%= submit_tag "保存" %>
+  <% 
+      end 
+    end
+  %>
+</fieldset>
+
+
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function hide_element(item){
+    item.hide();
+  }
+  function show_element(item){
+    item.show();  
+  }
+  $(function(){
+      $("#date_time").datepicker({dateFormat: 'yymm'});
+      hide_element($("#pv_value"));
+      $("#date_time").change(function(event){
+        if($("#date_time").val().length != 6){
+          alert("日期格式不正确");
+          hide_element($("#pv_value"));
+          return false;
+        }
+        $("#date_time").next("label").show();
+        $("#date_time").next("label").html('加载数据中....');
+        hide_element($("#pv_value"));
+        $.get($("#month_pv_path").val(), {tag_id: $("#tag_id").val(), time: $("#date_time").val()}, function(data){
+          if(data["is_success"] == "1"){
+            $("#old_pv").html(data["pv"]);
+            $("#date_time").next("label").hide();
+            show_element($("#pv_value"));
+          }else{
+            alert("检索出错，您误操作了");
+          }
+        });
+      });
+  })
+</script>
+

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/respond_to/layouts
+END
+standard.iphone.erb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/respond_to/layouts/standard.iphone.erb
+END
+standard.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/respond_to/layouts/standard.html.erb
+END
+missing.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/respond_to/layouts/missing.html.erb
+END

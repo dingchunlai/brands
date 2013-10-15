@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>淘宝门户 - 淘宝网</title>
+<meta name="description" content="淘宝网(Taobao.com)中国最大,最安全的个人网上交易社区(C2C)，作为专业的购物网站拥有全球时尚前沿的消费者购物集市,100%认证网上商城及超值二手商品区，同时购物安全，产品丰富，应有尽有,任你选购,让你尽享网上在线购物乐趣！" />
+<meta name="keywords" content="淘宝,掏宝,网上购物,C2C,在线交易,交易市场,网上交易,交易市场,网上买,网上卖，购物网站,团购,网上贸易,安全购物,电子商务,放心买,供应,买卖信息,网店,一口价,拍卖,网上开店,网络购物,打折,免费开店,网购,频道,店铺" />
+<link rel="stylesheet" href="http://a.tbcdn.cn/p/header/header-min.css?t=20101118.css" />
+<link rel="stylesheet" type="text/css" href="http://a.tbcdn.cn/tbsp/tbsp.css?t=20090602.css" />
+<link rel="stylesheet" href="http://assets.taobaocdn.com/tbra/2.0/reset-grids.css?t=20100607.css" />
+
+<%= yield(:head)%>
+</head>
+<style type="text/css">
+.header { height:120px; width:950px; overflow:hidden; margin:0 auto; }
+.footer { height:300px; overflow:hidden; }
+.footerbox { height:300px; width:970px; overflow:hidden; margin:-60px auto 0 auto; }
+
+a.prev_page,a.next_page{background:transparent url(http://img06.taobaocdn.com/tps/i6/T1quhBXhVmXXXXXXXX-323-220.png) no-repeat 0 0;width: 49px;background-color: #FFFFFF;height: 20px;line-height: 20px;border: 1px solid #CCCCCC;display: inline-block;height: 20px;line-height: 20px;min-width: 18px;padding: 1px;}
+a.prev_page{background-position: -74px -23px;text-indent: 5px;}
+a.next_page{background-position: -82px -23px;text-indent: -6px;}
+.page-navigation span.current{color: #FF5500;font-weight: 700;margin: 0 6px;}
+.page-navigation a, .page-navigation a.page-up, .page-navigation a.page-down{margin: 0 1px;}
+</style>
+<body>
+<div class="header" style="height:130px">
+  <iframe src="http://www.taobao.com/promo/co_header_taoinfo.php?type=life&from=ifeng" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" width="950" height="130" allowtransparency="true"></iframe>
+</div>
+<div class="content">
+
+  <%= yield%>
+</div>
+<div class="footer">
+  <div class="footerbox">
+    <iframe src="http://www.taobao.com/promo/co_footer.php" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" width="950" height="300" allowtransparency="true" ></iframe>
+  </div>
+</div>
+</body>
+</html>

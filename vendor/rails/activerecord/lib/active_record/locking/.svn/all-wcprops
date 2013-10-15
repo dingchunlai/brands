@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/lib/active_record/locking
+END
+pessimistic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/lib/active_record/locking/pessimistic.rb
+END
+optimistic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activerecord/lib/active_record/locking/optimistic.rb
+END

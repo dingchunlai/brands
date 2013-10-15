@@ -1,0 +1,186 @@
+<link href="http://js.51hejia.com/css/picdeco.css?12431" rel="stylesheet" type="text/css" />
+<% @title = "成套家电设计--#{@case.NAME}" %>
+<div class="he_con">
+  <div class="qu_con f_l zd_info">
+    <div class="qu_con_info zd_con_info">
+      <h3 class="he_title qu_font">成套家电设计师信息</h3>
+      <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wjz.jpg" alt=""/>
+      <h4><a href="<%= jdsjs_url %>" target="_blank">王纪柱</a></h4>
+      <ul>
+        <li><span>手机：15921267735</span></li>
+
+        <li><span>地址：上海隋园实业有限公司隋园社区店</span></li>
+      </ul>
+      <a href="<%= jdsjs_url %>" target="_blank" class="qu_ckxq">查看详情</a>
+    </div>
+    <div class="mdzs"><a href="<%= map_url %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/mdzp_s.jpg" alt="" /></a></div>
+    <div class="zd_con1">
+      <h3 class="he_title qu_font">享受成套增值服务</h3>
+
+      <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/jary/haier_bgimg3.gif" alt="" />
+    </div>
+
+  </div>
+  <div id="casepic" class="f_l" style="width:575px;margin-left:10px;">
+    <h1 style="text-align:center;"><%= @case.NAME%></h1>
+    <script type="text/javascript" src="http://js.51hejia.com/js/imgplayer2.js?20091015">				</script>
+    <!-- 等比缩放图片 -->
+
+    <script type="text/javascript">
+      var flag=false;function DrawImage(ImgD){var image=new Image();
+        var iwidth = 499; //定义允许宽度，当宽度大于这个值时等比例缩小
+        var iheight = 299;
+        image.src=ImgD.src;
+        if(image.width>0 && image.height>0){flag=true;
+          if(image.width>iwidth){
+            ImgD.width=iwidth;ImgD.height=iheight;}else{
+            ImgD.width=image.width;ImgD.height=image.height;}}}
+    </script>
+    <div class="articlepic clearfix">
+      <div class="artdesl">
+        <ul>
+          <li><a href="#" onclick="$.ajax({data:'_method=put', dataType:'script', type:'post', url:'/opinion/<%= @case.ID %>/up_down?type=up', success: function(data){if(data!='sorry'){$('#CASEUP').text(data);}else{alert('对不起，你每天只能评价一次，谢谢！')}}}); return false;"><img alt="顶" src="http://js.51hejia.com/img/caseimages/good.gif" title="顶" /></a></li>
+          <li id="CASEUP"><%= $redis.get("case/show/#{@case.ID}/caseup") %></li>
+          <li><a href="#" onclick="$.ajax({data:'_method=put', dataType:'script', type:'post', url:'/opinion/<%= @case.ID %>/up_down?type=down', success: function(data){if(data!='sorry'){$('#CASEDOWN').text(data);}else{alert('对不起，你每天只能评价一次，谢谢！')}}}); return false;"><img alt="踩" src="http://js.51hejia.com/img/caseimages/bad.gif" title="踩" /></a></li>
+          <li id="CASEDOWN"><%= $redis.get("case/show/#{@case.ID}/casedown") %></li>
+          <li><a href="http://tuku.51hejia.com/zhuangxiu/tuku/down_case/<%= @case.ID %>" target="_blank"><img alt="收藏本套案例" src="http://js.51hejia.com/img/caseimages/save.gif" /></a></li>
+        </ul>
+      </div>
+      <script type="text/javascript" src="http://js.51hejia.com/js/chrome.js"></script>
+      <div class="destag" id="chromemenu1">
+        <!--<a href="//tuku/down_case/" target="_blank">下载</a>：-->
+
+        <ul>
+          <li><a href="http://tuku.51hejia.com/zhuangxiu/tuku/down_case/<%= @case.ID %>" target="_blank">全部(<%= @case.photos.size %>)</a></li>
+        </ul>
+      </div>
+      <script type="text/javascript">
+        cssdropdown.startchrome("chromemenu1")
+      </script>
+      <div class="artdesr">
+        <input type="hidden" id="imageUrl" value="http://image.51hejia.com/files/hekea/case_img/20090429/img200904291240983028093.jpg"/>
+        <a href="http://tuku.51hejia.com/zhuangxiu!screen/tuku-<%= @case.ID %>" target="_blank" title="全屏"> <img src="http://www.51hejia.com/images/photo/des08.gif" alt="全屏" border="0"/> </a> </div>
+      <div class="pic">
+        <div class="top"></div>
+        <div class="mai">
+          <div class="up"><a onclick="ss.previous();googleStat();" title="上一张"></a></div>
+          <p align="center" id="bigpic"> <img alt="" src="http://image.51hejia.com/files/hekea/case_img/20110308/img201103081299547150.jpg" id="ss_img" style="filter:blendTrans(Duration=1);" onload="javascript:DrawImage(this)"/> </p>
+          <div class="down"><a onclick="ss.next();googleStat();" title="下一张"></a></div>
+          <div class="info" id="tt"></div>
+          <style type="text/css">
+            div#tt a{text-decoration:none;}
+            a#moreinfo span{display:none;}
+            a#moreinfo:hover span{display:inline;position:absolute;background-color:#C0C0C0;border:1px solid #CCC;color:#000;left:0px;bottom:0px}
+          </style>
+        </div>
+        <div class="bottom">
+          <div class="bpinlun">案例信息</div>
+          <div class="autonum">
+            <input type="text" value="5" size="2"/>
+
+          </div>
+          <div class="picbutton1" id="autoPlayImg">
+            <!-- 播放 begin -->
+            <div id="Play" onclick="ss.play(); document.getElementById('Pause').style.display='block'; this.style.display='none';" onmousemove="this.style.color='#ffc900';" onmouseout="this.style.color='#dfdfdf';" style="display:none;"></div>
+            <!-- 播放 end -->
+            <!-- 暂停 begin -->
+            <div id="Pause" onclick="ss.pause(); document.getElementById('Play').style.display='block'; this.style.display='none';" onmousemove="this.style.color='#ffc900';" onmouseout="this.style.color='#dfdfdf';"></div>
+            <!-- 暂停 end -->
+          </div>
+
+          <div class="brenqi">上传者：<b>王纪柱</b>&nbsp;|&nbsp;人气：<%= $redis.get "deco_cases/#{@case.ID}/viewcount" %></div>
+        </div>
+      </div>
+      <div id="piclist" style="display:none">
+        <input type="hidden" id="decoSize" value="<%= @case.photos.size %>"/>
+        <% @case.photos.each_with_index do |photo, index| %>
+          <input type="hidden" id="decoUrl<%= index %>" value="<%= photo.get_photo_url %>"/>
+          <input type="hidden" id="title<%= index %>"  value="<%= @case.NAME %>"/>
+          <a href="<%= photo.get_photo_url %>" rel="lyteshow[heavens]"> </a>
+        <% end %>
+      </div>
+      <script type="text/javascript" language="javascript">
+        //内容部分
+        ss = new slideshow("ss");ss.prefetch = 1;ss.sizelmt = true;ss.repeat = true;
+        ss.textid='con';
+        var decoSize=document.getElementById("decoSize");
+        var tagSize=document.getElementById("tagSize");
+        if(tagSize!=null){
+          var str='<a href="#" onclick="checkAllSubmit();">全部</a>('+decoSize.value+')&nbsp;&nbsp;';
+          for(i=0;i<tagSize.value;i++){
+            var tagId=document.getElementById("tagId"+i);
+            var tagName=document.getElementById("tagName"+i);
+            var tagCount=document.getElementById("tagCount"+i);
+            str+='<input type="hidden" id="tagId'+i+'" value="'+tagId.value+'">';
+            str+='<a href="#" onclick="showDeco('+i+',#<HejiaCase:0xb5905550>)">'+tagName.value+'</a>('+tagCount.value+')&nbsp;&nbsp;';}}
+        if(decoSize!=null){
+          for(j=0;j<decoSize.value;j++){
+            var decoUrl=document.getElementById("decoUrl"+j);
+            var title=document.getElementById("title"+j);
+            s = new slide();
+            s.src = decoUrl.value;
+            s.title = title.value;
+            s.link = decoUrl.value;
+            s.text = str;
+            ss.add_slide(s);}}
+        for(var i=0;i<ss.slides.length;i++){s = ss.slides[i];s.target = "_blank";}
+        //--><!]]>
+        ss.pre_update_hook = function(){
+          sid = ss.current;
+          title = ss.slides[sid].title;
+          linkurl = ss.slides[sid].link;
+          totals = ss.slides.length;
+          scon = ss.slides[sid].con;
+          tempid = parseInt(sid) + 1;
+          document.getElementById("tt").innerHTML = title;}
+        if(document.images){ss.image = document.images.ss_img;ss.update();ss.play();}
+        if(ss.slides.length>22){
+          document.getElementById("Main").style.height = "575px";
+          document.getElementById("Main").style.background = "url(http://i3.sinaimg.cn/dy/deco/2008/0509/yocc080509img/news_hdtj_080408_001_575.jpg)";
+          document.getElementById("xghd").style.borderBottom = "none";
+        }try{}catch(e){}
+      </script>
+      <div class="ptext">
+        <p style="text-indent:24px;"><%= truncate(@case.INTRODUCE, :length => 300, :omission => '') %></p>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <!-- end -->
+  </div>
+  <div class="zd_ad1 f_l">
+    <div><img src="http://img.51hejia.com/api/images/0006/0299/s1.jpg" width="163" height="105" /></div>
+
+    <ul>
+      <li><a href="<%= qa_4_url %>" target="_blank">什么是成套家电？</a></li>
+      <li><a href="<%= qa_4_url %>#a1" target="_blank">为什么要选择成套家电？</a></li>
+      <li><a href="<%= qa_4_url %>#a2" target="_blank">海尔的成套家电有什么优势？</a></li>
+    </ul>
+
+  </div>
+  <div class="ct_box1 f_l">
+
+    <h3 class="he_title">设计案例</h3>
+    <ul class="he_case1" style="margin-bottom:10px;">
+      <li><a href="<%= haier_jdsjs_case_url(:id => 536902) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/tiexin.jpg" /></a>
+        <dl>
+          <dt><a href="<%= haier_jdsjs_case_url(:id => 536902) %>" target="_blank">贴心服务 换来四笔订单</a></dt>
+          <dd>王阿姨经同事推荐前往海尔社区店，对其贴心服务颇为赏识，并先后下了四笔订单！</dd>
+        </dl>
+      </li>
+      <li><a href="<%= haier_jdsjs_case_url(:id => 536903) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/xuanzhe.jpg" /></a>
+        <dl>
+          <dt><a href="<%= haier_jdsjs_case_url(:id => 536903) %>" target="_blank">选择海尔产品 就会服务到底</a></dt>
+          <dd>韩先生购置海尔空调，对其贴心的上门服务非常满意，在小区单元传为佳话⋯⋯</dd>
+        </dl>
+      </li>
+      <li><a href="<%= haier_jdsjs_case_url(:id => 536904) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/qijiantao.jpg" /></a>
+        <dl>
+          <dt><a href="<%= haier_jdsjs_case_url(:id => 536904) %>" target="_blank">海尔7件套 质优价廉生活无忧</a></dt>
+          <dd>付女士家里总共选购了7件海尔家电产品，使用三年没有出现过任何问题！</dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<%= increase_haier_pv_image_tag "hejia_case", @case.ID %>

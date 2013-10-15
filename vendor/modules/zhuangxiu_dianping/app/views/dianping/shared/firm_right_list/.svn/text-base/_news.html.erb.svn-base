@@ -1,0 +1,10 @@
+<% if (deco_ideas = @firm.deco_ideas.find(:all, :limit => 4)).count > 0  %>
+  <div class="zxdp2011_zxxx margin10">
+    <h3>最新消息...</h3>
+    <ul>
+      <% deco_ideas.each do |idea|%>
+        <li><%= link_to truncate_u(idea.title,15), deco_idea_url(:id => idea.id), :target => "_blank"%></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

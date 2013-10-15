@@ -1,0 +1,96 @@
+<div class="zxdp2010_koubtop clear zxdp2010_dianp zxdp2011_exp">
+  <h3>
+    <label>看看其他网友的装修经历</label>
+
+  </h3><div class="zxdp2011_exp_tab">
+  <% if [12117].include? @user_city_code.to_i %>
+      <ul>
+        <li class="zxdp2011_exp_tab1"><a href="javascript:void(0)">6万以下</a></li>
+        <li class="zxdp2011_exp_tab2"><a href="javascript:void(0)">6-10万</a></li>
+        <li class="zxdp2011_exp_tab3"><a href="javascript:void(0)">10万以上</a></li>
+      </ul>
+  <% else %>
+      <ul>
+        <li class="zxdp2011_exp_tab1"><a href="javascript:void(0)">8万以下</a></li>
+        <li class="zxdp2011_exp_tab2"><a href="javascript:void(0)">8-15万</a></li>
+        <li class="zxdp2011_exp_tab3"><a href="javascript:void(0)">15万以上</a></li>
+      </ul>
+  <% end %>
+    </div>
+  <div class="zxdp2011_exp clearfix margin10">
+    <div class="zxdp2011_exp_cont">
+      <div class="zxdp2011_exp_cont_list zxdp2011_exp_cont1">
+        <ul>
+          <% @api_diaries1.each do |diary| %>
+          <li>
+            <div><%= link_to image_tag(diary.master_picture.url("160x120"), :alt => diary.title,:size =>"160x120" ) ,diary_url(diary), :target => "_blank" %>
+              <div>
+                <span><div style="" class="dafenstars02 f_r">
+                  <% diary_praise = get_diary_praise diary %>
+                  <% if (@user_city_code.to_i == 11910) && (diary_praise.round >= 8) %>
+                    <p style='width:86px'></p>
+                  <% else %>
+                    <p style="width: <%= diary_praise.round.to_f / 2.0 * 18.0 %>px;"></p>
+                  <% end %>
+                  </div>本次评价&nbsp;
+                  </span><h2><strong><%= link_to truncate(h(diary.title),:length => 25,:omission => '')  ,diary_url(diary), :target => "_blank" %></strong></h2>
+              </div>
+              <div>业主：<%= link_to truncate( diary.user_name,:length => 4,:omission => '') ,diary_url(diary), :target => "_blank" %>&nbsp;&nbsp;&nbsp;公司：<%= link_to truncate(diary.deco_firm.name_abbr, :length => 4 ,:omission => '')  ,firm_url(:id => diary.deco_firm.id,:trailing_slash => "/"), :target => "_blank" %>&nbsp;&nbsp;&nbsp;总价：<%= diary.deal_price %>万&nbsp;&nbsp;&nbsp;风格：<%= link_to STYLES[diary.style.to_i],search_diaries_for_options(:style => diary.style.to_i), :target => "_blank"%></div>
+              <p><%= truncate(strip_tags(diary.content).gsub(/<|>/,""),:length => 96 ,  :omission => '……')%></p>
+              <div><span><a target="_blank" href="<%= firm_factories_url(:firm_id => diary.deco_firm.id, :trailing_slash => "/") %>"><img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_exp_cont_an.jpg"></a></span>最后更新：<%=diary.order_time.nil? ? diary.updated_at.strftime("%Y-%m-%d") : diary.order_time.strftime("%Y-%m-%d")%>&nbsp;&nbsp;&nbsp; 日记(<%= diary.decoration_diary_posts.size%>)&nbsp;&nbsp;&nbsp;点评(<%= diary.remarks_count %>)&nbsp;&nbsp;&nbsp;阅读(<%= diary.pv || 0 %>)</div>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="zxdp2011_exp_cont_list zxdp2011_exp_cont2">
+        <ul>
+          <% @api_diaries2.each do |diary| %>
+          <li>
+            <div><%= link_to image_tag(diary.master_picture.url("140x106"), :alt => diary.title,:size =>"160x120" ) ,diary_url(diary), :target => "_blank" %>
+              <div>
+                <span><div style="" class="dafenstars02 f_r">
+                  <% diary_praise = get_diary_praise diary %>
+                  <% if (@user_city_code.to_i == 11910) && (diary_praise.round >= 8) %>
+                    <p style='width:86px'></p>
+                  <% else %>
+                    <p style="width: <%= diary_praise.round.to_f / 2.0 * 18.0 %>px;"></p>
+                  <% end %>
+                  </div>本次评价&nbsp;
+                  </span><h2><strong><%= link_to truncate(h(diary.title),:length => 25,:omission => '')  ,diary_url(diary), :target => "_blank" %></strong></h2>
+              </div>
+              <div>业主：<%= link_to truncate( diary.user_name,:length => 4,:omission => '') ,diary_url(diary), :target => "_blank" %>&nbsp;&nbsp;&nbsp;公司：<%= link_to truncate(diary.deco_firm.name_abbr, :length => 4 ,:omission => '')  ,firm_url(:id => diary.deco_firm.id,:trailing_slash => "/"), :target => "_blank" %>&nbsp;&nbsp;&nbsp;总价：<%= diary.deal_price %>万&nbsp;&nbsp;&nbsp;风格：<%= link_to STYLES[diary.style.to_i],search_diaries_for_options(:style => diary.style.to_i), :target => "_blank"%></div>
+              <p><%= truncate(strip_tags(diary.content).gsub(/<|>/,""),:length => 96 ,  :omission => '……')%></p>
+              <div><span><a target="_blank" href="<%= firm_factories_url(:firm_id => diary.deco_firm.id, :trailing_slash => "/") %>"><img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_exp_cont_an.jpg"></a></span>最后更新：<%=diary.order_time.nil? ? diary.updated_at.strftime("%Y-%m-%d") : diary.order_time.strftime("%Y-%m-%d")%>&nbsp;&nbsp;&nbsp; 日记(<%= diary.decoration_diary_posts.size%>)&nbsp;&nbsp;&nbsp;点评(<%= diary.remarks_count %>)&nbsp;&nbsp;&nbsp;阅读(<%= diary.pv || 0 %>)</div>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="zxdp2011_exp_cont_list zxdp2011_exp_cont3">
+        <ul>
+          <% @api_diaries3.each do |diary| %>
+          <li>
+            <div><%= link_to image_tag(diary.master_picture.url("140x106"), :alt => diary.title,:size =>"160x120" ) ,diary_url(diary), :target => "_blank" %>
+              <div>
+                <span><div style="" class="dafenstars02 f_r">
+                  <% diary_praise = get_diary_praise diary %>
+                  <% if (@user_city_code.to_i == 11910) && (diary_praise.round >= 8) %>
+                    <p style='width:86px'></p>
+                  <% else %>
+                    <p style="width: <%= diary_praise.round.to_f / 2.0 * 18.0 %>px;"></p>
+                  <% end %>
+                  </div>本次评价&nbsp;
+                  </span><h2><strong><%= link_to truncate(h(diary.title),:length => 25,:omission => '')  ,diary_url(diary), :target => "_blank" %></strong></h2>
+              </div>
+              <div>业主：<%= link_to truncate( diary.user_name,:length => 4,:omission => '') ,diary_url(diary), :target => "_blank" %>&nbsp;&nbsp;&nbsp;公司：<%= link_to truncate(diary.deco_firm.name_abbr, :length => 4 ,:omission => '')  ,firm_url(:id => diary.deco_firm.id,:trailing_slash => "/"), :target => "_blank" %>&nbsp;&nbsp;&nbsp;总价：<%= diary.deal_price %>万&nbsp;&nbsp;&nbsp;风格：<%= link_to STYLES[diary.style.to_i],search_diaries_for_options(:style => diary.style.to_i), :target => "_blank"%></div>
+              <p><%= truncate(strip_tags(diary.content).gsub(/<|>/,""),:length => 96 ,  :omission => '……')%></p>
+              <div><span><a target="_blank" href="<%= firm_factories_url(:firm_id => diary.deco_firm.id, :trailing_slash => "/") %>"><img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_exp_cont_an.jpg"></a></span>最后更新：<%=diary.order_time.nil? ? diary.updated_at.strftime("%Y-%m-%d") : diary.order_time.strftime("%Y-%m-%d")%>&nbsp;&nbsp;&nbsp; 日记(<%= diary.decoration_diary_posts.size%>)&nbsp;&nbsp;&nbsp;点评(<%= diary.remarks_count %>)&nbsp;&nbsp;&nbsp;阅读(<%= diary.pv || 0 %>)</div>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

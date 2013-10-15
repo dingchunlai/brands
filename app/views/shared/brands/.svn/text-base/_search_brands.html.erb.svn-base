@@ -1,0 +1,14 @@
+<% unless @brands.blank? %>
+  <div>
+    <ul class="vertical">
+    <% @brands.each do |brand| %>
+      <% 
+        TaggedBrand.find_by_brand_id(brand.id).each do |tagged_brand| 
+        name = tagged_brand.brand.name_zh.concat("(").concat(tagged_brand.tag.TAGNAME).concat(")")
+      %>
+        <li><%= link_to name, edit_admin_brand_path(brand) %><li>
+      <% end %>
+    <% end %>
+    </ul> 
+  </div>
+<% end %>

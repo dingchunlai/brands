@@ -1,0 +1,42 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => 'Q&A新建页',
+            :button => ['返回', admin_coupon_faqs_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['Q&A列表', admin_coupon_faqs_path],
+              ['新建页面']
+            ]
+%>
+<% form_for @coupon_faq, :url => admin_coupon_faqs_path do |f| %>
+  <%= f.error_messages %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2">创建Q&A</th>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :faq_group_id %></strong></td>
+        <td class="last"><%= f.select :faq_group_id, FaqGroup.used_group.map{ |g| [g.name, g.id] }.unshift(['请选择', '']), {}, :reg => '^\S+$', :tip => "分组必须选择" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :question %></strong></td>
+        <td class="last"><%= f.text_field :question, :class => "text", :reg => '\S', :tip => "问题属于必须" %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :answer %></strong></td>
+        <td class="last"><%= f.text_area :answer, :class => "text", :size => "80x20", :reg => '\S', :tip => "答案属于必须" %>    
+       </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit '提交' %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+
+
+<%#= render :partial => '/shared/coupon/enable_tinymce' %>
+

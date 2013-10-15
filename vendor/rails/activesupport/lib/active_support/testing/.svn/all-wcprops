@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing
+END
+default.rb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/default.rb
+END
+setup_and_teardown.rb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/setup_and_teardown.rb
+END
+assertions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/assertions.rb
+END
+deprecation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/deprecation.rb
+END
+performance.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/performance.rb
+END
+declarative.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/testing/declarative.rb
+END

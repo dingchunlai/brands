@@ -1,0 +1,43 @@
+<div class="toolbar">
+  <% url_name = "admin_#{@attachable_object.class.name.underscore}_pictures_path"
+     form_for :picture, :url => send(url_name, @attachable_object), :html => {:method => :post, :multipart => true} do |f| %>
+    <ul class="horizontal">
+      <li class="last">
+        <%= f.file_field :uploaded_data %>
+        <%= f.check_box :is_master, {}, 1, 0 %> <span style="padding-right: 10px;">设为主图<span>
+        <%= submit_tag "上传图片" %>
+      </li>
+    </ul>
+  <% end %>
+  <div class="clear"></div>
+</div>
+<p class="notice">注意：当没有主图时，下一张上传的图片将会自动被设为主图，也就是说，上传的第一张图片肯定会被自动设为主图。这样做是为了尽可能防止有图的而没有主图的情况出现。</p>
+<%= show_flash_message %>
+<h1><%= @attachable_object.name %> 图片列表</h1>
+<% if master = @pictures.detect { |pic| pic.master? } %>
+  <h2>主图</h2>
+  <ul class="horizontal">
+    <li>
+      <%= image_tag master.public_filename, :class => 'demo' %>
+      <div class="tool_span">
+        <%= link_to '删除', admin_picture_path(master), :confirm => "确定删除该图片吗？", :method => :delete %>
+      </div>
+    </li>
+  </ul>
+  <div class="clear"></div>
+<% end %>
+<h2>非主图</h2>
+<ul class="horizontal">
+  <% @pictures.each do |picture| %>
+    <% unless picture.master? %>
+      <li>
+        <%= image_tag picture.public_filename, :class => 'demo' %>
+        <div class="tool_span">
+          <%= link_to '设为主图', set_master_admin_picture_path(picture), :method => :post %>
+          |
+          <%= link_to '删除', admin_picture_path(picture), :confirm => "确定删除该图片吗？", :method => :delete %>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

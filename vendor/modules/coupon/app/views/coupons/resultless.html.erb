@@ -1,0 +1,49 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<div class="width960">
+  <div class="djq_location">
+    您当前的位置：<%=link_to '抵用券首页', coupon_index_path, :target => '_blank'%> >
+    <span>没有搜索结果</span>
+  </div>
+</div>
+
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_error">
+    <div class="djq_searchdata margin10">找到相关抵用券<strong>0</strong>张</div>
+    <div class="djq_find djq_errorfind">
+      <div class="djq_findicon f_l">快速查找</div>
+      <div class="djq_findsearch f_r">
+        <form name="keyword_search" method="get">
+           <input name="keyword" type="text" class="djq_findinput" title="<%= coupon_searh_explain %>" onfocus="if(this.value=='<%= coupon_searh_explain %>') this.value='';" onblur="if(this.value=='')this.value='<%= coupon_searh_explain %>';" value="<%= @keyword || coupon_searh_explain%>" /><input value="" type="submit" class="djq_findbtn" />
+        </form>
+      </div>
+    </div>
+
+    <div class="djq_errorbox">
+      <h4>很抱歉，没有找到<%=@keyword && "与<span>“#{@keyword}”</span>"%>相关的抵用券</h4>
+      <p>建议您：<br/>1. 看看输入的文字是否有误<br/>2. 去掉可能不必要的字词，如“的”、“什么”等<br/>3. 调整关键字，如“多乐士五合一墙面漆”改成“多乐士 五合一墙面漆”或“多乐士 墙面漆”</p>
+    </div>
+  </div>
+</div>
+
+<!--content_code_end-->
+
+<script type="text/javascript">
+
+  $(function(){
+    //抵用券关键词搜索
+    $('form[name=keyword_search]').submit(function(){
+      var tf_keyword = $(this).find('input[name=keyword]');
+      var kw = $.trim(tf_keyword.val());
+      tf_keyword.val(kw);
+      if (kw=='<%= coupon_searh_explain %>'||kw==''){
+        alert('请输入搜索关键词！');
+      }else{
+        window.open('/kw-' + kw + '-0.html', '_top');
+      }
+      return false;
+    });
+  });
+
+</script>

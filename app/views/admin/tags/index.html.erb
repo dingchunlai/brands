@@ -1,0 +1,53 @@
+<%= show_flash_message %>
+<div class="search">
+  <% form_tag admin_tags_path, :method => :get do %>
+    <div>
+      <%= text_field_tag :name %>
+      <%= submit_tag '搜索' %>
+    </div>
+  <% end %>
+</div>
+<table border="1" width="600">
+  <caption>品类列表</caption>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>状态</th>
+      <th>论坛版块数</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+      <tr>
+        <td><%= tag.TAGNAME %></td>
+        <td><%= tag.status_zh %></td>
+        <td>
+          <%if tag.status_zh == "已停用"%>
+            <span style="color:#BFBFB9;">------</span>
+          <%elsif tag.bbs_tag.nil?%>
+            <span style="color:#BFBFB9;">未开通</span> <%=link_to '[开通]', admin_tag_path(tag)+"?create_bbs=1", :method => :put%>
+          <%else%>
+            <b style="color:blue;"><%=BbsTag.count("id", :conditions =>["brand_tag_id = ?", tag.TAGID])-1%></b> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="<%=tag_brands_admin_tag_path(tag)%>" target="_blank">[维护]</a>
+          <%end%>
+        </td>
+        <td>
+          <%= link_to (tag.enabled? ? '停用' : '启用'), admin_tag_path(tag), :method => :put %>
+          <%= link_to '删除', admin_tag_path(tag), :confirm => "确定删除“#{tag.TAGNAME}”吗？", :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<style type="text/css">
+  td {
+    text-align: center;
+    width: 100px;
+    padding: 5px;
+  }
+  th {
+    padding: 6px;
+  }
+</style>

@@ -1,0 +1,32 @@
+<%=include_jquery_easy_validator%>
+<%=include_jquery_autocomplete%>
+
+<%= top_bar :title => '线上显示数量设置',
+  :button => ['抵用券列表', admin_coupons_path],
+  :breadcrumbs => [
+  ['抵用券后台', coupon_admin_index_path],
+  ['抵用券管理', admin_coupons_path],
+  ['线上显示数量设置', on_line_display_amount_admin_coupons_path]
+]
+%>
+
+<% form_tag on_line_display_amount_admin_coupons_path, :method => :post do %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">抵用券信息管理</th>
+    </tr>
+    <tr>
+      <td class="first" width="172"><strong>线上显示数量：</strong></td>
+      <td class="last"><%= text_field_tag :amount, @amount, :reg => '^[1-9]\d*$', :tip => "线上显示数量必须填写数字"  %></td>
+    </tr>
+     <tr>
+      <td class="first" width="172"></td>
+      <td class="last"><%= submit_tag "保存" %></td>
+    </tr>
+  </table>
+</div>
+<% end %>
+

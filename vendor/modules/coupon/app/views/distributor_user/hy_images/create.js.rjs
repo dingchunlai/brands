@@ -1,0 +1,10 @@
+page << "$('#new_upload_link').css('display', 'none');" if @remove_add_link
+if @image.errors.count == 0
+  page.insert_html :top, :img_list, :partial => 'distributor_user/hy_images/image', :locals => { :image => @image, :img_type => @img_type }
+  page << "$($('#cancel_edit').parent()).html('');"
+  if (@images.size+1) >= Distributor::HY_PIC_UPLOAD_LIMIT[@img_type.to_sym]
+    page << "$('#new_upload_link').css('display', 'none');"
+  end
+else
+  page.replace_html :hy_upform_error_msg, @image.errors.full_messages.join("<br />")
+end

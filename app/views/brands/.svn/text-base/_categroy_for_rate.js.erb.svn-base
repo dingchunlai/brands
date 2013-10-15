@@ -1,0 +1,8 @@
+(function() {
+  <% if %w[good soso bad].include?(@item) %>
+    $('#<%= @item %>_rate_count').replaceWith('<td height="24" align="center" id="<%= @item %>_rate_count"><%= @brand_rating.send(@item) %>票</td>');
+  <% else %>
+    <% item = @item.split('_').first -%>
+    $('#<%= item %>_rate_bar').replaceWith(<%= rating_bar_for(@brand_rating, item).inspect %>);
+  <% end %>
+})();

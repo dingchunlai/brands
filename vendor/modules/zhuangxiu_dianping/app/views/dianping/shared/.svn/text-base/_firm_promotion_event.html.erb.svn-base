@@ -1,0 +1,14 @@
+<%
+if (events = @firm.events).count > 0
+  event = events[0]
+%>
+  <div class="zxdp2011_cxhd margin10">
+    <h3>这些促销活动会让你省钱...</h3>
+    <ul>
+      <li>
+        <p><%= truncate(event.prompt, 95, '') %></p>
+      </li>
+        <li>· <%= link_to truncate(event.title, 15, ''), two_coupon_urls(@user_city_code,event), :target => "_blank" %></li>
+    </ul>
+  </div>
+<% end -%>

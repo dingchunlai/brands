@@ -1,0 +1,68 @@
+<div>
+  <span style="font-size:15px;color:#000999;">[ <%= @promotion_page.name %>] - 推广项管理页面</span>        
+  <%= link_to "新建推广位", items_admin_promotion_page_path(@promotion_page) %> | <%= link_to "维护推广内容", search_item_admin_promotion_page_path(@promotion_page)  %>
+</div>
+<hr />
+<%= show_flash_message %>
+<div>
+  <% if @promotion_page.promotion_page_parts.size > 0 %>
+  <fieldset>
+    <table>
+      <tr>
+        <th>名称</th>
+        <th>描述</th>
+        <th>类型</th>
+        <th>操作</th>
+      </tr>
+      <% @promotion_page.promotion_page_parts.each do |item| %>
+        <tr>
+          <td><%= item.name  %></td>
+          <td><%= item.description %></td>
+          <td><%= Hejia::Promotable.all[item.item_type] %></td>
+          <td><%= link_to "编辑", items_admin_promotion_page_path(@promotion_page) + "?item_id=#{item.id}"  %></td>
+        </tr>
+      <% end %>
+    </table>
+  </fieldset>
+  <% end %>
+</div>
+<div>
+  <% is_record = @promotion_page_part.new_record? %>
+  <% form_for @promotion_page_part, :url => (is_record ? add_item_admin_promotion_page_path(@promotion_page) : edit_item_admin_promotion_page_path(@promotion_page)), :html => {:method => :post, :id => 'promotion_page_part'} do |f| %>
+    <fieldset>
+      <legend><% is_record ? '新建推广位' : '编辑推广位'%></legend>
+      <p>推广名称：<%= f.text_field :name %> &nbsp;&nbsp; <label style="color:red"> * 必填</label></p>
+      <p>推广描述：<%= f.text_field :description %></p>
+      <p>选择推广类型：<%= f.select :item_type, Hejia::Promotable.all.invert.to_a %></p>
+      <%= hidden_field_tag :page_id, @promotion_page.id %>
+      <%= is_record ? nil : hidden_field_tag(:item_id, params[:item_id]) %>
+      <p><%= submit_tag "保存" %></p>
+    </fieldset>
+  <% end %>
+</div>
+<script type="text/javascript">
+  $("#promotion_page_part").submit(function(event){
+        if($("#promotion_page_part_name").val() == ""){
+          alert("请输入推广项名称 !");
+          return false;
+        }
+      }
+  )
+</script>
+<style type="text/css">
+  table
+  {
+    border-collapse:collapse;
+  }
+  table, td, th
+  {
+    border:1px solid #000999;
+  }
+  td
+  {
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    width: auto;
+  }
+
+</style>

@@ -1,0 +1,75 @@
+<!--  Add For Coupon  -->
+
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> 
+  <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> > 
+  <% if @brand.new_record?  %> 新建品牌 <% else%> 编辑 <%= @brand.name_zh %>品牌 <% end %>
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<style type="text/css">
+  #content {border-collapse:collapse;border:none;}
+  #content td {border:solid #C0C0C0 1px;}
+  #content th {border:solid #C0C0C0 1px;}
+</style>
+<%= show_flash_message %>
+<% form_for :brand, :url => (@brand.new_record? && admin_brands_path || admin_brand_path(@brand)), :html => { :method => (@brand.new_record? && 'post' || 'put')} do |f| %>
+  <fieldset>
+    <legend><%= @brand.new_record? ? '新建品牌' : "编辑 #{@brand.name_zh} 品牌" %></legend>
+    <table id="content">
+      <tr>
+        <th>所属行业</th>
+      <td><% if @brand.new_record?  && @tag %><%= category_checkbox_list [@tag], 'brand' %><% else %><%= category_checkbox_list @brand.tags, 'brand' %><% end %></td>
+      </tr>
+      <tr>
+        <th>所属品类</th>
+        <td>
+          <table>
+          <% Tag.all_categories.each do |t| %>
+            <tr>
+              <td><%= t.TAGNAME %></td>
+              <td><%= production_category_checkbox_list t.TAGID, @brand.production_categories, 'brand' %></td>
+            </tr>
+          <% end %>
+          </table>
+        </td>
+      </tr>
+     <tr>
+        <th>名称</th>
+        <td><%= f.text_field :name_zh %></td>
+      </tr>
+      <tr>
+        <th>拼音或英文名</th>
+        <td><%= f.text_field :name_en %></td>
+      </tr>
+      <tr>
+        <th>站内URL地址</th>
+        <td>
+          <% if staff_logged_in? && session[:is_hejia_admin] %>
+            <%= f.text_field :permalink %>
+          <% else %>
+            <%= f.text_field :permalink, :disabled => (@brand.new_record? ? false : true) %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th>排序字母</th>
+        <td><%= f.text_field :initial %>* 注意：应该输入26个英文字母其中之一 [a..z]</td>
+      </tr>
+      <tr>
+        <th>月基数</th>
+        <td><%= f.text_field :base_number %></td>
+      </tr>
+      <tr>
+        <th>波动比例</th>
+        <td><%= f.text_field :percentage %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= submit_tag '保存' %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
+
+<%= render :partial => 'shared/enable_tinymce' %>

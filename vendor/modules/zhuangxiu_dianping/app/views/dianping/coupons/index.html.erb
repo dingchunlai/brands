@@ -1,0 +1,73 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:优惠券列表页") %>
+<% @title = html_metadata.title %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords %>
+
+<% location "优惠券列表"%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sousuo02 margin10">
+      <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+    </div>
+    <div class="zxdp2010_comlist">
+      <div class="zxdp2010_comlisttit">
+        <form action="/coupons" method="get" id="search_from">
+          <div class="list_r_tr f_l list_r">
+            <ul class="firm_order_2011">
+              <li>排序： </li>
+              <li>
+                <select style="vertical-align:middle;" id="date" name="date">
+                  <option value=''>请选择</option>
+                  <option value='1' <%= 'selected' if @date.to_i == 1 %> >前三天</option>
+                  <option value='2' <%= 'selected' if @date.to_i == 2 %> >前一周</option>
+                  <option value='3' <%= 'selected' if @date.to_i == 3 %> >前一个月</option>
+                  <option value='4' <%= 'selected' if @date.to_i == 4 %> >前三个月</option>
+                </select>
+              </li>
+            </ul>
+          </div>
+          <div class="list_r_tr f_r list_r" style="width:auto;">
+            <ul>
+              <li style="width:auto;">公司：<input type="text" name="firm_name" id="firm_name" size="12" class="zx_diary_iptsty" value="<%= @firm_name %>" /> </li>
+              <li style="width:auto;margin-left:5px;margin-right:5px;">标题：<input name="coupon_title" id="coupon_title" value="<%= @coupon_title %>" type="text" size="12" class="zx_diary_iptsty" /> </li>
+              <li style="width:auto;"> <input type="submit" value="确认" class="zx_diary_btnsty" /> </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+
+      <div class="zxdp2010_yhqlist">
+        <% cache @fragment_key , :expires_in => 5.minutes do %>
+          <ul class="margin10 clearfix">
+            <% @coupons.each do |coupon| %>
+              <li>
+                <div class="zxdp2010_yhqlistimg f_l">
+                  <a href="<%= two_coupon_urls(@user_city_code,coupon) %>" target="_blank"><img src="<%= coupon.banner%>" alt="<%= coupon.title %>" /></a>
+                </div>
+                <div class="zxdp2010_yhqlisttxt f_r">
+                  <div class="zxdp2010_sjlntit clearfix">
+                    <h4><a href="<%= two_coupon_urls(@user_city_code,coupon)%>" target="_blank">优惠信息：<%= truncate(coupon.title,:length => 16 ,:omission => '') %></a></h4>
+                    <span class="f_r">发布时间：<%= coupon.created_at.strftime('%Y-%m-%d')%></span>
+                  </div>
+                  <p><a href="<%= two_coupon_urls(@user_city_code,coupon)%>" target="_blank"><%= coupon.firms[0].name_abbr %></a>   口碑：<strong><%= coupon.firms[0].praise %></strong></p>
+                  <div class="f_l">公司地址：<%=coupon.firms[0].address2 %></div>
+                  <div class="f_r"><label>有效期至：<%= coupon.ends_at %></label></div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+          <div class="pagination"><%= will_paginate @coupons, :params => {:trailing_slash => true }%></div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+  <%= render :partial => "/dianping/shared/list_side" %>
+
+</div>
+<!--end_content_code-->

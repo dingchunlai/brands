@@ -1,0 +1,197 @@
+<script type="text/javascript">
+    String.format = function() {
+        var s = arguments[0];
+        for (var i = 0; i < arguments.length - 1; i++) {
+            var reg = new RegExp("\\{" + i + "\\}", "gm");
+            s = s.replace(reg, arguments[i + 1]);
+        }
+        return s;
+    };
+
+        /*  抵用券信息下载到手机  */
+        var LIST_MAX                = 6;
+        var sDownLoadCookieName     = '_coupon_downloads';
+        var sDownloadItemDelimiter  = '_@_';
+        var aDownloadList           = $.cookie(sDownLoadCookieName) && $.cookie(sDownLoadCookieName).split(',') || [];
+        var sItemFormat             = "<tr>\n<td width='16' valign='top'><input type='hidden' id='dld_coupon_id{0}'/><img id='rm_{0}' class='rm' src='http://img3.51hejia.net/img/brandimg/djq_icon07.gif' style='cursor:pointer;' /></td>\n";
+        sItemFormat                += "<td><input type='text' style='border: none; background: none;' value='{1}' size='30'/></td>\n</tr>";
+
+        jQuery(document).ready(function($) {
+
+            // 加载cookie
+            $.fn._initLoadDownloads = function() {
+                var pw = $(this);
+                $.each(aDownloadList, function(index, item) {
+                    var _data = item.split(sDownloadItemDelimiter);
+                    pw.append($(String.format(sItemFormat, _data[0], _data[1])));
+                });
+                $("#dld_list_size").html("(" + aDownloadList.length + ")");
+            };
+
+            //  判断选中项日否已存在
+            $.fn._isExistedInDownloads = function() {
+                var _data = [];
+                _data.push($(this).attr("data-id"));
+                _data.push($(this).attr("data-title"));
+                var flag = _data[0];
+                var result = $.grep(aDownloadList, function(element, index) {
+                    var item = element.toString();
+                    return (item.split(sDownloadItemDelimiter)[0] == flag);
+                });
+                return result.length > 0;
+            };
+
+            // 添加选中项到下载列表
+            $.fn._addToDownloads = function() {
+                if (aDownloadList.length >= LIST_MAX) {
+//                    alert('提示:请不要超过' + LIST_MAX + '条.' );
+                } else {
+                    var _data = [];
+                    _data.push($(this).attr("data-id"));
+                    _data.push($(this).attr("data-title"));
+                    if (!$(this)._isExistedInDownloads()) {
+                        aDownloadList.push(_data[0] + sDownloadItemDelimiter + _data[1]);
+                        $("#dld_layer").append($(String.format(sItemFormat, _data[0], _data[1])));
+                        $("#dld_list_size").html("(" + aDownloadList.length + ")");
+                    } else {
+//                        alert('该抵用券您已添加到下载列表中.');
+                    }
+                    $.cookie(sDownLoadCookieName, aDownloadList.join(','), { expires: 30, domain: '51hejia.com', path: '/' });
+                }
+            };
+
+            // 从cookie中加载
+            $("#dld_layer")._initLoadDownloads();
+
+            $(".diyq_listbtn a").live("click",function() {
+                $(".diyq_sms").show(300);
+                $(this)._addToDownloads();
+                $(".diyq_smscont").show(300);
+            });
+
+            $(".down a").click(function() {
+                $(".diyq_sms").show(300);
+                $(this)._addToDownloads();
+                $(".diyq_smscont").show(300);
+            });
+
+            $(".diyq_smscloseup a").click(function() {
+                $(".diyq_smscont").hide(300);
+            });
+            $(".diyq_smsexpand a").click(function() {
+                $(".diyq_smscont").show(300);
+            });
+
+            // 单项移除
+            $(".rm").live('click', function() {
+                var oItem = $(this).parent().parent();
+                var sIndex = $(this).attr("id").toString().split("_")[1];
+                aDownloadList = $.grep(aDownloadList, function(element, index) {
+                    var item = element.toString();
+                    return (item.split(sDownloadItemDelimiter)[0] != sIndex);
+                });
+                oItem.remove();
+                $.cookie(sDownLoadCookieName, aDownloadList.join(','), { expires: 30, domain: '51hejia.com', path: '/' });
+                $("#dld_list_size").html("(" + aDownloadList.length + ")");
+            });
+
+            // 清空下载列表
+            $("#remove_all").click(function(){
+                $("#dld_layer").html('');
+                aDownloadList = [];
+                $.cookie(sDownLoadCookieName, aDownloadList.join(','), { expires: 30, domain: '51hejia.com', path: '/' });
+                $("#dld_list_size").html("(0)");
+            });
+
+            // 点击下载
+            $("#dld_coupons").click(function() {
+
+                if (aDownloadList.length == 0){
+                    alert('请选择需要下载的现金券!');
+                    return;
+                }
+
+                var mobile_reg = /^1[3|5|8]\d{9}$/;
+                // /^((13[0-9]{1})|159|153|152|158|189|188)+\d{8}$/;
+                var mobile = $('#mobile4send');
+                // 验证手机
+                if (mobile.val() == '') {
+                    alert('请输入手机号');
+                    $('#mobile4send').focus();
+                    return;
+                } else {
+                    if (!mobile_reg.test(mobile.val())) {
+                        alert('请输入正确的手机号');
+                        $('#mobile4send').focus();
+                        return;
+                    }
+                }
+                // 验证验证码
+                if ($("#image_code").val() == '') {
+                    alert("输入验证码");
+                    $("#image_code").focus();
+                    return;
+                } else {
+                    if ($("#image_code").val().length != 4) {
+                        alert("验证码错误");
+                        $("#image_code").focus();
+                        return;
+                    }
+                }
+
+                var ids = [];
+                $.each(aDownloadList, function(index, item) {
+                    var coupon_id = item.toString().split(sDownloadItemDelimiter)[0];
+                    try {
+                        _gaq.push(['_trackPageview','/virtualpv/coupon/download/' + coupon_id]);
+                    } catch (e) {
+
+                    }
+                    ids.push(coupon_id);
+                });
+
+                $.ajax({
+                  type: 'POST',
+                  url: '<%= send_sms_coupon_downloads_path %>',
+                  data: { 'ids': ids.join(","), 'image_code': $("#image_code").val(), 'mobile': $('#mobile4send').val() },
+                  success: function(data) {
+                      if (data.status == 0) {
+                        $("#remove_all").trigger('click');
+                        $("#image_code_tag").trigger('click');
+                        $("#image_code").attr("value", "");
+                        $("#mobile4send").attr("value", "");
+                        alert(data.msg);
+                      } else {
+                        alert(data.msg);
+                        $("#image_code").attr("value", "");
+                        $("#image_code_tag").trigger('click');
+                      }
+                  },
+                  dataType: 'json'
+                });
+                
+            });
+
+        });
+
+</script>
+<div class="diyq_sms">
+  <div class="diyq_smscont">
+    <div class="diyq_smscloseup clearfix"><a href="javascript:void(0);"></a></div>
+    <p><strong>已成功添加到短信下载列表！</strong><br/>
+      请每次批量发送条数不要超过<script type="text/javascript">document.write(LIST_MAX);</script>条。</p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="dld_layer">
+    </table>
+    <div class="diyq_smsinfo"> 请输入手机号：<br/>
+      <input name="mobile" type="text" id="mobile4send"/>
+      <br/>
+      请输入验证码：<br/>
+      <input type="text" size="4" id="image_code"/>
+      <img widht="50" height="20" style="vertical-align:middle;" id="image_code_tag" src="http://api.51hejia.com/user/get_image_code?rand=0.33585713910070836" onclick="this.src=(function(){ var url='http://api.51hejia.com/user/get_image_code?rand='; url = url + Math.random().toString(); return url;})();"/>
+      <div class="diyq_smsbtn">
+        <input type="image" style="vertical-align:middle;" src="http://img3.51hejia.net/img/diyongquan/diyq_dxbtn.gif" id="dld_coupons"/>
+        <a href="javascript:void(0);" id="remove_all">全部删除</a></div>
+    </div>
+  </div>
+  <div class="diyq_smsexpand cleafix"><a href="javascript:void(0);">短信下载<span id="dld_list_size">(0)</span></a></div>
+</div>

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/510/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/480/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/index.html.erb
+END
+success.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/success.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/new.html.erb
+END
+admin_index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/admin_index.html.erb
+END
+draft.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/draft.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/show.html.erb
+END
+show.html_1.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/show.html_1.erb
+END
+_form.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/510/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/_form.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_cases/edit.html.erb
+END

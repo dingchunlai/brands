@@ -1,0 +1,18 @@
+<% paint_cases = PaintCase.status_is(0).mail_show %>
+<div>
+<h1>案例审核列表</h1>
+<table border="1">
+	<tr>
+		<td>案例标题</td>
+		<td>油漆工</td>
+		<td>时间</td>
+	</tr>
+	<% paint_cases.each do |paint_case| %>
+	<tr>
+		<td><%= paint_case.title%></td>
+		<td><%= paint_case.paint_worker.USERNAME if paint_case.paint_worker%></td>
+		<td><%= paint_case.created_at.to_s(:db) %></td>
+	</tr>
+	<% end %>
+</table>
+</div>

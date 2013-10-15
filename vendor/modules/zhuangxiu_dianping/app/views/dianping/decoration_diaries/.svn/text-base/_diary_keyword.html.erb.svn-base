@@ -1,0 +1,8 @@
+<div class="zxdp2011_continfotags">
+	类型：网友日记&nbsp;&nbsp;&nbsp;&nbsp;来源：<%= truncate(@diary.user_name, :length => 7 ,:omission => '') %>&nbsp;&nbsp;&nbsp;&nbsp;关键词：
+	<%= link_to STYLES[@diary.style.to_i],search_diaries_for_options(:style => @diary.style.to_i), :target => "_blank"%>
+	<%= link_to MODELS[@diary.model.to_i],search_diaries_for_options(:model => @diary.model.to_i), :target => "_blank"%>
+	<%= link_to ROOM[@diary.room.to_i],search_diaries_for_options(:room => @diary.room.to_i), :target => "_blank"%>
+	<%= link_to PRICE[@diary.price.to_i],search_diaries_for_options(:price => @diary.price.to_i), :target => "_blank"%>
+</div>
+

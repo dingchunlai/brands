@@ -1,0 +1,38 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > <%= link_to "推广页管理", promotion_pages_admin_brand_path(@brand, :tag_id => @tag.TAGID) %> > 页面推广项列表
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<div>
+  <%= show_flash_message %>
+  <table>
+    <tr>
+      <th>推广项名称</th>
+      <th>推广项描述</th>
+      <th>推广类型</th>
+      <th>截字</th>
+      <th>推广数量</th>
+      <th>操作</th>
+    </tr>
+    <% 
+      @promotion_page.promotion_page_parts.each do |item| 
+      promotion_collection_item = @promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name) 
+      collection_item_url = admin_promotion_items_path(@promotion_page.item_code(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name))
+      edit_item_url = edit_admin_promotion_collection_path(@promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name))
+    %>
+      <tr>
+        <td><%= promotion_collection_item.name %></td>
+        <td><%= promotion_collection_item.remark %></td>
+        <td><%= Hejia::Promotable.all[promotion_collection_item.item_type] %></td>
+        <td><%= promotion_collection_item.chars_size %></td>
+        <td> <%= promotion_collection_item.items_length %> / <%= promotion_collection_item.size %></td>
+        <td>
+          <%= link_to "维护推广内容", goto_admin_redirection_addresses_path(:url => collection_item_url)  %>
+          <%= link_to "维护推广名称", goto_admin_redirection_addresses_path(:url => edit_item_url) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

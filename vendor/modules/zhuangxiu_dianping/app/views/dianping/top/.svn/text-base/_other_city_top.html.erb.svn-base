@@ -1,0 +1,17 @@
+<li class="zxdp_phbhack">
+  <h3><%= API_RANK_TITLE[@user_city_code.to_i][7] %></h3>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr class="zxdp_phbbgcolor">
+      <td width="34">&nbsp;</td>
+      <td width="99"><label>名称</label></td>
+      <td width="58"><%= @user_city_code.to_i == 12301 ? '数量' : '浏览量' %></td>
+    </tr>
+    <% @firms_top_areas.each_with_index do |firm, index| %>
+      <tr>
+        <td><strong><%= index + 1 %></strong></td>
+        <td><a href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/<%= firm.id %>" title="<%= firm.name_abbr %>" target="_blank"><%= firm.name_abbr %></a></td>
+        <td><%= firm.c %></td>
+      </tr>
+    <% end %>
+  </table>
+</li>

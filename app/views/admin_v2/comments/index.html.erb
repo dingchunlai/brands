@@ -1,0 +1,40 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> 
+  <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 评论管理页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<div style="padding: 10px;">
+  <%= link_to "新建评论", new_admin_brand_comment_path(@brand, :tag_id => @tag.TAGID) %>
+  <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+<table>
+  <tr>
+    <th>编号</th>
+    <th>标题</th>
+    <th>内容</th>
+    <th>时间</th>
+    <th>用户</th>
+    <th>好评/差评</th>
+    <th>操作</th>
+  </tr>
+  <% @comments.each do |comment|%>
+    <tr>
+      <td style="width:40px;"><%= comment.id %></td>
+      <td><%= link_to ul(comment.title, 10), admin_brand_comment_path(@brand, comment, :tag_id => @tag.TAGID) %></td>
+      <td><%= ul(comment.body, 20) %></td>
+      <td><%= comment.created_at.strftime("%Y-%m-%d") %></td>
+      <td><%= comment.user_name  %></td>
+      <td><%= comment.remark_zh %></td>
+      <td style="width:50px;"><%=link_to '删除', admin_brand_comment_path(@brand, comment, :tag_id => @tag.TAGID)+"?page=#{params[:page]}", :method => :delete, :confirm => "您确定要删除这条点评吗？"%></td>
+    </tr>
+  <%end%>
+</table>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+
+

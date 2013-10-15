@@ -1,0 +1,7 @@
+<ul>
+<% @firms_top_attention.each do |f| %>
+    <li>
+      <div><span class="width90"><a href="http://z.shanghai.51hejia.com/<%= f.id %>" target="_blank" title="<%= f.name_abbr %>"><%= f.name_abbr %></a></span><span class="right_div9_riji"><span class="right_div9_num"><%= f.c %></span>篇日记</span></div>
+    </li>
+<% end %>
+</ul>

@@ -1,0 +1,36 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title       => '提示邮件接收人管理页',
+            :button      => ['接收人列表', admin_coupon_remind_mails_path],
+            :breadcrumbs => [
+                    ['管理首页', coupon_admin_index_path],
+                    ['接收人列表', admin_coupon_remind_mails_path]
+            ]
+%>
+<% form_for @coupon_remind_mail, :url => admin_coupon_remind_mails_path do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">创建提示邮件接收人</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last"><%= f.select :city_id, Coupon::CITIES.map{ |value, key| [key, value] }, :include_blank => '请选择', :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :recipient %>*</strong></td>
+          <td class="last"><%= f.text_area :recipient, :class => "text", :tip => "必须*", :rows => 5, :cols => 30  %>每行一个</td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :cc %></strong></td>
+          <td class="last"><%= f.text_area :cc, :class => "text", :rows => 5, :cols => 30 %>每行一个</td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>

@@ -1,0 +1,23 @@
+<% coupon = Coupon.find(item.title)
+existing_amount = coupon.virtual_existing_number.to_i <= 0 ? 0 : coupon.virtual_existing_number.to_i
+existing_amount = coupon.sell_style == 1 ? coupon.existing_number : existing_amount %>
+<li>
+  <div class="mc_xjq_no">NO.<%= coupon.code %></div>
+  <div class="mc_xjq_name"><%= coupon.brand_industry_name %></div>
+  <div class="mc_xjq_img"><img src="<%=cloud_fs_domain("image")%><%= coupon.list_thumbnail_url %>" alt="<%= coupon.brand_industry_name %>" /></div>
+  <p class="mc_xjq_num">总发行<%= coupon.total_issue_number %>张 当前可用<%= existing_amount %>张</p>
+  <p class="mc_xjq_info">经营范围：<%= coupon.production_categories.first(2).collect{|p| p.short_name + " "} %></p>
+  <p class="mc_xjq_address">使用地址：<%= coupon.distributor_shop.address %></p>
+  <p class="mc_xjq_download">点击下载</p>
+  <div class="mc_xjq_value">
+    <span class="mc_xjq_dy">抵用</span>
+    <div class="mc_xjq_value_img">
+      <span class="mc_img1"></span>
+      <span class="mc_img0"></span>
+      <span class="mc_img0"></span>
+      <span class="mc_yuan"></span>
+    </div>
+  </div>
+  <div class="mc_xjq_remain"><span><%= existing_amount %></span></div>
+  <a href="<%= item.url %>" class="mc_xjq_link" target="_blank" ></a>
+</li>

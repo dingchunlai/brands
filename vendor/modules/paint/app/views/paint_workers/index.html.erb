@@ -1,0 +1,64 @@
+<% title "【油漆工】个人主页_#{@paint_worker.USERBBSNAME}_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_3 %>
+<% description PAINT_DESCRIPTION_3 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "#{@paint_worker.USERBBSNAME}个人主页", :location_end => nil }%>
+<!--content_code-->
+<div class="width960 margin10">
+  <div class="yg_current">
+    <h3>认证油工</h3>
+  </div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="yg_web_l f_l">
+    <div class="yg_web_lbox margin10">
+      <h2><%= @paint_worker.USERBBSNAME %>个人主页</h2>
+      <div class="yg_web_limg"><%= image_tag get_avatar_img(@paint_worker.painter.avatar_file_name) %></div>
+      <div class="yg_renzhengbtn"><a href="/paiqian?id=<%=@paint_worker.USERBBSID%>" target="_self" rel="stylesheet" type="text/css">我要约他</a></div>
+    </div>
+  </div>
+  <div class="yg_web_r f_r">
+    <div class="yg_web_rbox margin10">
+      <h3>认证油工个人信息</h3>
+      <div class="yg_web_rtxt01">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="100"><span>姓名：</span></td>
+            <td><%= @paint_worker.USERBBSNAME %></td>
+            <td width="60"><span>性别：</span></td>
+            <td><%= Painter::GENDER.index(@paint_worker.painter.gender) %></td>
+            <td width="100"><span>适合品牌：</span></td>
+            <td><%= Painter::BRAND.index(@paint_worker.painter.brand) %></td>
+          </tr>
+          <tr>
+            <td><span>技术得分：</span></td>
+            <td><%= @paint_worker.painter.skill_score %></td>
+            <td><span>服务得分：</span></td>
+            <td><%= @paint_worker.painter.service_score %></td>
+            <td><span>完成单数：</span></td>
+            <td><%= @paint_worker.cases_amount %></td>
+          </tr>
+          <tr>
+            <td><span>从事油漆工年限：</span></td>
+            <td><%= @paint_worker.painter.job_year %>年</td>
+            <td><span>文化程度：</span></td>
+            <td><%= @paint_worker.painter.education %></td>
+            <td><span>所在城市：</span></td>
+            <td><%= City.name_for_code(@paint_worker.painter.city) %> </td>
+          </tr>
+          <tr>
+            <td><span>证书编号：</span></td>
+            <td><%= @paint_worker.painter.certificate_number %></td>
+            <td><span>证书等级：</span></td>
+            <td><%= Painter::GRADE.index @paint_worker.painter.grade%></td>
+            <td><span>培训日期：</span></td>
+            <td><%= @paint_worker.painter.train_date.strftime("%Y-%m-%d") unless @paint_worker.painter.train_date.blank? %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="yg_web_rbox yg_web_rboxhack02">
+      <%= render :partial => 'cases' %>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

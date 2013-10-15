@@ -1,0 +1,28 @@
+<div class="zxdp2010_yinxiang f_l firm_impression_2011" id="deco_impression">
+  <h3>您对 <%= @firm.name_abbr%> 的印象是</h3>
+  <%= render :partial => 'deco_impression_cloud' %>
+
+  <% unless @user_city_code == "12301" %>
+    <% unless [191704].include?(@firm.id) %>
+      <div class="zxdp2010_yxinput">
+        <% form_tag save_deco_impression_path(:id => @firm.id), :id => 'impression_form' do %>
+          请输入您的印象词：<%= text_field_tag :title, "不能多于5个字", :class => 'b_pln_lyinxinputt' %>
+          <%=submit_tag '添加', :class => 'b_search_btn', :id=>"deco_impression_submit"%>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="zxdp2010_yxkeys">
+    <strong>最新添加印象：</strong>
+    <span id="new_impression">
+      <%
+      DecoImpression.latest(@firm.id).each do |impression|
+        impression = h impression
+      %>
+        <% unless BadWord.find("bad_words", impression) %>
+          <%= content_tag :span, impression, :title => impression %>
+        <% end %>
+      <% end %>
+    </span>
+  </div>
+</div>

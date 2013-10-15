@@ -1,0 +1,13 @@
+<div class="gsl_wyly" id="remarks_div">
+  <div class="gsl_wyly_tit">
+    <h3>网友评论</h3>
+    <span><a href="#" target="_self" title="返回顶部">返回顶部</a></span>
+  </div>
+  <%@remarks.each do |remark|%>
+  <div class="gsl_wyly_txt">
+    <h4><label><%= remark.created_at.strftime('%Y-%m-%d %H:%M:%S')%></label><%= remark.user_name%></h4>
+    <p><%=h raw(remark.content)%></p>
+  </div>
+  <% end %>
+  <%= will_paginate(@remarks) unless @remarks.blank? %>
+</div>

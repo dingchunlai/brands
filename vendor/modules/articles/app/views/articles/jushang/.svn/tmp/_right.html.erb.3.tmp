@@ -1,0 +1,124 @@
+<div class="sidelist clearfix">
+
+  <%=adspace('居尚-文章终端页-宽幅1', '', '<div class="ad_3 clearfix"></div>')%>
+
+  <style media="screen" type="text/css">
+    #f2 .seo_tian li.tian{
+      height:100px;width:119px;
+      overflow:hidden;
+      margin:0 5px;
+      text-align:center;
+      float:left;
+      _display:inline;
+    }
+    #f2 .sidebox_3 li.tian img{
+      width:110px;height:80px;
+    }
+    a.WQbaomingbox{font-size:12px;display:inline; color:#6d0200; width:84px;height:20px; padding:2px 5px 5px 5px; text-transform:none; background:url(http://js.51hejia.com/img/zhuangxiu1023/sqmf_btn.gif) center no-repeat;}
+    a.WQbaomingbox hover:{color:#6d0200; text-transform:none;}
+    .tab_jzsb{font-size:14px; padding-top:4px; margin-top:10px;width:260px;height:30px; display:block; text-indent:30px; background:url(http://js.51hejia.com/img/zhuangxiu1023/zd_bg.gif) no-repeat;}
+    /*表单样式*/
+    .bmbg2 { display:none; background:#000; opacity:0.5; filter:alpha(opacity=50); width:100%; height:100%; position:fixed!important; position:absolute; left:0; top:0;  _top:expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+             z-index:99; }
+    .bmform2 { display:none; background:#fff; border:8px solid #D1D1D1; width:400px;left:50%; margin-left:-200px!important; top:50%; margin-top:-130px!important; margin-top:0; position:fixed!important; position:absolute;  _top:expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+               z-index:999; }
+    .bmform2 table {margin:10px 0px;}
+    .bmform2 td { padding:6px 5px; color:#333; }
+  </style>
+
+  <ul class="sidebox_1">
+    <h2 class="title_s">精华文章推荐</h2>
+    <%hejia_promotion_items(54327, :attributes => ['title','url'], :limit => 6).each do |a|%>
+      <li>
+        <% if a["url"] == "http://www.ellechina.com/deco/gallery/products/xunyicao-20110906_pic?s_cid=hejia" %>
+          <a href="<%= a["url"] %>" target="_blank" title="<%= a["title"] %>" onclick="_gaq.push(['_trackEvent','导流效果', '居尚终端页', 'ELLE文字', 1]);"><%= a["title"] %></a>
+        <% else %>
+          <a href="<%= a["url"] %>" target="_blank" title="<%= a["title"] %>"><%= a["title"] %></a>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <form id="baidu_search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+    <input name="s" type="hidden" value="7289350921164188503" />
+    <input type="text" name="q" size="30" style="width:125px;border:1px solid #e0e0e0;height:23px;height:21px;line-height:22px;margin-right:3px;margin-left:6px;" />
+    <a onclick="document.getElementById('baidu_search').submit()"><img src="http://www.51hejia.com/images/zhuangxiu1023/f2_btn.gif" alt=""/></a>
+  </form>
+
+
+  <% cache "articles:#{@channel}:right:case:#{@city_id}:#{@id}",:expires_in =>5.minutes do %>
+    <%= render :partial => "articles/detail/jushang_anli" %>
+  <% end %>
+
+  <ul class="sidebox_3" >
+    <h2>装饰搭配</h2>
+    <% hejia_promotion_items(54306, :attributes => ['title','url','image_url','description'], :limit => 4).each do |r| %>
+      <li class="clearfix">
+        <%= promotion_image_tag r %>
+        <div class="listright">
+          <a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><h4><%= truncate_u(r["title"], 9) %></h4></a>
+          <p><%= truncate_u(r["description"], 40, "...") %>[<a href="<%= r["url"] %>" target="_blank">详细</a>]</p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= render :partial => 'articles/jushang/top10' %>
+
+  <ul class="sidebox_6">
+    <h2 class="title_s">最新更新</h2>
+    <% if @article and @article.article_sort %>
+      <% articles = @article.newest_articles(8)
+      str = ''
+      articles.each do |article|
+        domain = 'http://www.51hejia.com/'
+        if article.sort_sign == 'zhuangxiu'
+          domain = 'http://d.51hejia.com/'
+        end
+        if article.sort_sign != ''
+          domain = domain + article.sort_sign + '/'
+        end
+        if article.CREATETIME
+          domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+        domain = domain + article.ID.to_s
+        str = str + '<li><a href='+domain+' target=_blank title="'+article.TITLE+'">' + truncate(article.TITLE,:length => 16,:omission => "") +'</a></li>'
+      end
+    %>
+      <%=str%>
+    <% end %>
+  </ul>
+  <ul class="sidebox_4 clearfix">
+    <h2>精彩专题</h2>
+    <% for r in hejia_promotion_items(54307, :attributes => ['title','url','image_url'], :limit => 6) %>
+      <li>
+        <%= promotion_image_tag r %>
+        <p><a href="<%= r["url"] %>" target="_blank"><%= truncate_u(r["title"], 9) %></a></p>
+      </li>
+    <% end %>
+  </ul>
+
+  <ul class="sidebox_6 sidebox_8">
+    <h2>图库</h2>
+    <% for r in hejia_promotion_items(230, :attributes => ['title','url'], :limit => 6)[0..5] %>
+      <li><a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><%= r["title"] %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="sidebox_5">
+    <h2>专区关键词</h2>
+    <li class="clearfix">
+      <% hejia_promotion_items(54305, :attributes => ['title','url']).each do |result| %>
+        <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+      <% end %>
+    </li>
+  </ul>
+
+  <ul class="sidebox_6">
+    <h2>装修公司推荐</h2>
+    <%= render_cell :zhuangxiu, :gong_si_tui_jian %>
+  </ul>
+
+  <% cache "articles:#{@channel}:right:diary:#{@city_id}:#{@id}",:expires_in =>5.minutes do %>
+    <%= render :partial => "articles/detail/jushang_diary" %>
+  <% end %>
+</div><!--side -->

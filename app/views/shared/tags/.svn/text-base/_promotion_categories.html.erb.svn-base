@@ -1,0 +1,109 @@
+<% if @tag.TAGURL == 'diban' %>
+  <!-- 目前位置当行业是地板时才显示 -->
+  <div class="width960 margin10">
+    <div class="b_tabbox clearfix">
+      <h3>品牌按字母索引</h3>
+      <div class="b_tab">
+        <ul class="b_tabmenu clearfix">
+          <% 0.upto(4).to_a.each do |i| %>
+            <li class="b_tabmenu<%= i %>"></li>
+          <% end %>
+        </ul>
+        <div>
+          <%
+          [('a'..'d'), ('e'..'h'), ('i'..'l'), ('m'..'s'), ('t'..'z')].to_a.each do |msi|
+          %> <div class="b_tabtxt">
+              <ul>
+                <%
+                msi.to_a.each do |nu|
+                  brands = @tag.brands(false, nu)
+                  unless brands.blank?
+                  %>
+                    <li>
+                      <% brands.each do |brand| %>
+                        <span>[<%= nu.upcase %>]
+                          <% if brand.name_zh.strip == "泛美原木地热地板" %>
+                            <a href="http://shops.youhui.51hejia.com/index/2288/4214" target="_blank" class="b_tabtxtcur"><%= brand.name_zh %></a>
+                          <% else %>
+                            <a href="/<%= brand.permalink %>/" target="_blank" class="b_tabtxtcur"><%= brand.name_zh %></a>
+                          <% end %>
+                        </span>
+                      <% end %>
+                    </li>
+                  <%
+                  end
+                end
+              %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="b_hotbrands clear clearfix">
+        <dl class="clearfix">
+          <dt>热门品牌</dt>
+          <dd>
+            <% new_promotion_items("品牌库:品类首页:#{@tag.TAGURL}:热门品牌").each do |item| %>
+              <a href="<%= item.url %>" target="_blank"><img alt="<%= item.description %>" src="<%= item.title %>" /></a>
+            <% end %>
+          </dd>
+        </dl>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="b_tuijbrands">
+          <%
+          ['实木', '创意', '强化复合', '性价比高', '实木复合', '甲醛超低'].each_with_index do |item_name, index|
+            tr_index = index + 1
+          %>
+            <% if tr_index / 2 == 0 %><tr> <% end %>
+              <td width="200" align="right"><%= item_name %><%= @tag.TAGNAME %>推荐品牌：</td>
+              <td>
+                <div>
+                  <% new_promotion_items("品牌库:品类首页:#{@tag.TAGURL}:#{index}:推荐品牌").each do |item| %>
+                    <%= link_to item.title, item.url, :target => '_blank' %>
+                  <% end %>
+                </div>
+              </td>
+              <% if tr_index % 2 == 0 %></tr> <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      $(".b_tabmenu li").mouseover(
+      function(){
+        $(this).addClass(function() {
+          return 'b_tabmenucur' + $(this).index();
+        });
+        $(".b_tabtxt").eq($(this).index())
+        .siblings().hide().end().show();
+      });
+      $(".b_tabmenu li").mouseout(
+      function(){
+        $(this).removeClass(function() {
+          return 'b_tabmenucur' + $(this).index();
+        });
+        $(".b_tabtxt").hide();
+      });
+      $(".b_tabtxt").mouseover(
+      function(){
+        $(".b_tabmenu li").eq($(this).index()).addClass(function() {
+          return 'b_tabmenucur' + $(this).index();
+        });
+        $(".b_tabtxt").eq($(this).index())
+        .siblings().hide().end().show();
+      });
+      $(".b_tabtxt").mouseout(
+      function(){
+        $(".b_tabmenu li").eq($(this).index()).removeClass(function() {
+          return 'b_tabmenucur' + $(this).index();
+        });
+        $(".b_tabtxt").hide();
+      });
+    })
+  </script>
+
+<% end %>
+
+

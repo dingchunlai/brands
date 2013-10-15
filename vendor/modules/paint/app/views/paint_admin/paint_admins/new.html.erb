@@ -1,0 +1,11 @@
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>添加新用户</h1>
+  <div class="breadcrumbs">用户管理 / 添加新用户</div>
+</div>
+<div class="clearfix">
+	<% form_for @paint_admin ,:url=>paint_admin_paint_admins_path do |f| -%>
+	<%= render :partial => 'form',:locals=>{:f=>f} %>
+	<% end -%>
+</div>
+

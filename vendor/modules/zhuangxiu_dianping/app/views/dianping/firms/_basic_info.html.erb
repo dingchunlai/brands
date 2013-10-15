@@ -1,0 +1,104 @@
+<div class="zxdp2010_info margin10 f_l">
+  <h3><%= @firm.name_abbr %></h3>
+  <!--隐藏
+  <div class="zxdp2010_infonum">本月<em><%#= @firm.latest_30_days_valid_applicants_count%></em>人预约 累计<em><%#= @firm.valid_applicants_count%></em>人预约</div>
+    <div class="zxdp2010_mianfbtn2"> <a href="#reply" title="我要留言"></a> </div>
+  -->
+  <%
+  if @firm.freedo.to_i == 1
+    freedo_color = 'top:8px;right:15px;bottom:auto;'
+  else
+    freedo_color = 'right: 15px; bottom: auto;background-position: 0px -230px;top:5px;width:66px;height:26px;overflow:hidden;'
+  end
+%>
+
+  <div class="zxdp2010_mianfbtn" style="<%= freedo_color %>">
+    <%= link_to("",new_dianping_applicant_path(:deco_firm_id => @firm.id), :title =>"免费预约量房",:id=>"applicant")  %>
+  </div>
+  <% if @firm.deco_firms_contacts.size > 0 %>
+    <script type="text/javascript">
+      jQuery(function($){
+        $(".zxdp2010_mianfbtn3").click(
+        function(){
+          _gaq.push(['a._trackEvent', '公司终端页', '查看联系方式', <%= @firm.name_abbr.to_json %>, 1]);
+          $(".zxdp2010_mianfbtn3box").css("width",390).css("border-width",1);
+          $(".zxdp2010_mianfbtn3").hide();
+        });
+        $(".zxdp2010_mianfbtn4").click(
+        function(){
+          $(".zxdp2010_mianfbtn3box").css("width",0).css("border-width",0);
+          $(".zxdp2010_mianfbtn3").show();
+        });
+      });
+    </script>
+    <!--  隐藏
+            <div class="zxdp2010_mianfbtn3"></div>
+    -->
+    <div class="zxdp2010_mianfbtn3box">
+      <div class="top"></div>
+      <div class="center">
+        <table width="379" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><div class="zxdp2010_mianfbtn3txt">
+                <div id="ScrollMe">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <% @firm.deco_firms_contacts.each do |contact| %>
+                      <tr>
+                        <td valign="top" width="44"><strong><%= contact.master? ? '总店' : '分店' %>：</strong></td>
+                        <td><p>公司地址：<%= contact.address %></p>
+                          <p>联系电话：<%= @firm.is_cooperation != 1 ? @firm.tel_text : contact.telephone %></p>
+                          <p>在线联系：<%= @firm.is_cooperation != 1 ? @firm.qq_text : contact.online_contact %></p>
+                        </td>
+                      </tr>
+                    <% end -%>
+                  </table>
+                </div>
+                <script type="text/javascript">new srcMarquee("ScrollMe",0,1,355,100,30,5000,0,100)</script>
+              </div></td>
+            <td width="14"><div class="zxdp2010_mianfbtn4"></div></td>
+          </tr>
+        </table>
+      </div>
+      <div class="bottom"></div>
+    </div>
+  <% end -%>
+  <table width="288" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td colspan="4" class="zxdp2011_pfnum">设计：<span><%= @firm.design_praise %></span> 施工：<span><%= @firm.construction_praise %></span> 服务：<span><%= @firm.service_praise %></span></td>
+    </tr>
+    <tr>
+      <td width="65"><span>主打价位：</span></td>
+      <td width="79"><%= @firm.price_text %></td>
+      <td width="65"><span>擅长风格：</span></td>
+      <td width="79"><%= @firm.style.nil? ? "暂无" : DecoFirm::STYLES[@firm.style]%></td>
+    </tr>
+    <tr>
+      <td width="65" valign="top"><span>公司地址：</span></td>
+      <td width="223" colspan="3" style="overflow:hidden;"><div class="firm_show_address_2011">
+          <div id="<%= 'ScrollMe1' if firm_address(@firm).size > 1 %>" class="firm_show_address1_2011">
+            <% firm_address(@firm).each do |address| %>
+              <p title="<%= address %>"><%= address%></p>
+            <% end%>
+          </div>
+        </div>
+        <script type="text/javascript">new srcMarquee("ScrollMe1",0,1,808,20,30,3000,300,20)</script></td>
+    </tr>
+    <tr>
+      <td><span>在线联系：</span></td>
+      <td colspan="3"><%= @firm.qq_text.strip %></td>
+    </tr>
+    <tr>
+      <td><span>联系电话：</span></td>
+      <td width="223" colspan="3" style="overflow:hidden;">
+        <div id="<%= 'ScrollMe2' if firm_telphone(@firm).size > 1 && @firm.is_cooperation.to_i == 1 %>" class="firm_show_address1_2011">
+          <% firm_tel(@firm).each do |ft| %>
+            <p><%= ft %></p>
+          <% end %>
+        </div>
+        <script type="text/javascript">new srcMarquee("ScrollMe2",0,1,223,20,30,3000,300,20)</script>
+      </td>
+    </tr>
+  </table>
+  <div class="zxdp2010_infomenu clearfix"> <span class="a">日记<span>(<%= @diaries_count %>)</span></span> <span class="a">案例<span>(<%= @cases_count%>)</span></span> <span class="a">评论<span>(<%= @firm.remark_only_count%>)</span></span> <span class="a" style="width:90px">在建工地<span>(<%= @factories_count%>)</span></span> </div>
+</div>
+

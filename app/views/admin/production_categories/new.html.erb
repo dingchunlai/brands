@@ -1,0 +1,47 @@
+<% is_adding_new_record = @category.new_record? %>
+<%= show_flash_message %>
+<% form_for @category, :url => (is_adding_new_record && admin_production_categories_path || admin_production_category_path(@category)), :html => { :method => (is_adding_new_record && :post || :put) } do |f| %>
+  <%= f.error_message %>
+  <table>
+    <tr>
+      <th>所属行业</th>
+      <td><%= select_tag "production_category[tag_id]", options_for_select([['请选择', '']].concat(Tag.all_categories.map{|r| [r.TAGNAME, r.TAGID.to_i]}), (@category.tag_id || '')) %></td>
+    </tr>
+    <tr>
+      <th>名称</th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <th>技术参数</th>
+      <td>
+        <% @category.attrs.each_with_index do |attr, index| %>
+          <div>
+            <%= text_field_tag "attributes[#{index}]", attr.name, :id => "attributes_#{index}" %>
+            <%= hidden_field_tag "attributes[mapping][#{index}]", attr.id %>
+          </div>
+        <% end %>
+          <div>
+            <input type="button" value="添加参数" id="add-attribute" />
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= submit_tag '保存' %></td>
+    </tr>
+  </table>
+<% end %>
+
+<script type="text/javascript">
+  (function() {
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        var index = $(this).parent().siblings().length;
+        $('<input type="text" name="attributes[' + index + ']" id="attributes_' + index + '" />').appendTo($('<div />').insertBefore($(this).parent()));
+      });
+    }
+
+    $(function() {
+      enableAttributeAdding();
+    });
+  })();
+</script>

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/!svn/ver/94/51hejia/repos/brands/release/test/unit
+END
+document_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/document_test.rb
+END
+role_ability_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/role_ability_test.rb
+END
+tagged_brand_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/tagged_brand_test.rb
+END
+brand_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/brand_test.rb
+END
+production_promotion_info_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/production_promotion_info_test.rb
+END
+coupon_download_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/coupon_download_test.rb
+END
+coupon_faq_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/coupon_faq_test.rb
+END
+brand_details_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/brand_details_test.rb
+END
+picture_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/picture_test.rb
+END
+tag_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/tag_test.rb
+END
+brands_production_category_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/test/unit/brands_production_category_test.rb
+END

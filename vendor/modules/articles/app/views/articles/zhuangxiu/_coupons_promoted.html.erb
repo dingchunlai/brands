@@ -1,0 +1,46 @@
+<script type="text/javascript">
+  $(function(){
+    $(".index_cscxxx div.txt table:gt(0)").hide();
+    $(".index_cscxxx div.tab li:first").addClass("active");
+    $(".index_cscxxx div.tab li").mouseover(
+    function(){
+      $(this).addClass("active")
+      .siblings().removeClass("active");
+      $(".index_cscxxx div.txt table").eq($(this).index())
+      .siblings().hide().end().show();
+    }
+  )
+  }
+)
+</script>
+<div class="index_gusr_bottom margin10">
+  <h2><span>现金券下载排行</span></h2>
+
+  <div class="index_cscxxx clearfix">
+    <div class="tab f_l">
+      <ul>
+        <li class="active">橱柜</li>
+        <li>洁具</li>
+        <li>地板</li>
+        <li>瓷砖</li>
+        <li>家具</li>
+        <li>橱电</li>
+        <li>门窗</li>
+      </ul>
+    </div>
+    <div class="txt f_l">
+      <% [42103, 42100, 42099, 44578, 42891, 42096, 44579].each do |tagid| %>
+        <% index = 0 %>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <% Coupon.with_tagid_limit(tagid,7).each do |event| %>
+            <tr>
+              <td><%= index += 1 %>.<a href="<%= event.event_url %>" target="_blank"><%= truncate_u(event.title, 8) %></a></td>
+              <td align="right" class="num"><span><%= event.def_value %></span>次</td>
+              <td width="32"><a href="<%= event.event_url %>" target="_blank"><img src="http://img2.51hejia.net/img/homeimg/icon1.gif" alt="详情" /></a></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

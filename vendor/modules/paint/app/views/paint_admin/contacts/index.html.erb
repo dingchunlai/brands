@@ -1,0 +1,77 @@
+<%= render :partial => "sub_menu" %>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $(".contact_table tr:odd").addClass("odd");
+      $(".contact_table tr:even").addClass("even");
+      $("#province").change(function(){
+        $.getJSON("/paint_admin/contacts/get_cities",{province: $("#province").val()}, function(data){
+          $("#city").empty();
+          $("<option value=''>请选择</option>").appendTo("#city");
+          $.each(data,function(i){
+            $("<option value='"+ data[i][1] +"'>"+ data[i][0] +"</option>").appendTo("#city");
+            });
+          });
+        });
+      });
+    </script>
+    <style type="text/css">
+	.contact_table td{height:30px;line-height:30px;padding:0 5px;}
+	.contact_table .odd{background:#fff;}
+	.contact_table .even{background:#dedede;}
+</style>
+<div class="top-bar">
+    <h1>联络列表查看</h1>
+	<div class="breadcrumbs">联络列表 / 联络列表查看</div>
+</div>
+<div class="clearfix">
+	<div><%= show_flash_message%></div>
+	<div class="select-bar">
+		<form id="" name="" action="<%=paint_admin_contacts_path%>" method="get">
+			联系人<input type="text" name="people" value="<%=@people%>" style="width:100px">
+			电话<input type="text" name="phone" value="<%=@phone%>" style="width:100px">
+			省<select name="province" id="province" style="width:80px">
+				<option value="">请选择</option>
+				<% get_province.each do |k,v| %>
+					<option value="<%= v %>" <%= 'selected' if @province == v %>><%= k %></option>
+				<% end %>
+			</select>
+			城市<select name="city" id="city" style="width:80px;">
+				<option value="">请选择</option>
+				<% get_cities(@province).each do |k,v| %>
+                                  <option value="<%= v %>" <%= "selected='selected'" if @city == v %> ><%= k %></option>
+				<% end %>
+			</select>
+			<input type="submit" value="检索">
+		</form>
+	</div>
+	<div>
+		<table width="850" class="contact_table">
+			<tr align="center">
+				<td>省份</td>
+				<td>城市</td>
+				<td>服务中心名称</td>
+				<td>服务中心地址</td>
+				<td>电话</td>
+				<td>联系人</td>
+				<td>添加时间</td>
+				<td>操作</td>
+			</tr>
+			<% @contacts.each do |contact|%>
+			<tr align="center">
+				<td><%= Province.name_for_code(contact.province) %></td>
+				<td><%= City.name_for_code(contact.city) %></td>
+				<td><%= contact.contact_name %></td>
+				<td><%= contact.address %></td>
+				<td><%= contact.phone %></td>
+				<td><%= contact.contact_people %></td>
+				<td><%= contact.created_at.strftime("%Y-%m-%d") rescue "" %></td>
+				<td>
+					<% if can? :update, :contacts %><%=link_to "编辑",edit_paint_admin_contact_path(contact.id)%>&nbsp;|&nbsp;<% end %>
+					<% if can? :destroy, :contacts %><%=link_to "删除",paint_admin_contact_path(contact.id),:method => :DELETE, :confirm => '确定删除'%><% end %>
+					</td>
+			</tr>
+			<% end %>
+		</table>
+		<%= will_paginate @contacts ,:prev_label=> '上一页',:next_label=> '下一页',:class => 'digg_pagination'%>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<div class="zxdp2011_continfotit">
+  <h3><%= @case.NAME%></h3>
+</div>
+<% unless @diary.nil? %><%= render :partial => 'diary_keyword' %><% end %>
+<div class="zxdp2011_focus">
+  <div class="zxdp2011_focusbq clearfix">
+    <% show_tags = photo_zone_tags(@case.photos, @case.id)[0..4] %>
+    <span class="f_l">
+      <% show_tags.each do |tag| %><%= "#{tag.name}(#{tag.photo_count})" %><% end %>
+    </span>
+    <span class="f_r"><strong><em id="num">-</em>/<em id="all">-</em></strong></span>
+  </div>
+  <div class="zxdp2011_focusimg v_show clearfix">
+    <div class="zxdp2011_focusbighack f_l">
+      <div class="zxdp2011_focusbig clearfix">
+        <%
+          case_photos = @case.photos
+          case_photos.each do |photo|
+         %>
+          <div><%= image_tag(photo.get_photo_url,:alt=>@case.NAME)%>
+            <p><%= truncate_u(@case.NAME,10) if @case.NAME%></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="change_btn"> <span class="prev"><small>▲</small></span><span class="next"><small>▼</small></span> </div>
+    <div class="zxdp2011_focussmall v_content f_r">
+      <div class="v_content_list">
+        <ul>
+          <% case_photos.each do |photo|%>
+            <li><%= image_tag(photo.get_photo_url,:alt=>@case.NAME)%></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/time
+END
+zones.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/time/zones.rb
+END
+behavior.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/time/behavior.rb
+END
+calculations.rb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/time/calculations.rb
+END
+conversions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/time/conversions.rb
+END

@@ -1,0 +1,46 @@
+<%= top_bar :title => '城市管理页',
+            :button => ['创建城市', new_admin_city_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['城市管理', admin_cities_path]
+            ]
+%>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">编号</th>
+      <th><%= City.human_attribute_name("name") %></th>
+      <th><%= City.human_attribute_name("pinyin") %></th>
+      <th><%= City.human_attribute_name("code_name") %></th>
+      <th><%= City.human_attribute_name("districts_count") %></th>
+
+      <th colspan=3 class="last">操作</th>
+    </tr>
+    <% @cities.each_with_index do |city, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= city.id %></td>
+          <td><%= city.name %></td>
+          <td><%= city.pinyin %></td>
+          <td><%= city.code_name %></td>
+          <td><%= city.districts_count %></td>
+          <% if can? :update, city %>
+              <td><%= link_to '修改', edit_admin_city_path(city) %></td>
+          <% end %>
+          <% if can? :read, District %>
+              <td><%= link_to '列表地区', admin_districts_path(:city_id => city) %></td>
+          <% end %>
+          <% if can? :create, District %>
+              <td><%= link_to '添加地区', new_admin_district_path(:city_id => city) %></td>
+          <% end %>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @cities.empty? -%>
+      <%= will_paginate @cities, :class => "digg_pagination" -%>
+  <% end -%>
+
+</div>

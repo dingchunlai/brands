@@ -1,0 +1,93 @@
+<% content_for :html_head do %>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】#{@city.name}装修建材优惠券,家装产品购买现金抵用券_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券", "和家网无条件现金抵用券,覆盖油漆涂料、厨房电器、地板、卫浴洁具、橱柜厨具、水处理、中央空调、家具、吊顶、瓷砖、门窗、壁纸、背景墙、照明灯具、装修辅材、五金、楼梯、采暖、家电、智能家居、布艺软、装饰品、装修公司等行业,聚合家居建材品牌,集优惠券、代金券、折扣券全部功能,为装修消费者提供代金优惠服务,目前已开通上海、南京、无锡、苏州、杭州、宁波6个城市。装修省钱,尽在和家网装修省钱狂频道。"%>
+<% end %>
+<script type="text/javascript">
+  jQuery(function($){
+      //抵用券关键词搜索
+      $('form[name=keyword_search]').submit(function(){
+        var tf_keyword = $(this).find('input[name=keyword]');
+        var kw = $.trim(tf_keyword.val());
+        tf_keyword.val(kw);
+        if (kw == ''){
+          alert('请输入搜索关键词！');
+        }else{
+          window.open('/kw-' + kw + '-0.html', '_top');
+        }
+        return false;
+      });
+
+    });
+</script>
+
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="diyq_r f_r">
+    <div class="diyq_error margin10">
+      <h4>
+        <% unless @keyword.blank? %>
+          很抱歉，在全部现金券分类下没有找到与“ <span><%= @keyword %></span> ”相关的现金券
+        <% else %>
+          很抱歉，在全部现金券分类下没有找到相关" <span>
+            <% if @tag_id != 0 %><% tg = Industry.find_by_TAGID(@tag_id) %><% tg.blank? ? '' : tg.TAGNAME %><% end %> 
+            <% if @pc_id != 0 %><% pc = ProductionCategory.find_by_id(@pc_id) %><%= pc.blank? ? '' : pc.name %><% end %> 
+            <% if @brand_id != 0 %><% bd = Brand.find_by_id(@brand_id) %><%= bd.blank? ? '' : bd.name_zh %><% end %> 
+            <% if @district_id != 0 %><% dt = District.find_by_id(@district_id) %><%= dt.blank? ? '' : dt.name %><% end %> 
+            <% if @shop_id != 0 %><% ms = MarketShop.find_by_id(@shop_id) %><%= ms.blank? ? '' : ms.name%><% end %> 
+        <% end %> </span>"的现金劵
+      </h4>
+      <form name="keyword_search">
+        <p> 你需要的现金券是：
+          <input name="keyword" type="text" />
+          <input name="" type="submit" value=" " class="diyq_l_btn" />
+        </p>
+      </form>
+    </div>
+    <script type="text/javascript">
+	$(function(){
+		$(".diyq_listimg").mouseover(
+		      function(){
+			  if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+					    });	
+		$(".diyq_listimg").mouseout(
+		      function(){
+			  $(".diyq_coupon").hide();
+					    });	
+		$(".diyq_coupon").mouseover(
+		      function(){
+			  if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+					    });	
+		$(".diyq_coupon").mouseout(
+		      function(){
+			  $(".diyq_coupon").hide();
+					    });
+		
+		$(".diyq_listbtn a").click(
+		function(){
+			$(".diyq_sms").show(300);
+			$(".diyq_smscont").show(300);
+					});
+						
+		$(".diyq_smscloseup a").click(
+		function(){
+			$(".diyq_smscont").hide(300);
+					});	
+		$(".diyq_smsexpand a").click(
+		function(){
+			$(".diyq_smscont").show(300);
+					});	
+	});
+</script>
+    <%= render :partial => '/share/recommended_industry' %>
+    <!-- coupon_image_hover -->
+    <%= render :partial => '/share/coupon_image_hover' %>
+    <!-- coupon_download_pop -->
+    <%= render :partial => '/share/coupon_download_pop' %>
+  <div class="diyq_l f_l">
+    <%= render :partial => '/share/title_search' %>
+    <%= render :partial => '/share/category_search' %>
+    <%= render :partial => '/share/district_consulting' %>
+  </div>
+</div>
+<%= render :partial => '/share/common_help' %>
+<!--end_content_code-->
+

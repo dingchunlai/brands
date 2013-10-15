@@ -1,0 +1,35 @@
+
+CREATE TABLE painters(
+id INT(11) NOT NULL AUTO_INCREMENT ,
+user_id INT(11) NOT NULL DEFAULT 0,
+id_number CHAR(18) ,
+province VARCHAR(50),
+city VARCHAR(50),
+grade TINYINT(4) DEFAULT 0 ,
+painters_status  TINYINT(4) DEFAULT 0 ,
+job_year INT ,
+certificate TINYINT(4),#证书
+certificate_number INT(11),#证书号码
+effect TINYINT(4),#特殊效果
+spray_gun TINYINT(4),#是否用过喷枪
+brush TINYINT(4),#刷墙
+address VARCHAR(255),
+education VARCHAR(50), #学历
+job VARCHAR(255),
+avatar_file_name VARCHAR(50),
+know_here VARCHAR(255),
+skill_score INT(11),
+service_score INT(11),
+member_code VARCHAR(50),
+zip_code VARCHAR(50),
+trial_products TEXT , #试用产品
+train_date DATETIME , #培训时间
+dealers VARCHAR(255),#经销商
+moral_audit VARCHAR(50),#职业道德考核
+theory_audit VARCHAR(50),#理论考核
+operating_audit VARCHAR(50),#操作考核
+created_at DATETIME DEFAULT NULL,
+updated_at DATETIME DEFAULT NULL ,
+PRIMARY KEY (id),
+FOREIGN KEY(user_id) REFERENCES HEJIA_USER_BBS(USERBBSID)
+)

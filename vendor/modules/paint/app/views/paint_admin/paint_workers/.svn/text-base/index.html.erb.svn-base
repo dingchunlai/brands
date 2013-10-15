@@ -1,0 +1,10 @@
+<%= render :partial => "sub_menu" %>
+<div class="top-bar">
+    <h1>油漆工查询</h1>
+	<div class="breadcrumbs">油漆工管理 / 油漆工查询</div>
+</div>
+<div class="clearfix">
+	<div><%= show_flash_message%></div>
+	<div class="select-bar"><%= render :partial => "search_top"%></div>
+	<div><%= render :partial => "info" %></div>
+</div>

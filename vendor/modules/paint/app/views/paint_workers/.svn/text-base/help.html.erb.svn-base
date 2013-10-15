@@ -1,0 +1,40 @@
+<% title "【油漆工】帮助中心_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_web_l f_l">
+   	<%= render :partial => '/shared/front_admin_left'%>
+  </div>
+  <div class="yg_web_r f_r">
+    <div class="yg_web_rbox margin10">
+      <div><%=render :partial => '/shared/front_admin_top', :locals => { :top_name => "个人信息" }%></div>
+      <div class="yg_web_rtxt04">
+        <% if @key.blank? %>
+      		<%= render :partial => '/help/admin_help_index'%>
+		<% elsif @key == '在线认证'%>
+			<%= render :partial => '/help/admin_help_renzheng'%>
+		<% elsif @key == '如何登录'%>
+			<%= render :partial => '/help/admin_help_login'%>
+		<% elsif @key == '忘记密码'%>
+			<%= render :partial => '/help/admin_help_forgot'%>
+		<% elsif @key == '修改个人信息'%>
+			<%= render :partial => '/help/admin_help_update'%>
+		<% elsif @key == '案例发布'%>
+			<%= render :partial => '/help/admin_help_case_new'%>
+		<% elsif @key == '评分标准'%>
+			<%= render :partial => '/help/admin_help_pingfen'%>
+		<% elsif @key == '案例管理'%>
+			<%= render :partial => '/help/admin_help_manage'%>
+		<% elsif @key == '油工培训申请'%>
+			<%= render :partial => '/help/admin_help_training'%>
+		<% elsif @key == '金刷子认证师傅'%>
+			<%= render :partial => '/help/admin_help_shifu'%>
+		<% else %>
+			<%= render :partial => '/help/admin_help_index'%>
+		<% end %>
+	  </div>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

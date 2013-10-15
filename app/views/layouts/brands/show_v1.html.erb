@@ -1,0 +1,236 @@
+
+<%
+set_brand_page_meta_data  @tag.TAGURL, @brand.permalink
+content_for :html_head do
+%>
+  <%= javascript_include_tag jquery_resource(:version => '1.4') %>
+  <%= javascript_include_tag 'brand_rating' %>
+<% end %>
+<% content_for :banner_ad do %>
+  <%= adspace("#{@brand_index_page_adspace}-页头广告1", "", '<div class="clearfix"></div>') if @brand_index_page_adspace %>
+<% end %>
+<%= render :partial => 'shared/layouts/header' %>
+<% current_menu = 'class="b_menu_current"' %>
+
+<div class="b_width960 margin10 clearfix">
+  <div class="b_menu_gz">
+    <h3>
+      <label class="f_r">
+        <% unless @p_category_id %>
+          <strong><%= @tag.TAGNAME %></strong> 品牌近期关注榜第<span><%=@brand.last_month_rank(@tag.TAGID)%></span>名
+        <% end %>
+      </label>
+      <%= @brand.name_zh %> 口碑评价
+      <em>目前共有<span><%=@brand.pv(@tag.TAGID)%></span>人关注 [上月共有<span><%=@brand.last_month_pv(@tag.TAGID)%></span>人关注]</em>
+    </h3>
+    <ul class="b_menu">
+      <% unless @p_category_id %>
+        <li id="num1" <%= current_menu if controller.action_name == 'show' %>>
+          <%= link_to "<strong>品牌首页</strong>", show_pinpai_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num2" <%= current_menu if controller.action_name == 'info' %>>
+          <%= link_to "<strong>品牌信息</strong>", pinpai_info_path(:subdomain => false, :permalink => @brand.permalink) %>
+        </li>
+        <li id="num3" <%= current_menu if controller.action_name == 'articles' %>>
+          <%= link_to "<strong>品牌评测导购</strong>", pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num4" <%= current_menu if controller.action_name == 'productions' || controller.action_name == 'production'%>>
+          <%= link_to "<strong>产品信息</strong>", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+      <% else %>
+        <li id="num1" <%= current_menu if controller.action_name == 'second_category_show' %>>
+          <%= link_to "<strong>品牌首页</strong>", second_category_new_path(:subdomain => false,:category_url =>params[:category_url], :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num2" <%= current_menu if controller.action_name == 'category_info' %>>
+          <%= link_to "<strong>品牌信息</strong>", second_category_info_path(:subdomain => false,:category_url =>params[:category_url], :permalink => @brand.permalink) %>
+        </li>
+        <li id="num3" <%= current_menu if controller.action_name == 'category_articles' %>>
+          <%= link_to "<strong>品牌评测导购</strong>", second_category_articles_path(:subdomain => false,:category_url =>params[:category_url], :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+        <li id="num4" <%= current_menu if controller.action_name == 'category_productions' %>>
+          <%= link_to "<strong>产品信息</strong>", second_category_productions_path(:subdomain => false,:category_url =>params[:category_url], :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+      <% end %>
+
+      <%if @brand.documents && @brand.documents.size > 0 %>
+        <li id="num5" <%= current_menu if controller.action_name == 'documents' %>>
+          <%= link_to "<strong>资料下载</strong>", pinpai_documents_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %>
+        </li>
+      <%end%>
+      <% if @brand.permalink != 'nippon' && @brand.permalink != 'primyonline' %>
+        <% unless @p_category_id %>
+          <% unless link_to_feature(@brand, "<strong>品牌专区</strong>").blank? %>
+            <li id="num6" >
+              <%= link_to_feature @brand, "<strong>品牌专区</strong>" %>
+            </li>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%unless (tuku_zhuanqu_url=LINK_URLS['图库专区'][params[:permalink]]).blank?%>
+        <li id="num7" >
+          <%= link_to "<strong>图库专区</strong>", tuku_zhuanqu_url, :target=>"_blank" %>
+        </li>
+      <%end%>
+      <% if @brand.name_zh == "立邦" %>
+        <li id="num8">
+          <%= link_to "<strong>产品智能选择</strong>", "http://www.51hejia.com/zhuanti/libang201111/index.html", :target=>"_blank" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="b_width960 clearfix margin10">
+  <div class="b_width680 f_l">
+    <%= yield %>
+  </div>
+  <div class="b_width270 f_r margin10">
+    <h3><%= @brand.name_zh %>品牌口碑</h3>
+    <% unless @p_category_id %>
+      <%= render :partial => "layouts/brands/brand_rating" %>
+    <% else %>
+      <%= render :partial => "layouts/brands/categroy_rating" %>
+    <% end %>
+    <div class="b_ad02">
+      <% if API_PROMOTION_MAPPING['品牌'][@brand.permalink] || API_PROMOTION_MAPPING['品类'][@tag.TAGNAME] %>
+        <%=
+        item=hejia_promotion_items(((API_PROMOTION_MAPPING['品牌'][@brand.permalink] && API_PROMOTION_MAPPING['品牌'][@brand.permalink]['品牌宽幅广告1']) ? API_PROMOTION_MAPPING['品牌'][@brand.permalink]['品牌宽幅广告1'] : API_PROMOTION_MAPPING['品类'][@tag.TAGNAME]['品牌宽幅广告1']), :attributes => ['url', 'image_url', 'title'], :limit => 1).first
+        promotion_image_tag item if item
+      %>
+      <% end %>
+    </div>
+    <% unless (brands = get_anther_brand(@tag.id, @brand)).blank? %>
+      <h3 class="b_right_tit">您可能感兴趣的其他品牌</h3>
+      <div class="b_right_text b_right_text03 clearfix">
+        <ul>
+          <% brands.first(25).each do |brand|-%>
+            <li><%=link_to brand.name_zh, show_pinpai_path(brand.permalink, :subdomain => false, :trailing_slash => true),:target => "_blank" %></li>
+          <%end -%>
+        </ul>
+      </div>
+    <% end %>
+    <h3 class="b_right_tit">
+      <span class="b_r_titmore f_r"><%=link_to ">>更多", "http://z.shanghai.51hejia.com/zhuangxiugushi", :target=>"_blank" %>
+      </span><%= @brand.name_zh %>相关装修日记
+    </h3>
+    <% diaries = DecorationDiary.latest_ten_diaries_for_brand(@brand) %>
+    <div class="b_right_text b_right_text04">
+      <ul>
+        <% diaries.each do |diary| %>
+          <li><%= link_to_with_title diary.title, diary.url, :truncate => 16, :target => "blank" %></li>
+        <% end %>
+        <!--<li class="b_more"></li>-->
+      </ul>
+    </div>
+    <% articles = get_atricle_by_category_brand(@brand.name_zh) %>
+    <%if articles && articles.size > 0 %>
+      <h3 class="b_right_tit">
+        <span class="b_r_titmore f_r"><%= link_to_feature @brand, ">>更多" %>
+        </span><%= @brand.name_zh %>资讯
+      </h3>
+      <div class="b_right_text b_right_text04">
+        <ul>
+          <% articles.each do |article| %>
+            <li><%=link_to_with_title article.title, article.url, :truncate => 15, :target=>"_blank" %></li>
+          <%end%>
+        </ul>
+      </div>
+    <%end%>
+    <div class="b_ad02">
+      <% if API_PROMOTION_MAPPING['品类'][@tag.TAGNAME] %>
+        <%=
+        item = hejia_promotion_items(API_PROMOTION_MAPPING['品类'][@tag.TAGNAME]['品牌宽幅广告2'], :attributes => ['url', 'image_url', 'title'], :limit => 1).first
+        promotion_image_tag item if item
+      %>
+      <% end %>
+    </div>
+    <% if @browsed_productions %>
+      <h3 class="b_right_tit">浏览过的产品</h3>
+      <div class="b_right_text b_right_text05">
+        <ul>
+          <%
+          @browsed_productions.each do |product|
+            unless product.master_picture.blank?
+            %>
+              <li>
+                <% path = pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id) %>
+                <%= link_to image_tag(product.master_picture.public_filename), path, :target => '_blank' %>
+                <%= link_to product.name, path, :target => '_blank' %>
+              </li>
+            <%
+            end
+          end
+          -%>
+        </ul>
+      </div>
+    <% end %>
+
+    <% unless @tagged_brand.agencies_cities.blank? %>
+      <script type="text/javascript">
+        $(function(){
+          $(".b_pln_sidecont div:gt(0)").hide();
+          $(".b_pln_sidetab li:first").addClass("b_pln_sideactive");
+          $(".b_pln_sidetab li").mouseover(
+          function(){
+            $(this).addClass("b_pln_sideactive")
+            .siblings().removeClass("b_pln_sideactive");
+            $(".b_pln_sidecont div").eq($(this).index())
+            .siblings().hide().end().show();
+          }
+        )
+        }
+      )
+      </script>
+      <div class="b_pln_sidety margin10">
+        <h3><%= @brand.name_zh %><%= @tag.TAGNAME %>哪里去买</h3>
+        <div class="b_pln_sidemore"></div>
+        <div class="b_pln_sidetxt b_pln_sidetxt06">
+          <ul class="b_pln_sidetab clearfix">
+            <li>全国</li>
+            <% @tagged_brand.agencies_cities.first(3).each do |tag| %>
+              <li><%= City.name_for_code(tag) %></li>
+            <% end %>
+          </ul>
+          <div class="b_pln_sidecont">
+            <% unless @tagged_brand.agencies.blank? %>
+              <div>
+                <ul>
+                  <% @tagged_brand.agencies.first(4).each do |agency| %>
+                    <li><span>经&nbsp;销&nbsp;商：<%= link_to agency.title, "#n", :target => '_blank' %></span>
+                      <address>
+                        <label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+                        <%= agency.address  %>
+                      </address>
+                      <span>联系电话：<em><%= agency.telephone  %></em></span></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <% @tagged_brand.agencies_cities.first(3).each do |tag| %>
+              <div>
+                <ul>
+                  <% Agency.tagged_brand_and_city(@tagged_brand.id, tag, 4).each do |agency| %>
+                    <li><span>经&nbsp;销&nbsp;商：<%= link_to agency.title, "#n", :target => '_blank' %></span>
+                      <address>
+                        <label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+                        <%= agency.address  %>
+                      </address>
+                      <span>联系电话：<em><%= agency.telephone  %></em></span></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if flash[:notice] %>
+  <div id="notice_info" style="display:none">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<%= render :partial => 'shared/layouts/footer' %>
+

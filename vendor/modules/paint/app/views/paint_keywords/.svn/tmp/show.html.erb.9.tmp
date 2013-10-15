@@ -1,0 +1,46 @@
+<% title "【#{@paint_keyword.name}】#{@paint_keyword.name}知识|图片|评论_和家网油漆施工频道" %>
+<% keywords "#{@paint_keyword.name},#{@paint_keyword.name}知识,#{@paint_keyword.name}图片,#{@paint_keyword.name}评论" %>
+<% description "和家网油漆施工频道，汇聚了最全#{@paint_keyword.name}知识，包括#{@paint_keyword.name}图片、#{@paint_keyword.name}评论信息..." %>
+<%= render :partial => '/shared/top_location', :locals => { :location => @location, :location_end => @paint_keyword.name }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <% @articles.each do |article|%>
+    <div class="yg_listp1 clearfix">
+      <h3><a href="<%= article.detail_url %>" target="_blank" title="<%= article.title %>"><%= article.title %></a></h3>
+      <p><%= truncate(article.SUMMARY,:length => 160 ,:omission => '')%><a href="<%= article.detail_url %>" target="_self" title="查看全文">【查看全文】</a></p>
+      <div class="yg_listp1_img"><a href="<%= article.detail_url %>" target="_self"><img src="<%= get_article_image_link(article) %>" /></a></div>
+      <div class="yg_listp1_tags f_l">
+        <span>
+          标签：
+          <% for paint_keyword in article::paint_keywords %>
+          <%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %>
+          <% end %>
+        </span>
+      </div>
+      <div class="yg_listp1_time f_r"><%= article.CREATETIME.strftime("%Y-%m-%d %H:%M")%></div>
+    </div>
+    <% end %>
+    <div><%= will_paginate @articles %></div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10">
+    	<%= render :partial => "/shared/right_top_img"%>
+    </div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/paint_top10"%>
+    </div>
+    <div class="yg_current">
+      <h3>热门标签</h3>
+      <div class="yg_hot">
+        <% for paint_keyword in PaintKeyword.find(:all,:limit => 62) %>
+        <%= link_to(paint_keyword.name, "/keywords/#{paint_keyword.id}", :target => "_blank") %>  
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

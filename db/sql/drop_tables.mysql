@@ -1,0 +1,12 @@
+SET NAMES utf8;
+
+DROP TABLE documents;
+DROP TABLE production_properties;
+-- DROP TABLE production_attributes_production_categories;
+DROP TABLE production_attributes;
+DROP TABLE pictures;
+DROP TABLE productions;
+DROP TABLE production_categories;
+DROP TABLE production_series;
+DROP TABLE tagged_brands;
+DROP TABLE article_promotion_info;

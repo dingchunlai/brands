@@ -1,0 +1,32 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title       => '现金券发行量管理管理页',
+            :button      => ['管理列表', admin_coupon_issue_num_stats_path(:coupon_id => params[:coupon_id])],
+            :breadcrumbs => [
+                    ['管理首页', coupon_admin_index_path],
+                    ['现金券发行量管理列表', admin_coupon_issue_num_stats_path(:coupon_id => params[:coupon_id])]
+            ]
+%>
+<% form_for @coupon_issue_num_stat, :url => admin_coupon_issue_num_stats_path do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">维护现金券发行量</th>
+        </tr>
+        <%= f.hidden_field :coupon_id %>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :counts %></strong></td>
+          <td class="last"><%= f.text_field :counts, :class => "text", :reg => '^[1-9]+([0-9]*)$', :tip => "必须为数字" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :op_type %></strong></td>
+          <td class="last"><%= f.select :op_type, [["新增", 'add'], ["减少", 'reduce']] %></td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>

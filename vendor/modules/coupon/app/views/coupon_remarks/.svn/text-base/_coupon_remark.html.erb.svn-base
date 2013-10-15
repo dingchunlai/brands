@@ -1,0 +1,29 @@
+<% div_for coupon_remark, :class => "gsl_wyly_txt" do %>
+
+  <h4>
+    <div class="f_l"><%= coupon_remark.user.USERNAME %></div>
+    <label><%= coupon_remark.created_at.strftime("%Y年%m月%d日 %H:%M") rescue '' %></label>
+  </h4>
+  <p><%= h coupon_remark.content %> <a href="javascript://" class="reply_button" style="color:#f60;">【回复】</a></p>
+  <div id="replies<%=coupon_remark.id%>">
+    <%coupon_remark.replies.each do |reply|%>
+      <%= render :partial => 'coupon_remarks/reply', :locals => {:r => reply} %>
+    <%end%>
+  </div>
+  <div class="diary_contwbpingl clearfix" style="display:none;">
+    <%
+      new_reply = coupon_remark.replies.new
+      new_reply.resource_type = coupon_remark.resource_type
+      new_reply.resource_id = coupon_remark.resource_id
+    %>
+    <% form_for new_reply, :url => coupon_remarks_path, :html => {:id => "remark_form_#{coupon_remark.id}", :class => 'remark_form f_r'} do |f| %>
+      <%= f.hidden_field :resource_type %>
+      <%= f.hidden_field :resource_id %>
+      <input name="remark_id" type="hidden" value="<%=coupon_remark.id%>" />
+      <%= f.text_field :content, :class => 'zx_diary_iptsty', :size => 50%>
+      <input type="submit" value="回复" class="zx_diary_btnsty diary_post_remark" />
+    <% end %>
+  </div>
+
+
+<% end %>

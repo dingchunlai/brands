@@ -1,0 +1,12 @@
+<div class="zxdp2010_cur margin10">
+  <h3><%= name %></h3>
+  <div class="zxdp2010_txt zxdp2010_txttop zxdp2010_kbtop">
+    <dl>
+      <% diaries.each do |diary| %>
+        <dd>
+          <a href="<%= diary_url(diary) %>" target="_blank" title="<%= diary.title %>"><%= truncate(diary.title, 15) %></a>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

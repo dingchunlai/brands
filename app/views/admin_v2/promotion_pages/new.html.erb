@@ -1,0 +1,16 @@
+<%= show_flash_message %>
+<% is_new = @promotion_page.new_record?   %>
+<% form_for @promotion_page, :url => (is_new ? admin_promotion_pages_path : admin_promotion_page_path(@promotion_page)), :html => {:method => (is_new ? :post : :put), :id => 'promotion_page'} do |f| %>
+  <fieldset>
+    <legend><%= (is_new ? "新建推广页面" : "编辑推广页面") %></legend>
+    <p>页面位置: <%= f.text_field :name %></p>
+    <p>页面描述: <%= f.text_field :description %></p>
+    <% if is_new %>
+      <p>页面类型: <%= f.select :type, PromotionPage::TYPE_NAME.to_a %></p>
+    <% else %>
+       <p>页面类型: <%= PromotionPage::MODEL_TYPE[@promotion_page.type] %></p>
+    <% end %>
+    <p><%= submit_tag "保存" %></p>
+  </fieldset>
+<% end%>
+

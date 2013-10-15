@@ -1,0 +1,58 @@
+<%=include_jquery_autocomplete%>
+
+<%= top_bar :title => '经销商一一印象管理',
+  :button => ['经销商列表', admin_distributors_path],
+  :breadcrumbs => [
+  ['抵用券后台', coupon_admin_index_path],
+  ["经销商", admin_distributor_path(@distributor)],
+]
+%>
+<%= show_flash_message %>
+<br /><br />
+<div>
+  <ul class="horizontal">
+    <% @distributor.impressions({:with_count => true}).each_with_index do |e, index| %>
+      <% if can?(:destroy_impression, :distributors) %>
+        <%= link_to '删除', destroy_impression_admin_distributor_path(@distributor, :title => e), :method => :post, :confirm => 'Are You Sure! ' if index % 2 == 0  %> 
+      <% end %>
+      <li><%= e %></li> <%= " || " if index % 2 != 0 %>
+    <% end %>
+  </ul>
+</div>
+<br />
+<div id="form_1">
+  <span style="font-size: 17px;color: red;">请确保印象词在6个之内</span>
+  <fieldset>
+    <legend><%= @distributor.title %>  -- 印象信息</legend>
+    <% form_tag impressions_admin_distributor_path(@distributor), :method => :post do %>
+    <div>
+      <input type="button" value="添加印象" id="add-attribute" />
+    </div>
+    <%= submit_tag "保存", :disabled => true %>
+    <% end %>
+  </fieldset>
+</div>
+
+<script type="text/javascript">
+  (function() {
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        $('#form_1 input[type=submit]').attr("disabled", false);
+        var index = $(this).parent().siblings().length;
+        $('<input type="text" name="attributes[' + index + ']" id="attributes_' + index + '" />数量: <input type="type" name="values[' + index + ']" id="values_'+ index +'" />').appendTo($('<div />').insertBefore($(this).parent()));
+      });
+    }
+
+    $(function() {
+      enableAttributeAdding();
+    });
+  })();
+</script>
+<style type="text/css">
+  .horizontal li
+  {
+    display: inline;
+    list-style-type: none;
+    padding-right: 5px;
+  }
+</style>

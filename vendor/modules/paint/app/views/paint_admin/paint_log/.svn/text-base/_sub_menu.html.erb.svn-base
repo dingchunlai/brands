@@ -1,0 +1,3 @@
+<% content_for :sub_menu do %>
+	<% if can? :read, :paint_log %><li><a href="/paint_admin/log">查看日志</a></li><% end %>
+<% end -%>

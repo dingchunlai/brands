@@ -1,0 +1,56 @@
+    <%
+       pro_tags = promotion_items("抵用券:频道首页:#{@city.pinyin}:推荐行业")
+       ul_tags = []
+    %>
+    <div class="diyq_list clear">
+      <div class="diyq_listtab">
+        <ul class="clearfix">
+          <% pro_tags.each_with_index do |item, index| %>
+            <li class="<% index == 0 ? '' : '' %>" data-title="<%= item.title%>"><%= item.description %></li>
+            <% ul_tags << "<ul class=\"clearfix\" id=\"uls_#{index}\"></ul>"  %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="diyq_listnum">共有<strong><%= Coupon.valid_count(@city.id) %></strong>张现金券</div>
+      <div class="diyq_listtxt clearfix">
+        <div style="text-align: center; padding: 60px 0" id="content_loading"><img src="http://js.51hejia.net/img/loading.gif" /></div>
+        <%= ul_tags.join("\n") %>
+      </div>
+    </div>
+  </div>
+    <script type="text/javascript">
+    $(function() {
+
+        $.fn._LoadIndustryPromotionItem = function() {
+            var industry = $(this).attr("data-title");
+            var index = $(".diyq_listtab li").index($(this));
+            if (!($("#uls_" + index).html().length > 0)) {
+                $("#content_loading").css("display", "");
+                if (null != industry) {
+                    $.get("<%= promotion_industry_path%>", { industry_name : industry }, function(data) {
+                        $("#content_loading").css("display", "none");
+                        $("#uls_" + index).html(data);
+                    }, "html");
+                }
+            }
+        };
+
+        var tab_len = $(".diyq_listtab li").length;
+        var random_index = parseInt(Math.random() * tab_len + 1) - 1;
+        $(".diyq_listtab li:eq("+ random_index +")").addClass("active");
+        $(".diyq_listtxt ul:eq("+ random_index +")").show();
+        $(".diyq_listtab li:eq("+ random_index +")")._LoadIndustryPromotionItem();
+        $(".diyq_listtab li").click(
+                                   function() {
+                                       $(this).addClass("active")
+                                               .siblings().removeClass("active");
+                                       $(".diyq_listtxt ul").eq($(this).index())
+                                               .siblings().hide().end().show();
+                                       $(this)._LoadIndustryPromotionItem();
+                                       
+                                   });
+
+    });
+    </script>
+
+

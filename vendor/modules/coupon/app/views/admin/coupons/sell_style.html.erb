@@ -1,0 +1,27 @@
+<%if flash[:success]%>
+  <p><font color="red"><%= flash[:success] %></font></p>
+<%end%>
+<p>
+  修改销售方式
+</p>
+<form action="sell_style" method="put">
+  <input type="hidden" name="id" value="<%=@coupon.id%>"/>
+  <table border=1>
+    <tr>
+      <td>现金券</td>
+      <td><%= @coupon.title %></td>
+    </tr>
+    <tr>
+      <td>方式</td>
+      <td>
+        <input type="radio" name="sell_style" value="0" <%if @coupon.sell_style == 0%>checked<%end%>/>默认 &nbsp;&nbsp;
+        <input type="radio" name="sell_style" value="1" <%if @coupon.sell_style == 1%>checked<%end%>/>秒杀
+      </td>
+    </tr>
+
+
+    <tr>
+      <td align=center colspan=2><input type="submit" value="确定"/></td>
+    </tr>
+  </table>
+</form>

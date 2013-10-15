@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures
+END
+brands.yml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/brands.yml
+END
+production_promotion_infos.yml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/production_promotion_infos.yml
+END
+brand_details.yml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/brand_details.yml
+END
+coupon_downloads.yml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/coupon_downloads.yml
+END
+coupon_faqs.yml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/coupon_faqs.yml
+END
+pictures.yml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/pictures.yml
+END
+tags.yml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/tags.yml
+END
+documents.yml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/documents.yml
+END
+brands_production_categories.yml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/brands_production_categories.yml
+END
+tagged_brands.yml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/tagged_brands.yml
+END
+role_abilities.yml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/test/fixtures/role_abilities.yml
+END

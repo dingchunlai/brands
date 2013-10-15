@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/466/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared
+END
+_paint_top10.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_paint_top10.html.erb
+END
+_upload_img.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_upload_img.html.erb
+END
+_front_admin_top.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_front_admin_top.html.erb
+END
+_city_select.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_city_select.html.erb
+END
+_paint_admin_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_paint_admin_menu.html.erb
+END
+_help.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/466/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_help.html.erb
+END
+_front_admin_left.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_front_admin_left.html.erb
+END
+_top_location.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_top_location.html.erb
+END
+_right_top_img.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_right_top_img.html.erb
+END
+_admin_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/shared/_admin_menu.html.erb
+END

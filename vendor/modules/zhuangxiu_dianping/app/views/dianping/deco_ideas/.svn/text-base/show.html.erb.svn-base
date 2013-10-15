@@ -1,0 +1,39 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:设计理念终端页") %>
+<% @title = html_metadata.title % {:idea_name => @deco_idea.title} %>
+<% @description = html_metadata.description  %>
+<% @keywords = html_metadata.keywords % {:idea_name => @deco_idea.title} %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > #{link_to "#{($redis.get("deco_idea_#{@firm.id}").nil?) ? '设计理念' : $redis.get("deco_idea_#{@firm.id}")}",firm_deco_ideas_url(:firm_id => @firm.id)}" %>
+<style type="text/css">
+  li .diary_contwb{display:none;}
+</style>
+<%= render :partial => "dianping/deco_ideas/deco_ideas_register_pop"%>
+<!--end_submenu_code-->
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_dianp">
+      <h3><%= @deco_idea.title%></h3>
+    </div>
+    <div class="diary_contlist" id="diary_contlist">
+
+      <ul>
+        <li class="diary_body" id="diary_body">
+          <div class="zx_diaryfbglimg" style="margin:0 15px">
+            <%= @deco_idea.content %>
+          </div>
+          <div class="zxdp2010_pages clearfix">
+            <% cache "dianping:firm:deco_idea:show:#{@deco_idea.id}:bottom", :expires_in => 5.minutes do %>
+              <div class="f_l"><%= previous_deco_idea_link @previous_deco_idea %></div>
+              <div class="f_r"><%= next_deco_idea_link @next_deco_idea %></div>
+            <% end %>
+          </div>
+          <%= render :partial => "/dianping/shared/remarks", :locals=>{ :resource_id => @deco_idea.id, :resource_type=> "DecoIdea"} %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>
+<%= increase_pv_image_tag "deco_idea", @deco_idea.id %>

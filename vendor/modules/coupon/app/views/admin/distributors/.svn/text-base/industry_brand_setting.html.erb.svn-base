@@ -1,0 +1,138 @@
+<script type="text/javascript">
+    <% if @industry_brands.empty? %>
+    var industry_brands = {};
+    <% else %>
+    var industry_brands = <%=@industry_brands.inject({}) { |hash,(key, value)| hash[key] ||= []; hash[key] = value.map(&:brand_id); hash }.to_json%>;
+    <% end %>
+</script>
+<% form_for '', :url => save_industry_brand_setting_admin_distributor_path(@distributor) do |f| %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th colspan="2">经销商:&nbsp;&nbsp;&nbsp;&nbsp;<%= @distributor.title %>&nbsp;&nbsp;&nbsp;&nbsp;行业品牌设定</th>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="30"><strong>行业</strong></td>
+      <td class="last">
+        <%
+           industries_html = ''
+           Industry.select_options.each do |industry|
+        %>
+            <%
+               industries_html << "<div id='industry_brands_#{industry[1]}' style='display:none;float: left;' data='#{industry[0]}'></div><div class='clear'></div>"
+            %>
+            <%= check_box_tag 'distributor_account_profile[industries][]', industry[1], false, :id => "industry_#{industry[1]}" -%>
+            <%= h industry[0] -%>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong>品牌</strong></td>
+      <td class="last">
+        <div id="brands_container">
+          <%= industries_html %>
+        </div>
+      </td>
+    </tr>
+    <tr><td colspan="2" align="center"><%= f.submit "提交" %><font color='red'><%= flash[:notice] %></font></td></tr>
+  </table>
+</div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+        $.fn._initLoadBrands = function() {
+            var tag_id = $(this).attr("id").replace("industry_", "");
+            if ($(this).attr("checked")) {
+                $("#industry_brands_" + tag_id).css("display", "block");
+                $("#industry_brands_" + tag_id).html("正在加载 "+ $("#industry_brands_" + tag_id).attr("data") + " 下的品牌...");
+                // ajax call
+                $.ajax({
+                    url: '/pinlei/' + tag_id + '/pinpai',
+                    type: 'get',
+                    dataType: 'json',
+
+                    error: function(request) {
+                        $("#industry_brands_" + tag_id).html("<font color=red>加载 "+ $("#industry_brands_" + tag_id).attr("data") + " 品牌失败，请联系管理员！</font>");
+                    },
+
+                    success: function(data) {
+                        $("#industry_brands_" + tag_id).html("<p style='border: 1px solid #369369; padding: 2px; background-color: orange;'>"
+                                + $("#industry_brands_" + tag_id).attr("data") + "的品牌"
+                                + "<span style='margin-left: 5px; display: none; text-decoration: underline; cursor: pointer;' id='all_checked_"+ tag_id  + "'>全选</span>"
+                                + "<span style='margin-left: 5px; display: none; text-decoration: underline; cursor: pointer;' id='all_unchecked_"+ tag_id  + "'>取消</span>"
+                                + "<span style='float: right; padding: 2px; cursor: pointer; border:1px solid #eee;' data='fold' id='fold_"+ tag_id +"'>◢</span>"
+                                + "</p>");
+                        if (data.length == 0) {$("#industry_brands_" + tag_id).html($("#industry_brands_" + tag_id).attr("data") + " 下暂无品牌");}
+                        $("<div style='display:none;' id='industry_brands_container_"+ tag_id +"'></div>").appendTo($("#industry_brands_" + tag_id));
+                        for (var i = 0; i < data.length; i++) {
+                            var checked = false;
+                            if (industry_brands[tag_id] != null)
+                            {
+                                var result = $.grep(industry_brands[tag_id], function(n, index) {
+                                    return n == data[i].id;
+                                });
+                                if (result.length > 0) {
+                                    checked = true;
+                                }
+                            }
+                            var str = '<div style="float: left; padding: 4px; margin: 0 1px 2px 3px; width: 100px; border-left: 5px outset #336699; border-bottom: 1px dotted #336699;">'
+                                    + '<input type="checkbox" value="'+ tag_id + '-' + data[i].id + '" name="distributor_account_profile[brands][]"'
+                                    + (checked ? ' checked=true' : '') + '>'
+                                    +'<span>&nbsp;' + data[i].name_zh + '</span></div>';
+                            $(str).appendTo($("#industry_brands_container_" + tag_id));
+                        }
+                    }
+                });
+            } else {
+                $("#industry_brands_" + tag_id).css("display", "none");
+                // empty elements
+                $("#industry_brands_" + tag_id).html("");
+            }
+        };
+        
+        $("input[id^='industry_']").attr("checked", false);
+
+        $("span[id^='fold_']").live('click', function(){
+            var id = $(this).attr("id").replace("fold_", '');
+            if ($(this).attr("data") == "unfold") {
+                $("#all_checked_" + id).css("display", "none");
+                $("#all_unchecked_" + id).css("display", "none");
+                $(this).html("◢");
+                $("#industry_brands_container_" + id).css("display", "none");
+                $(this).attr("data", "fold");
+            } else {
+                $(this).html("◣");
+                $("#industry_brands_container_" + id).css("display", 'block');
+                $(this).attr("data", "unfold");
+                $("#all_checked_" + id).css("display", "");
+                $("#all_unchecked_" + id).css("display", "");
+            }
+        });
+
+        $("span[id^='all_checked_']").live("click", function(){
+            var id = $(this).attr("id").replace("all_checked_", '');
+            $("input[value^='"+ id +"-']").attr("checked", true);
+        });
+
+        $("span[id^='all_unchecked_']").live("click", function(){
+            var id = $(this).attr("id").replace("all_unchecked_", '');
+            $("input[value^='"+ id +"-']").attr("checked", false);
+        });
+
+        $("input[id^='industry_']").click(function(){
+            $(this)._initLoadBrands();
+        });
+
+        $("input[id^='industry_']").each(function(i){
+            var id = $(this).attr("id").replace("industry_", '');
+            if (industry_brands[id] != null) {
+                $(this).attr("checked", true);
+                $(this)._initLoadBrands();
+            }
+        });
+
+
+    });
+</script>

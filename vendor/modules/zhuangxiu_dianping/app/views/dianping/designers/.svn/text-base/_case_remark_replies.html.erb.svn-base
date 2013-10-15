@@ -1,0 +1,12 @@
+<% if flash[:error] %>
+  <div style="padding-left:25px;color:red;"><%=flash[:error]%></div>
+<% end %>
+<% remark.show_replies.each do |remark_reply| %>
+  <% editor = get_remark_editor(remark_reply) %>
+  <% if editor.class == DecoFirm %>
+    <em>[<a href="<%= generate_firm_path(editor) %>" title="<%= editor.name_zh %>" target="_blank"><%= editor.name_zh %></a>]于 <%= remark_reply.created_at.strftime("%Y-%m-%d") %> 回复</em>
+  <% elsif editor.class == HejiaUserBbs %>
+    <em>[<%= remark_reply.user_name %> ]于<%= remark_reply.created_at.strftime("%Y-%m-%d %H:%M:%S") %>回复</em>
+  <% end %>
+  <p><%= remark_reply.content %></p>
+<% end if remark.replies.size > 0 %>

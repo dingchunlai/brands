@@ -1,0 +1,17 @@
+     <div class="diyq_contbox6 diyq_listrbox diyq_listrboxa">
+      <h3>您可能感兴趣的<%= Coupon.human_name %></h3>
+      <ul>
+        <% 
+          @interested_coupons.each do |coupon| 
+            existing_amount = coupon.virtual_existing_number.to_i <= 0 ? 0 : coupon.virtual_existing_number.to_i
+        %>
+        <li>
+          <div class="diyq_listno">NO.<%= coupon.code %></div>
+          <div class="diyq_listtit"><%= link_to coupon.brand_industry_name, coupon_show_path(coupon), :target => '_blank' %></div>
+          <div class="diyq_listimg2"><a href="<%= coupon_show_path(coupon) %>" target="_blank"><img src="<%=cloud_fs_domain("image")%><%= coupon.list_thumbnail_url %>" width="132" height="94" /></a></div>
+          <p class="clear">总发行<%= coupon.total_issue_number %>张 当前可用<%= existing_amount %>张</p>
+        </li>
+        <% end %>
+      </ul>
+     </div>
+

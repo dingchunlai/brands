@@ -1,0 +1,15 @@
+<div class="width960 margin10">
+  <div class="diyq_bottombox">
+    <% 
+      ["如何获取","如何使用","如何推荐","如何投诉"].each_with_index do |hp, index| 
+        i = index + 1
+    %>
+    <ul class="how<%= i %>">
+      <% promotion_items("抵用券:频道首页:帮助中心:#{hp}").each do |item| %>
+        <li>·<%= link_to item.title, item.url, :target => '_blank' %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+</div>
+

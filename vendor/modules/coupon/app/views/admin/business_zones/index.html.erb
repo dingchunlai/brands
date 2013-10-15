@@ -1,0 +1,121 @@
+<%= top_bar :title => '商圈管理页',
+            :button => ['创建商圈', new_admin_business_zone_path(:district_id => params[:district_id])],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['BusinessZones', admin_business_zones_path(:district_id => params[:district_id])]
+            ]
+%>
+<div class="select-bar">
+  <%= select_tag "business_zone_city_id", options_for_select(City.find(:all).collect { |city| [city.name, city.id] }.unshift(['请选择','']), @district.nil? ? "" : @district.city_id) %>
+  <%= select_tag "business_zone_district_id", options_for_select(District.by_city(@district.nil? ? 0 : @district.city_id).collect { |city| [city.name, city.id] }, params[:district_id].to_i) %>
+</div>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">编号</th>
+      <th><%= BusinessZone.human_attribute_name("name") %></th>
+      <th><%= BusinessZone.human_attribute_name("pinyin") %></th>
+      <th><%= BusinessZone.human_attribute_name("code_name") %></th>
+      <th><%= BusinessZone.human_attribute_name("city_id") %></th>
+      <th><%= BusinessZone.human_attribute_name("district_id") %></th>
+      <th colspan=5 class="last">操作</th>
+    </tr>
+    <% @business_zones.each_with_index do |business_zone, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= business_zone.id %></td>
+          <td><%= business_zone.name %></td>
+          <td><%= business_zone.pinyin %></td>
+          <td><%= business_zone.code_name %></td>
+          <td>
+            <% if can? :read, City %>
+                <%= link_to business_zone.city.name, admin_city_path(business_zone.city_id) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+          <td>
+            <% if can? :read, City %>
+                <%= link_to business_zone.district.name, admin_district_path(business_zone.district_id) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+          <td>
+            <% if can? :read, business_zone %>
+                <%= link_to "查看", admin_business_zone_path(business_zone) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+          <td>
+            <% if can? :update, business_zone %>
+                <%= link_to '修改', edit_admin_business_zone_path(business_zone) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+          <!--<td><%#= link_to '删除', admin_business_zone_path(business_zone), :confirm => 'Are you sure?', :method => :delete %></td>-->
+          <td>
+            <% if can? :read, MarketShop %>
+                <%= link_to "卖场分店列表", admin_market_shops_path(:business_zone_id => business_zone) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+
+          </td>
+          <td>
+            <% if can? :create, MarketShop %>
+                <%= link_to '添加卖场分店', new_admin_market_shop_path(:business_zone_id => business_zone.id) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @business_zones.empty? -%>
+      <%= will_paginate @business_zones, :class => "digg_pagination" -%>
+  <% end -%>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+
+        var city_id = "business_zone_city_id";
+        var district_id = "business_zone_district_id";
+
+        $("#" + city_id).change(function(){
+            if ($(this).val() == "") { return null; }
+            $('#' + district_id + ' option').remove();
+            $('#' + district_id).append($('<option value="">loading...</option>'));
+            $.ajax({
+                url: '/remote/districts/',
+                type: 'get',
+                data: {'id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert("请联系管理员");
+                },
+
+                success: function(data) {
+                    $('#' + district_id + ' option').remove();
+                    //if (data.length == 0) $('#' + district_id).append($('<option value="">没有地区</option>'));
+                    $('#' + district_id).append($('<option value="">请选择</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#' + district_id);
+                    }
+                }
+            });
+        });
+
+        $("#" + district_id).change(function(){
+            if ($(this).val() == "") { return; }
+            location.href='/admin/business_zones?district_id=' + $(this).val();
+        });
+
+    });
+</script>

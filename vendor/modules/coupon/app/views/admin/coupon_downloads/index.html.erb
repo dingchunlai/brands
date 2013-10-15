@@ -1,0 +1,64 @@
+<%= top_bar :title => '手机统计页面',
+  :button => ["数据统计", data_admin_coupons_path],
+  :breadcrumbs => [
+  ['首页', coupon_admin_index_path],
+  ["#{Coupon.human_name}管理", admin_coupons_path],
+  ['确认下载手机']
+]
+%>
+
+<div class="select-bar">
+  <span style="margin-left: 20px;color: #0033CC;font_size: 18px;"> <%= @coupon.title %>--<%= @coupon.code %></span>
+</div>
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th style="width: 50%">手机号码</th>
+      <th>状态</th>
+    </tr>
+    <%@coupon_downloads.each do |download|%>
+      <tr>
+        <% unless download.is_confirm %>
+          <td>
+            <% 
+              mobile = download.mobile
+              mobile[4..7] = '****'
+              mobile 
+            %>
+            <span id="<%= download.id %>_show"> 
+              <%= mobile %>
+            </span> 
+          </td>
+          <td><% if can? :update, download %> <span id="<%= download.id %>_button" current_option="update"><%=link_to '确认手机号码', "#n" %></span><% end %></td>
+        <% else %>
+          <td> <%= download.mobile %> </td>
+          <td> <span style="color: red;">已确认</span> </td>
+        <% end %>
+      </tr>
+    <%end%>
+  </table>
+ </div>
+
+<script type="text/javascript">
+  $(function(){
+      $("span[current_option=update] a").click(function(event){
+          event.preventDefault();
+          var id = $(this).parent().attr("id").split('_')[0];
+          $.ajax({
+              type: 'PUT',
+              url: "/admin/coupon_downloads/" + id,
+              dataType: 'json',
+              success: function(data){
+                $('#' + id + '_button').html("<span style='color: red;'>已确认</span>");
+                $('#' + id + '_show').html(data.mobile);
+              },
+              error: function(){
+                alert('修改参数错误! ');
+              }
+            });
+      });
+  });
+</script>

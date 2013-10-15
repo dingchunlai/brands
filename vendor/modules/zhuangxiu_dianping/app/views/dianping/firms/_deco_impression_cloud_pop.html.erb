@@ -1,0 +1,33 @@
+<!--vote_code-->
+<script type="text/javascript">
+jQuery(function($){
+	$(".zxdp2011_voteopen").click(
+		function(){
+			$(".zxdp2011_bg").show();
+			$(".zxdp2011_vote").show();
+					});
+	$(".zxdp2011_voteclose").click(
+		function(){
+			$(".zxdp2011_bg").hide();
+			$(".zxdp2011_vote").hide();
+					});
+	$(".tag_cloud div").mouseover(
+		function(){
+			$(this).css("z-index","99");
+					});
+	$(".tag_cloud div").mouseout(
+		function(){
+			$(this).css("z-index","0");
+					});
+});
+</script>
+<div class="zxdp2011_bg"></div>
+<div class="zxdp2011_vote">
+  <h3>点击下列印象词可进行投票</h3>
+  <div class="zxdp2011_voteclose">关闭</div>
+  <div class="zxdp2011_votebox">
+    <%= render :partial => 'impression_pop'  %>
+  </div>
+</div>
+<!--end_vote_code-->
+

@@ -1,0 +1,57 @@
+<%= top_bar :title => '提供抵用券管理页',
+            :button => ['创建提供抵用券', new_admin_offer_coupon_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['OfferCoupons', admin_offer_coupons_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">提供抵用券信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="100"><strong><%= OfferCoupon.human_attribute_name("merchant") %></strong></td>
+      <td class="last"><%= h @offer_coupon.merchant %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("body") %></strong></td>
+      <td class="last"><%= h @offer_coupon.body %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("city_id") %></strong></td>
+      <td class="last"><%= @offer_coupon.city.name %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("district_id") %></strong></td>
+      <td class="last"><%= @offer_coupon.district.name %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("linkman") %></strong></td>
+      <td class="last"><%= h @offer_coupon.linkman %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("telphone") %></strong></td>
+      <td class="last"><%= h @offer_coupon.telphone %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("sex") %></strong></td>
+      <td class="last"><%= @offer_coupon.sex? ? "男" : "女" %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= OfferCoupon.human_attribute_name("status") %></strong></td>
+      <td class="last"><%= (@offer_coupon.status != 1) ? "<font color=red>未处理</font>" : "已处理" %></td>
+    </tr>
+    <tr>
+      <td class="first last" colspan=2>
+        <% if (@offer_coupon.status != 1) %>
+            <%= link_to "更改处理状态", edit_admin_offer_coupon_path(@offer_coupon) %>
+        <% end %>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<%= link_to "返回列表", admin_offer_coupons_path %>
+      </td>
+    </tr>
+
+  </table>
+</div>

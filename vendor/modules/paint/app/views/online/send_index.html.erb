@@ -1,0 +1,74 @@
+<% title "【油漆工】申请派遣油漆工_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_3 %>
+<% description PAINT_DESCRIPTION_3 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "申请派遣油漆工", :location_end => nil }%>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#no_buy").click(function(){
+			$(".has_brand").hide();
+		});
+		$("#has_buy").click(function(){
+			$(".has_brand").show();
+		});
+		function none_brand(){
+			if ($("#has_buy").val() == 0) {
+				$(".has_brand").hide();
+			}else{
+				$(".has_brand").show();
+			}
+		};
+		none_brand();
+	});
+</script>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current margin10">
+      <h3>申请派遣油漆工</h3>
+      <div class="yg_jsz clearfix">
+        <div class="yg_jsz_txt f_r"><%= render :partial => '/explanation/online_send_1' %></div>
+      </div>
+      <div class="yg_jsz_shenq">
+        <h4>第一步：</h4>
+		<% form_for @paint_send , :url => paiqian_path do |f|%>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="right" width="300"><strong>您是否已经购买了油漆：</strong></td>
+              <td><%= f.radio_button(:is_buy ,1 ,:id => 'has_buy' ,:checked => true) %>
+                <label for="radio01">是</label>
+				<%= f.radio_button(:is_buy ,0 ,:id => 'no_buy' ,:checked => false) %>
+                <label for="radio02">否</label></td>
+            </tr>
+            <tr class="has_brand">
+              <td align="right"><strong>您购买的油漆品牌：</strong></td>
+              <td><%= f.radio_button(:brand, 1 ,:checked => true) %>
+                <label for="radio03">多乐士</label>
+               	<%= f.radio_button(:brand, 2) %>
+                <label for="radio04">来威漆</label>
+				<%= f.radio_button(:brand, 0) %>
+                <label for="radio05">其他品牌</label></td>
+            </tr>
+            <tr>
+              <td colspan="2"><div class="yg_sqjsz_btn">
+			  <%= f.hidden_field :paint_worker_id, :value => @paint_worker.id %>
+			  <%= f.hidden_field :province, :value => @paint_worker.painter.province %>
+			  <%= f.hidden_field :city, :value => @paint_worker.painter.city%>
+			<%= f.submit "下一步" ,:style => "cursor:pointer;"%>
+          </div></td>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+       <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

@@ -1,0 +1,148 @@
+<%content_for :head do%>
+  <script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+  <% javascript 'http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js',
+    'http://js.51hejia.com/js/jquery.timers-1.2.js',
+    'http://js.51hejia.com/js/jquery/plugins/tmpl/1.0.0/jquery.tmpl.min.js'
+  %>
+  <link type='text/css' rel="Stylesheet" href='http://js.51hejia.com/js/jquery/plugins/kindeditor/3.5.2/skins/default.css'/>
+  <%= include_kindeditor_javascript %>
+  <%= include_jquery_easy_validator %>
+<%end%>
+<%= top_bar :title => '经销商编辑页',
+            :button => ['经销商列表', admin_distributors_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['经销商管理', admin_distributors_path],
+              ['编辑页面']
+            ]
+%>
+<% 
+  form_for( @distributor, 
+      :url => admin_distributor_path(@distributor), 
+      :html => {'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'), :class => 'upload_form'}) do |f| 
+%>
+  <%= f.error_messages %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">修改经销商信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= f.label :title %></strong></td>
+      <td class="last"><%= f.text_field :title, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= f.label :short_title %></strong></td>
+      <td class="last"><%= f.text_field :short_title, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= f.label :class_name %></strong></td>
+      <td class="last"><%= f.select :class_name, Object.subclasses_of(Distributor).collect { |obj| [obj.human_name, obj.to_s] }, :include_blank => "默认" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><label for="distributor_QQ">QQ</label></strong></td>
+      <td class="last"><%= f.text_field :qq %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= f.label :logo %></strong></td>
+      <td class="last">
+          <img id="image_thumb" alt="图片预览" size="356x125" />
+          <span id="image_upload_button"></span>
+          <%= f.text_field :logo, :style => "display:none;", :class => "image_attr" %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong><%= f.label :description %></strong></td>
+      <td>
+          <%= f.text_area :description , :id=>"cke_editor" ,:style=>"width: 600px;height: 250px;", :class=>"kindeditor", "data-toolbar" => "simple" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+          <table width="99%" border="0" cellspacing="0" cellpadding="0" id="picyl" data_index="0">
+            <thead>
+              <tr style="BACKGROUND-COLOR: #708090"><th width="60">操作</th><th width="50">预览图</th><th width="300">文件名</th><th width="100">删除</th></tr>
+            </thead>
+            <tbody>
+
+            <style type="text/css" media="screen">
+              img.preview{
+                width: 200px; 
+                height: 200px;
+                position: absolute;
+                left: 40px;
+                top: -120px;
+                float: left;
+                z-index: 1px;
+              }
+            </style>
+
+            <script id="pic_list_template" type="text/x-jquery-tmpl">
+              <td>
+                <%= link_to "插入", "${img_path_with_domain}", :class => "insert_img_to_editor", :title => "将该图片插入至文档" %>
+              </td>
+              <td>
+                <a class="preview_pic" href="#"><%= image_tag "http://js.51hejia.com/img/zxdpimg/zxrj_picicon.gif" %></a>
+                <div style="position:relative;z-index:140;display:none;"><img src="${img_path_with_domain}" class="preview" /></div>
+              </td>
+              <td>${file_name}</td>
+              <td>
+                <%= link_to "删除图片", "#", :class => "delete_picture", 'data-id' => "", :title => "删除图片"%>
+                <%= hidden_field_tag "pictures[][image_id]", "${image_id}" %>
+                <%= hidden_field_tag "pictures[][image_md5]", "${image_md5}" %>
+                <%= hidden_field_tag "pictures[][image_ext]", "${image_ext}" %>
+                <%= hidden_field_tag "pictures[][file_name]", "${file_name}" %>
+              </td>
+            </script>
+            <!-- jQuery ERB -->
+            <% @distributor.pictures && @distributor.pictures.each do |picture|%>
+              <tr class="line">
+                <td><%= link_to "插入", picture.url, :class => "insert_img_to_editor", :title => "将该图片插入至文档" %></td>
+                <td >
+                  <a class="preview_pic" href="#"><%= image_tag "http://js.51hejia.com/img/zxdpimg/zxrj_picicon.gif" %></div></a>
+                  <div style="position:relative;z-index:140;display:none;"><img src="<%= picture.url%>" class="preview"></div>
+                </td>
+                <td><%= picture.file_name %></td>
+                <td>
+                  <%= link_to "删除图片", "#", :class => "delete_picture", "data-id" => picture.id,  :title => "删除图片"%>
+                  <%= hidden_field_tag "pictures[][image_id]", picture.image_id %>
+                  <%= hidden_field_tag "pictures[][image_md5]", picture.image_md5 %>
+                  <%= hidden_field_tag "pictures[][image_ext]", picture.image_ext %>
+                  <%= hidden_field_tag "pictures[][file_name]", picture.file_name %>
+                  <%= hidden_field_tag "pictures[][id]", picture.id %>
+                </td>
+              </tr>
+            <% end %>
+            <!-- END jQuery ERB -->
+            </tbody>
+          </table>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <span id="swfupload_button"></span>
+        <span>提示： 图片最佳尺寸500px*375px(长宽比4：3)； 单图大小不能超过200K </span>
+     </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= f.submit '提 交' %></td>
+    </tr>
+  </table>
+</div>
+<% end %>
+
+<style type="text/css">
+  table.form th, table.form td{
+    padding-left: 0px; 
+  } 
+  table.listing td{
+    padding: 0px 0px;
+  }
+</style>
+<script src="http://js.51hejia.com/js/projects/brands/upload/single_image_upload.js?<%= Time.now.year %>" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/projects/brands/upload/multi_mode_image_upload.js?<%= Time.now.year %>" type="text/javascript"></script>

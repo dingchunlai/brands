@@ -1,0 +1,6 @@
+<ul class="sidebox_6">
+  <h3>品牌库</h3>
+  <% @articles.each do |a| %>
+    <li><a href="<%= a.detail_url %>" target="_blank" title="<%= a.TITLE %>"><%= truncate_u(a.TITLE, 17) %></a></li>
+  <% end %>
+</ul>

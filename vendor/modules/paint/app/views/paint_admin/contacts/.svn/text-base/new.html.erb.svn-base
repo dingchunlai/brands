@@ -1,0 +1,8 @@
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>联络列表添加</h1>
+  <div class="breadcrumbs">联络列表 / 联络列表添加</div>
+</div>
+<div class="clearfix">
+	<%= render :partial => "edit_info"%>
+</div>

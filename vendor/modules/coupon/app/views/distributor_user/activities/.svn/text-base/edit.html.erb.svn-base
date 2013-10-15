@@ -1,0 +1,9 @@
+<%= top_bar :title       => "#{VipDistributorActivity.human_name}管理",
+            :button      => ['返回列表', distributor_user_activities_path],
+            :breadcrumbs => [
+                    ['首页', distributor_user_index_path],
+                    ["#{VipDistributorActivity.human_name}管理", distributor_user_activities_path]
+            ]
+%>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<%= render :partial => 'form' %>

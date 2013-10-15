@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title>权限管理-beta</title>
+  <link rel="stylesheet" href="http://jquery.bassistance.de/treeview/jquery.treeview.css"/>
+  <link rel="stylesheet" href="http://jquery.bassistance.de/treeview/red-treeview.css"/>
+  <link rel="stylesheet" href="screen.css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://jquery.bassistance.de/treeview/lib/jquery.cookie.js" type="text/javascript"></script>
+  <script src="http://jquery.bassistance.de/treeview/jquery.treeview.js" type="text/javascript"></script>
+  <script src="/javascripts/jrails.js?1291606870" type="text/javascript"></script>
+  <script type="text/javascript">
+      $(function() {
+          $("#tree").treeview({
+              collapsed: true,
+              animated: "medium",
+              control:"#sidetreecontrol",
+              persist: "location"
+          });
+      });
+  </script>
+</head>
+<style type="text/css">
+  *{paddding:0;margin:0;}
+  #banner{background:#f60;padding:20px;color:#fff;font-size:18px;}
+  #group_form{padding:10px 20px; background:#eee;font-size:14px;}
+  #group_form form{margin-top:5px;font-size:12px;}
+  #group_form input{font-size:12px;}
+  #permission_form{padding:10px 20px; background:#eee;font-size:14px;}
+  #permission_form form{margin-top:5px;font-size:12px;}
+  #permission_form input{font-size:12px;}
+  #main{padding:0 20px; background:#f6f6f6;font-size:14px;}
+  #sidetreecontrol{color:#999;float:left;height:30px;line-height:30px;}
+  #sidetreecontrol a,#sidetreecontrol a:hover{color:#f60;font-weight:bold;text-decoration:none;}
+  #permissions_frm{border-top:1px solid #dedede;padding-top:10px;}
+  .treeview ul{background:#f6f6f6;}
+  .treeview .collapsable span{color:#333;}
+  .add_group {padding:2px 5px;background:#223;margin-left:20px;color:#fff;cursor:pointer;}
+  .add_permission {padding:2px 5px;background:#449;margin-left:20px;color:#fff;cursor:pointer;}
+  .edit_permission {padding:2px 5px;background:#f60;margin-left:20px;color:#fff;cursor:pointer;}
+
+  #edit_permission_form {
+      z-index: 999;
+      position: absolute;
+      backgournd: #666;
+      filter: alpha(opacity = 80); /*IE*/
+      -moz-opacity: 0.8; /*MOZ , FF*/
+      opacity: 0.8; /*CSS3, FF1.5*/
+      display: none;
+      border: 1px dashed #254;
+      width: 50%;
+      font-size:12px;
+      background: #FFFFE0;
+  }
+</style>
+<body>
+<h3 id="banner"><strong>［BETA］</strong>编辑[ <%= @role.name %> ]角色权限 <a href="<%=admin_web_permissions_path%>">返回列表</a></h3>
+<% if can? :create_group, :web_permissions %>
+<div id="group_form">
+  <strong>权限组创建</strong>
+  <form action="<%= create_group_admin_web_permissions_path %>" class="new_ability_permission_group" id="new_ability_permission_group" method="post">
+    <input id="ability_permission_group_parent_id" name="ability_permission_group[parent_id]" type="hidden" />
+    名称：<input id="ability_permission_group_title" name="ability_permission_group[title]" size="30" type="text" onblur="this.style.border='';" />
+    <input type="submit" value="创建" /><input type="reset" value="重置" id="ability_permission_group_reset" />
+  </form>
+</div>
+<% end %>
+<hr />
+<% if can? :create_permission, :web_permissions %>
+<div id="permission_form">
+  <strong>权限创建</strong>
+  <form action="<%= create_permission_admin_web_permissions_path %>" class="new_ability_permission" id="new_ability_permission" method="post">
+    名称：<input type="text" name="ability_permission[title]" id="ability_permission_title" value="" onblur="this.style.border='';" />
+    动作：<input type="text" name="ability_permission[action]" id="ability_permission_action" value="" />
+    subject_class:<input type="text" name="ability_permission[subject_class]" id="ability_permission_subject_class" value="" />
+    subject_conditions:<input type="text" name="ability_permission[subject_conditions]" id="ability_permission_subject_conditions" value="" />
+    <input type="hidden" name="ability_permission[group_id]" id="ability_permission_group_id" value="" />
+    <input id="ability_permission_submit" name="commit" type="submit" value="创建" />
+    <input id="ability_permission_reset" name="reset" type="reset" value="重置" />
+  </form>
+</div>
+<% end %>
+<% if can? :create_permission, :web_permissions %>
+<div id="edit_permission_form">
+  <strong>权限修改</strong>
+  <form action="<%= update_permission_admin_web_permissions_path %>" class="edit_ability_permission" id="edit_ability_permission" method="post">
+    <input type="hidden" name="edit_permission_id" id="edit_permission_id" />
+    名称：<input type="text" name="edit_ability_permission[title]" id="edit_ability_permission_title" value="" onblur="this.style.border='';" />
+    动作：<input type="text" name="edit_ability_permission[action]" id="edit_ability_permission_action" value="" /><br />
+    subject_class:<input type="text" name="edit_ability_permission[subject_class]" id="edit_ability_permission_subject_class" value="" />
+    subject_conditions:<input type="text" name="edit_ability_permission[subject_conditions]" id="edit_ability_permission_subject_conditions" value="" /><br />
+    <input id="edit_ability_permission_reset" name="reset" type="reset" value="重置" />
+    <input id="edit_ability_permission_submit" name="commit" type="submit" value="更新" />
+    <input id="close_edit_permission_form" type="button" value="关闭窗口"/>
+  </form>
+</div>
+<hr />
+<% end %>
+<div id="main">
+  <div id="sidetree">
+    <div class="treeheader">&nbsp;</div>
+    <div id="sidetreecontrol"><a href="?#">收起</a> | <a href="?#">展开</a>&nbsp;&nbsp;</div>
+    <div style="float:left;height:30px;line-height:30px;padding-left:10px;">
+         <form id="all_frm" onsubmit="return false;">
+          所有权限 <%= check_box_tag 'all_permission', @admin_permission.id, @permissions.include?(@admin_permission) %>
+         </form>
+    </div>
+    <div><span id='status' style="display:none;background-color:red;">操作进行中...</span></div>
+    <form id="permissions_frm" onsubmit="return false;" style="clear:both;">
+      <div id="tree_content">
+        <%= render_permission_tree(@groups, @all_permissions.group_by(& :group_id), @permissions.map(& :id)) %>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    function add_link() {
+        <% if can? :create_group, :web_permissions %>
+        $.each($("span[data='group']"), function(i, item) {
+            var id = $(item).attr("id").replace('group_', '');
+            var str = "&nbsp;&nbsp;<a id='g_" + id + "' class='add_group'>添加分组</a>";
+            $(str).insertAfter($(item));
+        });
+        <% end %>
+
+        <% if can? :create_permission, :web_permissions %>
+        $.each($("span[data='permission']"), function(i, item) {
+            var id = $(item).attr("id").replace('group_', '');
+            var str = "&nbsp;&nbsp;<a id='gp_" + id + "' class='add_permission'>添加权限</a>";
+            $(str).insertAfter($(item));
+        });
+        <% end %>
+
+        $.each($("span[data='both']"), function(i, item) {
+            var id = $(item).attr("id").replace('group_', '');
+            <% if can? :create_group, :web_permissions %>
+            var str_group = "&nbsp;&nbsp;<a id='g_" + id + "' class='add_group'>添加分组</a>";
+            $(str_group).insertAfter($(item));
+            <% end %>
+            <% if can? :create_permission, :web_permissions %>
+            var str_permission = "&nbsp;&nbsp;<a id='gp_" + id + "' class='add_permission'>添加权限</a>";
+            $(str_permission).insertAfter($(item));
+            <% end %>
+        });
+
+        <% if can? :update_permission, :web_permissions %>
+        $.each($("li[id^='permission_item_']"), function(i, item) {
+            var id = $(item).attr("id").replace('permission_item_', '');
+            $(item).css("background", "#FFFFE0");
+            var str = "<a id='edit_permission_" + id + "' class='edit_permission'>修改</a>";
+            $(str).insertAfter($(item).children().last());
+        });
+        <% end %>
+
+        //设置 span样式 
+        $("span[id^='peritem_title_']").css("float", 'left');
+        $("span[id^='peritem_title_']").css("display", "block");
+        $("span[id^='peritem_title_']").css("color", '#963');
+        $("span[id^='peritem_title_']").css("width", '200px');
+
+
+    }
+    $(function() {
+        add_link();
+
+        $("#close_edit_permission_form").click(function(){
+            $("#edit_permission_form").css("display", "none");
+            $("li[id^='permission_item_']").css("border", "");
+        });
+
+        $("a[id^='g_']").live('click', function() {
+            var parent_id = $(this).attr('id').replace('g_', '');
+            $("#new_ability_permission_group").each(function() {
+                this.reset();
+            });
+            $("#ability_permission_group_title").css("border", "");
+            $("#ability_permission_group_parent_id").attr("value", parent_id);
+            $("#ability_permission_group_title").css("border", "2px dotted red");
+            $("#ability_permission_group_title").focus();
+            
+        });
+
+        $("a[id^='gp_']").live('click', function() {
+            var group_id = $(this).attr('id').replace('gp_', '');
+            $("#ability_permission_reset").click(); // : (
+//            $("#new_ability_permission").each(function() {
+//                this.reset();
+//            });
+            $("#ability_permission_group_id").attr("value", group_id);
+            $("#ability_permission_title").css("border", "");
+            $("#ability_permission_title").css("border", "2px dotted red");
+            $("#ability_permission_title").focus();
+            
+        });
+
+        $("a[id^='edit_permission_']").live('click', function() {
+            var permission_id = $(this).attr('id').replace('edit_permission_', '');
+            $.ajax({
+                url: '<%= fetch_permission_admin_web_permissions_path %>',
+                type: 'get',
+                data: {'id' : permission_id},
+                dataType: 'json',
+                error: function(request) {
+                    alert("请联系管理员");
+                },
+                success: function(data) {
+                    // for test
+                    var obj = $("#edit_permission_" + data.id);
+                    $("li[id^='permission_item_']").css("border", "");
+                    obj.parent().css("border-left", "5px solid #999");
+
+                    // 设置表单
+                    $("#edit_permission_id").attr("value", data.id);
+                    $("#edit_ability_permission_title").attr("value", data.title);
+                    $("#edit_ability_permission_action").attr("value", data.action);
+                    $("#edit_ability_permission_subject_class").attr("value", data.subject_class_name);
+                    $("#edit_ability_permission_subject_conditions").attr("value", data.subject_conditions);
+                    $("#edit_permission_form").css("display", "block");
+
+                    var left = obj.position().left + obj.width() + obj.scrollLeft() + 50;
+                    var top = obj.position().top + obj.scrollTop();
+                    $("#edit_permission_form").offset({ left: left, top: top });
+                }
+            });
+        });
+
+
+        $("#new_ability_permission_group").submit(function(){
+            if ($("#ability_permission_group_title").val() == "") { alert('请填写名称'); $("#ability_permission_group_title").focus(); return false; }
+            jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'<%= create_group_admin_web_permissions_path %>'}); return false;
+            
+        });
+
+        $("#new_ability_permission").submit(function(){
+            if ($("#ability_permission_title").val() == "") { alert('请填写名称'); $("#ability_permission_title").focus(); return false; }
+            if ($("#ability_permission_action").val() == "") { alert('请填写动作'); $("#ability_permission_action").focus(); return false; }
+            if ($("#ability_permission_subject_class").val() == "") { alert('请填写subject_class'); $("#ability_permission_subject_class").focus(); return false; }
+            if ($("#ability_permission_group_id").val() == "") { alert('请设置所在权限组'); return false; }
+            jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'<%= create_permission_admin_web_permissions_path %>'}); return false;
+        });
+
+        $("#edit_ability_permission").submit(function(){
+            if ($("#edit_permission_id").val() == "") { alert('请选择需要编辑的权限'); return false; }
+            if ($("#edit_ability_permission_title").val() == "") { alert('请填写名称'); $("#edit_ability_permission_title").focus(); return false; }
+            if ($("#edit_ability_permission_action").val() == "") { alert('请填写动作'); $("#edit_ability_permission_action").focus(); return false; }
+            if ($("#edit_ability_permission_subject_class").val() == "") { alert('请填写subject_class'); $("#edit_ability_permission_subject_class").focus(); return false; }
+            jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'<%= update_permission_admin_web_permissions_path %>'}); return false;
+        });
+
+
+        <% if can? :update, :web_permissions %>
+        $("#all_permission").live('click', function() {
+            var op = 'add';
+            var pid = 'all';
+            if ($(this).attr("checked")) {
+                $("input[name^='permission_']").attr("checked", false);
+                $("input[name^='permission_']").attr("disabled", true);
+                // all
+                op = 'add';
+                pid = 'all';
+            } else {
+                $("#permissions_frm").each(function() {
+                    this.reset();
+                });
+                op = 'revoke';
+                pid = $(this).val();
+            }
+
+            var url = '<%= admin_web_permission_path(:id => params[:id]) %>?pid=' + pid + "&op=" + op + "&type=all";
+            $('#status').css("display", '');
+            jQuery.ajax(
+                {
+                    data:'&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token -%>'), dataType:'script', type:'put', url:url
+                });
+            
+            if (!$(this).attr("checked")) {
+                $("input[name^='permission_']").attr("disabled", false);
+            }
+            
+        });
+        $("input[name^='permission_']").live('click',function() {
+            $("#all_permission").attr("checked", false);
+            // single
+            var op = 'add';
+            var pid = $(this).attr("id").replace('permission_', '');
+            if ($(this).attr("checked")) {
+                op = 'add';
+            } else {
+                op = 'revoke';
+            }
+            var url = '<%= admin_web_permission_path(:id => params[:id]) %>?pid=' + pid + "&op=" + op + "&type=single";
+            $('#status').css("display", '');
+            $("input[name^='permission_']").attr("disabled", true);
+            jQuery.ajax(
+                {
+                    data:'&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token -%>'), dataType:'script', type:'put', url:url
+                });
+        });
+        <% else %>
+        $("#all_permission").attr("disabled", true);
+        $("input[name^='permission_']").attr("disabled", true);
+        <% end %>
+    });
+    <% if @permissions.include?(@admin_permission) %>
+    $("input[name^='permission_']").attr("disabled", true);
+    <% end %>
+
+</script>

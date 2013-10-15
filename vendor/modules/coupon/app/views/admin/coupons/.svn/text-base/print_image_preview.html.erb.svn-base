@@ -1,0 +1,225 @@
+<%= top_bar :title => '抵用券管理',
+            :button => ['返回列表', admin_coupons_path],
+            :breadcrumbs => [
+                    ['抵用券后台', coupon_admin_index_path],
+                    ['抵用券管理', admin_coupons_path]
+            ]
+%>
+<style type="text/css">
+    .print_form {
+        width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .container {
+        width: 631px;
+        height: 354px;
+        background: <%= @print_image["tag_color"]%>;
+        margin: 0 auto;
+    }
+
+    .vertical {
+        width: 24px;
+        height: 354px;
+        float: left;
+    }
+
+    .vertical p {
+        width: 14px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        padding: 5px;
+    }
+
+    .wcontainer {
+        width: 607px;
+        height: 349px;
+        float: left;
+        background: #fff;
+    }
+
+    .coupon_image {
+        width: 289px;
+        height: 213px;
+        margin: 0 10px;
+        float: left;
+    }
+
+    .coupon_image img {
+        width: 289px;
+        height: 213px;
+    }
+
+    .logo {
+        width: 236px;
+        height: 54px;
+        margin: 0 10px;
+        float: left;
+    }
+
+    .logo img {
+        width: 236px;
+        height: 54px;
+    }
+
+    .discount_text {
+        float: left;
+        width: 230px
+    }
+
+    .discount_text p {
+        font-size: 14px;
+        font-weight: bold;
+        color: red;
+        margin: 20px 0 0 30px;
+    }
+
+    .return_text {
+        float: left;
+        width: 230px
+    }
+
+    .return_text p {
+        font-size: 40px;
+        font-weight: bold;
+        color: blue;
+        margin: 20px 0 0 30px;
+    }
+
+    .date_text {
+        float: left;
+        width: 230px
+    }
+
+    .date_text p {
+        font-size: 14px;
+        font-weight: bold;
+        color: red;
+        margin: 30px 0 0 30px;
+    }
+
+    .bcontainer {
+        float: left;
+        width: 597px;
+        border-top: 1px dotted #333;
+        margin: 30px 0 0 10px;
+    }
+
+    .shop_name {
+        float: left;
+        width: 100%;
+        height: 20px;
+        margin: 10px 0 5px 0;
+    }
+
+    .shop_name p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .shop_addr {
+        float: left;
+        width: 100%;
+        height: 20px;
+        margin: 5px 0
+    }
+
+    .shop_addr p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .shop_telphone {
+        float: left;
+        width: 50%;
+        height: 20px;
+        margin: 5px 0
+    }
+
+    .shop_telphone p {
+        font-size: 20px;
+        color: #333;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    .area {
+        float: right;
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+    .area p {
+        font-size: 16px;
+        font-weight: bold;
+        color: <%= @print_image["area_color"]%>;
+        border: 2px solid <%= @print_image["area_color"]%>;
+        padding: 2px;
+    }
+</style>
+<div style='padding: 15px; color:red; font-size: 18px'>核对抵用券打印图相关信息</div>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan=2>印刷图预览</th>
+    </tr>
+    <tr>
+      <td class="first" width="80"><%= Coupon.human_name %>标题:</td>
+      <td class="last"><%= @coupon.title %></td>
+    </tr>
+    <tr>
+      <td class="first" width="80"><%= Coupon.human_name %>编号:</td>
+      <td class="last"><%= @coupon.code %></td>
+    </tr>
+  </table>
+  <hr/>
+  <div class="container">
+    <div class="vertical">
+      <p><%= @print_image["production_categories"].gsub(" ", "<br /><br />").html_safe %></p>
+    </div>
+    <div class="wcontainer">
+      <div class="coupon_image">
+        <%= image_tag "http://assets1.image.51hejia.com/" + @print_image['print_image_url'] %>
+      </div>
+      <div class="logo">
+        <%= image_tag "http://assets1.image.51hejia.com/" + @print_image['logo'] %>
+      </div>
+      <div class="discount_text">
+        <p>每满<%= @print_image['discount_amount'] %>元抵</p>
+      </div>
+      <div class="return_text">
+        <p><%= @print_image['return_amount'] %>元</p>
+      </div>
+      <div class="date_text">
+        <p>有效期:截止<%= @print_image["activity_end_at"] %></p>
+      </div>
+      <div class="bcontainer">
+        <div class="shop_name">
+          <p>店名: <%= @print_image["shop_name"] %></p>
+        </div>
+        <div class="shop_addr">
+          <p>地址: <%= @print_image["shop_address"] %></p>
+        </div>
+        <div class="shop_telphone">
+          <p>电话: <%= @print_image["shop_telphone"] %></p>
+        </div>
+        <div class="area">
+          <p><%= @print_image["area"] %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if can? :print_image_confirm, Coupon %>
+  <div class="print_form">
+    <% form_for '', :url => print_image_confirm_admin_coupon_path, :html => {:onsubmit => "return confirm('确认生成?');"} do |f| %>
+        <%= f.submit '确认', :name => nil %>&nbsp;&nbsp;<%= link_to "返回列表页", admin_coupons_path %>
+    <% end %>
+  </div>
+  <% end %>
+</div>

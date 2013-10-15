@@ -1,0 +1,72 @@
+<%
+order = @order.to_i
+firm_name    = get_list_firm_name_abbr2 firm
+firm_address = firm.address2.blank? ? ['暂无信息'] : firm.address2.split(/,/).map{|address| address }
+firm_praise = firm.praise
+#宁波的价位改为同上海一样
+firm_price   = firm.price.to_i != 0 ? ([12117].include?(@user_city_code.to_i) ? DecoFirm::NINBO_PRICE[firm.price.to_i] : DecoFirm::PRICE[firm.price.to_i]) : '暂无信息'
+firm_deco    = firm.model.to_i != 0 ? MODELS[firm.model.to_i] : '暂无信息'
+%>
+<li class="list_r_li_data01">
+  <%= link_to '', firm_url(:id => firm.id,:trailing_slash => "/"), :target => '_blank', :title => firm_name, :class => 'list_rli_a', :onfocus => 'this.blur()' %>
+  <p class="zxdp2010_comlistzxyy">
+    <%= link_to "在线预约",new_dianping_applicant_path(:deco_firm_id => firm.id), :title =>"免费预约量房",:id=>"applicant" ,:class => "applicant" %>
+  </p>
+  <div></div>
+  <ul class="num f_r">
+    <li><%= content_tag :span, firm.design_praise,       :class => (order == 2 ? 'red' : nil) %></li>
+    <li><%= content_tag :span, firm.construction_praise, :class => (order == 3 ? 'red' : nil) %></li>
+    <li><%= content_tag :span, firm.service_praise,      :class => (order == 4 ? 'red' : nil) %></li>
+  </ul>
+  <strong><%= link_to firm_name, firm_url(:id => firm.id,:trailing_slash => "/"), :target => '_blank', :title => firm_name %></strong>
+  <p class=txt>&nbsp;&nbsp;<span>口碑：&nbsp;</span><span class="red"><%= format("%.1f",firm_praise) %></span></p>
+  <p class=txt>&nbsp;&nbsp;<span>预约单数：&nbsp;</span><span class="red"><%= firm.valid_applicants_count %></span></p>
+  <p class="txt"><% if promoted %>&nbsp;&nbsp;<img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_icon1.gif" alt=""/><%end%><%if firm.free_loan%>&nbsp;&nbsp;<%= link_to image_tag("http://js.51hejia.com/img/zxdpimg/zxdp2011_icon10.gif", :alt => "免息贷"), "http://sc.51hejia.com?firm=#{firm.id}", :target => "_blank", :class => "clearfix" %><% end %></p>
+  <div class="textarea clearfix"><span class="span_1"><strong>公司地址：</strong></span>
+    <div class="textscroll f_l firm_summary_2011">
+      <% if firm_address.size > 1%>
+        <div id="ScrollMe<%= firm.id %>" style="overflow: hidden; height: 20px">
+          <% firm_address.each do |address| %>
+            <p><%= truncate(address,:length => 25,:omission => '') %></p>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="firm_address_2011"><p><%= truncate(firm_address.to_s,:length => 25,:omission => '') %></p></div>
+      <% end%>
+    </div>
+    <script type="text/javascript">new srcMarquee("ScrollMe<%= firm.id %>",0,1,808,20,30,3000,300,20)</script>
+    <span><strong>主打价位：</strong> <%= firm_price %></span><span><strong>装修方式：</strong> <%= firm_deco %></span>
+  </div>
+  <ul class="clearfix sale">
+    <li class="first">
+      <span class="color01">优惠信息</span>
+      <% events = firm.events %>
+      <% if events.blank? %>
+        <span><%= '暂无优惠信息' %></span>
+      <% else %>
+        <% events.each do |event| %>
+          <span ><%= truncate(event.title, :length => 35, :omission => '') %></span>
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
+  <p class="title"><span>经典案例：</span><span class="color02">案例：<span class="red"><%= firm.decoration_diaries.published.size %></span></span>
+    <%= %Q'<span class="color02">&nbsp;&nbsp;设计师：</span><span class="red">#{firm.designers_count}</span>' if firm.designers_count && firm.designers_count > 0 %>
+    <%= %Q'<span class="color02">&nbsp;&nbsp;点评：</span><span class="red">#{firm.remark_only_count}</span>' %>
+    <%= %Q'<span class="color02">&nbsp;&nbsp;在建工地：</span><span class="red">#{firm.factories.size}</span>' if firm.factories && firm.factories.size > 0%>
+  </p>
+  <ul class="piclist clearfix">
+    <% showed_notes = 0 %>
+    <% firm.firm_list_diary_master_images.each_with_index do |diary,index| %>
+      <%if diary.master_picture %>
+        <li class="<%= 'first' if showed_notes == 0 %>" >
+          <%= link_to image_tag(diary.master_picture.url("120x90"),:alt => diary.title) , firm_url(:id => firm.id,:trailing_slash => "/"), :target => "_blank"%>
+        </li>
+        <% showed_notes += 1 %>
+      <% end %>
+    <% end %>
+    <% if showed_notes == 0 %>
+      <li class="nopic"></li>
+    <% end %>
+  </ul>
+</li>

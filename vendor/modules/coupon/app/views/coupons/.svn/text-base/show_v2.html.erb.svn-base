@@ -1,0 +1,95 @@
+<% content_for :html_head do %>
+  <% set_coupon_page_meta_data @coupon.seo_title, @coupon.seo_keywords, @coupon.seo_description %>
+  <link href="http://js.51hejia.net/css/zxdpcss.css?201011051" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="http://js.51hejia.net/colorbox/exp1/colorbox.css" type="text/css"/>
+  <script type="text/javascript" src="http://js.51hejia.net/js/jquery.colorbox-min.js"></script>
+  <%= javascript_include_tag 'jrails' %>
+<% end %>
+<%
+distributor = @coupon.distributor
+coupon_ids = distributor.coupons.valid.map &:id
+coupons_size = coupon_ids.size
+shop = @coupon.distributor_shop
+coupon_tag = @coupon.tag
+%>
+<!--ad_code-->
+<div class="width960 margin10"><span id='afp_id_57673'></span></div>
+<!--end_ad_code-->
+<!--location_code-->
+<a name="a1" id="a1">&&nbsp;</a>
+<div class="width960">
+  <div class="diyq_location">您的位置：<%= link_to "首页", coupon_index_path, :target => '_blank' %>
+    > <a href="/0-0-0-<%= coupon_tag.TAGID %>-0-0-0.html" target="_blank"><%= coupon_tag.TAGNAME %></a>
+    > <span><%= @coupon.title %></span>
+  </div>
+</div>
+<!--end_location_code-->
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="diyq_list_l f_l">
+    <div class="diyq_conttit clearfix">
+      <h2><%= distributor.short_title %><%= Coupon.human_name %></h2>
+      <div class="diyq_listtab f_r">
+        <ul class="clearfix">
+          <li><a href="#a2">商家信息</a></li>
+          <li><a href="#a2">地 图</a></li>
+          <li><a href="#a3">评 论</a></li>
+          <li class="active"><%= Coupon.human_name %>(<%= coupons_size %>)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="diyq_contbox3"><img src="http://img3.51hejia.net/img/diyongquan/diyq_phone2.gif" />
+      <div class="coupon"><img src="<%= cloud_fs_domain('image')%><%=@coupon.show_image_url%>" /></div>
+      <div class="num clearfix"><div style="width: 480px;text-align: center;" class="f_l">当前可用<span><%= @coupon.sell_style == 1 ? @coupon.existing_number : @coupon.virtual_existing_number.to_i %></span>张  总发行<span><%= @coupon.total_issue_number %></span>张</div><em class="f_r">有效期：<%= @coupon.activity_began_at.to_date.strftime("%Y年%m月%d日") %>至<%= @coupon.activity_end_at.to_date.strftime("%Y年%m月%d日") %></em></div>
+      <p>以下内容将通过手机短信的形式，发送到您指定的手机：</p>
+      <div class="sms"><%= @coupon.sms_msg %></div>
+      <div class="down"><% if @coupon.sell_style == 1 && @coupon.existing_number == 0 %><span style="border: 1px solid #CF5A6C;color: #CCCCCC;padding:5px;">短信下载</span><% else %><a href="javascript:void(0);" data-id="<%= @coupon.id %>" data-title="<%= @coupon.title %>">短信下载</a><% end %></div>
+    </div>
+    <div class="diyq_contbox4">
+      <strong>使用说明</strong>
+      <%= @coupon.usage %>
+    </div>
+    <a name="a2" id="a2">&nbsp;</a>
+    <div class="diyq_contbox5 clearfix">
+      <div class="info f_l">
+        <strong>商家信息</strong>
+        <p>名称： <%= shop.name %></p>
+        <p>地址： <%= shop.address %></p>
+        <p>联系方式：<%= shop.telphone %></p>
+        <p>经营范围：<%= @coupon.production_categories.first(2).collect{|p| p.short_name + " "} %></p>
+      </div>
+      <div class="map f_r">
+        <%
+        if shop &&  shop.googlemap_image_url
+          image_domain = cloud_fs_domain('image')
+          image_url = image_domain.concat shop.googlemap_image_url
+        %>
+          <img src="<%= cloud_fs_domain("image") %><%= image_url %>" width="180" height="100"/>
+        <% else %>
+          <%= shop.address %>
+        <% end %>
+      </div>
+      <div class="djq_contblink clear">
+        <table width="450" border="0" cellspacing="0" cellpadding="0">
+          <%= render :partial => "shared/shared_connection" %>
+        </table>
+      </div>
+    </div>
+    <a name="a3" id="a3">&nbsp;</a>
+    <div class="margin10">
+      <%= render :partial => "coupon_remark" %>
+      <%= render :partial => 'login_ajax' %>
+    </div>
+    <%= render_cell :coupon, :interested_coupons, :city_id => @city.id, :limit => 4 %>
+  </div>
+  <div class="diyq_list_r f_r">
+    <%= render :partial => "promotion_browsed" %>
+    <%= render_cell :coupon, :hot_coupons, :tag_id => @coupon.tag_id, :city_id => @city.id, :limit => 3 %>
+    <%= render :partial => "featured_distributor" %>
+    <%= render_cell :coupon, :owned_browsed_coupons, :browsed_coupons => cookies[:browsed_coupons] %>
+  </div>
+</div>
+<!-- 公共模块 -->
+<%= render :partial => '/share/common_help' %>
+<!-- 添加到下载脚本 -->
+<%= render :partial => '/share/coupon_download_pop' %>

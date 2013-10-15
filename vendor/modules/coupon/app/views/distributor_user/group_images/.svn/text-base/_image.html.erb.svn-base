@@ -1,0 +1,14 @@
+        <li>
+          <h3 class="title" id="hy_upload_pic_title_<%= image.id %>"><%= image.name %></h3>
+          <img src="<%= cloud_fs_domain("image") + image.image_url %>" id="hy_upload_pic_<%= image.id %>"/><br />
+          <span><%= link_to_remote '修改',
+                         :url => distributor_user_group_upload_img_form_path(:type => img_type, :id => image.id),
+                         :before => "$('#form').html('表单加载中...');$('#error').html('');",
+                         :update => { :success => "form" },:failure => "$('#form').html('');$('#error').html('错误，请联系管理员!');" %></span>
+
+          <% if default_img == image.id %>
+            <span style="color:red;">默认主图</span>
+          <% else %>
+            <%= link_to '设为主图', set_default_distributor_user_group_image_path(image.id) %>
+          <% end  %>
+        </li>

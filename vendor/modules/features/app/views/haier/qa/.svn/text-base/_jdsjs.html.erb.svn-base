@@ -1,0 +1,16 @@
+<div class="qu_con_info">
+  <h3 class="he_title qu_font">家装设计师信息</h3>
+  <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wjz.jpg" alt=""/>
+  <h4><a href="<%= jdsjs_url %>" target="_blank">王纪柱</a></h4>
+  <ul>
+    <li><span>手机：</span>15921267735</li>
+    <li><span>地址：</span>上海隋园实业有限公司隋园社区店</li>
+
+  </ul>
+  <a href="<%= jdsjs_url %>" target="_blank" class="qu_ckxq">查看详情</a>
+</div>
+<div class="qu_case">
+  <h4>设计案例</h4>
+  <a href="<%= haier_jdsjs_case_url(:id => 536900) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/shequ.jpg" /></a>
+  <p><a href="<%= haier_jdsjs_case_url(:id => 536900) %>" target="_blank">海尔社区 再苛刻的要求也能解决</a></p>
+</div>

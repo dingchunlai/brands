@@ -1,0 +1,26 @@
+if current_user
+  if @remark.errors.empty?
+    if @remark_id == 0
+      page.insert_html :top, :remarks, :partial => @remark
+      page["remark_form_0"].reset
+    else
+      page.insert_html :top, "replies#{@remark_id}", :partial => 'coupon_remarks/reply', :locals => {:r => @remark}
+      page["remark_form_#{@remark_id}"].reset
+    end
+    page.replace_html :error_message_for_comment, ""
+    #  js_str =<<-EOF
+    #            if ($('#remarks').children().length > 5)
+    #            {
+    #                var cnt = $('#remarks').children().length - 5;
+    #                for(var i=0; i< cnt; i++ ) {
+    #                    $($('#remarks').children().last()).remove();
+    #                }
+    #            }
+    #EOF
+    #  page << js_str
+  else
+    page.replace_html :error_message_for_comment, @remark.errors.full_messages.join("<br />")
+  end
+else
+  page << "alert('请先登录再提交评论！');"
+end

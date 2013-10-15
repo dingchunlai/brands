@@ -1,0 +1,7 @@
+if @group.errors.empty?
+  #page[:new_ability_permission].reset
+  page << '$("#ability_permission_group_reset").click();'
+  page << "location.reload();"
+else
+  page << "alert('#{@group.errors.full_messages.join("\n")}');"
+end

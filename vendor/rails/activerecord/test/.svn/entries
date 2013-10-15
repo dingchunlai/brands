@@ -1,0 +1,83 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release/vendor/rails/activerecord/test
+http://svn.51hejia.com:8081
+
+
+
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+cases
+dir
+
+schema
+dir
+
+assets
+dir
+
+connections
+dir
+
+models
+dir
+
+config.rb
+file
+
+
+
+
+2012-11-12T03:54:13.305792Z
+2cec417ec9966c979e5314731c20060f
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+225
+
+fixtures
+dir
+
+migrations
+dir
+

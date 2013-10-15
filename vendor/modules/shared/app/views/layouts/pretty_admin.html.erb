@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>后台管理</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://js.51hejia.com/js/jquery.colorbox-min.js"></script>
+    <link rel="stylesheet" href="http://js.51hejia.com/colorbox/exp1/colorbox.css" type="text/css" />
+    <link rel="stylesheet" href="http://js.51hejia.com/css/yougong/yougong201204.css" type="text/css" />
+    <%= yield(:head)%>
+    <script type="text/javascript" charset="utf-8">
+      jQuery.preventDefaultEvent = function(callback) {
+        return function(event) {
+          callback.apply(this);
+          event.preventDefault();
+          return false;
+        }
+      }
+    </script>
+    <%= stylesheet_link_tag "pretty_admin/admin.css" %>
+  </head>
+  <body>
+    <div id="main">
+      <div id="header">
+        <!--<a href="#" class="logo"><img src="img/logo.gif" width="101" height="29" alt="" /></a>-->
+        <%= render_navigation_partial %>
+        <!-- 菜单示例: /vendor/modules/paint/shared/paint_admin_menu -->
+      </div>
+      <div id="middle">
+        <div id="left-column">
+          <h3>子菜单</h3>
+          <ul class="nav">
+            <%= yield(:sub_menu)%>
+            <%= render_menu_partial%>
+          </ul>
+        </div>
+        <div id="center-column">
+          <%= yield %>
+        </div>
+      </div>
+      <div id="footer"><p>www.51hejia.com  和家网</p></div>
+    </div>
+  </body>
+</html>

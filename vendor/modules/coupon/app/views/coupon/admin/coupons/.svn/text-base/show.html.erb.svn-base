@@ -1,0 +1,63 @@
+<p>
+  <b>Title:</b>
+  <%=h @coupon.title %>
+</p>
+
+<p>
+  <b>Money reach:</b>
+  <%=h @coupon.money_reach %>
+</p>
+
+<p>
+  <b>Money refund:</b>
+  <%=h @coupon.money_refund %>
+</p>
+
+<p>
+  <b>Coupon shop:</b>
+  <%=h @coupon.coupon_shop %>
+</p>
+
+<p>
+  <b>Agency:</b>
+  <%=h @coupon.agency %>
+</p>
+
+<p>
+  <b>Sms msg:</b>
+  <%=h @coupon.sms_msg %>
+</p>
+
+<p>
+  <b>Activity began at:</b>
+  <%=h @coupon.activity_began_at %>
+</p>
+
+<p>
+  <b>Activity end at:</b>
+  <%=h @coupon.activity_end_at %>
+</p>
+
+<p>
+  <b>Usage:</b>
+  <%=h @coupon.usage %>
+</p>
+
+<p>
+  <b>Offline event:</b>
+  <%=h @coupon.offline_event %>
+</p>
+
+<p>
+  <b>Offline address:</b>
+  <%=h @coupon.offline_address %>
+</p>
+
+<p>
+  <b>Offline out count:</b>
+  <%=h @coupon.offline_out_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
+<%= link_to 'Back', coupons_path %>

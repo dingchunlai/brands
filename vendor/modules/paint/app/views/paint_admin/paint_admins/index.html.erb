@@ -1,0 +1,45 @@
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>用户列表</h1>
+  <div class="breadcrumbs">用户管理 / 用户列表</div>
+</div>
+<div id="search_form">
+	<% form_tag( {:action => "index"} ,:method=>:get) do %>
+	  用户名:<%= text_field_tag "username","", :size=>15%> 
+		姓名:<%= text_field_tag "userbbsname","", :size=>15%> 
+		Email:<%= text_field_tag "userbbsemail","", :size=>15%> 
+		<%= submit_tag("搜索")%>
+	<% end -%>
+</div>
+<table border="0" cellspacing="5" id="table_list" class="listing"  cellpadding="5" width="770">
+	<tr>
+		<th>用户名</th>
+		<th>姓名</th>
+		<th>邮箱</th>
+		<th>添加日期</th>
+		<th>权限</th>
+		<th>操作</th>
+	</tr>
+	<% @paint_admins.each do |admin| %>
+	<tr <%= cycle("class='odd'","")%>>
+		<td><%=h admin.USERNAME %></td>
+		<td><%=h admin.USERBBSNAME %></td>
+		<td><%=h admin.USERBBSEMAIL %></td>
+		<td><%=h admin.CREATTIME.to_date %></td>
+		<td><%=h admin.roles_for_show%></td>
+		<td>
+			<%= link_to "编辑",edit_paint_admin_paint_admin_path(admin) %> | 
+			<% unless current_user.id == admin.USERBBSID%><%= link_to "删除",paint_admin_paint_admin_path(admin),:method=>:delete,:confirm =>"确认删除?" %> |<% end %>
+			<%= link_to "修改密码",edit_password_paint_admin_paint_admin_path(admin) %>
+		</td>
+	</tr>
+	<% end -%>
+</table>
+<% if @paint_admins.size == 0%>
+<div>
+	提示: 没有符合条件的查询结果
+</div>
+<% end %>
+
+<%= will_paginate(@paint_admins,:class=>'digg_pagination')%>
+

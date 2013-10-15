@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque
+END
+README.markdown
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/README.markdown
+END
+.kick
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/.kick
+END
+HISTORY.md
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/HISTORY.md
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/LICENSE
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/Rakefile
+END
+deps.rip
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/deps.rip
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/init.rb
+END
+resque.gemspec
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/resque.gemspec
+END
+config.ru
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/config.ru
+END

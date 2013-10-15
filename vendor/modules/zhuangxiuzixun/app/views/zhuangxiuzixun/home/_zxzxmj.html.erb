@@ -1,0 +1,23 @@
+<div class="title">
+  <span>
+    <% hejia_promotion_items(54199, :attributes => ['title','url','image_url','description'],:limit => 10).each do |result| %>
+      <a href="<%= result["url"] %>" target="_blank"><%= truncate(result.title,:length=>10,:omission => '') %></a>
+    <% end %>
+    <a href="http://d.51hejia.com/zq/装修日记/" class="more" target="_blank">>>更多</a>
+  </span>
+  <h2 class="noindent"><a class="noindent" href="http://d.51hejia.com/zq/装修日记" target="_blank">最新装修美家</a></h2>
+</div>
+<ul class="inbox" style="display:none" id="h0">
+  <p class="btnbox"> <a href="http://d.51hejia.com/zq/装修日记/" class="btn" onmouseover="javascript:setFocus2('ul','U5','h',1);" target="_blank">网友晒家</a> <a href="http://d.51hejia.com/zq/样板间/" class="btn2" onmouseover="javascript:setFocus2('ul','U5','h',0);" target="_blank">美丽样板间</a> </p>
+  <% hejia_promotion_items(54150, :attributes => ['title','url','image_url', 'description'],:limit => 3).each do |result| %>
+    <li> <a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for(result["image_url"]) %>" /></a> <i><a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a></i> <i class="li1"></i> </li>
+  <% end %>
+  <li> <a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bm_img210.jpg" /></a></li>
+</ul>
+<ul class="inbox" style="display:block" id="h1">
+  <p class="btnbox"> <a href="http://d.51hejia.com/zq/装修日记" class="btn2" onmouseover="javascript:setFocus2('ul','U5','h',1);" target="_blank">网友晒家</a> <a href="http://d.51hejia.com/zq/样板间/" class="btn" onmouseover="javascript:setFocus2('ul','U5','h',0);" target="_blank">美丽样板间</a> </p>
+  <% hejia_promotion_items(54151, :attributes => ['title','url','image_url', 'description'],:limit => 3).each do |result| %>
+    <li> <a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for(result["image_url"]) %>" /></a> <i><a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a></i> <i class="li1"></i> </li>
+  <% end %>
+  <li> <a href="javascript:void(0)" class="tanchuall_open"><img src="http://js2.51hejia.com/img/zhuangxiu1023/bm_img210.jpg" /></a></li>
+</ul>

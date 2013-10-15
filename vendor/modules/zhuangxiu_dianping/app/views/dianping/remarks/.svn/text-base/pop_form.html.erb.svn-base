@@ -1,0 +1,58 @@
+<div class="dafenbox" id="DecoPraisePopDiv" style="margin:10px 0 30px 0">
+  <a name="a02" id="a02"></a>
+  <h4 style="text-align:left;text-indent:20px;color:#333;">留言评价</h4>
+  <a name="a02" id="a02"></a>
+  <% form_for :remark , @remark , :url =>{:action=>"firm_remark_save" ,:controller => "remarks"},:html =>{:id => "pop_remark"} do %>
+    <input type="hidden" id="pop_youhaoma" name="youhaoma"/>
+    <input type='hidden' id="" name='remark[resource_id]' value='<%=@firm_id %>'/>
+    <input type="hidden" id="pop_main_praise" name="remark[praise]" value="<%= params[:praise]%>"/>
+    <div class="dafentit">手机号码：
+      <input id="pop_mobile" type="text" class="pinjsjh" />
+      <input id="pop_code_button" type="button" value="获取验证码" />
+                验证码：<input name="verify_code" id="pop_verify_code" type="text" class="pinjyzm" />
+    </div>
+    <div class="pinjprompt" style="margin-left:20px;"></div>
+    <table width="510" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="190"><dl>
+            <dt>详细评价<span>（非必填）</span></dt>
+            <dd class="clearfix">
+              <div class="f_l"><strong>最满意</strong></div>
+              <div id="zuimanyi">
+                <input type="radio" class="col1" name="zuimanyi" value="设计"/>设计
+                <input type="radio" class="col2" name="zuimanyi" value="施工"/>施工
+                <input type="radio" class="col3" name="zuimanyi" value="服务"/>服务
+              </div>
+            </dd>
+            <dd class="clearfix">
+              <div class="f_l"><strong>较满意</strong></div>
+              <div id="jiaomanyi">
+                <input type="radio" class="col1" name="jiaomanyi" value="设计"/>设计
+                <input type="radio" class="col2" name="jiaomanyi" value="施工"/>施工
+                <input type="radio" class="col3" name="jiaomanyi" value="服务"/>服务
+              </div>
+            </dd>
+            <script type="text/javascript">
+              jQuery(document).ready(function($) {   										
+                var obj = $("input[type='radio']");
+                obj.each(function(){
+                  $(this).click(function(){
+                    var classid = $(this).attr("class");
+                    var parentobj = $(this).parents("dd").siblings() ;
+                    parentobj.find("input[class="+classid+"]").attr("disabled","true").siblings().removeAttr("disabled");
+                  })
+                })
+              });	                   	
+            </script>
+          </dl></td>
+        <td><textarea name="remark[content]" cols="" rows="" style="width:320px;"></textarea></td>
+      </tr>
+    </table>
+    <div class="clearfix" style="text-align:center;padding:10px 0;margin:0;">
+      <input type="hidden" id="pop_mark_tj" name="mark_tj" value="true"/>
+      <input type="hidden" id="pop_mark_tj" name="submit_type" value="pop"/>
+      <input id="pop_mark_button" type="button" value="提 交" class="gsl_wyly_btn" />
+      <input id="pop_mark_reset" type="button" value="重 置" class="gsl_wyly_btn" />
+    </div>
+  <% end %>
+</div>

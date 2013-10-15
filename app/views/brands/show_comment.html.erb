@@ -1,0 +1,212 @@
+<div class="b_dpcont margin10">
+  <div class="b_dpcont_bg"></div>
+  <div class="b_dpcont_prev"> &lt&lt 上一篇口碑：<%=@previous_comment?"<a href='#{pinpai_show_comment_path(:permalink => @brand.permalink, :id => @previous_comment.id)}'>#{ul(@previous_comment.title, 15)}</a>":'无'%></div>
+  <div class="b_dpcont_next">下一篇口碑：<%=@next_comment?"<a href='#{pinpai_show_comment_path(:permalink => @brand.permalink, :id => @next_comment.id)}'>#{ul(@next_comment.title, 15)}</a>":'无'%> &gt&gt </div>
+  <div class="b_dpcont_txt clearfix">
+    <h3>
+      <div class="f_r"><%=@comment.created_at.strftime("%Y-%m-%d %H:%M") rescue ""%></div>
+      <%=strip_tags(@comment.title)%></h3>
+    <div class="b_ppdp_pinf">
+      <div class="f_l"><span><%=@comment.user_name%></span> 对<%=@brand.name_zh%>的评分：</div>
+      <div class="dafenstars02 f_l">
+        <p style="width:<%="#{@comment.remark * 20}%"%>"></p>
+      </div>
+    </div>
+    <p class="b_ppdp_p">
+      <%=text_to_html(@comment.body)%>
+    </p>
+    <div class="b_dpcont_hud clearfix">
+      <div class="b_dpcont_tages f_l">
+        <!-- <a href="#" target="_blank">浏览<span>(125)</span></a><a href="#" target="_blank">举报</a><a href="#" target="_blank">分享</a> -->
+        <span>标签：</span>
+        <%@comment.tags.each do |tag|%>
+          <%=link_to tag, pinpai_comments_path(:permalink => @brand.permalink, :tag => tag), :target => '_blank'%>
+        <%end%>
+      </div>
+      <div class="b_ppdp_hud f_r">
+        <a href="javascript://" class="b_ppdp_hud_a02" comment_id="<%=@comment.id%>">送鲜花(<%=@comment.support%>)</a>
+        <a href="javascript://" class="b_ppdp_hud_a03" comment_id="<%=@comment.id%>">扔鸡蛋(<%=@comment.oppose%>)</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="b_dpwypl">
+  <div class="b_pln_ltit01">
+    <h3>网友评论</h3>
+  </div>
+  <div class="b_pln_ltxt02more"><a href="#woyaopinglun" title="我要评论" target="_self">我要评论&gt&gt </a></div>
+  <div class="b_pln_ltxt01">
+    <ul>
+      <%i = 1%>
+      <%@reverts.each do |r|%>
+        <li class="clearfix">
+
+          <h5>
+            <label class="f_r"># <%=i%>楼</label>
+            <span><%=r.user_name%></span>
+            <%=r.created_at.strftime("%Y-%m-%d %H:%M") rescue ""%>
+          </h5>
+          <p><%=text_to_html(r.body)%></p>
+          <div class="b_dpwyplhud">
+            <a href="javascript://" comment_id="<%=r.id%>" data-name="support">支持<span>(<%=r.support%>)</span></a>
+            <a href="javascript://" comment_id="<%=r.id%>" data-name="oppose">反对<span>(<%=r.oppose%>)</span></a>
+          </div>
+        </li>
+        <%i+=1%>
+      <%end%>
+    </ul>
+    <h4><a name="woyaopinglun">我要评论</a></h4>
+    <div class="b_dpwydp">
+      <% form_tag ajax_post_path(@brand.permalink, 'comment_revert'), :id => "comment_revert_form" do%>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <%=text_area_tag :body%>
+              <%=hidden_field_tag :comment_id, @comment.id%>
+            </td>
+          </tr>
+          <tr>
+            <td><%= submit_tag '提交评论', :class => 'gsl_wyly_btn' %></td>
+          </tr>
+        </table>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+<%content_for :html_body_end do%>
+  <script type="text/javascript">
+    $(function(){
+      $('.colorbox').colorbox();
+    });
+
+    function login_callback(arg) {
+      if(arg == 'error') {
+        alert('帐号有误，请重新输入。');
+      } else {
+        $('#comment_revert_form').submit();
+      }
+    }
+
+    function register_callback(arg) {
+      if(arg) {
+        if(typeof(arg) == 'object') {
+          if(arg['error'] == 'code')
+            alert('验证码错误。');
+          else
+            alert('注册信息有误，请检查。');
+        } else {
+          $('#comment_revert_form').submit();
+        }
+      } else {
+        alert('很抱歉，发生未知错误，请稍后重试。');
+      }
+    }
+
+    $('.b_ppdp_hud_a02').click(function(){
+      var t = $(this);
+      $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=support&comment_id="+t.attr('comment_id'), function(data){
+        if (data=='0')
+          alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+        else
+          t.html('送鲜花('+data+')');
+      }, "text")
+    });
+    
+    $('.b_ppdp_hud_a03').click(function(){
+      var t = $(this);
+      $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=oppose&comment_id="+t.attr('comment_id'), function(data){
+        if (data=='0')
+          alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+        else
+          t.html('扔鸡蛋('+data+')');
+      }, "text")
+    });
+
+    $('a[data-name=support]').click(function(){
+      var t = $(this);
+      $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=support&comment_id="+t.attr('comment_id'), function(data){
+        if (data=='0')
+          alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+        else
+          t.html('支持<span>(' + data + ')</span>');
+      }, "text")
+    });
+
+    $('a[data-name=oppose]').click(function(){
+      var t = $(this);
+      $.get("<%=ajax_get_path(@brand.permalink, 'comment_vote')%>?type=oppose&comment_id="+t.attr('comment_id'), function(data){
+        if (data=='0')
+          alert('感谢您的参与，但您已经参与过这个投票了。\n(注：24小时内，同一个项目仅能进行一次有效的投票)');
+        else
+          t.html('反对<span>(' + data + ')</span>');
+      }, "text")
+    });
+
+    $('#pop_login_form').live('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        dataType: 'jsonp',
+        jsonpCallback: 'login_callback',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        error: function() {
+          alert('很抱歉，发生未知错误，请稍后重试。')
+        }
+      });
+    });
+
+    //
+    $('#signup_form').live('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        dataType: 'jsonp',
+        jsonpCallback: 'register_callback',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        error: function() {
+          alert('您填写的注册信息有误，请更正后重试。')
+        }
+      });
+    });
+  
+    $('#comment_revert_form').live('submit', function(event) {
+      var submitBtn = $(this).find(':submit');
+      submitBtn.attr('disabled', 'disabled');
+      $.ajax({
+        url: '<%=ajax_post_path(@brand.permalink, 'comment_revert')%>',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+
+        error: function(request) {
+          if (request.responseText=='unlogged')
+          {
+            $.fn.colorbox({'href': '<%=ajax_get_path(@brand.permalink, 'login_form')%>', 'open': true});
+          }else{
+            var msg = "由于以下错误，您的回复未能保存：\n  "
+            try {
+              msg +=
+                $.map(eval('(' + request.responseText + ')'), function(error) {
+                return error[1];
+              }).join("\n  ");
+            } catch(e) {
+              msg += "未知错误"
+            }
+            alert(msg);
+          }
+          submitBtn.attr('disabled', null);
+        },
+
+        success: function(data) {
+          //alert(data.title);
+          window.open('<%=pinpai_show_comment_path(:permalink => @brand.permalink, :id => @comment.id)%>','_top');
+          //submitBtn.attr('disabled', null);
+          $.fn.colorbox.close();
+        }
+      });
+      event.preventDefault();
+      return false;
+    });
+  </script>
+<%end%>

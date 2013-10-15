@@ -1,0 +1,48 @@
+<div class="new_anli margin10">
+  <h2>案例赏析之 <%= @random_firm_info[:company].name_abbr %></h2>
+  <div class="new_anli_tab">
+    <div class="new_anli_img">
+      <a target="_blank" href="http://z.<%= TAGURLS[@city_id] %>.51hejia.com/<%= @random_firm_info[:company][:id] %>"><img width="160" height="107" src="<%= (@random_firm_info[:company_case] && @random_firm_info[:company_case].master_picture_url) ? @random_firm_info[:company_case].master_picture_url : 'http://www.51hejia.com/api/images/none.gif' %>" /></a>
+      <p>→查看<a target="_blank" href="http://z.<%= TAGURLS[@city_id] %>.51hejia.com/<%= @random_firm_info[:company][:id] %>/">公司资料</a></p>
+    </div>
+    <div class="new_anli_table">
+      <table width="395" cellspacing="0" cellpadding="0" border="0">
+        <tbody><tr>
+            <td valign="middle" height="22" align="left" colspan="5">装修公司： <a target="_blank" href="http://z.<%= TAGURLS[@city_id] %>.51hejia.com/<%= @random_firm_info[:company][:id] %>/"><%= @random_firm_info[:company].name_abbr %></a></td>
+            <td valign="middle" align="left" colspan="2">口碑： <strong><%= @random_firm_info[:company].praise %></strong></td>
+          </tr>
+          <tr>
+            <td valign="middle" height="22" align="left" colspan="5">主打价位： <%= @random_firm_info[:company].price_text %></td>
+            <td valign="middle" align="left" colspan="2">擅长风格： <%= @random_firm_info[:company].style.nil? ? "暂无" : DecoFirm::STYLES[@random_firm_info[:company].style]%></td>
+          </tr>
+          <tr>
+            <td valign="middle" height="22" align="left" colspan="5">联系电话： <%= truncate_for_zh(@random_firm_info[:company].telephone.gsub(/\s/,''),12) %></td>
+            <td valign="middle" align="left" colspan="2">在线联系： <%= truncate_for_zh(@random_firm_info[:company].business_hours,12) %></td>
+          </tr>
+          <tr>
+            <td valign="middle" height="22" align="left" colspan="7">公司地址： <%= truncate_for_zh @random_firm_info[:company].address2,40 %></td>
+          </tr>
+          <tr>
+            <td valign="middle" height="22" align="left" colspan="5">本月<span class="font_r"><%= @random_firm_info[:current_month_applicant_count] %></span>人预约  累计<span class="font_r"><%= @random_firm_info[:all_applicant_count] %></span>人预约</td>
+            <td valign="middle" align="left" colspan="2"><a href="http://z.<%= TAGURLS[@city_id] %>.51hejia.com/<%= @random_firm_info[:company][:id] %>" class="applicant" target="_blank"><img width="81" height="19" src="http://js.51hejia.com/img/caseimages/anli_an.jpg"></a></td>
+          </tr>
+          <tr>
+            <td width="10" valign="middle" height="16" align="left"></td>
+            <td width="60" valign="middle" align="left"></td>
+            <td width="60" valign="middle" align="left"></td>
+            <td width="60" valign="middle" align="left"></td>
+            <td width="30" valign="middle" align="left"></td>
+            <td width="30" valign="middle" align="left"></td>
+            <td width="145" valign="middle" align="left"></td>
+          </tr>
+          <tr>
+            <td valign="middle" height="22" bgcolor="#e9e9e9" align="left"><!--DWLayoutEmptyCell-->&nbsp;</td>
+            <td valign="middle" bgcolor="#e9e9e9" align="left" colspan="6">日记<span class="font_y">(<%= @random_firm_info[:decoration_diaries_count] %>)</span>
+              案例<span class="font_y">(<%= @random_firm_info[:cases_count] %>)</span>
+              评论<span class="font_y">(<%= @random_firm_info[:company].remark_only_count%>)</span>
+              在建工地<span class="font_y">(<%= @random_firm_info[:factories_count] %>)</span></td>
+          </tr>
+        </tbody></table>
+    </div>
+  </div>
+</div>

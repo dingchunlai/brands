@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/!svn/ver/94/51hejia/repos/brands/release/db/sql
+END
+initial.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/initial.mysql
+END
+paint_cases.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/paint_cases.mysql
+END
+about_promotion_collection.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/about_promotion_collection.mysql
+END
+about_second_category.sql
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/about_second_category.sql
+END
+case_and_diaries.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/case_and_diaries.mysql
+END
+coupon.sql
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/coupon.sql
+END
+drop_tables.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/drop_tables.mysql
+END
+product_brands_index.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/product_brands_index.mysql
+END
+html_metadata.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/html_metadata.mysql
+END
+article_promotion_info.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/article_promotion_info.mysql
+END
+promotion_pages.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/promotion_pages.mysql
+END
+images.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/images.mysql
+END
+paint_training.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/paint_training.mysql
+END
+paint_sends.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/paint_sends.mysql
+END
+productions.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/productions.mysql
+END
+paint_contacts.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/paint_contacts.mysql
+END
+paint_log.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/paint_log.mysql
+END
+agencies.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/agencies.mysql
+END
+deco_firm_contacts.sql
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/deco_firm_contacts.sql
+END
+location_relate_model.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/location_relate_model.mysql
+END
+tagged_brands.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/tagged_brands.mysql
+END
+comments.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/comments.mysql
+END
+painters.mysql
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/db/sql/painters.mysql
+END

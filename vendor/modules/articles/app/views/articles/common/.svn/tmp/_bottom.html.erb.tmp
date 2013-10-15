@@ -1,0 +1,130 @@
+<%= render :partial => 'articles/detail/share_to' %>
+
+<style type="text/css">
+  #f2 .f2_content .jiaju {
+    background: url("http://img.51hejia.com/images/zhuangxiu1023/txtarea_bg.jpg") no-repeat scroll 0 0 transparent;
+    margin-bottom: 2px;
+    padding: 10px;
+    margin-left: 0px;
+  }
+  #f2 .f2_content .jiaju h2 {
+    padding: 0 10px;
+    text-indent: 2em;
+  }
+  #f2 .f2_content .jiaju .text_list {
+    display: inline;
+    float: left;
+    margin: 10px;
+  }
+  #f2 .f2_content .jiaju ul li {
+    display: inline;
+    float: left;
+    list-style: none outside none;
+    padding: 5px;
+    text-indent: 0.2em;
+  }
+</style>
+
+
+
+<div class="tuijian">
+  <h2><a href="http://<%=@article.subdomain%>.51hejia.com/<%=@article.sort_sign%>/" target="_blank"><%= @article.sort_name %> 相关文章推荐</a></h2>
+  <ul class="text_list">
+    <% if @article.channel_sign == "gongyu" %>
+      <% @article.SECONDCATEGORY = 41602 %>
+      <% @article.FIRSTCATEGORY = 41586 %>
+    <% end %>
+    <% Article.articles(6, @article.SECONDCATEGORY, 'hot', @article.FIRSTCATEGORY).each do |a| %>
+      <li><a href="<%= a.detail_url %>" target="_blank" title="<%= a.title %>"><%= truncate_u(a.title, 18) %></a></li>
+    <% end %>
+  </ul>
+  <% if ["gongyu","hunfang"].include?(@article.channel_sign) %>
+    <% results = hejia_promotion_items(Article::PROMOTIONS_BY_SIGN["dianxing"], :attributes => ['title','url','image_url']) %>
+  <% else %>
+    <% results = hejia_promotion_items(Article::PROMOTIONS_BY_SIGN[@article.channel_sign], :attributes => ['title','url','image_url']) %>
+  <% end %>
+  <ul class="text_list2 clearfix clear">
+    <li>
+      <% if results[0] %>
+        <%= promotion_image_tag results[0] %>
+        <p><a href="<%= results[0]["url"] %>" target="_blank" title="<%= results[0]["title"] %>"><%= results[0]["title"] %></a></p>
+      <% end %>
+    </li>
+    <li class="center" style="padding-top: 25px">
+      <p>点击返回 <a href="http://<%=@article.subdomain%>.51hejia.com/<%=@article.sort_sign%>/" class="a1" target="_blank">频道首页</a></p>
+      <p class="a2">点击返回 <a href="http://www.51hejia.com/" class="a2" target="_blank">网站首页</a></p>
+    </li>
+    <li>
+      <% if results[1] %>
+        <%= promotion_image_tag results[1] %>
+        <p><a href="<%= results[1]["url"] %>" target="_blank" title="<%= results[1]["title"] %>"><%= results[1]["title"] %></a></p>
+      <% end %>
+    </li>
+  </ul>
+</div>
+
+<%= render :partial => 'articles/detail/pinglun', :locals => {:article_id => @article.id} %>
+<% promotion_id = case @article.channel_sign; when 'pinlei' then 54212; when 'dianxing' then 54212; when 'gongyu' then 54212;when 'hunfang' then 54212; else 55309; end %>
+<div class="box1 clearfix">
+  <% tw = hejia_promotion_items(promotion_id, :attributes => ['title','url','image_url'], :limit => 21) %>
+  <h2>本周精彩推荐</h2>
+  <ul class="list1">
+    <% if tw[0] %>
+      <%= promotion_image_tag tw[0] %>
+    <% end %>
+    <% 3.upto(8) do |i| %>
+      <%break if tw[i].nil?%>
+      <li><a href="<%= tw[i]["url"] %>" target="_blank" title="<%= tw[i]["title"] %>"><%= truncate_u(tw[i]["title"], 16) %></a></li>
+    <% end %>
+  </ul>
+  <ul class="list1 list2">
+    <% if tw[1] %>
+      <%= promotion_image_tag tw[1] %>
+    <% end %>
+    <% 9.upto(14) do |i| %>
+      <%break if tw[i].nil?%>
+      <li><a href="<%= tw[i]["url"] %>" target="_blank" title="<%= tw[i]["title"] %>"><%= truncate_u(tw[i]["title"], 15) %></a></li>
+    <% end %>
+  </ul>
+  <ul class="list1 list3">
+    <% if tw[2] %>
+      <%= promotion_image_tag tw[2] %>
+    <% end %>
+    <% 15.upto(20) do |i| %>
+      <%break if tw[i].nil?%>
+      <li><a href="<%= tw[i]["url"] %>" target="_blank" title="<%= tw[i]["title"] %>"><%= truncate_u(tw[i]["title"], 15) %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="box1 clearfix">
+  <h2>精华推荐</h2>
+  <ul class="list4">
+    <% jinghuas = hejia_promotion_items(54214, :attributes => ['title','url','price_ago','image_url'], :limit => 6) %>
+    <% jinghuas.each do |jh| %>
+      <% break if jh.nil? %>
+      <li>
+        <p class="title"><%=jh.price_ago%></p>
+        <%= promotion_image_tag jh unless jh.image_url.blank? %>
+        <p><a href="<%= jh["url"] %>" target="_blank" title="<%= jh["title"] %>"><%= truncate_u(jh["title"], 18) %></a></p>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<!-- 装修公司推荐 -->
+<!--div class="f2_bottom">
+  <h2><a rel="nofollow" href="http://z.51hejia.com/companies" target="_blank">装修公司推荐</a></h2>
+  <div class="left">
+<%api = hejia_promotion_items(54273, :attributes => ['title','url','image_url'], :limit => 1)%>
+<% if api[0] %>
+  <%= promotion_image_tag api[0] %>
+                      <p><a href="<%= api[0]["url"] %>" target="_blank"><%= api[0]["title"] %></a></p>
+<% end %>
+  </div>
+  <ul> <%= render_cell :zhuangxiu, :gong_si_tui_jian %> </ul>
+</div-->
+
+<!-- 装修公司图片 和 装修公司促销 -->
+<%#= render_cell :zhuangxiu, :tu_pian_cu_xiao, :city_id => @city_id %>
+

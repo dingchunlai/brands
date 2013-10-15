@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/380/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/new.html.erb
+END
+_info.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/_info.html.erb
+END
+_sub_menu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/_sub_menu.html.erb
+END
+applicants.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/applicants.html.erb
+END
+_edit_info.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/!svn/ver/380/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/_edit_info.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/edit.html.erb
+END
+_search_top.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/!svn/ver/380/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/_search_top.html.erb
+END
+recycle.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/recycle.html.erb
+END
+edit_password.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/edit_password.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_admin/paint_workers/index.html.erb
+END

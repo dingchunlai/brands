@@ -1,0 +1,854 @@
+<link href="http://js.51hejia.com/css/tanchuall.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  .tanchuall_right {
+    text-align:right;
+  }
+</style>
+<script type="text/javascript">
+  function setFocus2(p, y, o, m) {
+    selectLayer2(p, y, o, m);
+
+  }
+
+  function selectLayer2(p, y, o, m) {
+    for (var i = 0; i < document.getElementById(y).getElementsByTagName(p).length; ) {
+      document.getElementById("li_" + i).className = "";
+      document.getElementById(o + i).style.display = "none";
+      i++;
+    }
+    document.getElementById("li_" + m).className = "hover";
+    document.getElementById(o + m).style.display = "block";
+  }
+</script>
+<div class="all clearfix">
+  <!--small_header_code-->
+  <!--end_small_header_code-->
+  <div class="width960">
+    <div id="index_ad1"></div>
+  </div>
+  <div class="menu_main clearfix">
+    <div class="title clearfix">
+      <ul class="clearfix f_r">
+        <li>
+          <!-- afp广告代码　装修资讯首页文字链1　START　============================== -->
+          <script type="text/javascript">
+            //<![CDATA[
+            ac_as_id = 55061;
+            ac_format = 0;
+            ac_mode = 1;
+            ac_group_id = 1;
+            ac_server_base_url = "afp.csbew.com/";
+            //]]>
+          </script>
+          <script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+          <!-- afp广告代码　首页文字链1　END　================================ -->
+        </li>
+        <li>
+          <!-- afp广告代码　装修资讯首页文字链2　START　============================== -->
+          <script type="text/javascript">
+            //<![CDATA[
+            ac_as_id = 55059;
+            ac_format = 0;
+            ac_mode = 1;
+            ac_group_id = 1;
+            ac_server_base_url = "afp.csbew.com/";
+            //]]>
+          </script>
+          <script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+          <!-- afp广告代码　首页文字链2　END　================================ -->
+        </li>
+      </ul>
+      <a href="http://www.51hejia.com" target="_blank"> <img src="http://img.51hejia.com/images/zhuangxiu1126/51hejia.jpg" alt="和家网" /> </a>
+      <a href="http://d.51hejia.com" target="_blank"> <img src="http://img.51hejia.com/images/zhuangxiu1126/new201110_zxlogo.jpg" alt="美文咨询" /> </a>
+      <style>
+        .city {
+          margin: 15px 0px 0px 10px;
+          float: left;
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .city b {
+          font-size: 12px;
+          font-weight: normal;
+        }
+        .city span {
+          margin-left: 5px;
+          font-size: 12px;
+          font-weight: normal;
+        }
+        .city .citydiv {
+          z-index: 100;
+          border-bottom: #e5e5e5 1px solid;
+          position: absolute;
+          border-left: #e5e5e5 1px solid;
+          padding-bottom: 5px;
+          padding-left: 5px;
+          width: 130px;
+          padding-right: 5px;
+          background: #fdf5dc;
+          visibility: hidden;
+          border-top: #e5e5e5 1px solid;
+          border-right: #e5e5e5 1px solid;
+          padding-top: 5px;
+        }
+        .city .citydiv a {
+          padding-bottom: 0px;
+          padding-left: 5px;
+          padding-right: 5px;
+          display: inline-block;
+          white-space: nowrap;
+          padding-top: 0px;
+          color: #333;
+        }
+      </style>
+    </div>
+  </div>
+  <div class="content margin10">
+    <div class="main_menu">
+      <div class="menubg">
+        <ul class="first_menu clearfix">
+          <li style="background: none;">
+            <a id="li_0" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',0);" href="http://d.51hejia.com/" class="hover">美文资讯 &gt;&gt;</a>
+            <a id="li_1" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',1);" href="http://www.51hejia.com/xiaohuxing/">小户型</a>
+            <a id="li_11" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',11);" href="http://www.51hejia.com/gongyu/">公寓</a>
+            <a id="li_2" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',2);" href="http://www.51hejia.com/bieshu/">别墅</a>
+            <a id="li_4" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',4);" href="http://www.51hejia.com/keting/">客厅</a>
+            <a id="li_3" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',3);" href="http://www.51hejia.com/chufang/">厨房</a>
+            <a id="li_5" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',5);" href="http://www.51hejia.com/weiyu/">卫浴</a>
+            <a id="li_6" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',6);" href="http://www.51hejia.com/woshi/">卧室</a>
+            <a id="li_7" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',7);" href="http://www.51hejia.com/shufang/">书房</a>
+            <a id="li_9" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',9);" href="http://www.51hejia.com/ertongfang/">儿童房</a>
+            <a id="li_10" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',10);" href="http://www.51hejia.com/huayuanshenghuo/">花园</a>
+            <a id="li_8" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',8);" href="http://www.51hejia.com/beijingqiang/">背景墙</a>
+            <a id="li_12" target="_blank" onmouseover="javascript:setFocus2('li','U1','x',12);" href="http://www.51hejia.com/hunfang/">婚房</a>
+          </li>
+        </ul>
+        <ul id="U1" class="sc_menu">
+
+          <li id="x0">
+            <% hejia_promotion_items(55271, :attributes => ['title','url'],:limit => 12).each do |r| %>
+              <%= link_to r.title , r.url, :target => "_blank" %>
+            <% end %>
+          </li>
+          <li style="display: none;" id="x1">
+            <a target="_blank" href="http://deco.51hejia.com/zq/小户型设计/">小户型设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/小户型空间/">小户型空间</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/小户型装饰/">小户型装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/家居DIY/">小户型DIY</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/家居收纳-小户型收纳.html">小户型收纳</a>
+          </li>
+          <li style="display: none;" id="x2">
+            <a target="_blank" href="http://deco.51hejia.com/zq/别墅设计/">别墅设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/别墅装饰/">别墅装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/别墅设计-度假别墅.html">度假别墅</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/经典别墅/">经典别墅</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/庭院-别墅庭院设计.html">别墅庭院</a>
+          </li>
+          <li style="display: none;" id="x3">
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房设计-厨房预算.html">厨房预算</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房设计/">厨房设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房装饰/">厨房装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房装饰-厨房风格.html">厨房风格</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房设计-厨房色彩搭配.html">厨房色彩搭配</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/厨房装饰-厨房用品.html">厨房用品</a>
+          </li>
+          <li style="display: none;" id="x4">
+            <a target="_blank" href="http://deco.51hejia.com/zq/客厅设计/">客厅设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/客厅装饰/">客厅搭配</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/客厅装饰-客厅家具.html">客厅家具</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/客厅风格/">客厅风格</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/交换空间-交换空间客厅设计.html">客厅交换空间</a>
+          </li>
+          <li style="display: none;" id="x5">
+            <a target="_blank" href="http://deco.51hejia.com/zq/卫浴设计/">卫浴设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卫浴装饰-卫生间风格.html">卫浴风格</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卫浴装饰/">卫浴装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/家居收纳-卫生间收纳.html">卫生间收纳</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卫浴用品/">卫浴用品</a>
+          </li>
+          <li style="display: none;" id="x6">
+            <a target="_blank" href="http://deco.51hejia.com/zq/卧室设计/">卧室设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卧室装饰/">卧室搭配</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卧室布置/">卧室导购</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/卧室布置/">卧室风格</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/交换空间-交换空间卧室设计.html">卧室交换空间</a>
+          </li>
+          <li style="display: none;" id="x7">
+            <a target="_blank" href="http://deco.51hejia.com/zq/书房设计/">书房样板间</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/书房家具-书桌设计.html">书房书桌</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/书房家具/">书房书柜</a>
+            <a target="_blank" href="http://d.51hejia.com/zq/装修知识-书房装修知识.html">书房装修知识</a>
+            <a target="_blank" href="http://d.51hejia.com/zq/房屋装修风水-书房装修风水.html">书房风水</a>
+          </li>
+          <li style="display: none;" id="x8">
+            <a target="_blank" href="http://deco.51hejia.com/zq/背景墙设计/">背景墙设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/背景墙装饰/">背景墙装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/电视背景墙/">电视背景墙</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/背景墙装饰画/">背景墙装饰画</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/背景墙装饰-手绘背景墙.html">手绘背景墙</a>
+          </li>
+          <li style="display: none;" id="x9">
+            <a target="_blank" href="http://deco.51hejia.com/zq/儿童房设计/">儿童房设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/儿童房家具/">儿童房收纳</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/儿童房装饰/">儿童房装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/儿童房设计-儿童样板房.html">儿童样板房</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/儿童房装饰-儿童装饰画.html">儿童装饰画</a>
+          </li>
+          <li style="display: none;" id="x10">
+            <a target="_blank" href="http://deco.51hejia.com/zq/庭院/">花园庭韵</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/园艺/">花园园艺</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/花艺/">花园花艺</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/室内植物/">花草植物</a>
+            <a target="_blank" href="http://case.51hejia.com/zq/节日派对/">节日派对</a>
+          </li>
+          <li style="display: none;" id="x11">
+            <a target="_blank" href="http://deco.51hejia.com/zq/公寓设计">公寓设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/经典公寓">经典公寓</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/公寓风格">公寓风格</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/公寓装饰">公寓装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/公寓收纳">公寓收纳</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/公寓空间">公寓空间</a>
+          </li>
+          <li style="display: none;" id="x12">
+            <a target="_blank" href="http://deco.51hejia.com/zq/婚房设计">婚房设计</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/婚房布置">婚房布置</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/家居风水">婚房风水</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/装饰搭配">婚房装饰</a>
+            <a target="_blank" href="http://deco.51hejia.com/zq/明星婚房">明星婚房</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="width960">
+      <%= render_ad 80881, "装修资讯-首页-通栏1+", "afp" %>
+      <!--embed align="middle" width="960" height="85" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" name="gamefile" quality="high" id="gamefile" src="http://js.51hejia.com/flash/zd.swf"-->
+    </div>
+
+    <div class="page_1 clearfix">
+      <%= render :partial => "page_1" %>
+    </div>
+  </div>
+  <div class="width960 clearfix">
+    <div class="f_l" id="index_ad3"></div>
+    <div class="f_r" id="index_ad4"></div>
+  </div>
+  <div class="page_2 clearfix margin10" >
+    <div class="box clearfix" id="U5">
+      <%= render :partial => "zxzxmj" %>
+    </div>
+    <div class="box clearfix">
+      <%= render :partial => "zxhx" %>
+    </div>
+    <div class="width960 margin10">
+      <div id="index_ad5"></div>
+    </div>
+    <div class="box clearfix ">
+      <%= render :partial => "zxys" %>
+    </div>
+    <div class="width960 margin10">
+      <div id="index_ad6"></div>
+    </div>
+    <div class="box clearfix list-3">
+      <%= render :partial => "zxfg" %>
+    </div>
+    <div class="box clearfix list-4">
+      <%= render :partial => "zxyt" %>
+    </div>
+    <div class="box clearfix list-5">
+      <%= render :partial => "fjzx" %>
+    </div>
+    <div class="box clearfix">
+      <div class="title">
+        <span> <% hejia_promotion_items(54205, :attributes => ['title','url','image_url', 'description'],:limit => 10).each do |result| %> <a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 10,:omission => "") %></a> <% end %> <a style="color:#000;padding: 0 65px 0 20px;" class="tanchuall_open more-2" href="javascript:void(0)">免费提供<i style="font-style:normal; color:#C30;">15项会员特权</i></a> </span>
+        <h2><a href="http://prod.51hejia.com/"target="_blank">装修材料导购</a></h2>
+      </div>
+      <div class="incontent">
+        <div class="incont-l">
+          <div class="boxlist">
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '39161', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul class="first" >
+<li class="one">
+<a href="http://www.51hejia.com/diban/" target="_blank">地板</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '38081', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul>
+<li class="one">
+<a href="http://www.51hejia.com/weiyupindao/" target="_blank">卫浴洁具</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+          </div>
+          <div class="boxlist">
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '38721', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul class="first" >
+<li class="one">
+<a href="http://www.51hejia.com/chuguipindao/" target="_blank">厨房橱柜</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '39188', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul>
+<li class="one">
+<a href="http://www.51hejia.com/youqituliao/" target="_blank">油漆涂料</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+          </div>
+          <div class="boxlist">
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '36264', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul class="first" >
+<li class="one">
+<a href="http://www.51hejia.com/buyi/" target="_blank">布艺装饰</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+            <% articles = Article.getarticlebytag( :brand => '0',:first => '38061', :second => '0',:third => '0',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '5' ,:title => '')
+            str = '
+<ul>
+<li class="one">
+<a href="http://www.51hejia.com/jiajuchanpin/" target="_blank">家具</a>
+</li>'
+            articles.each do |article|
+              domain = 'http://www.51hejia.com/'
+              if article.sort_sign == 'zhuangxiu'
+                domain = 'http://d.51hejia.com/'
+              end
+              if article.sort_sign != ''
+                domain = domain + article.sort_sign + '/'
+              end
+              if article.CREATETIME
+                domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+              domain = domain + article.ID.to_s
+              if article.IMAGENAME
+                img = 'http://img.51hejia.com/files/hekea/article_img/sourceImage/'+article.IMAGENAME.slice(3,8)+'/'+article.IMAGENAME
+              else
+                img = 'http://img3.51hejia.com/api/images/none.gif'
+              end
+              str = str + '
+  <li>
+  <a href='+domain+' target=_blank>' + truncate(article.TITLE,:length => 16,:omission => "") +'</a>
+  </li>'
+            end
+            str = str + '
+</ul>'
+          %>
+            <%= str%>
+          </div>
+        </div>
+        <ul class="incont-r">
+          <li class=" clearfix">
+            <!--增加报名链接-增加表格（表格3个）-->
+            <table border="0" width="210" height="75" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td style="color:#333; font-size:14px;">空间户型设计</td>
+                  <td><a style="color:#f00; font-size:12px;" href="javascript:void(0)" class="tanchuall_open">设计师全程陪同</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·户型点评</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·空间布置</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·户型改造</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·风格建议</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li class=" clearfix">
+            <table border="0" width="210" height="75" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td style="color:#333; font-size:14px;">效果图设计</td>
+                  <td><a style="color:#f00; font-size:12px;" href="javascript:void(0)" class="tanchuall_open ">省千元设计费用</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·平面图设计</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·首席设计师</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·施工图设计</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·港台设计师</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li class="last clearfix">
+            <table border="0" width="210" height="75" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td style="color:#333; font-size:14px;">报价服务</td>
+                  <td><a style="color:#f00; font-size:12px;" href="javascript:void(0)" class="tanchuall_open ">避开装修预算陷阱</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·装修报价</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·建材报价</a></td>
+                </tr>
+                <tr>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·装修预算审核</a></td>
+                  <td><a style="color:#611a1a; font-size:14px; font-weight:bold;" href="javascript:void(0)" class="tanchuall_open">·挖预算陷阱</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottombox clearfix">
+      <iframe src="http://tag.51hejia.com/api/bbs_topics_in_zhuangxiu" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0"></iframe>
+      <div class="right" id="bt1" style="overflow:hidden;">
+        <ul id="o0" style="display:block">
+          <a href="http://zt.51hejia.com" class="btn"  onmouseover="javascript:setFocus2('ul','bt1','o',0);" target="_blank">精彩装修专题</a><a href="http://www.51hejia.com/zq/" class="btn2"  onmouseover="javascript:setFocus2('ul','bt1','o',1);" target="_blank">热门专区</a>
+          <% PublishContent::zhuanti_valid_contents.first(9).each do |result| %>
+            <li>
+              <a href="<%= result.url %>" target="_blank"><%= result.title %></a>
+            </li>
+          <% end %>
+          <a href="http://zt.51hejia.com" class="more" target="_blank" style="float:right; padding-right:10px;">&gt;&gt;更多</a>
+        </ul>
+        <ul id="o1" style="display:none">
+          <a href="http://zt.51hejia.com" class="btn2" onmouseover="javascript:setFocus2('ul','bt1','o',0);" target="_blank">精彩装修专题</a><a href="http://www.51hejia.com/zq/" class="btn" onmouseover="javascript:setFocus2('ul','bt1','o',1);" target="_blank">热门专区</a>
+          <li class="clearfix">
+            <% hejia_promotion_items(54136, :attributes => ['title','url','image_url', 'description'],:limit => 25).each do |result| %>
+              <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!--links_code-->
+  <div class="width960 margin10">
+    <div class="links_hj">
+      <div class="links_bg_hj clearfix">
+        <h3 style="text-indent:0; padding-top:0;">友情链接</h3>
+        <span></span>
+        <ul class="clear">
+          <li>
+            <% hejia_promotion_items(54766, :attributes => ['title','url']).each do |result| %>
+              <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--end_links_code-->
+</div>
+
+
+<div class="tanchuall" style="display:none">
+  <input type="reset" class="tanchuall_close" value="关闭" name="">
+  <div class="tanchuall_box1"></div>
+  <form action="http://bm.51hejia.com/index/zixun1" method="post" enctype="multipart/form-data" onSubmit="return submitForm(this);">
+    <div  style=" margin-bottom:10px;">
+      <p class="biaoti_bg"><img src="http://js.51hejia.com/tuku/webroot/img/tanchuall_title.png" />
+      </p>
+    </div>
+    <table class="line_height" width="402" cellspacing="0" cellpadding="0" border="0" style="color:#333;">
+      <tbody>
+        <tr>
+          <td width="1" class="tanchuall_right"></td>
+          <td width="75" class="tanchuall_right"><span>*</span>姓名：</td>
+          <td width="100">
+            <input type="text" class="txt kuangao" name="name" id="bm_name" style="width:96px;">
+          </td>
+          <td width="1" class="tanchuall_right"></td>
+          <td width="116" class="tanchuall_right"><span>*</span>电话：</td>
+          <td width="100">
+            <input type="text" class="txt kuangao" name="phone" id="bm_phone" style="width:96px;">
+          </td>
+        </tr>
+        <tr>
+          <td class="tanchuall_right">&nbsp;</td>
+          <td class="tanchuall_right"><span>*</span>装修面积：</td>
+          <td>
+            <input type="text" class="txt kuangao"  name="area" id="bm_area"  style="width:96px;"/>
+          </td>
+          <td class="tanchuall_right">&nbsp;</td>
+          <td class="tanchuall_right">期望风格：</td>
+          <td>
+            <select name="style" id="bm_style" style="width:102px;padding:2px 0;" class="border_select">
+              <option value="">请选择</option>
+              <option value="现代简约">现代简约</option>
+              <option value="欧式">欧式</option>
+              <option value="美式">美式</option>
+              <option value="中式">中式</option>
+              <option value="地中海">地中海</option>
+              <option value="混搭">混搭</option>
+              <option value="北欧（宜家）">北欧（宜家）</option>
+              <option value="新古典">新古典</option>
+              <option value="东南亚">东南亚</option>
+              <option value="日式">日式</option>
+              <option value="韩式田园">韩式田园</option>
+              <option value="欧美乡村">欧美乡村</option>
+            </select></td>
+        </tr>
+        <tr>
+          <td class="tanchuall_right">&nbsp;</td>
+          <td class="tanchuall_right"><span>*</span>房型：</td>
+          <td>
+            <select name="room" id="bm_room" style="width:102px; padding:2px 0;" class="border_select">
+              <option value="">请选择</option>
+              <option value="小户型">小户型</option>
+              <option value="两居室">两居室</option>
+              <option value="三居室">三居室</option>
+              <option value="复式">复式</option>
+              <option value="别墅">别墅</option>
+              <option value="挑高/LOFT">挑高/LOFT</option>
+              <option value="四合院">四合院</option>
+            </select></td>
+          <td class="tanchuall_right">&nbsp;</td>
+          <td class="tanchuall_right"><span>*</span>楼盘名称：</td>
+          <td>
+            <input type="text" value="" style="width:96px; " id="bm_address" class="txt kuangao" name="address">
+          </td>
+        </tr>
+        <tr>
+          <td class="tanchuall_right">&nbsp;</td>
+          <td class="tanchuall_right"><span>*</span>装修区域：</td>
+          <td colspan="4">
+            <select id="firm_city" name="firm_city" style="width:75px;padding:2px 0;" class="border_select">
+              <option value="">省/市</option><option data_id="12" value="安徽">A安徽</option><option data_id="1" value="北京">B北京</option><option data_id="22" value="重庆">C重庆</option><option data_id="13" value="福建">F福建</option><option data_id="19" value="广东">G广东</option><option data_id="20" value="广西">G广西</option><option data_id="28" value="甘肃">G甘肃</option><option data_id="24" value="贵州">G贵州</option><option data_id="3" value="河北">H河北</option><option data_id="16" value="河南">H河南</option><option data_id="21" value="海南">H海南</option><option data_id="17" value="湖北">H湖北</option><option data_id="18" value="湖南">H湖南</option><option data_id="8" value="黑龙江">H黑龙江</option><option data_id="7" value="吉林省">J吉林省</option><option data_id="10" value="江苏">J江苏</option><option data_id="14" value="江西">J江西</option><option data_id="6" value="辽宁">L辽宁</option><option data_id="5" value="内蒙古">N内蒙古</option><option data_id="30" value="宁夏">N宁夏</option><option data_id="29" value="青海">Q青海</option><option data_id="9" value="上海">S上海</option><option data_id="23" value="四川">S四川</option><option data_id="15" value="山东">S山东</option><option data_id="4" value="山西">S山西</option><option data_id="27" value="陕西">S陕西</option><option data_id="2" value="天津">T天津</option><option data_id="31" value="新疆">X新疆</option><option data_id="26" value="西藏">X西藏</option><option data_id="25" value="云南">Y云南</option><option data_id="11" value="浙江">Z浙江</option>
+            </select>
+            <select class="border_select" style="width:75px;" id="firm_district" name="firm_district">
+              <option value="">市/地区</option><option value="上海市" data_id="72">上海市</option>
+            </select>
+            <select class="border_select" style="width:75px;" id="firm_area" name="firm_area">
+              <option value="">县/市</option>
+            </select></td>
+        </tr>
+        <tr>
+          <td class="tanchuall_right" >&nbsp;</td>
+          <td class="tanchuall_right" ><img  src="http://js.51hejia.com/tuku/webroot/img/tanchuall_yusuan.png" /></td>
+          <td colspan="4" style="font-size:12px; color:#666666;">
+            <input type="text" style="width:96px; margin-right:2px;" name="budget" id="bm_budget" class="txt kuangao" />
+            <span style="margin-right:5px;">万</span>例如：10万  20万</td>
+        </tr>
+        <tr>
+          <td width="1" class="tanchuall_right"></td>
+          <td colspan="5" style="line-height:20px; padding:0px 8px 0 2px; color:#666;"><img style="float:left; margin-right:2px;" src="http://js.51hejia.com/tuku/webroot/img/tanchuall_tip.png" /><span>小贴士：</span>经验显示，平均价位为<span>1000元-1500元/㎡</span>的装修费用，装修质量更有保障，同时方便我们为您约到更好的设计师。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tanchuall_box2">
+      <p style="text-align: center;">
+        <input type="submit" value="确定" name="" class="confirm" id="applicant_submit" style="text-align:center;">
+      </p>
+    </div>
+  </form>
+  <div style="width:100%; height:30px; background-color:#fffae6;"></div>
+</div>
+
+
+
+<script type="text/javascript">
+  function ge(id) {
+    return document.getElementById(id);
+  }
+
+  function trim(str) {
+    return str.replace(/^\s*(.*?)[\s\n]*$/g, '$1');
+  }
+
+  function submitForm(form) {
+    if (trim(ge("bm_name").value) == "") {
+      alert("您必须填写【姓名】！")
+      return false;
+    }
+    if (trim(ge("bm_phone").value) == "") {
+      alert("您必须填写【电话】！")
+      return false;
+    }
+    if (!trim(ge("bm_phone").value).match(/^\d{11}$/)) {
+      alert("【电话】号码必须为11位数字！")
+      return false;
+    }
+    if (trim(ge("bm_area").value) == "") {
+      alert("您必须填写【装修面积】！")
+      return false;
+    }
+    if (!trim(ge("bm_area").value).match(/^[1-9][0-9]*$/)) {
+      alert("【装修面积】必须为大于0整数数字！")
+      return false;
+    }
+    if (trim(ge("bm_room").value) == "") {
+      alert("您必须选择【房型】！")
+      return false;
+    }
+    if (trim(ge("bm_address").value) == "") {
+      alert("您必须填写【楼盘名称】！")
+      return false;
+    }
+    if (trim(ge("firm_city").value) == "") {
+      alert("您必须选择装修区域【省份】！")
+      return false;
+    }
+    if (trim(ge("firm_district").value) == "") {
+      alert("您必须选择装修区域【城市】！")
+      return false;
+    }
+    if (trim(ge("bm_budget").value) == "") {
+      alert("您必须填写【装修预算】！")
+      return false;
+    }
+    if (!trim(ge("bm_budget").value).match(/^[1-9][0-9]*$/)) {
+      alert("【装修预算】必须为大于0整数数字！")
+      return false;
+    }
+
+    return true;
+  }
+</script>
+<div class="tanchuall_bg" style="display:none;"></div>
+<script type="text/javascript">
+  $(".tanchuall_open").click(function() {
+    $(".tanchuall_bg").show();
+    $(".tanchuall").show();
+  });
+  $(".tanchuall_close").click(function() {
+    $(".tanchuall_bg").hide();
+    $(".tanchuall").hide();
+  })
+
+  $("#firm_city").change(function() {
+    if ($("#firm_city").val().length == 0) {
+      $("#firm_district").empty();
+      $("<option value=''>市/地区</option>").appendTo("#firm_district");
+    } else {
+      $.ajax({
+        type:'get',
+        url:document.URL+'get_cities',
+        data:'provinces_id=' + $("#firm_city option:selected").attr('data_id'),
+        dataType:'json',
+        success:function(data){
+          $("#firm_district").empty();
+          $("<option value=''>市/地区</option>").appendTo("#firm_district");
+          $.each(data, function(i) {
+            $("<option value='" + data[i][0] + "' data_id='" + data[i][1] + "'>" + data[i][0] + "</option>").appendTo("#firm_district");
+          });
+        }
+      })
+    }
+  });
+
+  $("#firm_district").change(function() {
+    if ($("#firm_district").val().length == 0) {
+      $("#firm_area").empty();
+      $("<option value=''>县/市</option>").appendTo("#firm_area");
+    } else {
+      $.ajax({
+        type:'get',
+        url:document.URL+'get_districts',
+        data:'citys_id=' + $("#firm_district option:selected").attr('data_id'),
+        dataType:'json',
+        success:function(data){
+          $("#firm_area").empty();
+          $("<option value=''>县/市</option>").appendTo("#firm_area");
+          $.each(data, function(i) {
+            $("<option value='" + data[i][0] + "' data_id='" + data[i][1] + "'>" + data[i][0] + "</option>").appendTo("#firm_area");
+          });
+        }
+      })
+    }
+  });
+
+</script>
+
+<!--ad_code-->
+<!-- afp广告代码　装修资讯首页顶部通栏　START　============================== -->
+<script type="text/javascript">
+  //<![CDATA[
+  ac_as_id = 55063;
+  ac_format = 0;
+  ac_mode = 1;
+  ac_group_id = 1;
+  ac_dest_id = 'index_ad1';
+  ac_server_base_url = "afp.csbew.com/";
+  //]]>
+</script>
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页顶部通栏　END　================================ -->
+<!-- afp广告代码　装修资讯首页宽幅1　START　============================== -->
+
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页宽幅1　END　================================ -->
+<!-- afp广告代码　装修资讯首页大旗帜　START　============================== -->
+<script type="text/javascript">
+  //<![CDATA[
+  ac_as_id = 55053;
+  ac_format = 0;
+  ac_mode = 1;
+  ac_group_id = 1;
+  ac_dest_id = 'index_ad3';
+  ac_server_base_url = "afp.csbew.com/";
+  //]]>
+</script>
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页大旗帜　END　================================ -->
+<!-- afp广告代码　装修资讯首页宽幅2　START　============================== -->
+<script type="text/javascript">
+  //<![CDATA[
+  ac_as_id = 55055;
+  ac_format = 0;
+  ac_mode = 1;
+  ac_group_id = 1;
+  ac_dest_id = 'index_ad4';
+  ac_server_base_url = "afp.csbew.com/";
+  //]]>
+</script>
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页宽幅2　END　================================ -->
+<!-- afp广告代码　装修资讯首页中部通栏　START　============================== -->
+<script type="text/javascript">
+  //<![CDATA[
+  ac_as_id = 55047;
+  ac_format = 0;
+  ac_mode = 1;
+  ac_group_id = 1;
+  ac_dest_id = 'index_ad5';
+  ac_server_base_url = "afp.csbew.com/";
+  //]]>
+</script>
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页中部通栏　END　================================ -->
+<!-- afp广告代码　装修资讯首页底部通栏　START　============================== -->
+<script type="text/javascript">
+  //<![CDATA[
+  ac_as_id = 55043;
+  ac_format = 0;
+  ac_mode = 1;
+  ac_group_id = 1;
+  ac_dest_id = 'index_ad6';
+  ac_server_base_url = "afp.csbew.com/";
+  //]]>
+</script>
+<script type="text/javascript" src=" http://static.csbew.com/k.js"></script>
+<!-- afp广告代码　装修资讯首页底部通栏　END　================================ -->
+<!--ad_code_end-->
+
+<script type="text/javascript" src="http://api.51hejia.com/statistics?code=zd-swf&style=eject&source=<%= request.host + request.path %>"></script>

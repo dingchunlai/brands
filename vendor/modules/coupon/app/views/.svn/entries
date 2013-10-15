@@ -1,0 +1,70 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release/vendor/modules/coupon/app/views
+http://svn.51hejia.com:8081
+
+
+
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+coupon_downloads
+dir
+
+distributors
+dir
+
+notifier
+dir
+
+share
+dir
+
+coupon
+dir
+
+coupons
+dir
+
+sessions
+dir
+
+shared
+dir
+
+coupon_remarks
+dir
+
+offer_coupons
+dir
+
+admin
+dir
+
+distributor_user
+dir
+
+complaints
+dir
+
+coupon_thematices
+dir
+

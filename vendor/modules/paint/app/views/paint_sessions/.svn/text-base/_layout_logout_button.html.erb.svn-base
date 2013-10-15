@@ -1,0 +1,1 @@
+<a href='<%= logout_path %>' target='_self' title='退出'>退出</a>

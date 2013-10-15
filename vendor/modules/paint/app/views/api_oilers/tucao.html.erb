@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>问题油工大吐槽专题</title>
+  <link href="http://js.51hejia.com/css/2010/header.css" rel="stylesheet" type="text/css" />
+  <link href="http://www.51hejia.com/zhuanti/yougong0516/images/css.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="http://js.51hejia.com/js/jquery/1.4.2/jquery.min.js"></script>
+  <!--图片滚动-->
+  <script type="text/javascript">
+    var Speed_1 = 10; //速度(毫秒)
+    var Space_1 = 20; //每次移动(px)
+    var PageWidth_1 = 169 * 5; //翻页宽度
+    var interval_1 = 5000; //翻页间隔时间
+    var fill_1 = 0; //整体移位
+    var MoveLock_1 = false;
+    var MoveTimeObj_1;
+    var MoveWay_1="right";
+    var Comp_1 = 0;
+    var AutoPlayObj_1=null;
+    function GetObj(objName){if(document.getElementById){return eval('document.getElementById("'+objName+'")')}else{return eval('document.all.'+objName)}}
+    function AutoPlay_1(){clearInterval(AutoPlayObj_1);AutoPlayObj_1=setInterval('ISL_GoDown_1();ISL_StopDown_1();',interval_1)}
+    function ISL_GoUp_1(){if(MoveLock_1)return;clearInterval(AutoPlayObj_1);MoveLock_1=true;MoveWay_1="left";MoveTimeObj_1=setInterval('ISL_ScrUp_1();',Speed_1);}
+    function ISL_StopUp_1(){if(MoveWay_1 == "right"){return};clearInterval(MoveTimeObj_1);if((GetObj('ISL_Cont_1').scrollLeft-fill_1)%PageWidth_1!=0){Comp_1=fill_1-(GetObj('ISL_Cont_1').scrollLeft%PageWidth_1);CompScr_1()}else{MoveLock_1=false}
+      AutoPlay_1()}
+      function ISL_ScrUp_1(){if(GetObj('ISL_Cont_1').scrollLeft<=0){GetObj('ISL_Cont_1').scrollLeft=GetObj('ISL_Cont_1').scrollLeft+GetObj('List1_1').offsetWidth}
+        GetObj('ISL_Cont_1').scrollLeft-=Space_1}
+        function ISL_GoDown_1(){clearInterval(MoveTimeObj_1);if(MoveLock_1)return;clearInterval(AutoPlayObj_1);MoveLock_1=true;MoveWay_1="right";ISL_ScrDown_1();MoveTimeObj_1=setInterval('ISL_ScrDown_1()',Speed_1)}
+        function ISL_StopDown_1(){if(MoveWay_1 == "left"){return};clearInterval(MoveTimeObj_1);if(GetObj('ISL_Cont_1').scrollLeft%PageWidth_1-(fill_1>=0?fill_1:fill_1+1)!=0){Comp_1=PageWidth_1-GetObj('ISL_Cont_1').scrollLeft%PageWidth_1+fill_1;CompScr_1()}else{MoveLock_1=false}
+          AutoPlay_1()}
+          function ISL_ScrDown_1(){if(GetObj('ISL_Cont_1').scrollLeft>=GetObj('List1_1').scrollWidth){GetObj('ISL_Cont_1').scrollLeft=GetObj('ISL_Cont_1').scrollLeft-GetObj('List1_1').scrollWidth}
+            GetObj('ISL_Cont_1').scrollLeft+=Space_1}
+            function CompScr_1(){if(Comp_1==0){MoveLock_1=false;return}
+              var num,TempSpeed=Speed_1,TempSpace=Space_1;if(Math.abs(Comp_1)<PageWidth_1/2){TempSpace=Math.round(Math.abs(Comp_1/Space_1));if(TempSpace<1){TempSpace=1}}
+              if(Comp_1<0){if(Comp_1<-TempSpace){Comp_1+=TempSpace;num=TempSpace}else{num=-Comp_1;Comp_1=0}
+                GetObj('ISL_Cont_1').scrollLeft-=num;setTimeout('CompScr_1()',TempSpeed)}else{if(Comp_1>TempSpace){Comp_1-=TempSpace;num=TempSpace}else{num=Comp_1;Comp_1=0}
+                  GetObj('ISL_Cont_1').scrollLeft+=num;setTimeout('CompScr_1()',TempSpeed)}}
+                  function picrun_ini(){
+                    GetObj("List2_1").innerHTML=GetObj("List1_1").innerHTML;
+                    GetObj('ISL_Cont_1').scrollLeft=fill_1>=0?fill_1:GetObj('List1_1').scrollWidth-Math.abs(fill_1);
+                    GetObj("ISL_Cont_1").onmouseover=function(){clearInterval(AutoPlayObj_1)}
+                    GetObj("ISL_Cont_1").onmouseout=function(){AutoPlay_1()}
+                    AutoPlay_1();
+                  }
+
+  </script>
+  </head>
+
+  <body>
+    <%= render_shared_header :ga_ids => ['UA-7619267-1', 'UA-13298432-1'] %>
+    <!--top end -->
+    <!--content -->
+    <div class="cs">
+            <div class="cs_1">
+            <div class="cs_1_p">装修路漫漫其修远兮，遇到任何细小的问题都不能当浮云，如果再遇到不给力的油漆工，那就真的是“杯具”啊。在墙面施工的过程中，你有木有被油工忽悠过？有木有被油工“漆”骗了？有木有？每一个装修业主都伤不起，别着急，今天我们就大胆地对油工们进行吐槽吧，细说他们的七宗罪。</div>
+        </div>
+        <div class="step1_1">
+            <div class="step1_1_p"><a href=" http://bbs.51hejia.com/btopic/256826" target="_blank"><span>我真是小白，又被油工忽悠！！接连两次被同一个人忽悠，我是不是很眼瞎……</span><img src="http://www.51hejia.com/zhuanti/yougong0516/images/tucao_bg.gif" /></a></div>
+            <a class="step1_1_link1" href="http://b.51hejia.com/pinpaiku/20110107/649468" target="_blank"></a>
+            <a class="step1_1_link2" href="http://www.51hejia.com/youqituliao/20110511/660588-2" target="_blank"></a>
+        </div>
+        <div class="step1_2">
+            <div class="step1_2_p"><a href=" http://bbs.51hejia.com/btopic/256828" target="_blank"><span>怎么遇到这么一个油漆工啊~~~~蹭吃蹭喝还理直气壮的！！！！！真没天理……</span><img src="http://www.51hejia.com/zhuanti/yougong0516/images/tucao_bg.gif" /></a></div>
+            <div class="step1_2_p1"><a href="http://bbs.51hejia.com/btopic/258775" target="_blank"><span>只会做墙面不会做木漆的油工伤不起呀！伤不起！……</span><img src="http://www.51hejia.com/zhuanti/yougong0516/images/tucao_bg.gif" /></a></div>
+            <a class="step1_2_link1" href="http://www.yougong.51hejia.com/article/649120" target="_blank"></a>
+            <a class="step1_2_link2" href="http://b.51hejia.com/pinpaiku/20110107/649468-2" target="_blank"></a>
+            <a class="step1_2_link3" href="http://www.51hejia.com/youqituliao/20110506/660220" target="_blank"></a>
+            <a class="step1_2_link4" href="http://www.51hejia.com/youqituliao/20110506/660217" target="_blank"></a>
+        </div>
+        <div class="step1_3">
+            <div class="step1_3_p"><a href=" http://bbs.51hejia.com/btopic/256827" target="_blank"><span>憋屈！找马路游击队施工等于捉迷藏，我家5月初刚装修完的，然后大概……</span><img src="http://www.51hejia.com/zhuanti/yougong0516/images/tucao_bg.gif" /></a></div>
+            <a class="step1_3_link1" href="http://www.yougong.51hejia.com/article/649008?page=1" target="_blank"></a>
+        </div>
+        <a id="a1" name="a1"></a>
+        <div class="step2">
+            <a class="step2_link1" href="http://www.yougong.51hejia.com/article/649151" target="_blank"></a>
+            <a class="step2_link2" href="http://www.yougong.51hejia.com/shigonggongyi/641896" target="_blank"></a>
+            <a class="step2_link3" href="http://www.51hejia.com/youqituliao/20110506/660191" target="_blank"></a>
+            <a class="step2_link4" href="http://www.yougong.51hejia.com/shigonggongyi/642022" target="_blank"></a>
+            <a class="step2_link5" href="http://www.51hejia.com/youqituliao/20110506/660192" target="_blank"></a>
+        </div>
+        <div class="step3">
+            <ul>
+                <li>
+                    <dl>
+                        <dt>水性木器漆独家测评</dt>
+                        <dd><a href="http://b.51hejia.com/pinpaiku/20101125/645832" target="_blank">净味是木器漆各种功能中的关键，只有保证健康呼吸，才能享受美好。这套水晶莹清味木器清漆，它是三个一组的，包括基漆、稀释剂、固化剂，调和在一起使用。打开三个漆盖……【详细】</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>施工流程图文介绍</dt>
+                        <dd><a href="http://www.51hejia.com/youqituliao/20110506/660201" target="_blank">第一步、油工进场后应该先看墙上是否有腻子解验腻子是否要铲除，在墙面滚上水用铲刀或刮板铲，如果能很轻松的铲下来，那说明是一般的腻子最好铲干净。要是很难铲除说明是白水泥……【详细】</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>如何检验施工效果</dt>
+                        <dd><a href="http://www.51hejia.com/youqituliao/20110506/660207" target="_blank">施工完毕后，业主可从5方面来验收质量：家具混油的表面是否平整饱和，应确保没有起泡，没有裂缝，而且油漆漆膜厚度均衡，基本没有刷痕，不流挂；不透底；是否饱满有没有色差……【详细】</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="step4">
+            <div class="step4_flash">
+            
+    <script type="text/javascript">    
+    var widths=580;                  
+    var heights=235;                  
+    var counts=3;       
+    img1=new Image ();img1.src='http://www.51hejia.com/zhuanti/yougong0516/images/tu_1.jpg';     
+    img2=new Image ();img2.src='http://www.51hejia.com/zhuanti/yougong0516/images/tu_2.jpg';     
+    img3=new Image ();img3.src='http://www.51hejia.com/zhuanti/yougong0516/images/tu_3.jpg';     
+
+    url1=new Image ();url1.src='http://www.yougong.51hejia.com/';    
+    url2=new Image ();url2.src='http://www.51hejia.com/youqituliao/20110511/660588';    
+    url3=new Image ();url3.src='http://b.51hejia.com/pinpaiku/20110105/649153';    
+        
+    var nn=1;    
+    var key=0;    
+    function change_img()    
+    {if(key==0){key=1;}    
+    else if(document.all)    
+    {document.getElementById("pic").filters[0].Apply();document.getElementById("pic").filters[0].Play(duration=2);}    
+    eval('document.getElementById("pic").src=img'+nn+'.src');    
+    eval('document.getElementById("url").href=url'+nn+'.src');    
+    for (var i=1;i<=counts;i++){document.getElementById("xxjdjj"+i).className='axx';}    
+    document.getElementById("xxjdjj"+nn).className='bxx';    
+    nn++;if(nn>counts){nn=1;}    
+    tt=setTimeout('change_img()',4000);}    
+    function changeimg(n){nn=n;window.clearInterval(tt);change_img();}    
+    document.write('<style>');    
+    document.write('.axx{padding:1px;width:12px;height:13px;display:block;text-align:center;margin:5px;}');    
+    document.write('a.axx:link,a.axx:visited{text-decoration:none;color:#CCCC00;border:#CCCC00 1px solid;line-height:12px;font:12px  sans-serif;background-color:#FFFFFF;}');    
+    document.write('a.axx:active,a.axx:hover{text-decoration:none;color:#FF0000;border:#FF0000 1px solid;line-height:12px;font:12px sans-serif;background-color:#FFFF99;}');    
+    document.write('.bxx{padding:1px;width:12px;height:13px;display:block;text-align:center;margin:5px;}');    
+    document.write('a.bxx:link,a.bxx:visited{text-decoration:none;color:#FF0000;border:#FF0000 1px solid;line-height:12px;font:12px sans-serif;background-color:#FFFF99;}');    
+    document.write('a.bxx:active,a.bxx:hover{text-decoration:none;color:#FF0000;border:#FF0000 1px solid;line-height:12px;font:12px sans-serif;background-color:#FFFF99;}');    
+    document.write('</style>');    
+    document.write('<div style="width:'+widths+'px;height:'+heights+'px;overflow:hidden;text-overflow:clip;">');    
+    document.write('<div><a id="url" target="_blank"><img id="pic" style="border:0px;filter:progid:dximagetransform.microsoft.wipe(gradientsize=1.0,wipestyle=4, motion=forward)" width='+widths+' height='+heights+' /></a></div>');    
+    document.write('<div style="float:right;width:15px;height:50px;top:-70px;right:13px;position:relative;margin:1px;padding:0px;margin:0px;border:0px;">');    
+    for(var i=1;i<counts+1;i++){document.write('<a href="javascript:changeimg('+i+');" id="xxjdjj'+i+'" class="axx" target="_self">'+i+'</a>');}    
+    document.write('</div></div>');    
+    change_img();    
+    </script>    
+
+
+            </div>
+            <div class="step4_p">家装是大事，业主不得不亲力亲为。油漆涂料施工更是关系到整个家装工程的“面子”问题。“三分涂料，七分施工”是业内流传的一句俗语。意思是说，好的涂料也要遵循科学的方法进行施工才能确保品质。涂料只是个半成品，最终还是需要通过工人的良好施工才能成为一个让业主满意的成品。
+            </div>
+        </div>
+        <div style="clear: both;"><div>
+      </div>
+    </div>
+    <div class="step5">
+      <ul>
+        <li>
+          <div><a onmousedown="ISL_GoUp_1()" onmouseup="ISL_StopUp_1()" onmouseout="ISL_StopUp_1()" href="javascript:void(0);" target="_self"><img src="http://www.51hejia.com/zhuanti/yougong0516/images/step5_left.gif"/></a></div>
+        </li>
+        <li>
+          <div class="step5_content" id="ISL_Cont_1">
+          <div class="step5_list">
+          <div id="List1_1">
+            <ul>
+              <% @paint_workers.each do |worker| %>
+                <li>
+                  <div class="step5_city"><%= City.name_for_code(worker.painter.city) %></div>
+                  <div class="step5_img"><%= image_tag get_avatar_img(worker.painter.avatar_file_name), :alt => worker.USERBBSNAME  %></div>
+                  <div class="step5_name"><%= worker.USERBBSNAME %></div>
+                  <div class="step5_yue"><a href="<%= generate_zt_paint_worker_url(worker.id) %>" target="_blank"><img src="http://www.51hejia.com/zhuanti/yougong0516/images/step5_yue.JPG" /></a></div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div id="List2_1"></div>
+          </div>
+          </div>
+        </li>
+        <li>
+          <div> <a onmousedown="ISL_GoDown_1()" onmouseup="ISL_StopDown_1()" onmouseout="ISL_StopDown_1()" href="javascript:void(0);" target="_self"><img src="http://www.51hejia.com/zhuanti/yougong0516/images/step5_right.gif"/></a></div>
+        </li>
+      </ul>
+    </div>
+    <div style="clear: both;"><div></div></div>
+    <script type="text/javascript">
+    <!--
+    picrun_ini()
+    //-->
+    </script>
+    <!--end -->
+    <div style="clear: both;"><div></div></div>
+    <%= render_shared_footer %>
+    </div>
+  </body>
+</html>

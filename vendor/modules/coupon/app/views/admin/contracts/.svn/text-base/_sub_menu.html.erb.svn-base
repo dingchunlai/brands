@@ -1,0 +1,5 @@
+<%= 
+  menu '合同管理', ["合同列表", admin_distributor_contracts_path(@distributor && @distributor.id || @contract.distributor_id), ],
+    ["添加店面", new_admin_distributor_shop_path(@distributor && @distributor.id || @contract.distributor_id)] 
+%>
+

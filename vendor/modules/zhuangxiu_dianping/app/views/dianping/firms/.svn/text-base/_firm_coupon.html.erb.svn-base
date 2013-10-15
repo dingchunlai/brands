@@ -1,0 +1,43 @@
+    <% if coupon = fetch_firm_coupon(@firm.id) %>
+    <!--2_code-->
+    <div class="zxdp2010_info margin10 zxdp2011_xjqinfo2 f_l">
+      <h3>现金券</h3>
+      <table width="304" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><%= link_to coupon.title, firm_coupon_url(coupon), :target => '_blank', :title => coupon.title %></td>
+        </tr>
+        <tr>
+          <td><div class="diyq_listimg diyqimg" data-img="<%= coupon.show_image_url %>">
+            <%= link_to image_tag("http://assets5.image.51hejia.com/#{coupon.show_image_url}"), firm_coupon_url(coupon), :target => '_blank', :title => coupon.title %></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!--2_code-->
+    <% elsif @event %>
+    <!--3_code-->
+    <div class="zxdp2010_info margin10 zxdp2011_xjqinfo3 f_l">
+      <h3>优惠信息</h3>
+      <table width="284" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><p><%= link_to(truncate_u(strip_tags(@event.prompt),90),two_coupon_urls(@user_city_code,@event), :target=>"_blank") %></p></td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to(@event.title, two_coupon_urls(@user_city_code,@event), :target=>"_blank") %>
+        </tr>
+      </table>
+    </div>
+    <!--3_code-->
+    <% else %>
+    <!--1_code-->
+    <div class="zxdp2010_info margin10 f_l">
+      <h3>现金券</h3>
+      <table width="304" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="http://img2.51hejia.com/img/zxdpimg/zxdp2011_icon16.gif" alt="暂无现金券" /></td>
+        </tr>
+      </table>
+    </div>
+    <!--1_code-->
+    <% end %>

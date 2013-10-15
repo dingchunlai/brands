@@ -1,0 +1,20 @@
+<% if flash[:success] %>
+  <div style="padding-left:25px;color:red;"><%=flash[:success]%></div>
+<% end %>
+<% remark.show_replies.each do |remark_reply| %>
+  <% editor = get_remark_editor(remark_reply) %>
+  <% if editor.class == DecoFirm %>
+    <label>[<a href="<%= generate_firm_path(editor) %>" title="<%= editor.name_zh %>" target="_blank"><%= editor.name_zh %></a>]于 <%= remark_reply.created_at.strftime("%Y-%m-%d") %> 回复</label>
+  <% elsif editor.class == HejiaUserBbs %>
+    <label>[<%= remark_reply.user_name %> ]于<%= remark_reply.created_at.strftime("%Y-%m-%d %H:%M:%S") %>回复</label>
+  <% end %>
+  <p><%= remark_reply.content %></p>
+<% end if remark.replies.size > 0 %>
+<div class="firm_contwbhfinput" style="display:none;" data-remark-size="<%= remark.replies.size %>">
+  <form action="" class = "remark_reply_form">
+    <input type="hidden" id="remark_parent_id" value="<%=remark.id%>"/>
+    <input type="hidden" id="user_id" value="<%= current_user.USERBBSID if current_user %>"/>
+    <input type="text" class="zx_diary_iptsty" id="remark_reply_content" size="50"/>
+    <input name="" type="button" value="回复" class="zx_diary_btnsty firm_remark_reply replay_submit" />
+  </form>
+</div>

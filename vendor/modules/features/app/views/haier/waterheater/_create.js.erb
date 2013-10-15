@@ -1,0 +1,4 @@
+<% msg = Remark.find(:first,:select =>'id,user_id,content',:include =>:hejia_bbs_user,:conditions =>'resource_type=\'haier_zhuanti_jiadian_waterheater\' and resource_type=0',:order =>'created_at desc') %>
+(function() {
+    $('.cs_4_li ul').prepend('<li><span class="font_l"><%= msg.user_id.to_i == 7360706 ? '和家网友' : msg.hejia_bbs_user.USERNAME %>：</span><%= truncate_u(msg.content,34) %></li>');
+})();

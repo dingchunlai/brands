@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions
+END
+_layout_index_button.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions/_layout_index_button.html.erb
+END
+_layout_login_button.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions/_layout_login_button.html.erb
+END
+_layout_logout_button.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions/_layout_logout_button.html.erb
+END
+forgot_password.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions/forgot_password.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/paint_sessions/index.html.erb
+END

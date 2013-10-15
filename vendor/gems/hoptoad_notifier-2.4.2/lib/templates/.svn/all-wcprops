@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/templates
+END
+javascript_notifier.erb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/templates/javascript_notifier.erb
+END
+rescue.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/templates/rescue.erb
+END

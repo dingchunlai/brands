@@ -1,0 +1,8 @@
+<% @cases = hejia_promotion_items(PAINT_HOME_CASE, :attributes => ['title','url'],:limit => 6)%>
+<h3>经典案例</h3>
+<div class="yg_more"></div>
+<ul class="clearfix">
+  <% @cases.each do |c|%>	
+  <li>·<a href="<%= c.url%>" target="_blank" title="<%= c.title %>"><%=truncate(c.title, :length => 15, :omission => '')%></a></li>
+  <% end %>
+</ul>

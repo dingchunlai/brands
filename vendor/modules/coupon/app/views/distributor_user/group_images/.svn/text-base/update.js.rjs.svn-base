@@ -1,0 +1,8 @@
+if @image.errors.count == 0
+  page << "$('#hy_upload_pic_#{@image.id}').attr('src','#{cloud_fs_domain("image")}#{@image.image_url}');"
+  #page << "$('#hy_upload_pic_status_#{@image.id}').html('待审核');"
+  page << "$('#hy_upload_pic_title_#{@image.id}').html('#{@image.name}');"
+  page << "$($('#cancel_edit').parent()).html('');";
+else
+  page.replace_html :hy_upform_error_msg, @image.errors.full_messages.join("<br />")
+end

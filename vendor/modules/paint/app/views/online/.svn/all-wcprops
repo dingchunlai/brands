@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/144/51hejia/repos/brands/release/vendor/modules/paint/app/views/online
+END
+_member_training.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/_member_training.html.erb
+END
+_new_training.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/_new_training.html.erb
+END
+send_info.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/send_info.html.erb
+END
+training_info.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/training_info.html.erb
+END
+success.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/success.html.erb
+END
+training.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/training.html.erb
+END
+refused.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/144/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/refused.html.erb
+END
+send_index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/online/send_index.html.erb
+END

@@ -1,0 +1,42 @@
+<% content_for :html_head do %>
+  <link href="http://js.51hejia.net/css/daijq.css" rel="stylesheet" type="text/css" />
+  <% if Rails.env == "production" %>
+    <link href="http://js.51hejia.net/css/diyongquan.css" rel="stylesheet" type="text/css" />
+  <% else %>
+    <link href="http://js.51hejia.com/css/rehearsal/diyongquan.css?<%= Time.now.day %>" rel="stylesheet" type="text/css" />
+  <% end %>
+  <script src="http://js2.51hejia.net/js/loopedslider.min.js" type=text/javascript></script>
+  <script type="text/javascript" src="http://js2.51hejia.net/js/jquery/plugins/cookie/1.0.0/jquery.cookie.min.js"></script>
+<% end %>
+<%= render :partial => 'shared/layouts/header', :locals => { :without_search_bar => true, :without_logo_image => true } %>
+<!--logo_code-->
+<% if controller.controller_name != "coupon_thematices" %>
+  <div class="width960 margin10 clearfix">
+    <div class="diyq_logo f_l"><a href="http://<%= @city.pinyin %>.youhui.51hejia.com/" target="_blank"><img src="http://img3.51hejia.net/img/diyongquan/diyq_logo.gif" alt="抵用券" /></a></div>
+    <div class="diyq_city f_l"> <span id="city010">[<a rel="dropmenu012"><%= @city.name %><small>&#9660;</small></a>]
+        <div id="dropmenu012" class="citydiv">
+          <a href="http://shanghai.youhui.51hejia.com/" target="_self" >上海</a>
+          <a href="http://nanjing.youhui.51hejia.com/" target="_self" >南京</a>
+          <a href="http://ningbo.youhui.51hejia.com/" target="_self" >宁波</a>
+          <a href="http://wuxi.youhui.51hejia.com/" target="_self" >无锡</a>
+          <a href="http://suzhou.youhui.51hejia.com/" target="_self" >苏州</a>
+        </div>
+        <script type="text/javascript">
+          cssdropdown.startchrome("city010")
+        </script>
+      </span> </div>
+    <div class="diyq_autotxt1 f_l">
+      <ul id="cont_m_5">
+        <li>砍到底价再返现！厂商<strong>特供</strong>、经销商<strong>让利</strong>、网站<strong>贴现</strong>，数千个品牌累计<strong>10</strong>亿价值，<strong>现金券震撼发行</strong>！</li>
+        <li>砍到底价再返现！厂商<strong>特供</strong>、经销商<strong>让利</strong>、网站<strong>贴现</strong>，数千个品牌累计<strong>10</strong>亿价值，<strong>现金券震撼发行</strong>！</li>
+      </ul>
+      <script type="text/javascript" src="http://js2.51hejia.net/js/txt_auto.js"></script>
+    </div>
+    <div class="diyq_num f_r">
+      <p><%= @city.name %>已有<strong><%= Coupon.exact_count(@city.id) %></strong>人下载<%= Coupon.human_name %></p>
+    </div>
+  </div>
+<% end %>
+<!--end_logo_code-->
+<%= yield %>
+<%= render :partial => 'shared/layouts/footer' %>

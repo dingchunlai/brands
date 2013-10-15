@@ -1,0 +1,36 @@
+<%= top_bar :title       => "#{VipDistributorCase.human_name}管理",
+            :button      => ['新增案例', new_distributor_user_case_path],
+            :breadcrumbs => [
+                    ['首页', distributor_user_index_path],
+                    ["#{VipDistributorCase.human_name}管理", distributor_user_activities_path]
+            ]
+%>
+<%= flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>" %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+	  <tr>
+        <th class="first">编号</th>
+	    <th><%= VipDistributorCase.human_attribute_name("title")%></th>
+	    <th colspan=3 class="last">操作</th>
+	  </tr>
+    <% @cases.each do |vip_distributor_case| %>
+        <tr>
+          <td><%= h vip_distributor_case.id %></td>
+          <td><%= h vip_distributor_case.title %></td>
+          <td><%= link_to '查看 & 管理图片', distributor_user_case_path(vip_distributor_case) %></td>
+          <td><%= link_to '编辑', edit_distributor_user_case_path(vip_distributor_case) %></td>
+          <td><%= link_to '删除', distributor_user_case_path(vip_distributor_case), :confirm => '确认删除?', :method => :delete %></td>
+        </tr>
+    <% end %>
+    <% unless @cases.empty? %>
+        <tr>
+          <td colspan="5">
+            <%= will_paginate @cases, :class => "digg_pagination" %>
+          </td>
+        </tr>
+    <% end %>
+
+  </table>
+</div>

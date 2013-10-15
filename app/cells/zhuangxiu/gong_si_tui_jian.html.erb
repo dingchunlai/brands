@@ -1,0 +1,4 @@
+<% @decofirms.each do |c| %>
+  <li><a href="http://z.<%= c.city_pinyin %>.51hejia.com/<%= c.id %>" target="_blank" title="<%= c.name_zh %>"><%= truncate_u(c.name_zh, 16) %></a></li>
+<% end %>
+

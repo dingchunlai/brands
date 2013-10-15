@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%= params[:date].last(2).to_i %>月份装潢公司荣誉榜  <%= @city_name %>十佳网友好评的装潢公司</title>
+<meta name="keywords" content="<%= CITIES[params[:city].to_i] %>装潢公司 <%= @city_name %>装饰 <%= @city_name %>装修 装修日记" />
+<meta name="description" content="和家网从执行媒体监管装修质量以来，一直备受网友的关注，本月依然从施工质量、服务态度、设计、口碑、性价比等方面，由网友投票综合评本月<%= @city_name %>装潢公司荣誉榜——十佳网友好评的装潢公司。" />
+
+<style type="text/css">
+
+*{ margin:0; padding:0;}
+ div{ margin:0 auto;}
+ img{border:none;}
+ 
+ 
+.box{ width:960px;font-size:12px;line-height:20px;}
+.box img{width:186px; height:124px;}
+.box span{color:#333;white-space: nowrap;display:inline-block;}
+.box span label{color:red;}
+.f_l{float:left;}
+.f_r{float:right;}
+
+.box1{ height:195px;}
+.box1_1{ width:240px; height:195px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_01.jpg) no-repeat; float:left;}
+.box1_2{ width:240px; height:65px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_02.jpg) no-repeat; float:left;}
+.box1_3{ width:240px; height:195px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_03.jpg) no-repeat; float:right;}
+.box1_4{ width:240px; height:195px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_04.jpg) no-repeat; float:right;}
+.box1_5{ width:240px; height:65px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_05.jpg) no-repeat; float:left;}
+.box1_5 p{ font-size:18px; color:#FFF; margin:26px 0 0 69px; _margin:26px 0 0 71px;}
+.box1_6{ width:240px; height:65px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/ningbo_06.jpg) no-repeat; float:left;}
+
+.box2{ height:184px;}
+.box2_1{ width:283px; height:184px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_07.jpg) no-repeat; float:left;}
+.box2_2{ width:415px; height:184px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_08.jpg) no-repeat; float:left;}
+.box2_2_p1{ font-size:18px; color:#715e37; margin:40px 0 0 75px;}
+.box2_2_p2{ font-size:12px; line-height:18px; text-indent:2em; color:#715e37; width:325px; height:69px; margin:10px 0 0 48px;}
+.box2_3{ width:262px; height:184px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_09.jpg) no-repeat; float:left;}
+
+.box3{ height:115px;}
+.box3_1{ width:319px; height:115px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_10.jpg) no-repeat; float:left;}
+.box3_2{ width:318px; height:115px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_11.jpg) no-repeat; float:left;}
+.box3_3{ width:323px; height:115px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_12.jpg) no-repeat; float:left;}
+.box3_3 form{ float:right; margin-top:79px; margin-right:28px; _margin-right:14px;}
+.box3_3 select{ width:145px; height:22px;}
+
+.box4{ height:239px;}
+.box4_1{ width:319px; height:239px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_13.jpg) no-repeat; float:left;}
+.box4_2{ width:214px; height:239px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_140.jpg) no-repeat; float:left;}
+.box4_2_ad{ width:186px; float:left; margin-top:39px; margin-left:16px; _margin-left:8px;}
+.box4_3{ width:209px; height:239px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_150.jpg) no-repeat; float:left;}
+.box4_3_ad{ width:186px; float:left; margin-top:40px; margin-left:10px; _margin-left:5px;}
+.box4_4{ width:218px; height:239px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_160.jpg) no-repeat; float:left;}
+.box4_4_ad{ width:186px; float:left; margin-top:41px; margin-left:12px; _margin-left:6px;}
+
+.box5{ height:234px;}
+.box5_1{ width:216px; height:234px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_170.jpg) no-repeat; float:left;}
+.box5_1_ad{ width:186px; float:left; margin-top:37px; margin-left:18px; _margin-left:9px;}
+.box5_2{ width:210px; height:234px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_180.jpg) no-repeat; float:left;}
+.box5_2_ad{ width:186px; float:left; margin-top:37px; margin-left:14px; _margin-left:7px;}
+.box5_3{ width:213px; height:234px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_190.jpg) no-repeat; float:left;}
+.box5_3_ad{ width:186px; float:left; margin-top:39px; margin-left:14px; _margin-left:7px;}
+.box5_4{ width:321px; height:234px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_20.jpg) no-repeat; float:left;}
+
+.box6{ height:228px;}
+.box6_1{ width:265px; height:228px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_210.jpg) no-repeat; float:left;}
+.box6_1_ad{ width:186px; float:left; margin-top:33px; margin-left:66px; _margin-left:33px;}
+.box6_2{ width:209px; height:228px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_220.jpg) no-repeat; float:left;}
+.box6_2_ad{ width:186px; float:left; margin-top:33px; margin-left:12px; _margin-left:6px;}
+.box6_3{ width:212px; height:228px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_230.jpg) no-repeat; float:left;}
+.box6_3_ad{ width:186px; float:left; margin-top:33px; margin-left:12px; _margin-left:6px;}
+.box6_4{ width:274px; height:228px; background:url(http://zt.51hejia.com/zhuanti/rybwx06/images/hangzhou_240.jpg) no-repeat; float:left;}
+.box6_4_ad{ width:186px; float:left; margin-top:33px; margin-left:12px; _margin-left:6px;}
+
+.a1{ display:block; width:186px; height:124px;}
+.a2{ display:block; font-weight:bold; font-size:14px; color:#313131; text-align:center; text-decoration:none; margin-top:3px;}
+</style>
+
+</head>
+
+
+
+<body>
+
+<div class="box box1">
+<div class="box1_1"></div>
+<div class="box1_4"></div>
+<div class="box1_3"></div>
+<div class="box1_2"></div>
+<div class="box1_5"><p><strong><%= params[:date].first(4).to_i %>年<%= params[:date].last(2).to_i %>月<%= @city_name %>地区</strong></p></div>
+<div class="box1_6"></div>
+</div>
+
+<div class="box box2">
+<div class="box2_1"></div>
+<div class="box2_2">
+<p class="box2_2_p1"><strong>网友评选Top10<%= @city_name %>十佳装潢公司</strong></p>
+<p class="box2_2_p2">和家网从执行媒体监管装修质量以来，一直备受网友的关注，本月依然从施工质量、服务态度、设计、口碑、性价比等方面，由网友投票综合评定出本月的<%= @city_name %>装潢公司荣誉榜——十佳网友好评的装潢公司。</p>
+</div>
+<div class="box2_3"></div>
+</div>
+
+<div class="box box3">
+<div class="box3_1"></div> 
+<div class="box3_2"></div>
+<div class="box3_3">
+<form>
+
+  <select onchange="var url = this.options[selectedIndex].value; if(url) window.open(url);">
+  	<option>请选择月份</option>
+  	<%= options_for_month_select(TAGURLS[@user_city_code.to_i])%>
+  </select>
+</form>
+</div>
+</div>
+<%= yield %>
+<!--statistics_code-->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(
+    ['_setAccount', 'UA-7619267-1'],
+    ['_setDomainName', '.51hejia.com'],
+    ['_addOrganic', "baidu", "kw"],
+    ['_addOrganic', "baidu", "word"],
+    ['_addOrganic', "soso", "w"],
+    ['_addOrganic', "3721", "name"],
+    ['_addOrganic', "yodao", "q"],
+    ['_addOrganic', "vnet", "kw"],
+    ['_addOrganic', "sogou", "query"],
+    ['_trackPageview']
+  );
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-12518263-3']);
+
+    ['_addOrganic', "baidu", "kw"];
+    ['_addOrganic', "baidu", "word"];
+    ['_addOrganic', "soso", "w"];
+    ['_addOrganic', "3721", "name"];
+    ['_addOrganic', "yodao", "q"];
+    ['_addOrganic', "vnet", "kw"];
+    ['_addOrganic', "sogou", "query"];
+
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F413eb88661221537985a18b6638be957' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!--end_statistics_code-->
+
+</body>
+</html>
+
+

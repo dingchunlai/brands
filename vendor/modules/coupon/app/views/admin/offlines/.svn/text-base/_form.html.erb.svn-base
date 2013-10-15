@@ -1,0 +1,69 @@
+<%=include_jquery_easy_validator%>
+<%
+  is_new = @offline_address.new_record? ? true : false
+  title = is_new ? "新建线下信息" : "编辑线下信息" 
+%>
+<%= top_bar :title => title,
+      :button => ['返回', admin_offlines_path],
+      :breadcrumbs => [
+        ['首页', coupon_admin_index_path],
+        ['线下管理', admin_offlines_path],
+        [title]
+      ]
+%>
+
+<% form_for @offline_address, :url => (is_new ? admin_offlines_path : admin_offline_path(@offline_address)), :html => {:method => (is_new ? :post : :put)} do |f| %>
+  <%= f.error_messages  %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2"><%= title %></th>
+      </tr>
+      <tr>
+        <td class="first" width="50"><strong><%= f.label :city_id %></strong></td>
+        <td class="last"><%= f.select(:city_id, City.used_cities.map{ |t| [t.name, t.id] }.unshift(['-请选择-',0]), {}, :reg => '^\w+$', :tip => "请选择城市") %> 
+        </td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :district_id %></strong></td>
+        <td class="last">
+          <% if !is_new %>
+            <%= f.select(:district_id, @area.map{ |t| [t.name, t.id] }.unshift(['-请选择-',0]), {}, :reg => '^\w+$', :tip => "请选择区域") %> 
+          <% else %>
+            <%= f.select(:district_id, ['-请选择-',0], {}, :reg => '^\w+$', :tip => "请选择区域") %>
+          <% end %>
+        </td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :address %></strong></td>
+        <td class="last"><%= f.text_area :address, :reg => '^\S+$', :tip => "地址必填必须" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first">&nbsp;</td>
+        <td class="last"><%= f.submit '保存' %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    $("#offline_address_city_id").change(function(){
+      var dom = $("#offline_address_district_id").empty();
+      if(parseInt($("#offline_address_city_id").val()) != 0){
+        $.get("/remote/districts/" + $("#offline_address_city_id").val(), function(data){
+          $('<option />').val('0').text("-请选择-").appendTo(dom);  
+          if(data.length > 0){
+            $.each(data, function(_, area){
+              $('<option />').val(area[1]).text(area[0]).appendTo(dom);
+            });
+          }
+        });
+      }else{
+        $('<option />').val('0').text("-请选择-").appendTo(dom);  
+        return false;
+      }
+    });
+  });
+</script>

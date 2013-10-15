@@ -1,0 +1,44 @@
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+		$(".log_ul li:odd").addClass("odd");
+		$(".log_ul li:even").addClass("even");
+	});
+</script>
+<style type="text/css">
+	.log_ul	{margin:5px 0;padding:10px;border:1px solid #f60;width:750px;}
+	.log_ul li{list-style:none;padding:5px 0;}
+	.log_ul em{color:red;}
+	.log_ul .odd{background:#dedede;}
+	.log_ul .even{background:#fff;}
+</style>
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>系统日志</h1>
+  <div class="breadcrumbs">系统日志 / 查看日志</div>
+</div>
+<div>
+	<div class="select-bar">
+	<form id="" name="" method="get" action="<%=paint_admin_paint_log_path%>">
+		操作人<select id="" name="user_id">
+			<% admins = PaintAdmin.get_all %>
+			<option value="">请选择</option>
+			<% admins.each do |admin|%>
+				<option value="<%=admin.USERBBSID%>" <%= "selected" if @user_id.to_i == admin.USERBBSID%>><%=admin.USERNAME%></option>
+			<% end %>
+		</select>
+		开始时间<input type="text" class="datepicker" size="10"  name="start_date" value="<%=@start_date%>">
+		结束时间<input type="text" class="datepicker" size="10"  name="end_date" value="<%=@end_date%>">
+		<input type="submit" value="检索">
+	</form>
+	</div>
+	<div class="clearfix">
+		<ul class="log_ul">
+			<% @logs.each do |log| %>
+					<li><%= log_show(log) %></li>
+			<% end %>
+		</ul>
+		<%= will_paginate @logs ,:class => 'digg_pagination'%>
+	</div>
+</div>

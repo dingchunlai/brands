@@ -1,0 +1,100 @@
+
+<% javascript jquery_resource(:plugin =>'kindeditor',:version =>'3.5.2',:resource =>'kindeditor-min.js') %>
+<% javascript jquery_resource(:plugin =>'kindeditor',:version =>'3.5.2',:resource =>'config/emoticons_config.js') %>
+<div class="gsl_wyly_lyk clear">
+  <a id="reply"></a>
+  <h3>我要评论</h3>
+  <input type="hidden" id="cookie_id" value="<%= current_user.USERBBSID if current_user %>"/>
+  <% unless current_user %>
+    <div id="login">
+      友情提示：您还未登陆，请<a class="firm_show_login_2011">"点击此处"</a>登陆后发表评论，谢谢!
+    </div>
+  <% end %>
+  <hr />
+  <div>
+    <form action="" id="firm_remark">
+      <input type="hidden" name="token" id="token" value="<%= @token %>"/>
+      <input type='hidden' id="deco_frim_id" name='remark[resource_id]' value='<%=@firm.id %>'/>
+      <table width="670" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="gsl_wyly_qy"><textarea id="content" class="kindeditor_only_emoticons" data-toolbar="emoticons" name="remark[content]" cols="" rows=""></textarea>
+          </td>
+        </tr>
+      </table>
+      <div id="simple_remark">
+        <% if flash[:error] %>
+          <div class="firm_show_remark_error_2011"><%=flash[:error]%></div>
+        <% else %>
+          <div id="open_mark" >
+            <% if flash[:notice] %>
+              <span class="firm_show_remark_error_2011"><%= flash[:notice] %></span>
+            <% else %>
+              <span class="firm_show_remark_error_2011 firm_show_remark_praise_2011">点击对该公司进行评分</span>
+            <% end %>
+          </div>
+        <% end %>
+        <div style="text-align:center;margin-bottom:10px;" id="remark_button">
+          <% if current_user %>
+            <input type="submit" value="留言提交" id="pt_submit"  class="gsl_wyly_btn"  />
+          <% else %>
+            <input type="button" value="留言提交" class="gsl_wyly_btn" onclick="Divopop('Login');return true;" />
+          <% end %>
+        </div>
+      </div>
+      <div class="pinjbox" style="display:none;">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="200">
+              <div class="clearfix">
+                <div class="set-praise f_l big-star" id="firm_under_star" data-praise="0"></div>
+                <input type="hidden" name="remark[praise]" id="mian_praise"/>
+                <div id="show_key" class="dafenkeys f_l"></div>
+              </div>
+              <dl>
+                <dt>详细评价<span>（非必填）</span></dt>
+                <dd class="clearfix">
+                  <div class="f_l"><strong>最满意</strong></div>
+                  <div id="zuimanyi">
+                    <input type="radio" class="col1" name="zuimanyi" value="设计"/>设计
+                    <input type="radio" class="col2" name="zuimanyi" value="施工"/>施工
+                    <input type="radio" class="col3" name="zuimanyi" value="服务"/>服务
+                  </div>
+                </dd>
+                <dd class="clearfix">
+                  <div class="f_l"><strong>较满意</strong></div>
+                  <div id="jiaomanyi">
+                    <input type="radio" class="col1" name="jiaomanyi" value="设计"/>设计
+                    <input type="radio" class="col2" name="jiaomanyi" value="施工"/>施工
+                    <input type="radio" class="col3" name="jiaomanyi" value="服务"/>服务
+                  </div>
+                </dd>
+                <script type="text/javascript">
+                  jQuery(function($){
+                    var obj = $("input[type='radio']");
+                    obj.each(function(){
+                      $(this).click(function(){
+                        var classid = $(this).attr("class");
+                        var parentobj = $(this).parents("dd").siblings() ;
+                        parentobj.find("input[class="+classid+"]").attr("disabled","true").siblings().removeAttr("disabled");
+                      })
+                    })
+                  })
+                </script>
+              </dl>
+            </td>
+            <td valign="top" id="is_verify">
+              <input type="hidden" id="youhaoma" name="youhaoma"/>
+              <input type="hidden" id="this_mobile" name="this_mobile"/> 
+              <div class="pinjphone">手机号码 <input id="buildin_mobile" type="text" class="pinjsjh" />
+                <input id="buildin_code_button" type="button" value="获取验证码" />
+                验证码 <input name="verify_code" id="buildin_verify_code" type="text" class="pinjyzm" /></div>
+              <p class="pinjprompt">注：为保证用户评分真实有效，对装修公司进行评分必须通过手机验证，验证仅为保证真实度，其间不会产生任何费用。验证功能仅对评分有效，网友留言不需此操作。</p>
+            </td>
+          </tr>
+        </table>
+        <div class="dafensub clearfix"><input id="mark_remark" type="button" value="提 交" class="dafenbtn01" /></div>
+        <input type="hidden" id="mark_tj" name="mark_tj"/>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<% if INDEX_AD_MAPPING[city][title].respond_to?(:each) %>
+  <div id="newsSlider02" class="news_slider f_l">
+    <div class="container">
+      <ul class="slides">
+        <% INDEX_AD_MAPPING[city][title].each do |id| %>
+          <li>
+            <!-- afp广告代码　　START　============================== -->
+            <script type="text/javascript">//<![CDATA[
+              ac_as_id = <%= id %>;
+              ac_format = 0;
+              ac_mode = 1;
+              ac_group_id = 1;
+              ac_server_base_url = "afp.csbew.com/";
+              //]]></script>
+            <script type="text/javascript" src="http://static.csbew.com/k.js"></script>
+            <!-- afp广告代码　　END　================================ -->
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="validate_Slider"></div>
+  </div>
+<% else %>
+<%= render_ad(INDEX_AD_MAPPING[city][title]) %>
+<% end %>

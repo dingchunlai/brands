@@ -1,0 +1,26 @@
+<div class="zxdp2010_slide f_l">
+  <% if @store_photos_count == 0 %>
+    <div style="margin:10px 0 0 10px">
+      <%= image_tag "http://img3.51hejia.com/img/zxdpimg/nopic03.jpg",:alt=>""%>
+    </div>
+  <% else %>
+    <div class="zxdp2010_slidebigimg">
+      <% @store_photos.each do |photo|%>
+        <%= store_photo_link photo,"300x180" %>
+      <% end -%>
+      <% 3.downto(@store_photos_count) do |i|%>
+        <%= image_tag "http://img3.51hejia.com/img/zxdpimg/nopic01.jpg",:alt=>""%>
+      <% end -%>
+    </div>
+    <div class="zxdp2010_slidesmallimg"  data-img-count="<%= @store_photos_count-1%>">
+      <ul class="clearfix">
+        <% @store_photos.each do |photo|%>
+          <li class="has_img"><%= store_photo_link photo,"92x78" %> </li>
+        <% end -%>
+        <% 3.downto(@store_photos_count) do |i|%>
+          <li><%= image_tag "http://img3.51hejia.com/img/zxdpimg/nopic02.jpg",:alt=>""%></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>
+</div>

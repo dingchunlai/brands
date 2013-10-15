@@ -1,0 +1,20 @@
+<div class="f2_bottom f2_bottom2" id="f2_bottom">
+  <div id="g0" style="display:block;">
+    <a href="http://z.51hejia.com/cases" class="now" target="_blank">装修公司图片</a>
+    <a href="http://z.51hejia.com/cases" onmouseover="javascript:setFocus2('div','f2_bottom','g',1);" target="_blank">装修公司图片</a>
+    <ul class="f_l clearfix">
+      <% @tu_pian.each do |c| %>
+        <li style="margin-right:5px;"><a href="http://z.51hejia.com/cases/<%= c.ID %>" target="_blank" title="<%= c.NAME %>"><%= truncate_u(c.NAME, 11) %></a></li>
+      <% end %>
+    </ul>
+  </div>
+  <div id="g1" style="display:none;">
+    <a href="http://z.51hejia.com/coupons" onmouseover="javascript:setFocus2('div','f2_bottom','g',0);" target="_blank">装修公司促销</a>
+    <a href="http://z.51hejia.com/coupons" class="now" target="_blank">装修公司促销</a>
+    <ul class="f_l clearfix">
+      <% @cu_xiao.each do |e| %>
+        <li style="margin-right:5px;"><a href="<%=coupon_url(:subdomain =>"z.#{TAGURLS[@city_id.to_i]}",:id => e.event_id)%>" target="_blank" title="<%= e.title %>"><%= truncate_u(e.title, 11) %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

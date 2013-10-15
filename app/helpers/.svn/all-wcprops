@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/!svn/ver/524/51hejia/repos/brands/release/app/helpers
+END
+productions_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/productions_helper.rb
+END
+brand_rating_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/brand_rating_helper.rb
+END
+tag_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/tag_helper.rb
+END
+layout_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/layout_helper.rb
+END
+cloud_fs_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/cloud_fs_helper.rb
+END
+production_series_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/production_series_helper.rb
+END
+application_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/524/51hejia/repos/brands/release/app/helpers/application_helper.rb
+END
+article_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/article_helper.rb
+END
+huodong_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/huodong_helper.rb
+END
+production_category_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/production_category_helper.rb
+END
+brand_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/app/helpers/brand_helper.rb
+END

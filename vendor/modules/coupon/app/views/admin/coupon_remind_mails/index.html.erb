@@ -1,0 +1,34 @@
+<%= top_bar :title       => '提示邮件接收人管理页',
+            :button      => ['创建接收人', new_admin_coupon_remind_mail_path],
+            :breadcrumbs => [
+                    ['管理首页', coupon_admin_index_path],
+                    ['接收人列表', admin_coupon_remind_mails_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">编号</th>
+      <th><%= CouponRemindMail.human_attribute_name("city_id") %></th>
+      <th><%= CouponRemindMail.human_attribute_name("recipient") %></th>
+      <th><%= CouponRemindMail.human_attribute_name("cc") %></th>
+
+      <th colspan=2 class="last">操作</th>
+    </tr>
+    <% @coupon_remind_mails.each_with_index do |coupon_remind_mail, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= coupon_remind_mail.id %></td>
+          <td><%= Coupon::CITIES[coupon_remind_mail.city_id] %></td>
+          <td><%= coupon_remind_mail.recipient.to_s.gsub("\n", "<br />") %></td>
+          <td><%= coupon_remind_mail.cc.to_s.gsub("\n", "<br />") %></td>
+          <td><%= link_to '查看', admin_coupon_remind_mail_path(coupon_remind_mail) %></td>
+          <td><%= link_to '修改', edit_admin_coupon_remind_mail_path(coupon_remind_mail) %></td>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @coupon_remind_mails.empty? -%>
+      <%= will_paginate @coupon_remind_mails, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

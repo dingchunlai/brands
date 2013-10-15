@@ -1,0 +1,84 @@
+<!-- Add For Coupon  -->
+<% is_adding_new_record = @category.new_record? %>
+<div class="page_navigate page_padding">
+  <span>当前位置：</span>  <%= link_to "产品类别管理", admin_production_categories_path %> > <%= is_adding_new_record ? "新建" : "编辑" %>产品类别页面
+  <br />
+  <br />
+</div>
+<div> 
+  <% form_for @category, :url => (is_adding_new_record && admin_production_categories_path || admin_production_category_path(@category)), :html => { :id => 'category', :method => (is_adding_new_record && :post || :put) } do |f| %>
+  <table>
+    <tr>
+      <th>所属行业</th>
+      <td><%= f.select :tag_id, Tag.all_categories.map{ |t| [t.TAGNAME, t.TAGID] }.unshift(['请选择','']), {} %></td>
+      <td><span id="category_tag_id"></span></td>
+    </tr>
+    <tr>
+      <th>名称</th>
+      <td><%= f.text_field :name %><span id="category_name"></span></td>
+      <td><span id="category_name"></span></td>
+    </tr>
+    <tr>
+      <th>简称</th>
+      <td><%= f.text_field :short_name %><span id="category_short_name"></span></td>
+      <td><span id="category_short_name"></span></td>
+    </tr>
+    <tr>
+      <th>技术参数</th>
+      <td>
+        <% @category.attrs.each_with_index do |attr, index| %>
+          <div>
+            <%= text_field_tag "attributes[#{index}]", attr.name, :id => "attributes_#{index}" %>
+            <%= hidden_field_tag "attributes[mapping][#{index}]", attr.id %>
+          </div>
+        <% end %>
+          <div>
+            <input type="button" value="添加参数" id="add-attribute" />
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= submit_tag '保存' %></td>
+    </tr>
+  </table>
+<% end %>
+</div>
+<script type="text/javascript">
+  (function() {
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        var index = $(this).parent().siblings().length;
+        $('<input type="text" name="attributes[' + index + ']" id="attributes_' + index + '" />').appendTo($('<div />').insertBefore($(this).parent()));
+      });
+    }
+
+    function from_submit(){
+      $("#category").submit(function(){
+        var flg = true;
+        if($('#production_category_tag_id').val() == ''){
+          $('#category_tag_id').html('* 请选择行业! ');
+          $('#category_tag_id').css('color', 'red');
+          flg = false;
+        }
+        if($('#production_category_name').val() == ''){
+          $('#category_name').html('* 请填写名称! ');
+          $('#category_name').css('color', 'red');
+          flg = false;
+        }
+        if($('#production_category_short_name').val() == ''){
+          $('#category_short_name').html('* 请填写简称! ');
+          $('#category_short_name').css('color', 'red');
+          flg = false;
+        }
+        if(!flg) {return flg;}
+        $('#category').submit();
+      });
+    }
+
+    $(function() {
+      enableAttributeAdding();
+      from_submit();
+    });
+  })();
+</script>
+

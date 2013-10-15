@@ -1,0 +1,916 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="http://js.51hejia.com/js/jquery/1.4.2/jquery.min.js"></script>
+    <% set_page_meta_data_for_page_id("专题:行业新闻:#{@date}") %>
+    <title><%= @page_title || '行业新闻-和家网' %></title>
+    <meta name="keywords" content="<%= @page_meta_keywords || '行业新闻-和家网' %>" />
+    <meta name="description" content="<%= @page_meta_desc || '行业新闻-和家网' %>" />
+  </head>
+<body>
+<div style="width:1010px; height:70px; background-color:#FFFFFF">
+  <%= render :partial => 'shared/layouts/ga_first_half' %>
+  <%= render_shared_header :ga_ids => ['UA-7619267-1', 'UA-13298432-1'] %>
+</div>
+<link href="http://www.51hejia.com/zhuanti/news201105/images/css.css" rel="stylesheet" type="text/css" />
+<%
+  item_prefix = "专题:行业新闻:#{@date}:"
+%>
+<table class="box" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="1010">
+  <tbody>
+    <tr>
+      <td><table class="box" align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
+          <tbody>
+            <% 
+              im = promotion_items("#{item_prefix}题图").first 
+              unless im.blank?
+            %>
+            <tr>
+              <td background="http://www.51hejia.com/zhuanti/news201105/images/f0_1.gif" height="10"></td>
+            </tr>
+            <tr bgcolor="#ffffff">
+              <td height="366"><%= link_to image_tag(im.image, :alt => im.title), im.url, :target => '_blank', :title => im.title %></td>
+            </tr>
+            <tr>
+              <td background="http://www.51hejia.com/zhuanti/news201105/images/f0_1.gif" height="10"></td>
+            </tr>
+            <% 
+              end 
+            -%>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="bianhuise" bgcolor="#eae9e5"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                  <tbody>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                    <tr>
+                      <td class="bianhuiqian" bgcolor="#ffffff" height="500" valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                          <tbody>
+                            <tr>
+                              <td valign="top" width="310"><table align="left" border="0" cellpadding="0" cellspacing="0" width="310">
+                                  <tbody>
+                                    <% 
+                                      large_images = promotion_items("#{item_prefix}大焦点图") 
+                                      unless large_images.blank?
+                                        pics = large_images.collect{|item|item.image}.join('|')
+                                        urls = large_images.collect{|item|item.url}.join('|')
+                                    %>
+                                    <tr>
+                                      <td class="youxia" height="414"><table align="center" border="0" cellpadding="0" cellspacing="0" width="295">
+                                          <tbody>
+                                            <tr>
+                                              <td height="400" width="295"><script type="text/javascript"> 
+                                                <!-- 
+                                                var focus_width=295
+                                                var focus_height=400
+                                                var text_height=0
+                                                var swf_height = focus_height+text_height
+
+                                                var pics="<%= pics %>"
+                                                var links="<%= urls %>"
+                                                var texts='' 
+
+                                                document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase=http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0 width="'+ focus_width +'" height="'+ swf_height +'">'); 
+                                                document.write('<param name="allowScriptAccess" value="sameDomain"><param name="movie" value="http://www.51hejia.com/zhuanti/news201105/images/pixviewer.swf"><param name="quality" value="high"><param name="bgcolor" value="#DADADA">'); 
+                                                document.write('<param name="menu" value="false"><param name=wmode value="opaque">'); 
+                                                document.write('<param name="FlashVars" value="pics='+pics+'&links='+links+'&texts='+texts+'&borderwidth='+focus_width+'&borderheight='+focus_height+'&textheight='+text_height+'">'); 
+                                                document.write('<embed src="http://www.51hejia.com/zhuanti/news201105/images/pixviewer.swf" wmode="opaque" FlashVars="pics='+pics+'&links='+links+'&texts='+texts+'&borderwidth='+focus_width+'&borderheight='+focus_height+'&textheight='+text_height+'" menu="false" bgcolor="#DADADA" quality="high" width="'+ focus_width +'" height="'+ swf_height +'" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"/>'); document.write('</object>');
+                                                //--> 
+                                              </script></td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                    <% end -%>
+                                    <tr>
+                                      <td height="10"></td>
+                                    </tr>
+                                    <tr>
+                                      <td height="160" width="310"><table align="right" border="0" cellpadding="0" cellspacing="0" width="303">
+                                          <tbody>
+                                            <tr>
+                                              <td class="STYLE625" bgcolor="#f1f1f1" height="160" width="303"><table align="center" border="0" cellpadding="0" cellspacing="0" width="280">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>
+                                                      <% 
+                                                        text_focus = promotion_items("#{item_prefix}大焦点图下方文字").first
+                                                          unless text_focus.blank?
+                                                      %>
+                                                      <a href="<%= text_focus.url %>" target="_blank"><%= truncate_u(text_focus.content, 120, '...') %></a>
+                                                      <% end -%>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                              <% 
+                                focus_atricles = promotion_items("#{item_prefix}焦点文章") 
+                                unless focus_atricles.blank?
+                                  first_focus_atricle = focus_atricles.shift
+                              %>
+                              <td valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" width="360">
+                                  <tbody>
+                                    <tr>
+                                      <td height="10"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><img src="http://www.51hejia.com/zhuanti/news201105/images/tds1.gif" height="16" width="88"></td>
+                                    </tr>
+                                    <% unless first_focus_atricle.blank? %>
+                                    <tr class="STYLE9">
+                                      <td align="center"><div align="center"><%= link_to first_focus_atricle.title, first_focus_atricle.url, :target => '_blank' %></div></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="STYLE8"><a href="<%= first_focus_atricle.url %>" target="_blank"><%= truncate_u(first_focus_atricle.content, 90, '...') %>[查看全文]</a></td>
+                                    </tr>
+                                    <% end -%>
+                                    <tr>
+                                      <td bgcolor="#ededed" height="1"></td>
+                                    </tr>
+                                    <% focus_atricles.each_with_index do |item, index| %>
+                                    <tr>
+                                      <td height="110"><table align="center" border="0" cellpadding="0" cellspacing="0" width="340">
+                                          <tbody>
+                                            <tr>
+                                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="340">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="100" width="128"><table border="0" cellpadding="0" cellspacing="0" width="110">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" class="tu" border="0" height="80" width="110"></a></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table></td>
+                                                      <td class="big14" height="100" width="212">
+                                                        <a href="<%= item.url %>" target="_blank"><%= truncate_u(item.content, 45, '...') %></a>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                    <% if index.to_i < 3 %>
+                                    <tr><td bgcolor="#ededed" height="1"></td></tr>
+                                    <%
+                                        end
+                                      end
+                                    -%>
+                                  </tbody>
+                                </table></td>
+                              <% end %>
+                              <td valign="top" width="280"><table align="center" border="0" cellpadding="0" cellspacing="0" width="270">
+                                  <tbody>
+                                    <tr>
+                                      <td height="7"></td>
+                                    </tr>
+                                    <tr>
+                                      <td background="http://www.51hejia.com/zhuanti/news201105/images/f0_2.gif" height="33"><table align="center" border="0" cellpadding="0" cellspacing="0" width="236">
+                                          <tbody>
+                                            <tr>
+                                              <td height="6"></td>
+                                            </tr>
+                                            <tr>
+                                              <td>点击排行榜</td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                    <tr>
+                                      <td bgcolor="#e9e8e6"><table align="center" border="0" cellpadding="0" cellspacing="0" width="255">
+                                          <tbody>
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                            </tr>
+                                            <%
+                                              top_items = promotion_items("#{item_prefix}关注排行榜")
+                                              unless top_items.blank?
+                                                first_item = top_items.shift
+                                                  unless first_item.blank?
+                                            %>
+                                            <tr>
+                                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="240">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="80" width="100"><img src="<%= first_item.image %>" class="tu001" height="78" width="88"></td>
+                                                      <td class="STYLE8"><p><a href="<%= first_item.url %>" target="_blank"><span class="STYLE7"><%= truncate_u(first_item.title, 10, '') %></span><br>
+                                                          </a><a href="<%= first_item.url %>" target="_blank" class="STYLE8"> <span class="STYLE8"><%= truncate(first_item.content, 21, '...') %></span>查看全文</a></p></td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                            <% end -%>
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td bgcolor="#f4f4f4"><table align="center" border="0" cellpadding="0" cellspacing="0" width="235">
+                                                  <tbody>
+                                                    <% 
+                                                      top_items.each_with_index do |item, index|
+                                                        number = index.to_i + 2
+                                                    %>
+                                                    <tr>
+                                                      <td height="30"><img src="http://www.51hejia.com/zhuanti/news201105/images/<%= number %>.gif" height="14" width="14"></td>
+                                                      <td class="STYLE6" height="30"><%= link_to item.title, item.url, :class => 'STYLE6', :target => '_blank' %></td>
+                                                    </tr>
+                                                    <% end -%>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                            <% end -%>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                    <tr>
+                                      <td height="10"></td>
+                                    </tr>
+                                    <% 
+                                      small_images = promotion_items("#{item_prefix}小焦点图") 
+                                      unless small_images.blank?
+                                        s_pics = small_images.collect{|item|item.image}.join('|')
+                                        s_urls = small_images.collect{|item|item.url}.join('|')
+                                    %>
+ 
+                                    <tr>
+                                      <td class="bianhuiqian" height="245"><table align="center" border="0" cellpadding="0" cellspacing="0" height="228" width="255">
+                                          <tbody>
+                                            <tr>
+                                              <td height="228" width="255"><script type="text/javascript"> 
+                                              <!-- 
+                                              var focus_width=255
+                                              var focus_height=235
+                                              var text_height=0
+                                              var swf_height = focus_height+text_height
+
+                                              var pics="<%= s_pics %>"
+                                              var links="<%= s_urls %>"
+                                              var texts='' 
+
+                                              document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase=http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0 width="'+ focus_width +'" height="'+ swf_height +'">'); 
+                                              document.write('<param name="allowScriptAccess" value="sameDomain"><param name="movie" value="http://www.51hejia.com/zhuanti/news201105/images/pixviewer.swf"><param name="quality" value="high"><param name="bgcolor" value="#DADADA">'); 
+                                              document.write('<param name="menu" value="false"><param name=wmode value="opaque">'); 
+                                              document.write('<param name="FlashVars" value="pics='+pics+'&links='+links+'&texts='+texts+'&borderwidth='+focus_width+'&borderheight='+focus_height+'&textheight='+text_height+'">'); 
+                                              document.write('<embed src="http://www.51hejia.com/zhuanti/news201105/images/pixviewer.swf" wmode="opaque" FlashVars="pics='+pics+'&links='+links+'&texts='+texts+'&borderwidth='+focus_width+'&borderheight='+focus_height+'&textheight='+text_height+'" menu="false" bgcolor="#DADADA" quality="high" width="'+ focus_width +'" height="'+ swf_height +'" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"/>'); document.write('</object>');
+                                              //--> 
+                                              </script></td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                    <% end -%>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="8"></td>
+            </tr>
+            <tr>
+              <td class="bianhuise" bgcolor="#eae9e5"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                  <tbody>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                    <tr>
+                      <td class="bianhuiqian" bgcolor="#ffffff" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="990">
+                          <tbody>
+                            <tr>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="975">
+                                  <tbody>
+                                    <tr>
+                                      <td width="36"><img src="http://www.51hejia.com/zhuanti/news201105/images/f0_3.gif" height="31" width="30"></td>
+                                      <td><span class="STYLE10">新品速递</span></td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="960">
+                                  <tbody>
+                                    <tr>
+                                      <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="960">
+                                          <tbody>
+                                            <tr>
+                                              <td><div id="cont_m_6" style="overflow: hidden; width: 1000px;">
+                                                  <ul>
+                                                    <% promotion_items("#{item_prefix}新品速递").each do |item| %>
+                                                    <li>
+                                                      <div align="center"><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" alt="dpp_0028" border="0" height="140" width="190"></a></div>
+                                                    </li>
+                                                    <% end -%>
+                                                  </ul>
+                                                </div>
+                                                <script> 
+if(AutoScroll_cont_m_6){AutoScroll_cont_m_6.stop()};
+var AutoScroll_cont_m_6 = {
+ frameId : "cont_m_6",
+ frameWidth : 960,//滚动框宽度
+ speed : 28, //移动速度(单位毫秒，越小越快)
+ space : 1, //每次移动像素(单位px，越大越快)
+
+ _timeoutObj : null,
+ $ : function(id){return document.getElementById(id)},
+ begin : function(){
+ if(!this.$(this.frameId)){return};
+ this.$(this.frameId).style.overflow = "hidden";
+ this.$(this.frameId).style.width = this.frameWidth + "px";
+ this._bigDiv = document.createElement("div");
+ this._bigDiv.style.zoom = 1;
+ this._bigDiv.style.overflow = "hidden";
+ this._bigDiv.style.width = "32765px";
+ this.div1 = document.createElement("div");
+ this.div2 = document.createElement("div");
+ this.div1.style.cssFloat = this.div1.style.styleFloat = this.div2.style.cssFloat = this.div2.style.styleFloat = "left";
+ tempHTML = this.$(this.frameId).innerHTML;
+ this.$(this.frameId).innerHTML = "";
+ this.$(this.frameId).appendChild(this._bigDiv);
+ this._bigDiv.appendChild(this.div1);
+ this._bigDiv.appendChild(this.div2);
+ this.div1.innerHTML = this.div2.innerHTML = tempHTML;
+
+ var tempThis = this;
+ this.$(this.frameId).onmouseover = function(){tempThis.stop()};
+ this.$(this.frameId).onmouseout = function(){tempThis.play()};
+ this.play();
+ },
+ play : function(){
+ var tempThis = this;
+ clearInterval(this._timeoutObj);
+ this._timeoutObj = setInterval(function(){tempThis.scrollNext()},this.speed);
+ },
+ stop : function(){
+ clearInterval(this._timeoutObj);
+ },
+ scrollNext : function(){
+ try{this.$(this.frameId).scrollLeft += this.space;}catch(e){this.stop();return;};
+ if(this.$(this.frameId).scrollLeft > this.div1.scrollWidth){
+ this.$(this.frameId).scrollLeft = this.$(this.frameId).scrollLeft - this.div1.scrollWidth;
+ };
+ }
+};
+AutoScroll_cont_m_6.begin();
+</script>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                            <tr>
+                              <td height="20">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="8"></td>
+            </tr>
+            <tr>
+              <td class="bianhuise" bgcolor="#eae9e5"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                  <tbody>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                    <tr>
+                      <td class="bianhuiqian" bgcolor="#ffffff" valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                          <tbody>
+                            <tr>
+                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="975">
+                                <!--DWLayoutTable-->
+                                  <tbody>
+                                    <tr>
+                                      <td height="4"></td>
+                                      <td width="833"></td>
+                                      <td width="106"></td>
+                                    </tr>
+                                    <tr>
+                                      <td width="36" height="44"><img src="http://www.51hejia.com/zhuanti/news201105/images/f0_3.gif" height="31" width="30"></td>
+                                      <td valign="middle"><span class="STYLE12">品牌动态</span></td>
+                                    <td align="center" valign="middle">
+                                      <% 
+                                        first_link_item = promotion_items("#{item_prefix}更多推荐1").first
+                                          unless first_link_item.blank? 
+                                      %>
+                                            <div align="center"><a href="<%= first_link_item.url %>" target="_blank" class="STYLE6"><%= first_link_item.title %></a></div>
+                                      <% end -%>
+                                    </td>
+                                    </tr>
+                                  </tbody>
+                              </table></td>
+                            </tr>
+                            <tr>
+                              <td bgcolor="#eaeaea" height="1"></td>
+                            </tr>
+                            <% 
+                              dialogue_exhibitors = promotion_items("#{item_prefix}对话参展商")
+                              unless dialogue_exhibitors.blank?
+                            %>
+                            <tr>
+                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                                  <tbody>
+                                    <tr>
+                                      <td class="you"><table align="center" border="0" cellpadding="0" cellspacing="0" width="690">
+                                          <tbody>
+                                            <tr>
+                                              <td width="50%"><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="25">&nbsp;</td>
+                                                    </tr>
+                                                    <% dialogue_exhibitors[0..2] && dialogue_exhibitors[0..2].each do |item|  %>
+                                                    <tr>
+                                                      <td><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td height="120" width="140"><img src="<%= item.image %>" class="tu001" height="120" width="130"></td>
+                                                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="190">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td height="25" class="STYLE7" style="overflow:hidden;"><a href="<%= item.url %>" target="_blank" class="STYLE7"><%= item.title %></a></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="STYLE822"><%= truncate_u(item.content, 42, '...') %><%= link_to '全文', item.url, :target => '_blank' %></td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td height="20">&nbsp;</td>
+                                                    </tr>
+                                                    <% end -%>
+                                                  </tbody>
+                                                </table></td>
+                                              <td width="50%"><table align="right" border="0" cellpadding="0" cellspacing="0" width="334">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="25">&nbsp;</td>
+                                                    </tr>
+                                                    <% dialogue_exhibitors[3..5] && dialogue_exhibitors[3..5].each do |item|  %>
+                                                    <tr>
+                                                      <td><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td height="120" width="140"><img src="<%= item.image %>" class="tu001" height="120" width="130"></td>
+                                                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="190">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td height="25" class="STYLE7" style="overflow:hidden;"><a href="<%= item.url %>" target="_blank" class="STYLE7"><%= item.title %></a></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="STYLE822"><%= truncate_u(item.content, 42, '...') %><%= link_to '全文', item.url, :target => '_blank' %></td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td height="20">&nbsp;</td>
+                                                    </tr>
+                                                    <% end -%>
+                                                 </tbody>
+                                                </table></td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                      <% end -%>
+                                      <%
+                                        more_exhibitors_information = promotion_items("#{item_prefix}更多参展商信息")
+                                          unless more_exhibitors_information.blank?
+                                            first_exhibitor_information = more_exhibitors_information.shift
+                                      %>
+                                      <td valign="top" width="270"><table border="0" cellpadding="0" cellspacing="0" width="270">
+                                          <tbody>
+                                            <% unless first_exhibitor_information.blank? %>
+                                            <tr>
+                                              <td class="xia" bgcolor="#f8f8f8" height="230" valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" height="166" width="256">
+                                                  <tbody>
+                                                    <tr><td height="8"></td></tr>
+                                                    <tr><td class="bianhuise" background="<%= first_exhibitor_information.image %>" height="160">&nbsp;</td></tr>
+                                                    <tr>
+                                                      <td height="25" class="STYLE7"><%= link_to first_exhibitor_information.title, first_exhibitor_information.url, :class => 'STYLE&', :target => '_blank' %></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td height="72"><%= truncate_u(first_exhibitor_information.content, 50, '...') %><%= link_to "查看全文", first_exhibitor_information.url, :target => '_blank' %></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td height="8"></td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                            <% end -%>
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="250">
+                                                  <tbody>
+                                                    <% more_exhibitors_information.each_with_index do |item, index| %>
+                                                    <tr>
+                                                      <td height="30" width="20"><img src="http://www.51hejia.com/zhuanti/news201105/images/icon_1.gif" height="7" width="4"></td>
+                                                      <td class="STYLE6" height="30" width="230"><%= link_to item.title, item.url, :target => '_blank' %></td>
+                                                    </tr>
+                                                    <% end -%>
+                                                  </tbody>
+                                                </table></td>
+                                            </tr>
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                            </tr>
+                                          </tbody>
+                                        </table></td>
+                                    <% end -%>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="8"></td>
+            </tr>
+            <tr>
+              <td class="bianhuise" bgcolor="#eae9e5"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                  <tbody>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                    <tr>
+                      <td class="bianhuiqian" bgcolor="#ffffff" valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                          <tbody>
+                            <tr>
+                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="975">
+                                  <tbody>
+                                    <tr>
+                                      <td></td>
+                                      <td height="4" width="830"></td>
+                                      <td width="109"></td>
+                                    </tr>
+                                    <tr>
+                                      <td width="36"><img src="http://www.51hejia.com/zhuanti/news201105/images/f0_3.gif" height="31" width="30"></td>
+                                      <td height="44"><span class="STYLE12">潮流看点</span></td>
+                                      <td>
+                                      <% 
+                                        second_link_item = promotion_items("#{item_prefix}更多推荐2").first
+                                          unless second_link_item.blank? 
+                                      %>
+                                        <div align="center"><a href="<%= second_link_item.url %>" target="_blank" class="STYLE6"><%= second_link_item.title %></a></div>
+                                      <% end -%>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                            <tr>
+                              <td bgcolor="#eaeaea" height="1"></td>
+                            </tr>
+                            <tr>
+                              <td><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                                  <tbody>
+                                    <tr>
+                                      <td class="you"><table align="center" border="0" cellpadding="0" cellspacing="0" width="690">
+                                          <tbody>
+                                            <%
+                                              media_booth = promotion_items("#{item_prefix}媒体看展台")
+                                              unless media_booth.blank?
+                                            %>
+                                            <tr>
+                                              <td width="50%"><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="25">&nbsp;</td>
+                                                    </tr>
+                                                    <% media_booth[0..2] && media_booth[0..2].each_with_index do |item, index| %>
+                                                    <tr>
+                                                      <td><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td height="120" width="140"><img src="<%= item.image %>" class="tu001" height="120" width="130"></td>
+                                                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="190">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td height="25" class="STYLE7"><%= link_to item.title, item.url, :target => '_blank' %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="STYLE822"><%= truncate_u(item.content, 40, '...') %>.<%= link_to "全文", item.url, :target => '_blank'%></td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table></td>
+                                                    </tr>
+                                                    <tr><td height="20">&nbsp;</td></tr>
+                                                    <% end -%>
+                                                  </tbody>
+                                                </table></td>
+                                              <td width="50%"><table align="right" border="0" cellpadding="0" cellspacing="0" width="334">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td height="25">&nbsp;</td>
+                                                    </tr>
+                                                    <% media_booth[3..5] && media_booth[3..5].each_with_index do |item, index| %>
+                                                    <tr>
+                                                      <td><table border="0" cellpadding="0" cellspacing="0" width="334">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td height="120" width="140"><img src="<%= item.image %>" class="tu001" height="120" width="130"></td>
+                                                              <td><table align="right" border="0" cellpadding="0" cellspacing="0" width="190">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td height="25" class="STYLE7"><%= link_to item.title, item.url, :target => '_blank' %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="STYLE822"><%= truncate_u(item.content, 40, '...') %>.<%= link_to "全文", item.url, :target => '_blank'%></td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table></td>
+                                                    </tr>
+                                                    <tr><td height="20">&nbsp;</td></tr>
+                                                    <% end -%>
+                                                 </tbody>
+                                                </table></td>
+                                            </tr>
+                                          <% end -%>
+                                          </tbody>
+                                        </table></td>
+                                        <%
+                                            more_media_info = promotion_items("#{item_prefix}更多媒体信息")
+                                            unless more_media_info.blank?
+                                              first_media = more_media_info.shift
+                                        %>
+                                      <td valign="top" width="270">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="270">
+                                          <tbody>
+                                            <% unless first_media.blank? %>
+                                            <tr>
+                                              <td class="xia" bgcolor="#f8f8f8" height="230" valign="top">
+                                                <table align="center" border="0" cellpadding="0" cellspacing="0" height="166" width="256">
+                                                  <tbody>
+                                                    <tr><td height="8"></td></tr>
+                                                    <tr><td class="bianhuise" background="<%= first_media.image %>" height="160">&nbsp;</td></tr>
+                                                    <tr><td class="STYLE7" height="25"><%= link_to first_media.title, first_media.url, :target => '_blank' %></td></tr>
+                                                    <tr><td height="72"><%= truncate_u(first_media.content, 50, '...') %><%= link_to "查看全文", first_media.url, :target => '_blank' %></td></tr>
+                                                    <tr><td height="8"></td></tr>
+                                                  </tbody>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                            <tr><td>&nbsp;</td></tr>
+                                            <% end -%>
+                                            <tr>
+                                              <td>
+                                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="250">
+                                                  <tbody>
+                                                    <% more_media_info.each do |item| %>
+                                                    <tr>
+                                                      <td height="30" width="20"><img src="http://www.51hejia.com/zhuanti/news201105/images/icon_1.gif" height="7" width="4"></td>
+                                                      <td class="STYLE6" height="30" width="230"><%= link_to item.title, item.url, :target => '_blank' %></td>
+                                                    </tr>
+                                                    <% end -%>
+                                                  </tbody>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                            <tr><td>&nbsp;</td></tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    <% end -%>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td height="4"></td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="8"></td>
+            </tr>
+            <tr>
+              <td height="667" bgcolor="#eae9e5" class="bianhuise"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                  <!--DWLayoutTable-->
+                  <tbody>
+                    <tr>
+                      <td width="1" height="5"></td>
+                      <td width="994"></td>
+                    </tr>
+                    <tr>
+                      <td height="798"></td>
+                      <td valign="top" bgcolor="#ffffff" class="bianhuiqian"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                          <!--DWLayoutTable-->
+                          <tbody>
+                            <tr>
+                              <td width="992"><table align="right" border="0" cellpadding="0" cellspacing="0" width="975">
+                                <!--DWLayoutTable-->
+                                  <tbody>
+                                    <tr>
+                                      <td width="30" height="4"></td>
+                                      <td width="9"></td>
+                                      <td width="930"></td>
+                                      <td width="6"></td>
+                                    </tr>
+                                    <tr>
+                                      <td height="44" valign="middle"><img src="http://www.51hejia.com/zhuanti/news201105/images/f0_3.gif" height="31" width="30"></td>
+                                      <td>&nbsp;</td>
+                                      <td align="left" valign="middle"><span class="STYLE12">现场花絮</span></td>
+                                    <td>&nbsp;</td>
+                                    </tr>
+                                  </tbody>
+                              </table></td>
+                            </tr>
+                            <tr>
+                              <td height="1"></td>
+                            </tr>
+                            <tr>
+                              <%
+                                images_items = promotion_items("#{item_prefix}现场图集")
+                                unless images_items.blank?
+                              %>
+                              <td height="747" valign="top"><table align="center" border="0" cellpadding="0" cellspacing="0" width="992">
+                                  <!--DWLayoutTable-->
+                                  <tbody>
+                                    <tr>
+                                      <td width="36" height="24">&nbsp;</td>
+                                      <td width="920">&nbsp;</td>
+                                      <td width="36">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td height="688">&nbsp;</td>
+                                      <td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                          <!--DWLayoutTable-->
+                                          <tr>
+                                            <% images_items[0..4] && images_items[0..4].each_with_index do |item, index| %>
+                                            <td width="160" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+                                                <!--DWLayoutTable-->
+                                                <tr>
+                                                  <td width="160" height="120" valign="top"><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" width="160" height="120" border="0" /></a></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="30" align="center" valign="middle" class="STYLE6"><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+                                                </tr>
+                                              </table></td>
+                                            <% if index.to_i < 4 %><td width="30">&nbsp;</td><% end -%>
+                                            <% end -%>
+                                          </tr>
+                                          <tr>
+                                            <td height="27">&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                            <% images_items[5..9] && images_items[5..9].each_with_index do |item, index| %>
+                                            <td width="160" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+                                                <!--DWLayoutTable-->
+                                                <tr>
+                                                  <td width="160" height="120" valign="top"><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" width="160" height="120" border="0" /></a></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="30" align="center" valign="middle" class="STYLE6"><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+                                                </tr>
+                                               </table></td>
+                                              <% if index.to_i < 4 %><td width="30">&nbsp;</td><% end -%>
+                                            <% end -%>
+                                          </tr>
+                                          <tr>
+                                            <td height="29">&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                            <% images_items[10..14] && images_items[10..14].each_with_index do |item, index| %>
+                                            <td width="160" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+                                                <!--DWLayoutTable-->
+                                                <tr>
+                                                  <td width="160" height="120" valign="top"><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" width="160" height="120" border="0" /></a></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="30" align="center" valign="middle" class="STYLE6"><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+                                                </tr>
+                                               </table></td>
+                                            <% if index.to_i < 4 %><td width="30">&nbsp;</td><% end -%>
+                                            <% end -%>
+                                           </tr>
+                                          <tr>
+                                            <td height="32">&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                            <% images_items[15..20] && images_items[15..20].each_with_index do |item, index| %>
+                                            <td width="160" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+                                                <!--DWLayoutTable-->
+                                                <tr>
+                                                  <td width="160" height="120" valign="top"><a href="<%= item.url %>" target="_blank"><img src="<%= item.image %>" width="160" height="120" border="0" /></a></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="30" align="center" valign="middle" class="STYLE6"><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+                                                </tr>
+                                              </table></td>
+                                            <% if index.to_i < 4 %><td width="30">&nbsp;</td><% end -%>
+                                            <% end -%>
+                                          </tr>
+                                        </table></td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td height="35">&nbsp;</td>
+                                      <td>&nbsp;</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                            <% end -%>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+</table>
+<div style="width:1010px;background-color:#FFFFFF">
+  <%= render_shared_footer %>
+</div>
+</body>
+</html>

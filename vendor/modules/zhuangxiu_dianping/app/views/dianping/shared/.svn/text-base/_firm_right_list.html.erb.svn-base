@@ -1,0 +1,7 @@
+<%#= render :partial => 'dianping/firms/firm_basic_info' %>
+<%= render :partial => "dianping/firms/firm_info" %>
+<%= render :partial => '/dianping/shared/firm_right_list/gongdi' %>
+<%= render :partial => 'dianping/shared/firm_promotion_coupon' %>
+<%= render :partial => 'dianping/shared/firm_promotion_event' %>
+<%= render :partial => '/dianping/shared/firm_right_list/news' %>
+<%= render :partial => '/dianping/shared/firm_right_list/kuanfu' %>

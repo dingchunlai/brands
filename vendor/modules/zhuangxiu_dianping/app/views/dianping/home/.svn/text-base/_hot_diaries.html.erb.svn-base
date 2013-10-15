@@ -1,0 +1,13 @@
+<h3>最新网友热议日记</h3>
+<div class="zxdp2010_txt zxdp2010_kbtop hot_diary_2011">
+<ul>
+  <li class="clearfix"><span class="zxdp2010_kbspan09">日记标题</span><span class="zxdp2010_kbspan10">评论数</span></li>
+  <% @hot_diaries.each do |diary|%>
+  	<li class="clearfix"><span class="zxdp2010_kbspan11">
+  		<a href="<%= diary_url(diary)%>" target="_blank"><%=truncate(diary.title,:length => 12, :omission => '') %></a></span>
+		<span class="zxdp2010_kbspan12"><%= "#{diary.yesterday_remarks}(#{diary.remarks_count})" %></span>
+	</li>
+  <% end %>
+</ul>
+</div>
+

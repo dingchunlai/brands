@@ -1,0 +1,34 @@
+<%prices = @firm.city.to_i == 11910 ? PRICE : NINBO_PRICE %>
+<h2><span class="n1"><%= truncate(@firm.name_abbr,:length => 6,:omission => "") %></span><span class="n2"></span></h2>
+<div class="rbox3 margin10">
+<a href="<%= firm_url(:id => @firm.id,:trailing_slash => "/") %>" target="_blank" style="text-decoration:none;">
+  <p class="pingfen">
+	综合：<span><%=@firm.praise %></span>
+	设计：<span><%= @firm.design_praise %></span>
+	 <br />
+	施工：<span><%=@firm.construction_praise %></span>
+	服务：<span><%=@firm.service_praise %></span>
+	</p>
+  <ul class="infodes">
+    <li>公司地址：<div><%= @firm.address2 %></div></li>
+    <li><strong style="color:#F60;">查看公司详情</strong></li>
+    <li>风格：<%= @firm.style ? DecoFirm::STYLES[@firm.style.to_i] : '暂无信息' %></li>
+    <li>价位：<%= @firm.price ? prices[@firm.price.to_i] : '暂无信息' %></li>
+    <li>方式：<%= @firm.model ? DecoFirm::MODELS[@firm.model.to_i] : '暂无信息' %></li>
+  </ul>
+  </a>
+	<div class="clear"></div>
+	<div class="cuxiaoxm">
+	    <p>参观样板房在建工地<br />和家网免费专车接送</p>
+	</div>
+	<div class="cuxiaoxm2">
+	   <p>监理帮您新房验收<br />设计师解决设计难题</p>
+	</div>
+	 
+</div>
+
+<% if false%>
+	<span style="color:#DDD">该公司信息已经不存在</span>
+<%end%>
+
+

@@ -1,0 +1,24 @@
+<% if @quoted_prices.size > 0 %>
+  <div class="zxdp2010_cur margin10">
+    <h3>常规报价</h3>
+    <div class="zxdp2010_more baojia_btn"><a href="javascript:void(0);">[更多]</a></div>
+    <div class="zxdp2010_txt zxdp2010_kbtop" id="baojia">
+      <ul>
+        <li class="clearfix">
+          <span class="zxdp2010_kbspan05" style="width:70px">户型</span>
+          <span class="zxdp2010_kbspan06" style="width:50px">平米</span>
+          <span class="zxdp2010_kbspan06" style="width:50px">价格</span>
+          <span class="zxdp2010_kbspan06" style="width:50px">类型</span>
+        </li>
+        <% @quoted_prices.each do |quoted_price |%>
+          <li class="clearfix">
+            <span class="zxdp2010_kbspan07" style="width:70px"><%= FACTORY_FANGXING[quoted_price.room]%></span>
+            <span class="zxdp2010_kbspan08" style="width:50px"><%= quoted_price.area%></span>
+            <span class="zxdp2010_kbspan08" style="width:50px"><%= quoted_price.price_text %>万</span>
+            <span class="zxdp2010_kbspan08" style="width:50px"><%= QUOTE_PRICE_TYPE[quoted_price.deco_type]%></span>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+  </div>
+<% end -%>

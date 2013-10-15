@@ -1,0 +1,54 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:公司在建工地列表页") %>
+<% @title = html_metadata.title % {:firm_name => @firm.name_zh} %>
+<% firm_sub_menu %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 在建工地列表"%>
+<%= render :partial => "dianping/shared/firm_factory_pop"%>
+
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <% cache @fragment_key , :expires_in => 5.minutes do %>
+    <div class="zxdp2010_l f_l">
+      <div class="zxdp2010_sjlnlist">
+        <h3>在建工地</h3>
+        <div class="zxdp2010_zjgdselect">
+          <!--
+                                          <select name="" size="1">
+                          <option>已完工</option>
+                          <option>未完工</option>
+                        </select>
+          -->
+        </div>
+        <div class="zxdp2010_sjslisthack"></div>
+        <div class="zxdp2010_zjgdlist">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr class="gsl_zjgd_tit">
+              <td width="90"><strong>所属区域</strong></td>
+              <td width="200"><strong>楼盘名称</strong></td>
+              <td width="89"><strong>房型</strong></td>
+              <td width="52"><strong>预算</strong></td>
+              <td width="141"><strong>可供参观时间</strong></td>
+              <td width="72"><strong>预约</strong></td>
+            </tr>
+            <% @factories.each do |factory|%>
+              <tr>
+                <td width="90"><%= factory.tagc.TAGNAME %></td>
+                <td width="200"><%= factory.NAME %></td>
+                <td width="89"><%= factory.FANGXING ? factory.FANGXING : '— — —' %></td>
+                <td width="52"><%= factory.MONEY %>万</td>
+                <td width="141"><%= factory.STARTENABLE.to_date if factory.STARTENABLE %> 至 <%= factory.ENDENABLE.strftime("%m-%d") if factory.ENDENABLE %></td>
+                <td width="72">
+                  <%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id),:class => "fancy_box gsl_zjgd_btn" %>
+                </td>
+              </tr>
+            <% end -%>
+          </table>
+        </div>
+        <div class="zxdp2010_sjsnum f_l">共有<span><%= @factories.total_entries%></span>个有<%= @firm.name_abbr%>的在建工地 </div>
+        <%= will_paginate @factories %>
+      </div>
+    </div>
+  <% end -%>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>

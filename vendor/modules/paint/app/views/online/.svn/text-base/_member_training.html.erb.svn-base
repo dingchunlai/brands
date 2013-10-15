@@ -1,0 +1,42 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="right">用户名：</td>
+      <td colspan="3"><%= @paint_worker.USERNAME %></td>
+    </tr>
+    <tr>
+      <td align="right">姓名：</td>
+      <td><%= @paint_worker.USERBBSNAME %>
+       	 性别：<%= Painter::GENDER.index(@paint_worker.painter.gender) %></td>
+      <td align="right">手机：</td>
+      <td><%= @paint_worker.USERBBSMOBELTELEPHONE %></td>
+    </tr>
+    <tr>
+      <td align="right">省份：</td>
+      <td><%= Province.name_for_code(@paint_worker.painter.province) %></td>
+      <td align="right">城市：</td>
+      <td><%= City.name_for_code(@paint_worker.painter.city) %></td>
+    </tr>
+    <tr>
+      <td align="right">电子邮箱：</td>
+      <td colspan="3"><%= @paint_worker.USERBBSEMAIL %></td>
+    </tr>
+    <tr>
+
+      <td align="right">从事油漆工年限：</td>
+      <td><%= @paint_worker.painter.job_year %>年</td>
+      <td align="right">已获证书：</td>
+      <td><%= Painter::CERTIFICATES.index(@paint_worker.painter.certificate) %></td>
+    </tr>
+    <tr>
+      <td align="right">文化程度：</td>
+      <td colspan="3"><%= @paint_worker.painter.education %></td>
+    </tr>
+    <tr>
+      <td align="right">您是否试用过喷枪：</td>
+      <td><%= @paint_worker.painter.spray_gun.to_i == 1 ? "是" : "否" %></td>
+      <td align="right"> 您是否做过点睛/修色/擦色：</td>
+      <td><%= @paint_worker.painter.brush.to_i == 1 ? "是" : "否" %></td>
+    </tr>
+  </table>
+<%= f.hidden_field :user_id,:value => @paint_worker.USERBBSID %>
+

@@ -1,0 +1,12 @@
+<% 
+  @brand = @attachable_object.brand
+  @tag = @attachable_object.tag
+%>
+<ul class="vertical menu_padding">
+  <% if @brand && @tag %>
+    <li><%= link_to '产品管理', admin_brand_productions_path(@brand, :tag_id => @tag.TAGID), :class => @attachable_object.is_a?(Production) ? 'current' : nil %></li>
+    <li><%= link_to '组合案例管理', admin_brand_production_combinations_path(@brand, :tag_id => @tag.TAGID), :class => @attachable_object.is_a?(Production) ? nil : 'current' %></li>
+  <% else %>
+    <li>操作错误!</li>
+  <% end %>
+</ul>

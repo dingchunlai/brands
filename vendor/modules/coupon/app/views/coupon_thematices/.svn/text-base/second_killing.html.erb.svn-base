@@ -1,0 +1,48 @@
+<% set_coupon_page_meta_data '庆51，和家百万现金大放送' %>
+
+<% if RAILS_ENV == "development" || RAILS_ENV == "staging" || RAILS_ENV == "rehearsal" %>
+  <link href="http://js.51hejia.com/css/rehearsal/coupon_second_killing.css?<%= Time.now.day %>" rel="stylesheet" type="text/css" />
+<% else %>
+  <link href="http://js.51hejia.com/css/coupon_second_killing.css" rel="stylesheet" type="text/css" />
+<% end %>
+
+<div class="mccon">
+  <div class="mc_head">
+    <div><img src="http://zt.51hejia.com/zhuanti/baiwanxianjin/images/head1.jpg" width="960" height="225" alt="" /></div>
+    <div><img src="http://zt.51hejia.com/zhuanti/baiwanxianjin/images/head2.jpg" width="960" height="225" alt="" /></div>
+  </div>
+  <!--ad_code-->
+  <div class="width960 margin10">
+    <a href="http://zt.51hejia.com/zhuanti/shangpin/index.html" target="_blank"><img src="http://zt.51hejia.com/zhuanti/ad/shangpin.jpg"></img></a>
+  </div>
+  <!--end ad_code-->
+  <div class="mc_con">
+    <div class="mc_con4 margin10">
+      <h1 class="mc_title"><img src="http://zt.51hejia.com/zhuanti/baiwanxianjin/images/h4.jpg" width="960" height="29" alt="" /></h1>
+      <ul class="mc_xjq clearfix">
+        <% promotion_items("抵用券:秒杀专题:coupons:力度").each do |item| %>
+          <%= render :partial => 'second_killing_coupon', :locals => { :item => item } %>
+        <% end %>
+      </ul>
+    </div>
+    <!--ad_code-->
+    <div class="width960 margin10">
+      <a href="http://shanghai.youhui.51hejia.com/coupon/658" target="_blank"><img src="http://zt.51hejia.com/zhuanti/ad/yuanmei.gif"></img></a>
+    </div>
+    <!--end ad_code-->
+    <div class="mc_con5 margin10">
+      <h1 class="mc_title"><img src="http://zt.51hejia.com/zhuanti/baiwanxianjin/images/h5.jpg" alt="" /></h1>
+      <ul class="mc_hotact clearfix">
+        <% promotion_items("抵用券:秒杀专题:coupons:活动热荐").each do |item| %>
+          <li><a href="<%= item.url %>" title="" target="_blank"><img src="<%= item.image %>" alt="<%= item.title %>" /></a>
+            <p><a href="<%= item.url %>" title=""><%= item.title %></a></p></li>
+        <% end %>
+      </ul>
+    </div>
+    <!--ad_code-->
+    <div class="width960 margin10">
+      <a href="http://zt.51hejia.com/zhuanti/yali/index.html" target="_blank"><img src="http://zt.51hejia.com/zhuanti/ad/yali.gif"></img></a>
+    </div>
+    <!--end ad_code-->
+  </div>
+</div>

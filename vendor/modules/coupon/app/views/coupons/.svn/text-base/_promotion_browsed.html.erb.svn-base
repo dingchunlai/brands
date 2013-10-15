@@ -1,0 +1,9 @@
+<div class="diyq_listrbox diyq_listrboxb margin10">
+  <h3>下载该<%= Coupon.human_name %>的还看过</h3>
+  <ul>
+    <% Coupon.with_period({:limit => 6}).with_city(@city.id).each do |coupon| %>
+      <li><span><a href="<%= coupon_show_path(coupon) %>" target="_blank">[<%= truncate(coupon.brand_industry_name, 4, '') %>]</a></span> <%= link_to truncate(coupon.title, 7, ''), coupon_show_path(coupon), :target => '_blank' %></li>
+    <% end %>
+  </ul>
+</div>
+

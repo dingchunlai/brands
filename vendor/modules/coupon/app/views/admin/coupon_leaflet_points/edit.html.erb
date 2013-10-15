@@ -1,0 +1,129 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title       => '抵用券领取点管理页',
+            :button      => ['抵用券领取点列表', admin_coupon_leaflet_points_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['抵用券领取点列表', admin_coupon_leaflet_points_path]
+            ]
+%>
+<% form_for(@coupon_leaflet_point, :url => admin_coupon_leaflet_point_path(@coupon_leaflet_point)) do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">修改抵用券领取点信息</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last"><%= f.text_field :name, :class => "text" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :address %></strong></td>
+          <td class="last"><%= f.text_field :address, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :telephone %></strong></td>
+          <td class="last"><%= f.text_field :telephone, :class => "text" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :shop_name %></strong></td>
+          <td class="last"><%= f.text_field :shop_name, :class => "text" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :linkman %></strong></td>
+          <td class="last"><%= f.text_field :linkman, :class => "text" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last">
+            <%= f.select :city_id, City.find(:all).collect { |item| [item.name, item.id] }, :include_blank => "请选择", :class => "text", :reg => '^\S+$', :tip => "必须*" %>*
+            输入<input type="text" name="txt_city" id="txt_city"/><input type="button" id="btn_city" value="定位城市"/>
+          </td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :district_id %></strong></td>
+          <td class="last"><%= f.select :district_id, @coupon_leaflet_point.city.districts.collect { |item| [item.name, item.id] }, :include_blank => "请选择", :class => "text", :reg => '^\S+$', :tip => "必须*" %>*</td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong>
+            <%= f.label :activity_begin_at %></strong></td>
+          <td class="last">
+            <%= f.text_field :activity_begin_at, :size => 10, :reg => '^\S+$', :tip => "必须*" %>*
+          </td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong>
+            <%= f.label :activity_end_at %></strong></td>
+          <td class="last">
+            <%= f.text_field :activity_end_at, :size => 10, :reg => '^\S+$', :tip => "必须*" %>*
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+
+     $("#coupon_leaflet_point_activity_begin_at").datepicker({dateFormat: 'yy-mm-dd'});
+     $("#coupon_leaflet_point_activity_end_at").datepicker({dateFormat: 'yy-mm-dd'});
+
+      $("input[type=button][id^='btn_']").click(function() {
+          var flag = $(this).attr("id").replace('btn_', '');
+          if ($("#txt_" + flag).val() == "") {
+              alert('请填写' + $(this).val().replace('定位', '') + '!');
+              $("#txt_" + flag).focus();
+          } else {
+              var got = false;
+              $("#coupon_leaflet_point_" + flag + "_id").css("background-color", "green");
+              $("#coupon_leaflet_point_" + flag + "_id").children().each(function(i) {
+                  if ($(this).text() == $("#txt_" + flag).val()) {
+                      got = true;
+                      $("#txt_" + flag).attr("value", '');
+                      $("#coupon_leaflet_point_" + flag + "_id").attr("selectedIndex", $(this).attr("index"));
+                      $("#coupon_leaflet_point_" + flag + "_id").trigger('change');
+                  }
+              });
+              $("#coupon_leaflet_point_" + flag + "_id").css("background-color", "");
+              if (!got) {
+                  alert('请填写正确的' + $(this).val().replace('定位', ''));
+                  $("#txt_" + flag).focus();
+              }
+          }
+      });
+
+      var city_id = "coupon_leaflet_point_city_id";
+      var district_id = "coupon_leaflet_point_district_id";
+
+      $("#" + city_id).change(function() {
+          if ($(this).val() == "") {
+              return null;
+          }
+          $('#' + district_id + ' option').remove();
+          $('#' + district_id).append($('<option value="">loading...</option>'));
+          $.ajax({
+              url: '/remote/districts/',
+              type: 'get',
+              data: {'id' : $(this).val()},
+              dataType: 'json',
+
+              error: function(request) {
+                  alert("请联系管理员");
+              },
+
+              success: function(data) {
+                  $('#' + district_id + ' option').remove();
+                  //if (data.length == 0) $('#' + district_id).append($('<option value="">没有地区</option>'));
+                  $('#' + district_id).append($('<option value="">请选择</option>'));
+                  for (var i = 0; i < data.length; i++) {
+                      $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#' + district_id);
+                  }
+              }
+          });
+      });
+  });
+</script>

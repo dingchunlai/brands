@@ -1,0 +1,13 @@
+if @offer_coupon.errors.empty?
+  page[:new_offer_coupon].reset
+  page.replace_html :error_message, ""
+  js_str =<<-EOF
+            $(".djq_tancboxbg").show();
+			$(".djq_tancbox").show();
+            intervalId = window.setInterval(redirect_to_index, 1000);
+
+EOF
+  page << js_str
+else
+  page.replace_html :error_message, @offer_coupon.errors.full_messages.join("<br />")
+end

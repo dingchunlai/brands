@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <title>品牌库管理后台</title>
+    <meta charset="utf-8" />
+    <%= javascript_include_tag 'html5' %>
+    <%= stylesheet_link_tag 'admin' %>
+    <link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <%= yield :html_head %>
+  </head>
+  <body>
+  <header>
+    <nav>
+      <ul>
+        <li><%= link_to '品牌管理', admin_brands_path %></li>
+        <li><%= link_to '产品管理', admin_productions_path %></li>
+        <li><%= link_to '文章管理', admin_articles_path %></li>
+        <li><%=link_to '促销活动', admin_promotions_path%></li>
+        <li><%=link_to '推广位', admin_promotion_pages_path%></li>
+        <li><%#link_to '互动管理', admin_comments_path%></li>
+        <li><%=link_to '经销商', admin_distributors_path%></li>
+        <li class="last"><%=link_to '权限管理', admin_abilities_path%></li>
+        
+        <li class="last"><%= link_to '新管理后台', admin_index_index_path %></li>
+        <!-- li class="last"><%# link_to '缓存管理', admin_cache_path %></li> -->
+      </ul>
+      <div class="clear"></div>
+    </nav>
+    <%= render_subnav %>
+  </header>
+  <div id="content">
+    <%= yield %>
+  </div>
+</body>
+</html>

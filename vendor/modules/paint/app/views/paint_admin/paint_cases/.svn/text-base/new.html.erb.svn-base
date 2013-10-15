@@ -1,0 +1,14 @@
+<%= render :partial => "sub_menu"%>
+
+<style type="text/css" media="screen">
+	.scrj_piclist{
+		display:none;
+	}
+</style>
+<div class="top-bar">
+    <h1>案例管理</h1>
+  <div class="breadcrumbs">案例管理 / 新建案例</div>
+</div>
+<div id="new_case">
+  <%= render :partial => 'form' %>
+</div>

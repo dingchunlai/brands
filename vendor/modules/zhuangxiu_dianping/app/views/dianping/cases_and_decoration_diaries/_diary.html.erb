@@ -1,0 +1,23 @@
+<% diary = DecorationDiary.find_by_id(diary_id)%>
+<% unless diary.nil? %>
+	<li>
+	<div class="zxdp2010_sjslistimg f_l"><%= link_to image_tag(diary.master_picture.url, :alt => diary.title ) ,diary_url(diary), :target => "_blank" %></div>
+	<div class="zxdp2010_sjlnlisttxt zxdp2011_rijilist f_r">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	    <tr>
+	      <td colspan="2"><h4><%= link_to truncate(h(diary.title),:length => 15,:omission => '')  ,diary_url(diary), :target => "_blank" %><img alt="Best" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon1.gif" /><% if  diary.is_verified.to_i == 1%><%= image_tag 'http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon2.gif' %><% end %><img alt="Best" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon3.gif" /></h4></td>
+	    </tr>
+	    <tr>
+	      <td valign="top">
+					<p><%= truncate(strip_tags(diary.content).gsub(/<|>/,""),:length => 56 ,  :omission => '……')%></p>
+	        <em>装修风格：<%= link_to STYLES[diary.style.to_i],search_diaries_for_options(:style => diary.style.to_i), :target => "_blank"%>&nbsp;&nbsp;装修户型：<%= link_to ROOM[diary.room.to_i],search_diaries_for_options(:room => diary.room.to_i), :target => "_blank"%>&nbsp;&nbsp;合同总价：<%= diary.deal_price %>万</em>
+				</td>
+	      <td valign="top"><div class="zxdp2011_yuyue"><a href="#" target="_blank"><img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjibtn.gif" /></a><em>施工：<%= link_to truncate(diary.deco_firm.name_abbr, :length => 4 ,:omission => '')  ,firm_url(:id => diary.deco_firm.id,:trailing_slash => "/"), :target => "_blank" %></em><em>业主：<%= link_to truncate( diary.user_name,:length => 4,:omission => '') ,diary_url(diary), :target => "_blank" %></em></div></td>
+	    </tr>
+	    <tr>
+	      <td colspan="2"><em>发表：<%=diary.created_at.strftime("%Y-%m-%d")%>&nbsp;&nbsp;更新：<%=diary.order_time.strftime("%Y-%m-%d")%>&nbsp;&nbsp;日记：(89)篇 阅读：(<%= diary.pv || 0 %>)  点评(<%= diary.remarks_count %>)</em></td>
+	    </tr>
+	  </table>
+	</div>
+	</li>
+<% end %>

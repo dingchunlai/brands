@@ -1,0 +1,24 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:排行榜") %>
+<% @title = html_metadata.title %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords %>
+
+<% location "装修公司排行榜"%>
+<div class="width960">
+  <div class="zxdp_phbtit">该排行榜内容由网友在“和家网-装修点评”平台所发表的真实日记，评论所产生的积分而来</div>
+  <div class="zxdp_phbtxt">
+    <ul class="clearfix">
+      <%= render :partial =>'dianping/top/price_top' %>
+      <% if @user_city_code.to_i == 12301 %>
+        <%= render :partial =>'dianping/top/ningbo_top' %>
+      <% else %>
+        <%= render :partial =>'dianping/top/attention_rise_remark' %>
+      <% end %>
+      <% if @user_city_code.to_i == 11910 %>
+        <%= render :partial => "dianping/top/shanghai_area_top" %>
+      <% else %>
+        <%= render :partial => "dianping/top/other_city_top" %>
+      <% end %>
+    </ul>
+  </div>
+</div>

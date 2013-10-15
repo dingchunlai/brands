@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin_v2/agencies
+END
+_subnav.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin_v2/agencies/_subnav.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin_v2/agencies/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin_v2/agencies/index.html.erb
+END

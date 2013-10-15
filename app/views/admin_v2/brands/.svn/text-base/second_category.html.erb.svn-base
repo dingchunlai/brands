@@ -1,0 +1,46 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 品类管理页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+  
+<table>
+  <% unless @tag.blank? %>
+    <% 
+      i = 0
+      tag_id = @tag.TAGID
+      @brand.brands_production_categories.each do |brand_category| 
+        category = brand_category.production_category
+        if category.tag_id == tag_id
+    %>
+      <tr>
+        <td><%= i += 1 %>. </td>
+        <td>[<%= category.name %>]
+        <% if brand_category.online %>
+          <%= link_to '上线', display_category_admin_brand_path(@brand, :tag_id => tag_id, :brand_category_id => brand_category.id), :method => :post %>
+        <% else %>
+          <%= link_to '下线', hide_category_admin_brand_path(@brand, :tag_id => tag_id, :brand_category_id => brand_category.id), :method => :post%>
+        <% end %>
+      </td></tr>
+    <% 
+        end 
+      end 
+    %>
+  <% else %>
+    <% 
+      @brand.brands_production_categories.each do |brand_categories| 
+        category = brand_categories.production_category
+    %>
+      <tr>
+        <td><%= i += 1 %>. </td>
+        <td><%= link_to category.name, edit_admin_brand_path(@brand) %></td>
+      </tr>
+    <% 
+      end 
+    %>
+  <% end %>
+  <% if i == 0 %><tr><td>暂无和 [<%= @tag.TAGNAME %>]-[<%= @brand.name_zh %>] 关联的品类 </td></tr><% end %>
+</table>

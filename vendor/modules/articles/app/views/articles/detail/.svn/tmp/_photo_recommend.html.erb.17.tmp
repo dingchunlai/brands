@@ -1,0 +1,25 @@
+<div id="case_wrapper">
+
+  <ul class="seo_tian clearfix sidebox_3 "><h2 class="title_s"><%= @tui_city %>装修图片推荐</h2>
+    <% @case_api[0,2].each do |cases| %>
+        <li class="tian">
+          <a title="<%=h cases.NAME %>" target="_blank" href="<%= cases.url %>">
+            <img width="100%" height="80" alt="<%=h cases.NAME %>" src="<%= cases.master_picture_url %>">
+          </a>
+          <a title="<%=h cases.NAME %>" target="_blank" href="<%= cases.url %>"><%=h truncate_for_zh(cases.NAME,36) %></a>
+        </li>
+    <% end %>
+  </ul>
+
+</div>
+
+<div class="ltext_list">
+  <ul>
+    <% if @case_api[2,8] %>
+        <% @case_api[2,8].each do |tc| %>
+            <li>·<a target="_blank" href="<%= tc.url %>"><%= h truncate_for_zh(tc.NAME,36) %></a></li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>
+

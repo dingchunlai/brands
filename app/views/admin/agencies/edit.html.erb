@@ -1,0 +1,74 @@
+<%= show_flash_message %>
+<% is_new_record = @agency.new_record? %>
+<% form_for @agency, :url => (is_new_record ? admin_agencies_path : admin_agency_path(@agency)), :html => {:method => (is_new_record ? :post : :put), :id => 'agency'} do |f| %>
+  <fieldset>
+    <p>经销商：<%= f.text_field :title %><span style="color:red">  *  必填 </span></p>
+    <p>电 话：<%= f.text_field :telephone %></p>
+    <p>地址：<%= f.text_field :address %></p>
+    <p>城市: <%= f.select :city, options_for_select(City.used_cities.map{|b| [b.pinyin, b.name]}, (@agency && @agency.city ? @agency.city : nil)), :include_blank => '-- 请选择 --' %><span style="color:red">   *  必选  </span></p>
+    <p>所属品类:
+      <%# data-ajax-url 是js代码中需要的访问地址，不宜在js代码中生成，故在这里现生成，用':id:'作为占位符 %>
+      <% tagg = @tagged_brand && @tagged_brand.tag || nil   %>
+      <%= select_tag :brand_category_id, "#{f.object.new_record? ? '<option selected="selected" value="0">-- 请选择 --</option>' : ''}" + options_for_select(@tags.map{|tag| [tag.TAGNAME, tag.TAGID]}, tagg && tagg.TAGID) %>
+      选择所属品牌:
+        <% if @tagged_brand && @tagged_brand.brand %>
+          <%= select_tag :brand_id, options_for_select(@brands.map{|b| [b.name_zh, b.id] }, @tagged_brand.brand.id)  %>
+        <% else %>
+          <%= select_tag :brand_id, [["<option selected='selected' value='0'>-- 请先选择品类 --</option>", '']] %>
+        <% end %>
+      <span style="color:red">   *   必选  </span></p>
+    <p><%= submit_tag (is_new_record ? "保存" : "修改") %><p>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  $('#agency').submit(function(event){
+    if($('#agency_title').val() == ''){
+      alert('请输入经销商名称');
+      return false;
+    }
+    if($('#agency_city').val() == ''){
+      alert('请选择城市');
+      return false;
+      }
+    if(parseInt($('#brand_category_id').val()) ==  0){
+      alert('请选择品类');
+      return false;
+    }
+    if(parseInt($('#brand_id').val()) == 0){
+      alert('请选择品牌');
+      return false;
+      }
+  });
+  $('#brand_category_id').attr("data-ajax-url", "/pinlei/:id:/pinpai")
+    // 处理品类发生变化之后的情况
+    $('#brand_category_id').change(function(event) {
+      event.preventDefault();
+      var id = $(this).val();
+      if(!id || id == '') {
+        updateBrandSelectElement([]);
+        return false;
+      }
+      var url = $(this).attr('data-ajax-url').replace(':id:', id);
+      $.getJSON(url, function(data, textStatus) {
+        if(textStatus == 'success') {
+          updateBrandSelectElement(data);
+        } else {
+          alert('读取品牌数据出错！');
+        }
+      });
+      return false;
+    });
+    // 更新品牌下拉框
+    function updateBrandSelectElement(brands) {
+      var dom = $('#brand_id').empty();
+      if(!brands || brands.length < 1) {
+        $('<option />').val('').text('-- 没有品牌可选 --').appendTo(dom);
+      } else {
+        $('<option />').val('').text('-- 请选择 --').appendTo(dom);
+        $.each(brands, function(_, brand) {
+          $('<option />').val(brand.id).text(brand.name_zh).appendTo(dom);
+        })
+      }
+    }
+</script>

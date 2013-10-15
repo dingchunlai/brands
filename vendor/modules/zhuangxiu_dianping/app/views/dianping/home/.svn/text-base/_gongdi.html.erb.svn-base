@@ -1,0 +1,31 @@
+<h3>预约参观在建样板房</h3>
+<div class="zxdp2010_more"></div>
+<div class="zxdp2010_txt zxdp2010_kbtop zxdp2011_canguan">
+  <ul>
+    <li><span class="zxdp2010_kbspan13">公司简称</span><span class="zxdp2010_kbspan14">楼盘名称</span><span class="zxdp2010_kbspan15"></span></li>
+    <% if [11908,11887,12349,12142,12069,12288,12030,12194,12208].include? @user_city_code.to_i %>
+        <%
+            if [11908,11887].include? @user_city_code.to_i
+              city_query_sql = "HEJIA_FACTORY_COMPANY.PROVINCE1 = #{@user_city_code.to_i}"
+            else
+              city_query_sql = "HEJIA_FACTORY_COMPANY.PROVINCE2 = #{@user_city_code.to_i}"
+            end
+
+            query_result = CaseFactoryCompany.find(:all,:include =>:deco_firm,:conditions =>city_query_sql,:order =>'STARTENABLE desc',:limit =>10)
+            query_result.each do |factory|
+        %>
+          <li><span class="zxdp2010_kbspan16"><%= link_to truncate(factory.deco_firm.name_abbr, :length => 4, :omission => '') ,firm_url(:id => factory.deco_firm.id,:trailing_slash => "/") ,:target => '_blank'%></span>
+            <span class="zxdp2010_kbspan17"><%= factory.NAME %></span>
+            <span class="zxdp2010_kbspan18 gongdi"><%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id), :class => "fancy_box" %></span>
+          </li>
+        <% end %>
+    <% else %>
+        <% promoted_factories_right(@user_city_code).each do |factory| %>
+          <li><span class="zxdp2010_kbspan16"><%= link_to truncate(factory.deco_firm.name_abbr, :length => 4, :omission => '') ,firm_url(:id => factory.deco_firm.id,:trailing_slash => "/") ,:target => '_blank'%></span>
+            <span class="zxdp2010_kbspan17"><%= factory.NAME %></span>
+            <span class="zxdp2010_kbspan18 gongdi"><%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id), :class => "fancy_box" %></span>
+          </li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>

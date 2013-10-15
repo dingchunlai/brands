@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin/production_series
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin/production_series/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin/production_series/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin/production_series/new.html.erb
+END
+_subnav.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/app/views/admin/production_series/_subnav.html.erb
+END

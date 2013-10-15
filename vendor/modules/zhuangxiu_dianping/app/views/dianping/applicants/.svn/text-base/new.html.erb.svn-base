@@ -1,0 +1,91 @@
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(
+
+  ['_setAccount', 'UA-7619267-1'],
+  ['_setDomainName', '.51hejia.com'],
+  ['_addOrganic', "baidu", "kw"],
+  ['_addOrganic', "baidu", "word"],
+  ['_addOrganic', "soso", "w"],
+  ['_addOrganic', "3721", "name"],
+  ['_addOrganic', "yodao", "q"],
+  ['_addOrganic', "vnet", "kw"],
+  ['_addOrganic', "sogou", "query"],
+  ['_trackPageview']
+  );
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-12518263-3']);
+  ['_addOrganic', "baidu", "kw"];
+  ['_addOrganic', "baidu", "word"];
+  ['_addOrganic', "soso", "w"];
+  ['_addOrganic', "3721", "name"];
+  ['_addOrganic', "yodao", "q"];
+  ['_addOrganic', "vnet", "kw"];
+  ['_addOrganic', "sogou", "query"];
+
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script src="http://hm.baidu.com/h.js?413eb88661221537985a18b6638be957" type="text/javascript"></script>
+
+<div id="applicant_form" class="zxdp2010_popbox" style="border-width:0">
+  <h3>免费预约咨询（量房、设计、报价、参观工地）</h3>
+  <ul>
+    <li>&gt;&gt; 预约后成功签约，将会获得<span>和家网更多的免费信息和优惠活动！</span></li>
+    <li>&gt;&gt; 已签约的业主，<span>可以通过发布装修日记，参与网友票选活动，就有机会赢取现金奖励，更可以成为装潢情报杂志签约作家！</span></li>
+  </ul>
+  <% form_for [:dianping, @applicant] do |f| -%>
+    <table width="528" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><strong>小区名称：</strong></td>
+        <td><%= f.text_field :community, :size => 15 %></td>
+        <td><strong>装修预算：</strong></td>
+        <td><%= f.text_field :budget, :size => 15 %></td>
+      </tr>
+      <tr>
+        <td><strong>联系姓名：</strong></td>
+        <td><%= f.text_field :name, :class=>"required", :size => 15 %></td>
+        <td><strong>装修方式：</strong></td>
+        <td><%= f.select :model, MODELS.invert, { :include_blank =>  "请选择" } %></td>
+      </tr>
+      <tr>
+        <td><strong>联系手机：</strong></td>
+        <td><%= f.text_field :tel, :class=>"required", :size => 15 %></td>
+        <td><strong>装修户型：</strong></td>
+        <td><%= f.select :room, ROOM.invert, { :include_blank =>  "请选择" } %></td>
+        <%= f.hidden_field :deco_firm_id, :value => params[:deco_firm_id]%>
+        <%= f.hidden_field :appointment_type, :value => @appointment_type %>
+      </tr>
+      <tr>
+        <td colspan="4" style="color:red;">温馨提示：请输入正确手机号，方便装修公司及时和您联系，谢谢！</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center">
+					<%= f.submit "提交", :class => "zxdp2010_popboxbtn", 
+							:onclick =>"pageTracker._trackEvent('[#{@city_name}]装修公司', '预约', '#{@firm.name_zh}', 1);" %>
+				</td>
+      </tr>
+    </table>
+  <% end -%>
+</div>

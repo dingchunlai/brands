@@ -1,0 +1,39 @@
+<div class="toolbar">
+    <ul class="horizontal">
+        <li class="last">
+            新增产品系列
+        </li>
+    </ul>
+    <div class="clear" />
+</div><% form_for :production_series, :url => admin_chanpinxilie_path, :html => {:method => :post} do |f| %>
+<fieldset>
+    <table>
+        <caption>
+            产品列表
+        </caption>
+        <tbody>
+            <tr>
+                <th>
+                    选择所属种类
+                </th>
+                <td>
+                    <%= f.select :brand_id, brand_select_collection %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    产品名称
+                </th>
+                <td>
+                    <%= f.text_field :name %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <%= submit_tag '保存' %>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<% end %>

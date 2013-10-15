@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS `case_and_diaries`;
+CREATE TABLE `case_and_diaries` (
+   `id` INT(11) NOT NULL AUTO_INCREMENT,
+   `item_id` INT(11) DEFAULT NULL,
+   `item_type` VARCHAR(50) DEFAULT NULL,
+   `created_at` DATETIME DEFAULT NULL,
+   `updated_at` DATETIME DEFAULT NULL,
+	`order_time` DATETIME DEFAULT NULL,
+    PRIMARY KEY (`id`)
+ ) ENGINE=INNODB CHARSET=utf8

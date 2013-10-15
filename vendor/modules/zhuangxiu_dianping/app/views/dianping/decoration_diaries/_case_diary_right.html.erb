@@ -1,0 +1,16 @@
+<div class="zxdp2010_r f_r">
+  <!--<div style="height:35px;">&nbsp;</div>-->
+  <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-宽幅1", '', '<div style="width:250px;height:156"></div>')%>
+  <div style="height:1px;">&nbsp;</div>
+  <%#= render :partial => 'dianping/firms/firm_basic_info' %>
+  <%= render :partial => "dianping/firms/firm_info" %>
+  <%= render :partial => 'dianping/shared/firm_promotion_coupon', :locals => {:is_case_diary => true} %>
+  <%= render :partial => "dianping/shared/yuyue" %>
+
+  <%= render :partial => "dianping/decoration_diaries/condition_diaries", :locals => {:name => "装修日记Top10", :diaries => @topten_diaries} unless @topten_diaries.blank? %>
+  <%= render :partial => "dianping/decoration_diaries/condition_diaries", :locals => {:name => "相关日记", :diaries => @related_diaries} unless @related_diaries.blank? %>
+
+  <%= render :partial => '/dianping/shared/firm_right_list/news' %>
+  <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-宽幅2", '', '<div style="width:250px;height:85"></div>')%>
+</div>
+<!--zxdp2010_r code end-->

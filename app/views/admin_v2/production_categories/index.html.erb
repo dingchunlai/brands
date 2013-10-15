@@ -1,0 +1,44 @@
+<div class="page_navigate page_padding">
+  <span>当前位置：</span>  <%= link_to "类别管理", admin_production_categories_path %> > 类别管理页面
+  <br /><br />
+  <div>
+    <% form_tag admin_production_categories_path, :method => :get do  %>
+          名称 : <%= text_field_tag :name, @name %> 
+          行业 ：<%= select_tag :tag_id, options_for_select(Tag.all_categories.map{ |t| [t.TAGNAME, t.TAGID] }.unshift(['请选择',0]), @tag_id)%>
+      <%= submit_tag "查询" %>
+    <% end %>
+  </div>
+  <br />
+<div>
+
+<% show_flash_message %>
+<div>
+  <%= paginate_content = will_paginate @categories %>
+  <table>
+    <caption>产品类别列表</caption>
+    <thead>
+      <tr>
+        <th>简称</th>
+        <th>名称</th>
+        <th>所属行业</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |category| %>
+        <tr>
+          <td><%= category.short_name %></td>
+          <td><%= category.name %></td>
+          <td><%= category.tag && category.tag.TAGNAME || link_to("关联行业", edit_admin_production_category_path(category)) %></td>
+          <td>
+            <ul class="horizontal">
+              <li><%= link_to '编辑', edit_admin_production_category_path(category) %></li>
+              <!--<li class="last"><%= link_to '删除', admin_production_category_path(category), :confirm => "确定删除“#{category.name}”吗？", :method => :delete %></li>-->
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate_content %>
+</div>

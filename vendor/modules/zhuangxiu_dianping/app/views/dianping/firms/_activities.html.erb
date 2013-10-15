@@ -1,0 +1,24 @@
+<%
+  events_count, coupons_count = @events.size, @coupons.size
+  if events_count > 0 || coupons_count > 0 
+%>
+<div class="zxdp2010_cur margin10">
+  <h3 class="zxdp2011_cur_h3">
+    <ul>
+      <% if coupons_count > 0 %><li>现金券</li><% elsif events_count > 0 %><li>活动信息</li><% end -%>
+    </ul>
+  </h3>
+  <div class="zxdp2010_txt">
+    <% if coupons_count > 0 %>
+        <div class="zxdp2010_kbtop zxdp2011_xjqtab"> <a href="<%= firm_coupon_path(@coupons[0]) %>" target="_blank"><img src="<%= "http://assets5.image.51hejia.com/#{@coupons[0].show_image_url}" %>" /></a><%= link_to @coupons[0].title, firm_coupon_path(@coupons[0]), :target => '_blank' %></div>
+    <% elsif events_count > 0 %>
+        <div class="zxdp2010_kbtop">
+          <p><%= link_to( truncate_u(strip_tags(@events[0].prompt),90),two_coupon_urls(@user_city_code,@events[0]), :target=>"_blank")%></p>
+          <ul>
+            <li>· <%= link_to(@events[0].title, two_coupon_urls(@user_city_code,@events[0]), :target=>"_blank") %></li>
+          </ul>
+        </div>
+    <% end -%>
+  </div>
+</div>
+<% end -%>

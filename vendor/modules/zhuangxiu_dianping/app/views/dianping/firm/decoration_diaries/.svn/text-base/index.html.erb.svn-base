@@ -1,0 +1,46 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:公司日记列表页") %>
+<% @title = html_metadata.title % {:firm_name => @firm.name_zh} %>
+<% firm_sub_menu  %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 装修日记列表"%>
+<%= render :partial => "dianping/shared/firm_factory_pop"%>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <% cache @fragment_key , :expires_in => 5.minutes do %>
+      <div class="zxdp2010_comlist">
+        <div class="zxdp2010_sjlnlist">
+          <h3>网友装修日记</h3>
+          <div class="zxdp2010_sjslisthack"></div>
+          <ul class="margin10 clearfix">
+            <% @diaries.each do |diary|%>
+              <li>
+                <div class="zxdp2010_sjslistimg f_l"><%= link_to image_tag(diary.master_picture.url, :alt => diary.title ), diary.url %></div>
+                <div class="zxdp2010_sjlnlisttxt zxdp2011_rijilist f_r">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td colspan="2"><h4><%= link_to truncate(h(diary.title),:length => 30,:omission => ''), diary.url, :target => "_blank"%><%= show_icon_diary diary,@user_city_code %>
+                          <%= image_tag("http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon2.gif") if diary.is_good == true %></h4></td>
+                    </tr>
+                    <tr>
+                      <td valign="top"><p> <%= truncate_u(strip_tags(diary.content),120)%></p>
+                        <em>装修风格：<%= STYLES[diary.style] %>  装修户型：<%= ROOM[diary.room] %>  合同总价：<%= diary.deal_price ? diary.deal_price.to_s.gsub(/\.0/,'')<<'万' : '暂无' %></em></td>
+                      <td valign="top"><div class="zxdp2011_yuyue">
+                          <%= link_to image_tag("http://js.51hejia.com/img/zxdpimg/zxdp2011_rjibtn.gif"), firm_factories_url(diary.deco_firm.id), :target => "_blank" %><em>施工：<a href="<%= diary.deco_firm.url %>" target="_blank"><%= diary.deco_firm.name_abbr %></a></em><em>业主：<%= truncate_u(diary.user.USERNAME,6) if diary.user %></em></div></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><em>发表：<%=diary.created_at.strftime("%Y-%m-%d")%>  更新：<%=diary.order_time.strftime("%Y-%m-%d")%>   日记：(<%= diary.decoration_diary_posts.count %>)篇 阅读：(<%= diary.pv %>)  点评(<%= diary.remarks_count %>)</em></td>
+                    </tr>
+                  </table>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+          <%= will_paginate @diaries %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>

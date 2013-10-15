@@ -1,0 +1,1 @@
+<a href='<%= paint_worker_admin_path %>' target='_self' title='个人主页'>个人主页</a>

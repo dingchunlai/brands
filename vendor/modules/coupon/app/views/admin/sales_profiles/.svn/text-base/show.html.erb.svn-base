@@ -1,0 +1,45 @@
+<%= top_bar :title => '业务员管理页',
+            :button => ['创建业务员', new_admin_sales_profile_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['业务员列表', admin_sales_profiles_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2"><%= SalesProfile.human_name %></th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("user_id") %></strong></td>
+      <td class="last"><%= @sales_profile.user && @sales_profile.user.rname || '---' %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("manager_id") %></strong></td>
+      <td class="last"><%= @sales_profile.manager_user && @sales_profile.manager_user.rname || '---' %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("city_id") %></strong></td>
+      <td class="last"><%= @sales_profile.city.name %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("qq") %></strong></td>
+      <td class="last"><%= @sales_profile.qq %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("email") %></strong></td>
+      <td class="last"><%= @sales_profile.email %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("mobile") %></strong></td>
+      <td class="last"><%= @sales_profile.mobile %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= SalesProfile.human_attribute_name("telephone") %></strong></td>
+      <td class="last"><%= @sales_profile.telephone %></td>
+    </tr>
+
+  </table>
+</div>

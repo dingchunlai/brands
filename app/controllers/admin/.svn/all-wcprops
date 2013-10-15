@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin
+END
+promotion_collections_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/promotion_collections_controller.rb
+END
+comments_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/comments_controller.rb
+END
+promotion_items_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/promotion_items_controller.rb
+END
+production_combinations_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/production_combinations_controller.rb
+END
+production_categories_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/production_categories_controller.rb
+END
+pictures_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/pictures_controller.rb
+END
+tags_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/tags_controller.rb
+END
+production_series_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/production_series_controller.rb
+END
+documents_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/documents_controller.rb
+END
+redirection_addresses_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/redirection_addresses_controller.rb
+END
+promotion_pages_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/promotion_pages_controller.rb
+END
+abilities_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/abilities_controller.rb
+END
+articles_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/articles_controller.rb
+END
+promotions_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/promotions_controller.rb
+END
+productions_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/productions_controller.rb
+END
+brands_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/brands_controller.rb
+END
+agencies_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/app/controllers/admin/agencies_controller.rb
+END

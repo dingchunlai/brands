@@ -1,0 +1,110 @@
+<%=include_jquery_autocomplete%>
+
+<%= top_bar :title => '店面管理',
+  :button => ['添加店面', new_admin_distributor_shop_path(@distributor_id)],
+  :breadcrumbs => [
+  ['抵用券后台', coupon_admin_index_path],
+  ["#{Distributor.id_to_title(@distributor_id)}", admin_distributor_shops_path(@distributor_id)],
+]
+%>
+
+<div class="select-bar">
+  <%form_for :search, :url => admin_distributor_shops_path(@distributor_id), :html => {:method => :get} do |f|%>
+    店面名称：<%=f.text_field :name, 'query-url' => shops_by_title_admin_distributor_shops_path(@distributor_id)%>
+    <%= f.select :city_id, City.find(:all, :select => 'id, name').map{|c| [c.name,c.id]}.unshift(['城市','']) %>
+    <%= f.select :district_id, @search.district_options %>
+    <input type="submit" value="搜索" />
+  <%end%>
+</div>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first" width="177">店面名称</th>
+      <th>城市</th>
+      <th>地区</th>
+      <th>商圈</th>
+      <th>分店</th>
+      <th class="last" colspan="2">管理</th>
+    </tr>
+    <%@shops.each do |shop|%>
+      <tr>
+        <td class="first style1"> 
+          <%=link_to shop.name, edit_admin_distributor_shop_path(@distributor_id, shop)%>
+        </td>
+        <td> <%=shop.city_name%> </td>
+        <td> <%=shop.district%> </td>
+        <td> <%=shop.business_zone%> </td>
+        <td> <%=shop.market_shop%> </td>
+        <td>
+          <% if can?(:read, Coupon) || can?(:read_owned_coupons, :coupons) %>
+            <%= link_to '抵用券', admin_coupons_path(:shop_id => shop.id) %>
+          <% end %>
+        </td>
+        <td class="last">
+          <% if can?(:edit, shop) || can?(:edit_owned_shop, shop) %>
+            <%= link_to '编辑', edit_admin_distributor_shop_path(@distributor_id, shop) %>
+          <% end %>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+
+  <div>
+    <%= will_paginate @shops , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    //动态调整界面元素宽度和高度
+    $('tr').css('height', '30px');
+    $('#search_name').css('width', '120px')
+    $('#search_city_id').css('width', '80px')
+    $('#search_district_id').css('width', '100px')
+
+    //搜索店面名称自动补全
+    $('#search_name').focus(function(){
+      if ($(this).val()=='请输入店面名称')
+        $(this).val('');
+      else
+        $(this).select();
+    });
+    $('#search_name').autocomplete($('#search_name').attr('query-url'), {
+      max: 10,
+      minChars: 2,
+      width: 120
+    });
+
+    //城市-地区 联动选择
+    $('#search_city_id').change(function(){
+      $('#search_district_id option').remove();
+      $('#search_district_id').append($('<option value="">数据查询中</option>'));
+      $.ajax({
+        url: '/remote/districts/' + $(this).val(),
+        type: 'get',
+        //data: {'distributor_id' : $(this).val()},
+        dataType: 'json',
+
+        error: function(request) {
+          alert(request.responseText);
+        },
+
+        success: function(data) {
+          $('#search_district_id option').remove();
+          if (data.length==0) $('#search_district_id').append($('<option value="">没有地区</option>'));
+          for(var i=0;i<data.length; i++){
+            $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#search_district_id');
+          }
+          $('#search_district_id').trigger('change');
+        }
+      });
+    });
+
+
+  });
+</script>

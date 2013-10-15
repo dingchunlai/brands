@@ -1,0 +1,4 @@
+<% content_for :sub_menu do %>
+	<li><%= link_to "在线派遣" ,'/paint_admin/online/send_index'%></li>
+	<li><%= link_to "培训申请" ,'/paint_admin/online/training'%></li>
+<% end %>

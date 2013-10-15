@@ -1,0 +1,3 @@
+<% content_for :sub_menu do %>
+	<% if can? :update, :paint_mail %><li><%=link_to "邮件配置" %></li><% end %>
+<% end -%>

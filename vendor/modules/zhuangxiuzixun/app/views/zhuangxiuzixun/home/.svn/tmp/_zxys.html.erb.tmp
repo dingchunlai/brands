@@ -1,0 +1,468 @@
+<div class="bmdiv_alpha bmdiv_margin">
+	<a href="javascript:void(0)" class="tanchuall_open"><img width="175" height="50" src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_btn.gif" /></a>
+</div>
+<div class="title">
+	<span> <% hejia_promotion_items(54201, :attributes => ['title','url','image_url', 'description'],:limit => 20).each do |result| %> <a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 10,:omission => "") %></a> <% end %> <a href="http://d.51hejia.com/zq/装修预算" class="more" target="_blank">>>更多</a> </span>
+	<h2 class="noindent"><a class="noindent" href="http://d.51hejia.com/zq/装修预算" target="_blank">装修预算</a></h2>
+</div>
+<div class="left">
+	<% hejia_promotion_items(54158, :attributes => ['title','url','image_url', 'description'],:limit => 1).each do |result| %>
+	<a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for result["image_url"] %>" /></a>
+	<p class="title">
+		<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+	</p>
+	<p>
+		<%= truncate(result["description"],:length => 56,:omission => "") %> ... <a href="<%= result["url"] %>" target="_blank">[查看详细]</a>
+	</p>
+	<% end %>
+	<h3><a href="http://d.51hejia.com/zq/" target="_blank">装修预算相关专区</a></h3>
+	<ul>
+		<li>
+			<% hejia_promotion_items(54159, :attributes => ['title','url','image_url', 'description'],:limit => 20).each do |result| %>
+			<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 8,:omission => "")  %></a>
+			<% end %>
+		</li>
+	</ul>
+</div>
+
+<div class="middle">
+	<div class="box clearfix">
+		<div class="title">
+			<span><a href="http://d.51hejia.com/zq/装修预算-5万以下装修.html" class="more" target="_blank">更多</a> </span>
+			<h3 class="noindent"><a class="noindent" href="http://d.51hejia.com/zq/装修预算-5万以下装修.html" target="_blank">5万以下装修</a>
+			<div class="bmdiv_title">
+				<a style="font-size:12px; color:#cc0000; font-weight:normal;" href="javascript:void(0)" class="tanchuall_open ">免费得5万以下装修方案</a>
+			</div></h3>
+			<% unless Article::promotion_articles(5, "5万以下装修").blank? %>
+				<% ids = Article::promotion_articles(5, "5万以下装修") %>
+				<% article = Article.get_article(ids[0]) %>
+				<div class="left">
+					<a href="<%= article.detail_url %>" target="_blank"><img src="<%= article.detail_img_url %>" /></a>
+					<p>
+						<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 14,:omission => "") %></a>
+					</p>
+				</div>
+				<ul class="rht">
+					<% unless ids[1].blank? %>
+						<% article = Article.get_article(ids[1]) %>
+						<p class="title">
+							<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 15,:omission => "") %></a>
+						</p>
+						<p class="txt">
+							<%= truncate(article.SUMMARY,:length => 30,:omission => "") %>...<a href="<%= article.detail_url %>" target="_blank">[查看详细]</a>
+						</p>
+					<% else %>
+						<% hejia_promotion_items(54160, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+							<p class="title">
+								<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+							</p>
+							<p class="txt">
+								<%= truncate(result["description"],:length => 30,:omission => "") %>...<a href="<%= result["url"] %>" target="_blank">[查看详细]</a>
+							</p>
+						<% end %>
+					<% end %>
+					<% unless ids[2,3].blank? %>
+						<ul>
+							<% for id in ids[2,3] %>
+								<% article = Article.get_article(id) %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+							<% limit = 3 - ids[2,3].size %>
+							<% if limit > 0 %>
+								<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42230',:begintime => '', :endtime => '', :beginnum => '0', :allnum => "#{limit}", :order => '1' ,:title => '') %>
+								<% for article in articles %>
+									<li>
+										<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+									</li>
+								<% end %>
+							<% end %>
+						</ul>
+					<% else %>
+						<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42230',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '3', :order => '1' ,:title => '') %>
+						<ul>
+							<% for article in articles %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+						</ul>
+					<% end %>
+				</ul>
+			<% else %>
+				<% hejia_promotion_items(54160, :attributes => ['title','url','image_url', 'description'],:limit => 1).each do |result| %>
+					<div class="left">
+						<a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for result["image_url"] %>" /></a>
+						<p>
+							<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 14,:omission => "") %></a>
+						</p>
+					</div>
+				<% end %>
+				<ul class="rht">
+					<% hejia_promotion_items(54160, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+						<p class="title">
+							<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+						</p>
+						<p class="txt">
+							<%= truncate(result["description"],:length => 30,:omission => "") %>...<a href="<%= result["url"] %>" target="_blank">[查看详细]</a>
+						</p>
+					<% end %>
+					<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42230',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '3', :order => '1' ,:title => '') %>
+					<ul>
+						<% for article in articles %>
+							<li>
+								<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+							</li>
+						<% end %>
+					</ul>
+				</ul>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="box clearfix">
+		<div class="title">
+			<span><a href="http://d.51hejia.com/zq/装修预算-6万至10万装修.html" class="more" target="_blank">更多</a> </span>
+			<h3 class="noindent"><a class="noindent" href="http://d.51hejia.com/zq/装修预算-6万至10万装修.html" target="_blank">6万至10万装修</a>
+			<div class="bmdiv_title">
+				<a style="font-size:12px; color:#cc0000; font-weight:normal;" href="javascript:void(0)" class="tanchuall_open ">免费得10万以內装修方案</a>
+			</div></h3>
+			<% unless Article::promotion_articles(7, "6万至10万装修").blank? %>
+				<% ids = Article::promotion_articles(7, "6万至10万装修") %>
+				<% article = Article.get_article(ids[0]) %>
+				<div class="left">
+					<a href="<%= article.detail_url %>" target="_blank"><img src="<%= article.detail_img_url %>" /></a>
+					<p>
+						<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 14,:omission => "") %></a>
+					</p>
+				</div>
+				<ul class="rht">
+					<% unless ids[1].blank? %>
+						<p class="title">
+							<% article = Article.get_article(ids[1]) %>
+							<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 15,:omission => "") %></a>
+						</p>
+					<% else %>
+						<% hejia_promotion_items(54161, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+							<p class="title">
+								<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+							</p>
+						<% end %>
+					<% end %>
+					<% unless ids[2,5].blank? %>
+						<ul>
+							<% for id in ids[2,5]%>
+							<% article = Article.get_article(id) %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+							<% limit = 5 - ids[2,5].size %>
+							<% if limit > 0 %>
+								<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42231',:begintime => '', :endtime => '', :beginnum => '0', :allnum => "#{limit}", :order => '1' ,:title => '') %>
+								<% for article in articles %>
+									<li>
+										<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+									</li>
+								<% end %>
+							<% end %>
+						</ul>
+					<% else %>
+						<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42231',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+						<ul>
+							<% for article in articles %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+						</ul>
+					<% end %>
+				</ul>
+			<% else %>
+				<% hejia_promotion_items(54161, :attributes => ['title','url','image_url', 'description'],:limit => 1).each do |result| %>
+				<div class="left">
+					<a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for result["image_url"] %>" /></a>
+					<p>
+						<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 14,:omission => "") %></a>
+					</p>
+				</div>
+				<% end %>
+				<ul class="rht">
+					<% hejia_promotion_items(54161, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+						<p class="title">
+							<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+						</p>
+					<% end %>
+					<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42231',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+					<ul>
+						<% for article in articles %>
+							<li>
+								<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+							</li>
+						<% end %>
+					</ul>
+				</ul>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="box clearfix">
+		<div class="title">
+			<span><a href="http://d.51hejia.com/zq/装修预算-10万至20万装修.html" class="more" target="_blank">更多</a> </span>
+			<h3 class="noindent"><a class="noindent" href="http://d.51hejia.com/zq/装修预算-10万至20万装修.html" target="_blank">10万以上装修</a>
+			<div class="bmdiv_title">
+				<a style="font-size:12px; color:#cc0000; font-weight:normal;" href="javascript:void(0)" class="tanchuall_open ">预约资深设计师免费上门设计</a>
+			</div></h3>
+
+			<% unless Article::promotion_articles(7, "10万以上装修").blank? %>
+				<% ids = Article::promotion_articles(7, "10万以上装修") %>
+				<% article = Article.get_article(ids[0]) %>
+				<div class="left">
+					<a href="<%= article.detail_url %>" target="_blank"><img src="<%= article.detail_img_url %>" /></a>
+					<p>
+						<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 14,:omission => "") %></a>
+					</p>
+				</div>
+				<ul class="rht">
+					<% unless ids[1].blank? %>
+						<p class="title">
+							<% article = Article.get_article(ids[1]) %>
+							<a href="<%= article.detail_url %>" target="_blank"><%= truncate(article.title,:length => 15,:omission => "") %></a>
+						</p>
+					<% else %>
+						<% hejia_promotion_items(54162, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+							<p class="title">
+								<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+							</p>
+						<% end %>
+					<% end %>
+					<% unless ids[2,5].blank? %>
+						<ul>
+							<% for id in ids[2,5]%>
+								<% article = Article.get_article(id) %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+							<% limit = 5 - ids[2,5].size %>
+							<% if limit > 0 %>
+								<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42232',:begintime => '', :endtime => '', :beginnum => '0', :allnum => "#{limit}", :order => '1' ,:title => '') %>
+								<% for article in articles %>
+									<li>
+										<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+									</li>
+								<% end %>
+							<% end %>
+						</ul>
+					<% else %>
+						<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42232',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+						<ul>
+							<% for article in articles %>
+								<li>
+									<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+								</li>
+							<% end %>
+						</ul>
+					<% end %>
+				</ul>
+			<% else %>
+				<% hejia_promotion_items(54162, :attributes => ['title','url','image_url', 'description'],:limit => 1).each do |result| %>
+					<div class="left">
+						<a href="<%= result["url"] %>" target="_blank"><img src="<%= api_img_url_for result["image_url"] %>" /></a>
+						<p>
+							<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 14,:omission => "") %></a>
+						</p>
+					</div>
+				<% end %>
+				<ul class="rht">
+					<% hejia_promotion_items(54162, :attributes => ['title','url','image_url', 'description'],:offset => 1,:limit => 1).each do |result| %>
+						<p class="title">
+							<a href="<%= result["url"] %>" target="_blank"><%= truncate(result["title"],:length => 15,:omission => "") %></a>
+						</p>
+					<% end %>
+					<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42229',:third => '42232',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+					<ul>
+						<% for article in articles %>
+							<li>
+								<a href='<%= article.detail_url %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 40 ,:omission => "") %></a>
+							</li>
+						<% end %>
+					</ul>
+				</ul>
+				<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="right right2">
+	<!--增加报名链接-增加图片和表单（修改ul样式及增加图片）-->
+	<div style="width:240px; height:150px; position:relative;" class="list5">
+		<div class="bmdiv_r_t">
+			<ul>
+				<li class="list_l_nav_icon active" id="outs">
+					装修清包
+				</li>
+				<li class="list_l_nav_icon" id="outs2">
+					装修半包
+				</li>
+				<li class="list_l_nav_icon" id="outs3">
+					装修全包
+				</li>
+			</ul>
+		</div>
+		<div class="list_l_content">
+			<div style="display: block;" class="bmdiv_r_li">
+				<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42246',:third => '42247',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+				<ul>
+					<% for article in articles %>
+					<%
+ domain = 'http://www.51hejia.com/'
+            if article.sort_sign == 'zhuangxiu'
+              domain = 'http://d.51hejia.com/'
+            end
+            if article.sort_sign != ''
+              domain = domain + article.sort_sign + '/'
+            end
+            if article.CREATETIME
+              domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/'
+            end
+            domain = domain + article.ID.to_s
+%>
+					<li>
+						<a href='<%= domain %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 16,:omission => "") %></a>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<div style="display: none;" class="bmdiv_r_li">
+				<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42246',:third => '42248',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+				<ul>
+					<% for article in articles %>
+					<%
+ domain = 'http://www.51hejia.com/'
+            if article.sort_sign == 'zhuangxiu'
+              domain = 'http://d.51hejia.com/'
+            end
+            if article.sort_sign != ''
+              domain = domain + article.sort_sign + '/'
+            end
+            if article.CREATETIME
+              domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/'
+            end
+            domain = domain + article.ID.to_s
+%>
+					<li>
+						<a href='<%= domain %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 16,:omission => "") %></a>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<div style="display: none;" class="bmdiv_r_li">
+				<% articles = Article.getarticlebytag( :brand => '0',:first => '12394', :second => '42246',:third => '42249',:begintime => '', :endtime => '', :beginnum => '0', :allnum => '5', :order => '1' ,:title => '') %>
+				<ul>
+					<% for article in articles %>
+					<%
+ domain = 'http://www.51hejia.com/'
+            if article.sort_sign == 'zhuangxiu'
+              domain = 'http://d.51hejia.com/'
+            end
+            if article.sort_sign != ''
+              domain = domain + article.sort_sign + '/'
+            end
+            if article.CREATETIME
+              domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/'
+            end
+            domain = domain + article.ID.to_s
+%>
+					<li>
+						<a href='<%= domain %>' target=_blank title="<%= article.TITLE %>"><%= truncate(article.TITLE,:length => 16,:omission => "") %></a>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<script type="text/javascript">
+				$(function() {
+					$(".bmdiv_r_t li").mousemove(function() {
+						showbox(".bmdiv_r_t", ".list_l_content");
+					})
+				})
+			</script>
+		</div>
+	</div>
+	<div class="bmdiv_btn3">
+		<a href="javascript:void(0)" class="tanchuall_open"> <img src="http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_btn3.jpg" /></a>
+	</div>
+	<div class="list3 list5 bmdiv_r_t">
+		<h3>小工具 预测装修预算</h3>
+		<form onsubmit="return submitForm(this);" enctype="multipart/form-data" method="post" action="http://bm.51hejia.com/index/form_process">
+			<table border="0" width="210" height="240" cellspacing="0" cellpadding="0" style="margin-top:8px;">
+				<tbody>
+					<tr>
+						<td width="88" style="font-size:14px; color:#333;">称&nbsp;呼</td>
+						<td width="122">
+						<input type="text" id="c01" name="c1" style="width:120px; height:20px; border:1px solid #ccc;" />
+						</td>
+					</tr>
+					<tr>
+						<td width="88" style="font-size:14px; color:#333;">手&nbsp;机</td>
+						<td width="122">
+						<input type="text" id="c02" name="c2" style="width:120px; height:20px; border:1px solid #ccc;" />
+						</td>
+					</tr>
+					<tr>
+						<td width="88" style="font-size:14px; color:#333;">我的房型</td>
+						<td width="122">
+						<select name="c3" style="width:120px; height:20px; border:1px solid #ccc;">
+							<option value="小户型">小户型</option>
+							<option value="两居室">两居室</option>
+							<option value="三居室">三居室</option>
+							<option value="复式">复式</option>
+							<option value="别墅">别墅</option>
+							<option value="挑高/LOFT">挑高/LOFT</option>
+							<option value="四合院">四合院</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td style="font-size:14px; color:#333;">我家的面积</td>
+						<td>
+						<select name="c4" style="width:120px; height:20px; border:1px solid #ccc;">
+							<option value="70平米以下">70平米以下</option>
+							<option value="70-120平米">70-120平米</option>
+							<option value="120-160平米">120-160平米</option>
+							<option value="160平米以上">160平米以上</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td style="font-size:14px; color:#333;">喜欢的风格</td>
+						<td>
+						<select name="c5" style="width:120px; height:20px; border:1px solid #ccc;">
+							<option value="现代简约">现代简约</option>
+							<option value="欧式">欧式</option>
+							<option value="美式">美式</option>
+							<option value="中式">中式</option>
+							<option value="地中海">地中海</option>
+							<option value="混搭">混搭</option>
+							<option value="北欧（宜家）">北欧（宜家）</option>
+							<option value="新古典">新古典</option>
+							<option value="东南亚">东南亚</option>
+							<option value="日式">日式</option>
+							<option value="韩式田园">韩式田园</option>
+							<option value="欧美乡村">欧美乡村</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td valign="bottom" align="center" style="font-size:12px; color:#000; vertical-align:bottom;" colspan="2">我想了解我家的装修预算多少合适</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="2" style="height:36px;">
+						<input type="hidden" value="290" name="formid" />
+						<input type="hidden" value="和家网" name="c110" id="c110" />
+						<input type="submit" value="" name="" style="background:url(http://js2.51hejia.com/img/zhuangxiu1023/bmdiv_btnGO.jpg) no-repeat;width:200px;height:36px; border:none; cursor:pointer;" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>

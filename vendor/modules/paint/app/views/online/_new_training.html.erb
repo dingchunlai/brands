@@ -1,0 +1,52 @@
+<script>
+	$(document).ready(function(){
+	$('#province_city_select').CitySelectTag({
+		    province_name: "paint_training[province]" ,
+		    city_name: "paint_training[city]",
+		    city_include_blank: false
+	  	});
+	});
+</script>
+<h5>*以下信息为必填项目</h5>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="right">姓名：</td>
+      <td><%= f.text_field :user_name,:size=> 20, :class => "required" %></td>
+       	<td width="60" align="right">性别：</td>
+		<td><%= f.select :gender, Painter::GENDER.sort{|x,y| x[1] <=> y[1]}%></td>
+    </tr>
+    <tr>
+       <td align="right">手机：</td>
+      <td><%= f.text_field :phone,:size=> 20 , :class => "required number" %></td>
+      <td align="right">地区：</td>
+      <td><div id="province_city_select" data-province="" data-city=""></div>
+				<div id="city_s" ></div></td>
+    </tr>
+    <tr>
+      <td align="right">电子邮箱：</td>
+      <td colspan="3"><%= f.text_field :email,:size=>30 , :class => "required email" %></td>
+    </tr>
+    <tr>
+
+      <td align="right">从事油漆工年限：</td>
+      <td><%= f.text_field :job_year, :size => 8,:class => "required number" %>年</td>
+      <td align="right">已获证书：</td>
+      <td><%= f.select :certificate, Painter::CERTIFICATES.sort{|x,y| x[1] <=> y[1]} %></td>
+    </tr>
+    <tr>
+      <td align="right">文化程度：</td>
+      <td colspan="3"><% Painter::EDUCATION.each do |e|%>
+			<%=f.radio_button(:education, e)%><%=e%>
+		<% end %>
+		<%=f.radio_button(:education, "其它",:checked => true )%>
+		其它<input type="text" name="education_other" ></td>
+    </tr>
+    <tr>
+      <td align="right">您是否试用过喷枪：</td>
+
+      <td colspan="2"><span style="float:left;"><%=f.radio_button(:spray_gun, 1 )%>是<%=f.radio_button(:spray_gun, 0, :checked => true )%>否</span>
+        <span style="float:right;">您是否做过点睛/修色/擦色：</span>
+        </td>
+      <td><%= f.radio_button(:brush, 1) %>是<%= f.radio_button(:brush, 0, :checked => true)%>否</td>
+    </tr>
+  </table>

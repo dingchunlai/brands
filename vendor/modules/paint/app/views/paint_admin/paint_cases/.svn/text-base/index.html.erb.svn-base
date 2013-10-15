@@ -1,0 +1,118 @@
+<% content_for(:head) do %>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		// 日期选择
+	 $("#from,#to").datepicker({ dateFormat: 'yy-mm-dd' });
+		// 全选
+	 $('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+	  //
+	 $('.do').click(function() {
+		 var $this = $(this);
+	   $.ajax({
+	     url: '/paint_admin/paint_cases/do',
+	     type: 'POST',
+      dataType: 'json',
+      data: $("#cases").serialize() +"&do=" + $this.text() ,
+      error: function() {
+        alert("修改失败");
+      },
+      success: function(data) {
+        if(data["status"] == "彻底删除"){
+         $(".check_box:checked").each(function() {
+					$(this).parents("tr").remove();
+				});
+        }else{
+         $(".check_box:checked").each(function() {
+					$(this).parents("tr").children(".status_text").text(data["status"]);
+				});
+        }
+      }
+     });
+	   return false;
+	 });
+	 
+	 
+	 
+	 $(".set_essence").click(function() {
+     var $this = $(this);
+     $(this).text("正在保存...");
+     $.ajax({
+       url: $(this).attr("href"),
+       type: 'POST',
+       dataType: 'text',
+       success: function(text) {
+         if (text=="true") {
+           var label_text = "精华";
+           var button_text = "取消精华";
+         }else{
+          var label_text = "";
+          var button_text = "设置为精华";
+         };
+         $this.parent().siblings(".label").text(label_text);
+         $this.text(button_text);
+       }
+     });
+     return false;
+	 });
+	});
+</script>
+<% end %>
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>案例管理</h1>
+  <div class="breadcrumbs">案例管理 / 案例列表</div>
+</div>
+<div id="search_form" class="clearfix">
+	<% form_tag( {:action => "index"} ,:method=>:get) do %>
+	<ul>
+		<li>创建日期: 从<%= text_field_tag "from","", :size=>10%> 到<%= text_field_tag "to",Date.today, :size=>10%> </li>
+		<li>状态:<%= select_tag :status, options_for_select(PaintCase::STATUS.to_a.unshift(['全部', '']), (params[:status] && params[:status].to_i || ''))  %></li>
+		<li>案例标题:<%= text_field_tag "title","", :size=>15%></li>
+		<li>油漆工:<%= text_field_tag "paint_worker_name" ,"",:size =>10 %></li>
+		<li><%= submit_tag("搜索")%></li>
+	</ul>
+	<% end -%>
+</div>
+<%= show_flash_message%>
+<% form_tag( {:action => "do"},:id=>"cases" )do %>
+  
+	<table border="0" cellspacing="5" cellpadding="5" id="table_list" class="listing" width="700">
+		<tr>
+			<th><%= check_box_tag "select_all",:id=>"select_all"%></th>
+			<th width="400">案例标题</th>
+			<th>油漆工</th>
+			<th>状态</th>
+			<th>精华</th>
+			<th>日期</th>
+			<th>操作</th>
+		</tr>
+		<%@paint_cases.each do |paint_case|%>
+		<tr>
+			<td><%= check_box_tag "select[]" ,paint_case.id ,false,:class=>"check_box"%></td>
+			<td><%= paint_case.title %><%= "<span style='color:red'>[油]</span>" if paint_case.is_front  %></td>
+			<td><%= paint_case.paint_worker.USERNAME if paint_case.paint_worker%></td>
+			<td class="status_text"><%=h PaintCase::SHOW_STATUS.index paint_case.status %></td>
+			<td class="label"><%= "精华" if paint_case.essence %></td>
+			<td><%= paint_case.created_at.to_date %></td>
+			<td>
+                          <%= link_to "编辑",edit_paint_admin_paint_case_path(paint_case)%> | 
+                          <%= link_to ( paint_case.essence ? "取消精华" : "设置为精华") , set_essence_paint_admin_paint_case_path(paint_case) ,:class=>"set_essence" %>
+			</td>
+		</tr>
+		<% end -%>
+		<tr>
+			<td colspan="7" style="border-bottom:1px solid #9097A9">
+				批量操作: 
+				<%= link_to "审核" , "#" ,:class=>"do"%>
+				<%= link_to "取消审核" , "#" ,:class=>"do"%>
+				<%= link_to "删除" , "#" ,:class=>"do"%>
+				<%= link_to "彻底删除" , "#" ,:class=>"do"%>
+				&nbsp; &nbsp;<span style="color:red">[注: 请慎用彻底删除功能]</span>
+			</td>
+		</tr>
+	</table>
+<% end -%>
+<%= will_paginate @paint_cases , :class => "digg_pagination"%>

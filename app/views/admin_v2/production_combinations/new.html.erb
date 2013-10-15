@@ -1,0 +1,28 @@
+<% is_new =  @combination.new_record? %>
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %>  > <% end %>
+  <% if @tag && @brand %><%= link_to "组合案例列表页", admin_brand_production_combinations_path(@brand, :tag_id => @tag.TAGID) %> <% end %> 
+    > <%= is_new ? "新建" : "编辑" %>组合案例页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+<%= show_flash_message %>
+<% form_for :combination, :url => (is_new && admin_production_combinations_path || admin_production_combination_path(@combination)), :html => {:method => (is_new && :post || :put)} do |f| %>
+  <fieldset>
+    <legend><%= is_new ? "新建" : "编辑" %>组合案例信息</legend>
+    <ul>
+      <li>标    题：<%= f.text_field :title	%></li>
+      <li>内    容：<%= f.text_field :content	, :class => 'mceEditor'  %></li>
+    </ul>
+     <%= hidden_field_tag :brand_id, @brand.id %>
+     <%= hidden_field_tag :tag_id, @tag.TAGID %>
+      <%= f.hidden_field :brand_id %>
+      <%= f.hidden_field :tag_id %>
+    <%= submit_tag '保存' %>
+  </fieldset>
+<% end %>
+<%= render :partial => 'shared/enable_tinymce' %>
+

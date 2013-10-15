@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>【家·专辑】家居装修装饰专题，家居图片专题_和家网专题频道</title>
+    <meta name="keywords" content="和家网专题频道;和家网专题;家居专题;装修专题；装饰专题；家居美图；和家网" />
+    <meta name="description" content="我们爱家，我们希望家也可以有自己的个性，该怎么设计、怎么装饰我们的家呢？上和家网专题频道！这里将为大家解析最时尚最热门的家装设计，这里有最美的家居图片集合，这里有最潮流的家居节日布置方案，这里还有热门家居品牌的最新动向！家，本该浪漫丰美！抛开一成不变，一起做个无可救药的大梦想家吧！" />
+    <link href="http://js.51hejia.com/zhuantipindao/css/page-zt.css" rel="stylesheet" type="text/css" />
+    <link href="http://js1.51hejia.com/hejia_index/statics/css/base.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://js.51hejia.com/js/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://js.51hejia.com/zhuantipindao/js/kissy.js"></script>
+    <script type="text/javascript" src="http://js.51hejia.com/zhuantipindao/js/topic.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".header_menu li").mouseover(function(){
+          $(this).siblings().removeClass("active").end().addClass("active");
+          $(".header_ygbox div.header_ygbox_con").eq($(this).index()).siblings().hide().end().show();
+        });
+        $(".subnav a").mouseover(function(){
+          $(this).siblings().removeClass("active1").end().addClass("active1");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

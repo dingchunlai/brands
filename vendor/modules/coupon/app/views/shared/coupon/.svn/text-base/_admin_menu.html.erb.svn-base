@@ -1,0 +1,29 @@
+<!-- 抵用券后台顶部导航菜单 -->
+<ul id="top-navigation" >
+
+  <li><a href="<%= coupon_admin_index_path %>" <%= active_top_menu("index") %> >首页</a></li>
+  <% if can?(:read, Distributor) || can?(:read_owned_distributors, Distributor) %>
+    <li><a href="<%= admin_distributors_path %>" <%= active_top_menu(["distributors", "shops", "contracts"]) %> ><%= "#{Distributor.human_name}管理" %></a></li>
+  <% end %>
+  <% if can?(:read, Coupon) || can?(:read_owned_coupons, :coupons) %>
+    <li><a href="<%= admin_coupons_path %>" <%= active_top_menu (["coupons", "complaints"]) %> ><%= "#{Coupon.human_name}管理" %></a></li>
+  <% end %>
+  <% if can? :read, PrintRecord %>
+    <li><a href="<%= admin_print_records_path %>" <%= active_top_menu (["print_records", "offlines", "print_properties"]) %> ><%= "#{PrintRecord.human_name}管理" %></a></li>
+  <% end %>
+  <% if can? :read, City %>
+    <li><a href="<%= admin_cities_path %>" <%= active_top_menu (["cities", "districts", "business_zones", "markets", "market_shops", "coupon_faqs"]) %>  >自定义</a></li>
+  <% end %>
+  <% if can? :read, SalesProfile %>
+    <li><a href="<%= admin_sales_profiles_path %>" <%= active_top_menu (["sales_profiles"]) %>  ><%= "#{SalesProfile.human_name}管理" %></a></li>
+  <% end %>
+  <% if can? :read, PartnerShip %>
+    <li><a href="<%= admin_partner_ships_path %>" <%= active_top_menu (["partner_ships"]) %>  ><%= "#{PartnerShip.human_name}管理" %></a></li>
+  <% end %>
+  <% if can? :read, CouponRemindMail %>
+    <li><a href="<%= admin_coupon_remind_mails_path %>" <%= active_top_menu (["coupon_remind_mails"]) %>  ><%= "#{CouponRemindMail.human_name}管理" %></a></li>
+  <% end %>
+  <div id="logout" style="float:right">
+    <%= link_to "退出", coupon_admin_logout_path%>
+  </div>
+</ul>

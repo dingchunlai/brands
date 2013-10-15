@@ -1,0 +1,24 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 推广页管理列表页
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<div>
+  <%= link_to "新建品牌推广页", promotion_page_admin_brand_path(@brand, :tag_id => @tag.TAGID) %>
+  <table>
+    <tr>
+      <th>页面</th>
+      <th>描述</th>
+      <th>操作</th>
+    </tr>
+    <% @promotion_pages.each do |page| %>
+      <tr>
+        <td><%= page.name %></td>
+        <td><%= page.description %></td>
+        <td><%= link_to "维护推广内容", promotion_collections_page_admin_brand_path(@brand, :page_id => page.id, :tag_id => @tag.TAGID) %> | <%= link_to "编辑", promotion_page_admin_brand_path(@brand, :page_id => page.id, :tag_id => @tag.TAGID) %></th>
+      </tr>
+    <% end %>
+  </table>
+</div>

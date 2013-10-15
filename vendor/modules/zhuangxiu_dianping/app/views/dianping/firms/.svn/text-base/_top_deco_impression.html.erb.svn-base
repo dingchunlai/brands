@@ -1,0 +1,27 @@
+
+  <div class="zxdp2010_cur margin10" id="top_deco_impression">
+    <h3><%= @firm.name_abbr%>的口碑印象排行</h3>
+    <div class="zxdp2010_txt zxdp2010_kbtop" style="height:225px;overflow:hidden;">
+      <ul>
+					
+						<li class="clearfix">
+							<span class="zxdp2010_kbspan03">品牌口碑</span>
+							<span class="zxdp2010_kbspan04">得票数</span>
+							<span class="zxdp2010_kbspan04">支持率</span>
+						</li>
+						
+						<% DecoImpression.charts(@firm.id, 8).each do |r|%>
+						<li class="clearfix">
+								<span class="zxdp2010_kbspan01"><%= h r[:name]%></span>
+								<span class="zxdp2010_kbspan02"><%=r[:score]%></span>
+								<span class="zxdp2010_kbspan04"><%=r[:percent]%></span>
+						</li>
+							<% end %>
+      </ul>
+    </div>
+  </div>
+		
+		
+  
+
+

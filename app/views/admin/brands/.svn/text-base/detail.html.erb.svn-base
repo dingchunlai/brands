@@ -1,0 +1,113 @@
+<%= show_flash_message %>
+<% form_for :brand_detail, :url => update_detail_admin_brand_path(@brand.id), :html => {:method => :post, :multipart => true} do |f| %>
+  <fieldset>
+  	<input type='hidden' name='tag_id' value='<%=@tag_id %>'>
+    <table>
+    	<tr>
+    		<td colspan = '2'>
+      		<caption><h3>编辑{ <%= @tag.TAGNAME %> - <%= @brand.name_zh %> }详细信息</h3></caption>
+      	</td>
+      </tr>
+
+      <tr>
+        <th>模板</th>
+        <td><%= select_tag :brand_template, options_for_select(BRAND_TEMPLATES, @brand_template)%></td>
+      </tr>
+
+      <tr>
+        <th>品类</th>
+        <td>
+          <ul class="horizontal">
+            <%
+              @brand.tagged_brands.each do |tagged_brand|
+                tag = tagged_brand.tag
+                css_class = 'current' if tag.TAGID == @tag_id
+            %>
+              <li><%= link_to tag.TAGNAME, detail_admin_brand_path(@brand, :tag_id => tag.TAGID), :class => css_class %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th>官方网站地址</th>
+        <td><%= f.text_field :website %></td>
+      </tr>
+      <tr>
+        <th>品牌点评</th>
+        <td><%= f.text_area :comment, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>品牌概要</th>
+        <td><%= f.text_area :description, :class => 'mceEditor' %></td>
+      </tr>
+       <tr>
+        <th>品牌故事</th>
+        <td><%= f.text_area :story, :class => 'mceEditor'%> </td>
+      </tr>
+      <tr>
+        <th>品牌历程</th>
+        <td><%= f.text_area :history, :class => 'mceEditor'%> </td>
+      </tr>
+      <tr>
+        <th>联系方法</th>
+        <td><%= f.text_area :contact, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>销售网络</th>
+        <td><%= f.text_area :sale_network, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>门店展示</th>
+        <td><%= f.text_area :demonstration, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>工程案例</th>
+        <td><%= f.text_area :cases, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>售后服务</th>
+        <td><%= f.text_area :service, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>技术特点</th>
+        <td><%= f.text_area :specialty, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <th>LOGO图片</th>
+        <td>
+          <% if @brand_logo %>
+            <%= image_tag @brand_logo.public_filename %>
+          <% else %>
+            <p>此品牌还没有logo图片</p>
+          <% end %>
+						<%= file_field_tag 'logo' %>
+        </td>
+      </tr>
+      <tr><td><hr/></td><td><hr/></td></tr>
+      <tr>
+        <th>{编辑SEO信息}</th>
+        <td>&nbsp;</td>
+      </tr>
+
+      <% fields_for @htmlmetadata do |html_meta_fields| %>
+      <tr>
+        <th>title</th>
+        <td><%= html_meta_fields.text_field :title, :size => 110 %></td>
+      </tr>
+      <tr>
+          <th>keywords</th>
+          <td><%= html_meta_fields.text_field :keywords, :size => 110 %></td>
+      </tr>
+      <tr>
+        <th>description</th>
+        <td><%= html_meta_fields.text_area :description, :rows => 4, :cols => 80 %></td>
+      </tr>
+    <% end %>
+      <tr>
+      	<td>&nbsp;</td>
+        <td><%= submit_tag '保存' %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
+<%= render :partial => 'shared/enable_tinymce' %>

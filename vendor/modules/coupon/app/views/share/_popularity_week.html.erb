@@ -1,0 +1,36 @@
+<div class="djq_rcur margin10">
+  <h3>一周人气排行榜</h3>
+  <div class="djq_rcurtxt">
+    <div class="djq_renq_tab">
+      <ul>
+      <%
+        all_tags = Industry.all_categories
+        if tag_id.blank? || tag_id.to_i == 0 
+          four_tags = all_tags.first(4)
+        else
+          four_tags = (Industry.find_by_TAGID(tag_id).to_a + Industry.all_categories.first(3))
+        end
+        four_tags.each do |tag| 
+      %>
+        <li><%= tag.TAGNAME.gsub("/", "") %></li>
+      <% end %>
+      </ul>
+    </div>
+    <div class="djq_renq_cont">
+      <% 
+        four_tags.each do |tag| 
+          index = all_tags.rindex(tag) + 1
+      %>
+        <div>
+          <ul class="djq_went_list">
+            <% Coupon.with_tag_city(tag.TAGID,  @city.id, 10).each do |coupon| %>
+              <li><%= link_to_with_title coupon.title, coupon_show_path(coupon), :truncate => 18, :target => '_blank' %></li>
+            <% end  %>
+            <li class="djq_went_more"><a href="<%= coupon_top_path %>#top0<%= index %>" target="_blank">More&gt;&gt;</a></li>
+          </ul>
+        </div>
+      <% end %>
+   </div>
+  </div>
+</div>
+

@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  jQuery(document).ready(function($){
+    $('.dafenstars02').attr('style',"");
+  });
+</script>
+<% cache "firm:remarks:#{@firm.id}:#{params[:page]}"  , :expires_in => 5.minutes do %>
+  <ul id="remarks_list">
+    <% @remarks.each do |remark|%>
+      <li class="clearfix">
+        <div class="zxdp2010_dianpimg f_l">
+          <%= image_tag(remark.user && remark.user.avatar || "http://member.51hejia.com/images/headimg/default.gif") %>
+        </div>
+        <div class="zxdp2010_dianptxt f_r">
+          <h4>
+            <div class="f_l"><span><%=  remark.user && remark.user.USERNAME || "和家网友"%></span>
+              <%= "对#{@firm.name_abbr}的评分：" if is_will_show = (remark.praise && remark.praise > 0) || (remark.decoration_diary && remark.decoration_diary.status == 1 && remark.decoration_diary.praise && remark.decoration_diary.praise > 0 ) %>
+            </div>
+            <% if is_will_show %>
+            <div class="dafenstars02 f_l">
+              <%= show_remark_star(@user_city_code,remark)%>
+            </div>
+            <% end %>
+            <div class="f_r firm_remark_reply"><%= remark.created_at.strftime("%Y-%m-%d %H:%M")%><a style="cursor:pointer;">[-]</a></div>
+          </h4>
+          <p class="zxdp2010_dianpp">
+            <%= whitelist_strip_tags(remark.content, :tags => ['img'], :include => true) %>
+            <%= link_to("[详细]",remark.decoration_diary.url, :target=>"_blank") if remark.decoration_diary && remark.user  && remark.decoration_diary.status == 1 %>
+            <span class="firm_show_remark_2011 open_firm_contwbhfinput">回复(<%= remark.show_replies.size %>)</span>
+          </p>
+          <div class="firm_contwbhuifu open">
+            <%= render :partial => "/dianping/firms/firm_post_remark_replies", :locals => { :remark => remark }%>
+          </div>
+        </div>
+      </li>
+    <% end -%>
+  </ul>
+  <%= will_paginate @remarks,:params =>{:controller=>"remarks",:action=>"firm_remarks_ajax_list",:resource_type=>"DecoFirm"}%>
+<% end -%>
+<% if flash[:notice] == "提示：对不起.您6个月只能评论一次" %>
+  <script type="text/javascript">
+    alert("提示：对不起.您6个月只能评论一次")
+  </script>
+<% elsif flash[:notice] == "提示：您在一分钟内，不能频繁发表多次评论!" %>
+  <script type="text/javascript">
+    alert("提示：您在一分钟内，不能频繁发表多次评论!")
+  </script>
+<% elsif flash[:notice] == "您已评论成功，谢谢！" %>
+  <script type="text/javascript">
+    alert("您本次的评论成功提交，谢谢！");
+    KE.util.setFullHtml('content', '');//kindeditor里面的清除内容函数
+    $this[0].reset();
+  </script>
+<% end %>

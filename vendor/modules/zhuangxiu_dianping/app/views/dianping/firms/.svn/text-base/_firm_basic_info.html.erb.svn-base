@@ -1,0 +1,65 @@
+<% dp_js 'dianping/yuyue.js'%>
+<div class="zxdp2010_cur margin10" style="z-index: 9">
+  <h3><%= link_to @firm.name_abbr, firm_path(@firm.id), :target => "_blank" %></h3>
+  <div class="zxdp2010_txt zxdp2011_sjgs">
+        <script type="text/javascript">
+         jQuery(function($){
+		 	$(".zxdp2011_sjgs td.btn a").click(function() {
+                          _gaq.push(['a._trackEvent', '公司终端页', '查看联系电话', <%= @firm.name_abbr.to_json %>, 1]);
+            	$(".zxdp2011_sjgs td.btn div").toggle(300)
+            });
+			$(".zxdp2011_sjgs td div.tit").mouseover(function() {
+            	$(".zxdp2011_sjgs td div.txt").show();
+            });
+			$(".zxdp2011_sjgs td div.txt").mouseout(function() {
+            	$(".zxdp2011_sjgs td div.txt").hide();
+            });
+        })
+      </script>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="70">主打价位：</td>
+        <td width="160"><%= @firm.price_text %></td>
+      </tr>
+      <tr>
+        <td width="70">擅长风格：</td>
+        <td width="160"><%= DecoFirm::STYLES[@firm.style] %></td>
+      </tr>
+      <tr>
+        <td width="70" valign="top">公司地址：</td>
+        <td width="160"><% address = @firm.address2 && @firm.address2.split(',') || '暂无信息' %>
+          <div class="over"><div class="tit"><%= address %></div><div class="txt"><% firm_address(@firm).each do |add| %><p><%= add %></p><% end %></div></div>
+        </td>
+      </tr>
+      <tr>
+        <td width="70">在线联系：</td>
+        <td width="160">
+        <% if @firm.web_qq && @firm.is_cooperation == 1 %>
+            <a target="blank" href="http://wpa.qq.com/msgrd?V=3&Uin=<%= @firm.web_qq %>&Exe=QQ&Site=<%= request.url %>&Menu=No" onclick="_gaq.push(['_trackEvent','效果', 'QQ交谈', '<%= @firm.name_zh %>', 1]);">
+            <img src="http://img2.51hejia.com/img/zxdpimg/zxdp2011_icon17.gif" alt="在线联系" /></a>
+        <% else %>
+          <%= @firm.qq_text %>
+        <% end -%>
+        </td>
+      </tr>
+      <tr>
+        <td width="70" valign="top">联系电话：</td>
+        <td width="160" class="btn"><a href="javascript:void(0);">点击查看<small>▼</small></a>
+          <div><%= @firm.tel_text  %></div></td>
+      </tr>
+      <tr>
+        <td colspan="2">本月<span><%= @firm.latest_30_days_valid_applicants_count%></span>人预约 累计<span><%= @firm.valid_applicants_count%></span>人预约</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="zxdp2011_sjgsbtn2">
+            <% if @firm.is_cooperation == 1 %>
+              <%= link_to("", new_dianping_applicant_path(:deco_firm_id => @firm.id), :class => 'btn2 applicant', :title =>"免费预约量房", :style => 'margin-right: 5px;')  %>
+              <%= link_to("", new_dianping_applicant_path(:deco_firm_id => @firm.id, :type => 1), :class => 'btn3 applicant', :title =>"参观样板房", :style => 'margin-right: 5px;margin-left: 0px;')  %>
+            <% end -%><% if coupon = fetch_firm_coupon(@firm.id) %><%= link_to("", firm_coupon_url(coupon), :target => '_blank', :class => 'btn4', :title => "下载抵用卷", :style => 'background: url(http://img3.51hejia.com/img/zxdpimg/zxdp2011_icon18.gif)  no-repeat -152px 0 ')%><% end -%>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

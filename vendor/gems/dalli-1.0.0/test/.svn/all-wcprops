@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test
+END
+test_ring.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_ring.rb
+END
+test_session_store.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_session_store.rb
+END
+helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/helper.rb
+END
+memcached_mock.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/memcached_mock.rb
+END
+test_sasl.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_sasl.rb
+END
+abstract_unit.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/abstract_unit.rb
+END
+test_dalli.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_dalli.rb
+END
+test_encoding.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_encoding.rb
+END
+test_active_support.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_active_support.rb
+END
+test_failover.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_failover.rb
+END
+test_network.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/test_network.rb
+END
+benchmark_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/dalli-1.0.0/test/benchmark_test.rb
+END

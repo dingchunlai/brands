@@ -1,0 +1,2 @@
+<% element_name = @element_name.nil? ? "city" : @element_name %>
+城市<%=select_tag element_name,options_for_select(@cities.map{|x,y| [y, x]},"请选择")%>

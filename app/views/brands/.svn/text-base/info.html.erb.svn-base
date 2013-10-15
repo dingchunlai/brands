@@ -1,0 +1,66 @@
+  	<div class="b_width138 f_l margin10">
+    	<div class="detail_left">
+            <div class="logo margin5">
+            <%if @brand_logo %><%=get_brand_logo(@brand, @brand_detail, @brand_logo, 140) %><%end%>
+            </div>
+            <div class="menu">
+            <div class="menu_top">品牌信息</div>
+			    	<ul id="menu">
+                     <li class="item">
+                       <% unless @p_category_id %>
+                       <%= get_link_to_url('description') %>
+                       <% else %>
+                       <%= get_link_to_url('description',params[:category_url]) %>
+                       <% end %>
+                     </li>
+                     <%if @brand_detail %>
+                      <%unless truncate_u(@brand_detail.sale_network).blank? %>
+	                     <li class="item"><%= get_link_to_url('sale_network') %></li>
+	                    <%end%>
+	                    <%unless truncate_u(@brand_detail.demonstration).blank? %>
+	                     <li class="item"><%=get_link_to_url('demonstration') %></li>
+	                    <%end%>
+	                    <%unless truncate_u(@brand_detail.cases).blank? %>
+	                     <li class="item"><%=get_link_to_url('cases') %></li>
+	                    <%end%>
+	                    <%unless truncate_u(@brand_detail.service).blank? %>
+	                     <li class="item"><%=get_link_to_url('service') %></li>
+	                    <%end%>
+	                    <%unless truncate_u(@brand_detail.specialty).blank? %>
+	                     <li class="item"><%=get_link_to_url('specialty') %></li>
+	                    <%end%>
+                        <%unless truncate_u(@brand_detail.story).blank? %>
+	                     <li class="item"><%=get_link_to_url('story') %></li>
+	                    <%end%>
+                        <%unless truncate_u(@brand_detail.history).blank? %>
+	                     <li class="item"><%=get_link_to_url('history') %></li>
+	                    <%end%>
+                     <%end%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="b_width532 f_l">
+    	<div class="info_right">
+        	<div class="info_box">
+        		<div id = "showmenu1" >
+            	<div class="info_title">
+                	<strong><%=BrandDetail::DETAIL_ATTR[@attr] %></strong>
+                </div>
+                <div class="info_content">
+                		<%if @brand_logo %><%=get_brand_logo(@brand , @brand_detail, @brand_logo, 170, 'brand_name') %><%end%>
+                    <%=@brand_detail[@attr] %>
+                </div>
+              </div>
+            </div>
+         
+            <div class="info_box">
+            	<div class="info_title">
+                	<strong>联系方式</strong>
+                </div>
+                    <div class=" info_content ">
+                        <%=@brand_detail.contact %>
+                    </div>
+            </div>
+        </div>
+    </div>

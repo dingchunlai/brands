@@ -1,0 +1,23 @@
+CREATE TABLE `paint_trainings` (
+   `id` INT(11) NOT NULL AUTO_INCREMENT,
+   `user_id` INT(11) DEFAULT NULL,
+   `user_name` VARCHAR(50) DEFAULT NULL,
+   `phone` VARCHAR(50) DEFAULT NULL,
+   `email` VARCHAR(50) DEFAULT NULL,
+   `province` VARCHAR(50) DEFAULT NULL,
+   `city` VARCHAR(50) DEFAULT NULL,
+   `gender` TINYINT(4) DEFAULT NULL,
+   `job_year` INT(11) DEFAULT NULL,
+   `certificate` TINYINT(4) DEFAULT NULL,
+   `spray_gun` TINYINT(4) DEFAULT NULL,
+   `brush` TINYINT(4) DEFAULT NULL,
+   `education` VARCHAR(50) DEFAULT NULL,
+   `hope_spray_gun` VARCHAR(50) DEFAULT NULL,
+   `hope_grade` TINYINT(4) DEFAULT '0',
+   `hope_brush` VARCHAR(50) DEFAULT NULL,
+   `remark` VARCHAR(500) DEFAULT NULL,
+   `created_at` DATETIME DEFAULT NULL,
+   `updated_at` DATETIME DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `user_id` (`user_id`)
+ ) ENGINE=INNODB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8

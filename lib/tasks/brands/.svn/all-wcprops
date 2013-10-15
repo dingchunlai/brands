@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/brands
+END
+update_error_city.rake
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/brands/update_error_city.rake
+END
+update_brands_initial.rake
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/brands/update_brands_initial.rake
+END
+diary_votes_summary.rake
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/brands/diary_votes_summary.rake
+END
+clear_week_pv.rake
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/brands/clear_week_pv.rake
+END

@@ -1,0 +1,34 @@
+<style type="text/css" media="screen">
+    #f2 .seo_tian li.tian{
+        height:100px;width:119px;
+        overflow:hidden;
+        margin:0 5px;
+        text-align:center;
+        float:left;
+        _display:inline;
+    }
+    #f2 .sidebox_3 li.tian img{
+        width:110px;height:80px;
+    }
+</style>
+
+<div id="diary_wrapper">
+  <ul class="seo_tian clearfix sidebox_3 "><h2 class="title_s"><%= @tui_city %>装修日记推荐</h2>
+    <% @diary_api[0,2].each do |da| %>
+        <li class="tian">
+          <a target="_blank" href="<%= da.url %>">
+            <img width="112" height="80" alt="<%= da.title %>" src="<% unless da.master_picture.blank? %><%= da.master_picture.url %><% end %>" />
+          </a>
+          <a target="_blank" href="<%= da.url %>"><%=truncate(da.title,10,'')%></a>
+        </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="ltext_list">
+  <ul>
+    <% @tag_diaries.each do |td| %>
+        <li>·<a target="_blank" href="http://z.<%= TAGURLS[@city_id] %>.51hejia.com/stories/<%= td.id %>"><%= h truncate_for_zh(td.title,36) %></a></li>
+    <% end %>
+  </ul>
+</div>

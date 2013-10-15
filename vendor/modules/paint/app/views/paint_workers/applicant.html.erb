@@ -1,0 +1,177 @@
+<% title "【油漆工】申请成为会员油漆工_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/messages_cn.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+  	$.validator.setDefaults({ 
+			onkeyup: false
+	});
+	jQuery.validator.addMethod("id_number", function(value, element) {
+		return this.optional(element) || value.length <= 18 && (/^\d{15}$|(\d{17}(?:\d|x|X)$)/.test(value));
+	}, "请输入正确的身份证号码");
+	jQuery.validator.addMethod("phone_size", function(value, element) {
+			return this.optional(element) || value.length == 11;
+		}, "请输入11位的手机号码");
+	$("#new_paint_worker").validate({
+		  rules: {
+		    user_name: {
+			  required: true,
+		      remote: {
+		        url: "/sessions/validate_username"
+		      }
+		    }
+		 },
+		 messages: {user_name:{remote: "用户名已存在"}}
+	});
+	$("#t_province").change(function(){
+			if ($("#t_province").val().length == 0) {
+			  $("#t_city").empty();
+	          $("<option value=''>请选择</option>").appendTo("#t_city");
+			}else {
+			  $.getJSON("/public/get_city_json",{province: $("#t_province").val()}, function(data){
+	          $("#t_city").empty();
+	          $("<option value=''>请选择</option>").appendTo("#t_city");
+	          $.each(data,function(i){
+	            $("<option value='"+ data[i][0] +"'>"+ data[i][1] +"</option>").appendTo("#t_city");
+	            });
+	          });
+			}
+    });
+  });	
+</script>
+<%= render :partial => '/shared/top_location', :locals => { :location => '在线申请金刷子油工会员', :location_end => nil }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current margin10">
+      <h3>在线申请金刷子油工会员 </h3>
+      <div class="yg_sqjsz_txt">
+        <h4>填写您的申请信息：</h4>
+        <% form_for  @paint_worker, :url => "/paint_worker/save"  do |f| %>
+		<%= f.error_messages%>
+		<% is_other = info_is_other(@paint_worker) %>
+		<% city_value= @paint_worker.id.nil? ? '' : @paint_worker.painter.city%>
+		<% province_value = @paint_worker.id.nil? ? '' : @paint_worker.painter.province%>
+          <h5>*以下信息为必填项目</h5>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="right">手机：</td>
+              <td colspan="3"><%= f.text_field :USERBBSMOBELTELEPHONE,:name => "user_name", :class => "required number phone_size",:size=>15 %>（手机号码等同于用登录账户）</td>
+              
+			 </tr>
+			 <tr>
+			 	<td align="right">身份证号码：</td>
+              	<td><% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+			    	<%= painter_fields.text_field :id_number ,:size=>30, :class => "required id_number"%>
+				<% end %></td>
+				<td align="right">姓名：</td>
+				<td><%= f.text_field :USERBBSNAME,:size=>8 , :class => "required"%></td>	
+			 </tr>
+			 <tr>
+				<td align="right">入会地区：</td>
+              	<td>省份<select name="paint_worker[painter_attributes][province]" id="t_province" class='required'>
+				<option value="">请选择</option>
+				<% Province.get_province_douleshi.each do |k,v| %>
+					<option value="<%= v %>"><%= k %></option>
+				<% end %>
+			</select>
+			城市<select name="paint_worker[painter_attributes][city]" id="t_city" class='required'>
+				<option value="">请选择</option>
+				</select>
+				</td>
+				<td align="right">性别：</td>
+              <td><% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+					<%= painter_fields.select :gender, options_for_select(Painter::GENDER.sort{|x,y| x[1] <=> y[1]})%>
+				<% end %></td>
+            </tr>
+            <tr>
+              <td align="right">电子邮箱：</td>
+              <td colspan="3"><%= f.text_field :USERBBSEMAIL,:size=>30 , :class => "email"%></td>
+            </tr>
+			<% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+            <tr>
+              <td align="right">礼品寄送地址：</td>
+              <td><%= painter_fields.text_field :address,:size=>30,:class => "required" %>
+				</td>
+               <td align="right">邮编：</td>
+              <td><%= painter_fields.text_field :zip_code,:size=>8,:class => "required number" %>
+				</td>
+            </tr>
+            <tr>
+              <td align="right">从事油漆工年限：</td>
+              <td><%= painter_fields.text_field :job_year, :size => 5,:class => "required number" %>年</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+          <h5>以下信息为选填项目（<em style="font-style:normal;font-weight:normal;">信息填写越完整，可帮助您申请到培训课程</em>）</h5>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="160" align="right">文化程度：</td>
+              <td colspan="2"><% Painter::EDUCATION.each do |e|%>
+			<%=painter_fields.radio_button(:education, e)%><%=e%>
+			<% end %>
+			<%=painter_fields.radio_button(:education, "其它", :checked => is_other[:education][:result])%>其它<input type="text" name="education_other" value="<%=is_other[:education][:this_value]%>">
+			</td>
+            </tr>
+            <tr>
+              <td align="right">您是否试用过喷枪：</td>
+              <td><%=painter_fields.radio_button(:spray_gun, 1)%>是<%=painter_fields.radio_button(:spray_gun, 0)%>否</td>
+              <td>您是否做过点睛/修色/擦色：<%=painter_fields.radio_button(:brush, 1)%>是<%=painter_fields.radio_button(:brush, 0)%>否 </label>
+              </td>
+            </tr>
+            <tr>
+              <td align="right">您是否做墙面特殊效果：</td>
+              <td colspan="2"><%=painter_fields.radio_button(:effect, 1)%>是<%=painter_fields.radio_button(:effect, 0)%>否 </label>
+              </td>
+            </tr>
+            <tr>
+              <td align="right">您目前的职业：</td>
+              <td colspan="2"><% Painter::JOBS.each do |j|%>
+			<%=painter_fields.radio_button(:job, j)%><%=j%>
+			<% end %><%=painter_fields.radio_button(:job, "其它", :checked => is_other[:job][:result])%>其它(请注明<input type="text" name="job_other"  value="<%=is_other[:job][:this_value]%>">)</td>
+            </tr>
+            <tr>
+              <td align="right">您是如何知道俱乐部信息的：</td>
+              <td colspan="2"><% Painter::KNOW_HERE.each do |k|%>
+			<%=painter_fields.radio_button(:know_here, k )%><%=k%>
+			<% end %>
+			<%=painter_fields.radio_button(:know_here, "其它", :checked => is_other[:know_here][:result])%>其它(请注明<input type="text" name="know_here_other" value="<%=is_other[:know_here][:this_value]%>">)
+			</td>
+            </tr>
+          </table>
+		  <p>您目前经常试用的木器漆产品是（可多选）：</p>
+		  <ul class="clearfix">
+        	<% Painter::TRIAL_PRODUCTS.each do |v|%>
+			<li><%=check_box_tag "paint_worker[painter_attributes][trial_products][]", v , (@paint_worker.id.nil? ? false : is_trial(v,@paint_worker.painter.trial_products))%><%= v%></li>
+			<% end %>
+		</ul>
+		<p>其它：请注明<input type="text" name="trial_products_other" value="<%=is_trial_other(@paint_worker)%>"></p>
+			<% end %>
+        
+        
+        <br/>
+        <h4>个人申明：</h4>
+        <div class="yg_sqjsz_grsm">
+        	<%= render :partial => '/explanation/applicant'%>
+        </div>
+        <div class="yg_sqjsz_btn"><%= f.submit "同意个人申明内容，提交申请" ,:style => "cursor:pointer;"%></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10">
+    	<%= render :partial => "/shared/right_top_img"%>
+	</div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+        <%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

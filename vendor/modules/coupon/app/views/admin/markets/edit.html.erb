@@ -1,0 +1,62 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '卖场管理页',
+            :button => ['返回', admin_markets_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['Markets', admin_markets_path]
+            ]
+%>
+<% form_for(@market, :url => admin_market_path(@distributor)) do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">修改卖场信息</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last"><%= f.text_field :name, :class => "text", :reg => '^\S+$', :tip => "必须*" %><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">编号</th>
+      <th><%= MarketShop.human_attribute_name("name") %></th>
+      <th><%= MarketShop.human_attribute_name("city_id") %></th>
+      <th><%= MarketShop.human_attribute_name("district_id") %></th>
+      <th><%= MarketShop.human_attribute_name("business_zone_id") %></th>
+      <th><%= MarketShop.human_attribute_name("market_id") %></th>
+      <th><%= MarketShop.human_attribute_name("address") %></th>
+      <th><%= MarketShop.human_attribute_name("telphone") %></th>
+      <th colspan=3 class="last">操作</th>
+    </tr>
+    <% @market_shops.each_with_index do |market_shop, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= market_shop.id %></td>
+          <td><%= market_shop.name %></td>
+          <td><%= market_shop.city.name %></td>
+          <td><%= market_shop.district.name %></td>
+          <td>
+            <% if market_shop.business_zone %>
+                <%= market_shop.business_zone.name %>
+            <% else %>
+                -
+            <% end %></td>
+          <td><%= market_shop.market.name %></td>
+          <td><%= market_shop.address %></td>
+          <td><%= market_shop.telphone %></td>
+          <td><%= link_to '查看', admin_market_shop_path(market_shop) %></td>
+          <td><%= link_to '修改', edit_admin_market_shop_path(market_shop) %></td>
+          <td><%= link_to '删除', admin_market_shop_path(market_shop), :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>

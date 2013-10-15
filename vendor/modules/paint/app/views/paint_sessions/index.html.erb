@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<title>油漆工登录</title>
+	<link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+	<link href="http://js.51hejia.com/css/2010/header.css?1230" rel="stylesheet" type="text/css" />
+	<link href="http://js.51hejia.com/css/2010/brandstyle.css?2010082609" rel="stylesheet" type="text/css" />
+	<link href="http://js.51hejia.com/css/2010/yougong.css" rel="stylesheet" type="text/css" />
+<script>
+	
+	jQuery.preventDefaultEvent = function(callback) {
+	  return function(event) {
+	    callback.apply(this);
+	    event.preventDefault();
+	    return false;
+	  }
+	}
+	function login_callback(arg) {
+      if(arg == 'error') {
+        alert('帐号有误，请重新输入。');
+      } else {
+        window.location.href="/paint_worker/admin";
+      }
+    }
+	
+	$(document).ready(function(){
+		$("#login_form").submit(function(){
+			if ($("#user_name").val().length == 0 ||$("#password").val().length == 0  ) {
+				alert("用户密码不能为空");
+				return false;
+			}else{
+				$.ajax({
+	       		dataType: 'jsonp',
+				jsonpCallback: 'login_callback',
+	        	url: $(this).attr('action'),
+	        	data: $(this).serialize(),
+	        	error: function() {
+	          		alert('很抱歉，发生未知错误，请稍后重试。')
+	       		}
+			})};
+			return false;
+		});
+	});
+</script>
+</head>
+</body>
+<!--content_code-->
+<div class="width960">
+  <div class="yg_loginbg">
+    <div class="yg_loginbox">
+      <h3>油漆工登录</h3>
+      <% form_tag "http://api.51hejia.com/sessions/user_login" , :id=>"login_form" ,:method=>:post do %>
+        <table width="260" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="right"><label>用户名：</label></td>
+            <td><%= text_field_tag "user_name"%></td>
+          </tr>
+          <tr>
+            <td align="right"><label>密码：</label></td>
+            <td><%= password_field_tag "password"%></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><input name="" type="checkbox" value="" id="checkbox01" />
+              <label for="checkbox01">记录我的登录状态</label><br/>
+              使用公共电脑请勿选择该项</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a href="/paint_worker/applicant" target="_self" title="申请成为金刷子油工会员" class="yg_logina01">申请成为金刷子油工会员</a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= submit_tag "",:id=>"submit",:class => "yg_loginbtn"%>
+              <a href="/sessions/forgot_password" target="_self" title="忘记密码" class="yg_logina02">忘记密码？</a></td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render_shared_footer %>
+<%= yield :html_body_end %>
+</body>
+</html>
+
+<!--content_code_end-->

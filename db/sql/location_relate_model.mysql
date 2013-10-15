@@ -1,0 +1,9 @@
+
+CREATE TABLE location_relate_models (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  model_name VARCHAR(50),
+  resource_id int(11),
+  resource_type varchar(50),
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL
+) ENGINE InnoDB CHARACTER SET utf8;

@@ -1,0 +1,106 @@
+<div class="b_width960 margin10">
+  <div class="">
+    位置导航：<a href="/huodong" target="_blank">活动首页</a> >
+    <a href="<%=list_url%>" target="_blank">活动列表</a>
+  </div>
+</div>
+
+<div class="b_width960 margin10">
+  <div class="b_hd_search02">
+    <h3>活动筛选<span>活动总数：<em><%=SalesPromotionEvent.all_events_counter%></em> 正在进行的活动：<em><%=SalesPromotionEvent.underway_events_counter%></em></span></h3>
+    <div class="b_hd_stxt">
+      <form action="" method="get">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="50">产品：</td>
+            <td>
+              <a <%="class='b_hd_stxt_cur'" if @tagurl.blank?%> href="<%=list_url(@city)%>" target="_self">不限</a>
+              <%@used_tags.each do |tag|%>
+                <%@tagname = tag.TAGNAME if @tagurl==tag.TAGURL%>
+                <a <%="class='b_hd_stxt_cur'" if @tagurl==tag.TAGURL%> href="<%=list_url(@city, tag.TAGURL)%>" target="_self"><%=tag.TAGNAME%></a>
+              <%end%>
+            </td>
+          </tr>
+          <tr>
+            <td width="50" valign="top">城市：</td>
+            <td>
+              <a <%="class='b_hd_stxt_cur'" if @city.blank?%> href="<%=list_url('', @tagurl)%>" target="_self">不限</a>
+              <%SalesPromotionEvent.has_events_cities(40).each do |c|%>
+                <%@cityname = City.name_for_code(c.city) if @city==c.city%>
+                <a <%="class='b_hd_stxt_cur'" if @city==c.city%> href="<%=list_url(c.city, @tagurl)%>" target="_self"><%=City.name_for_code(c.city)%></a>
+              <%end%>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="b_width960 clearfix">
+  <div class="b_hd_list f_l">
+    <h3>
+      <span class="b_hd_listtab">
+        <a href="<%=list_url(@city, @tagurl, "unexpired")%>" target="_self" <%="class='b_hd_listtabcur'" if @scope=="expired"%> >未结束</a>
+        <a href="<%=list_url(@city, @tagurl, "expired")%>" target="_self" <%="class='b_hd_listtabcur'" if @scope=="unexpired"%> >已结束</a>
+      </span>
+      当前筛选：<div>
+        <%if @cityname.nil? && @tagname.nil?%>
+          所有活动
+        <%elsif @cityname.nil?%>
+          <%=@tagname%>
+        <%elsif @tagname.nil?%>
+          <%=@cityname%>
+        <%else%>
+          <%=@cityname + " + " + @tagname%>
+        <%end%>
+      </div>
+    </h3>
+    <ul>
+      <%="<li class='clearfix'><div class='b_hd_listimg f_l'></div><div class='b_hd_listtxt f_r' style='padding:10px; font-size:15pt; color:red'>没有搜索到任何记录！</div></li>" if @events.length==0%>
+      <%@events.each do |item|%>
+        <li class="clearfix">
+          <div class="b_hd_listimg f_l">
+            <a href="<%=item.url%>" target="_blank">
+              <img alt="<%=item.subject%>" border="0" src="<%=item.image(150)%>" />
+            </a></div>
+          <div class="b_hd_listtxt f_r">
+            <h4><a href="<%=item.url%>" target="_blank"><%=item.subject%></a></h4>
+            <p><%=item.html_description%></p>
+            <span><label>【活动时间】</label> <%=item.duration%></span>
+            <span><label>【活动地点】</label> <%=item.location%></span>
+          </div>
+        </li>
+      <%end%>
+    </ul>
+    <div class="pagination">
+      <%=will_paginate @events, :previous_label => "上一页", :next_label => "下一页"%>
+    </div>
+  </div>
+  <div class="b_hd_side margin10 f_r">
+    <div class="b_hdside_box01 margin10">
+      <h3>火热活动进行中</h3>
+      <%= render :partial => "huodong/list/hot_event", :object => @hot_events[0] %>
+    </div>
+    <div class="b_hdside_box02 margin10">
+      <%= render :partial => "huodong/list/hot_event", :object => @hot_events[1] %>
+    </div>
+    <div class="b_hdside_box03 margin10">
+      <h3>近期活动预告</h3>
+      <ul>
+        <%@unstart_events.each do |event|%>
+          <li><a href="<%=event.url%>" target="_blank" title="<%=event.subject%>">
+              <%=ul(event.subject,18)%></a></li>
+        <%end%>
+      </ul>
+    </div>
+    <div class="b_hdside_box01 margin10">
+      <h3>火热活动进行中</h3>
+      <%= render :partial => "huodong/list/hot_event", :object => @hot_events[2] %>
+    </div>
+    <div class="b_hdside_box02">
+      <%= render :partial => "huodong/list/hot_event", :object => @hot_events[3] %>
+    </div>
+  </div>
+</div>
+
+<%set_page_meta_data '活动', '列表页', :city => @cityname.to_s, :tagname => @tagname.to_s %>

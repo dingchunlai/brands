@@ -1,0 +1,59 @@
+<%= top_bar :title => '卖场管理页',
+            :button => ['创建卖场', new_admin_market_path],
+            :breadcrumbs => [
+              ['Homepage', coupon_admin_index_path],
+              ['Markets', admin_markets_path]
+            ]
+%>
+<div class="select-bar">
+  <% form_for "", :url => admin_markets_path, :html => {:method => :get} do |f| %>
+      卖场名称
+      <input type="text" name="name" value=""/>
+      <input type="submit" value="查找"/>
+  <% end %>
+</div>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<div class="table">
+	<img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+	<img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+	<table class="listing" cellpadding="0" cellspacing="0">
+	  <tr>
+        <th class="first">编号</th>
+	<th><%= Market.human_attribute_name("name")%></th>
+
+	<th colspan=5 class="last">操作</th>
+	  </tr>
+	<% @markets.each_with_index do |market, index| %>
+	  <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+        <td height="25"><%= market.id%></td>
+	    <td><%= market.name%></td>
+        <td><%= link_to '查看卖场信息', admin_market_path(market) %></td>
+        <td>
+          <% if can? :update, market %>
+              <%= link_to '修改', edit_admin_market_path(market) %>
+          <% else %>
+              &nbsp;
+          <% end %>
+        </td>
+        <!--<td><%#= link_to '删除', admin_market_path(market), :confirm => 'Are you sure?', :method => :delete  %></td>-->
+        <td>
+          <% if can? :read, MarketShop %>
+              <%= link_to '查看分店', admin_market_shops_path(:market_id => market.id) %>
+          <% else %>
+              &nbsp;
+          <% end %>
+        </td>
+        <td>
+          <% if can? :create, MarketShop %>
+              <%= link_to '新建分店', new_admin_market_shop_path(:market_id => market.id) %>
+          <% else %>
+              &nbsp;
+          <% end %>
+        </td>
+	  </tr>
+	<% end %>
+	</table>
+	<% unless @markets.empty? -%>
+	<%= will_paginate @markets, :class => "digg_pagination" -%>
+	<% end -%>
+</div>

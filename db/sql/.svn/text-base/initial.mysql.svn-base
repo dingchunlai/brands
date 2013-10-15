@@ -1,0 +1,253 @@
+SET NAMES utf8;
+
+use product;
+
+CREATE INDEX product_brands_name_en_index ON product_brands (name_en);
+
+-- table
+CREATE TABLE article_promotion_info (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  article_id INTEGER NOT NULL,
+  index_priority INTEGER DEFAULT 0,
+  category_index_priority INTEGER DEFAULT 0,
+  brand_index_priority INTEGER DEFAULT 0,
+  brand_id INTEGER REFERENCES product_brands(id) ON DELETE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+-- indexes
+CREATE UNIQUE INDEX article_promotion_info_article_id_unique_index ON article_promotion_info (article_id);
+CREATE INDEX article_promotion_info_index_priority_index ON article_promotion_info (index_priority);
+CREATE INDEX article_promotion_info_category_index_priority_index ON article_promotion_info (category_index_priority);
+CREATE INDEX article_promotion_info_brand_index_priority_index ON article_promotion_info (brand_index_priority);
+
+-- table
+CREATE TABLE tagged_brands (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  brand_id INTEGER NOT NULL,
+  tag_id INTEGER NOT NULL
+) ENGINE InnoDB CHARACTER SET utf8;
+
+-- indexes
+CREATE INDEX tagged_brands_brand_id_index ON tagged_brands (brand_id);
+CREATE INDEX tagged_brands_tag_id_index   ON tagged_brands (tag_id);
+
+-- productions 相关的表
+CREATE TABLE production_series (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  code VARCHAR(255),
+  brand_id INTEGER REFERENCES product_brands (id) ON DELETE SET NULL
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX production_series_brand_id_index ON production_series (brand_id);
+
+CREATE TABLE production_categories (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  code VARCHAR(255)
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE TABLE productions (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  name  VARCHAR(255) NOT NULL,
+  model VARCHAR(255),
+  description TEXT,
+  brand_category_id INTEGER,
+  brand_id    INTEGER REFERENCES product_brands (id) ON DELETE CASCADE,
+  category_id INTEGER REFERENCES production_categories (id) ON DELETE SET NULL,
+  series_id   INTEGER REFERENCES production_series (id) ON DELETE SET NULL 
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX productions_category_id_index ON productions (category_id);
+CREATE INDEX productions_series_id_index ON productions (series_id);
+
+CREATE TABLE pictures (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  size INTEGER,
+  content_type VARCHAR(255),
+  filename VARCHAR(255),
+  height INTEGER,
+  width INTEGER,
+  parent_id INTEGER REFERENCES pictures (id) ON DELETE CASCADE,
+  thumbnail VARCHAR(255),
+  attachable_type VARCHAR(255),
+  attachable_id INTEGER
+  is_master TINYINT default 0,
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX pictures_parent_id_index ON pictures (parent_id);
+CREATE INDEX pictures_attachable_type_attachable_id_index ON pictures (attachable_type, attachable_id);
+
+CREATE TABLE production_attributes (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  category_id INTEGER REFERENCES production_categories (id) ON DELETE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX production_attributes_category_id_index ON production_attributes (category_id);
+
+-- CREATE TABLE production_attributes_production_categories (
+--   production_attribute_id INTEGER REFERENCES production_attributes (id) ON DELETE CASCADE,
+--   production_category_id  INTEGER REFERENCES production_categoris (id) ON DELETE CASCADE
+-- );
+
+CREATE TABLE production_properties (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  value TEXT NOT NULL,
+  attribute_name VARCHAR(255),
+  production_id INTEGER REFERENCES productions (id) ON DELETE CASCADE,
+  attribute_id  INTEGER REFERENCES product_brands (id) ON DELETE CASCADE,
+  created_at DATETIME,
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX documents_brand_id ON documents (brand_id);
+
+CREATE TABLE brand_details (
+  id   INTEGER AUTO_INCREMENT PRIMARY KEY,
+  sale_network TEXT,
+  demonstration TEXT,
+  cases TEXT,
+  service TEXT,
+  specialty TEXT,
+  brand_id INTEGER REFERENCES product_brands (id) ON DELETE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX brand_details_brand_id_index ON brand_details (brand_id);
+
+CREATE TABLE brand_ratings (
+  id   INTEGER AUTO_INCREMENT PRIMARY KEY,
+  good INTEGER default 0,
+  soso INTEGER default 0,
+  bad  INTEGER default 0,
+  quality_good INTEGER default 0,
+  quality_bad  INTEGER default 0,
+  service_good INTEGER default 0,
+  service_bad  INTEGER default 0,
+  reputation_good INTEGER default 0,
+  reputation_bad  INTEGER default 0,
+  cost_good INTEGER default 0,
+  cost_bad  INTEGER default 0,
+  known_good INTEGER default 0,
+  known_bad  INTEGER default 0,
+  score DECIMAL(2, 1),
+  brand_id INTEGER REFERENCES product_brands (id) ON DELETE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE INDEX brand_ratings_brand_id_index ON brand_ratings (brand_id);
+
+# 下载资料数量缓存
+ALTER TABLE product_brands add column documents_count INTEGER;
+
+
+CREATE TABLE production_combinations(
+    id     INTEGER   AUTO_INCREMENT  PRIMARY KEY,
+    title    VARCHAR(255) NOT NULL,
+    content   VARCHAR(255) NOT NULL,
+    brand_id  INTEGER REFERENCES product_brands (id) ON DELETE CASCADE,
+    tag_id    INTEGER NOT NULL,
+    pictrue_count   INTEGER
+)ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE  INDEX  production_combinations_brand_id on production_combinations(brand_id);
+CREATE  INDEX  production_combinations_tag_id on production_combinations(tag_id);
+
+-- table: images
+CREATE TABLE images (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  mongo_file_id VARCHAR(32),
+  md5 CHAR(32),
+  filename VARCHAR(255) NOT NULL,
+  parent_id INTEGER,
+  thumbnail VARCHAR(255),
+  attachable_id INTEGER NOT NULL,
+  attachable_type VARCHAR(255) NOT NULL
+) ENGINE InnoDB CHARACTER SET utf8;
+
+-- indexes: images
+CREATE INDEX images_attachable_id_attachable_type_index ON images (attachable_id, attachable_type);
+CREATE INDEX images_parent_id_index ON images (parent_id);
+
+-- 推广位相关表
+CREATE TABLE `sales_promotion_events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL COMMENT '活动地点',
+  `location_latlng` char(35) DEFAULT NULL,
+  `organizer` varchar(255) DEFAULT NULL COMMENT '组织者',
+  `subject` varchar(255) DEFAULT NULL COMMENT '主题',
+  `short_subject` varchar(50) DEFAULT NULL COMMENT '短标题',
+  `city` varchar(50) DEFAULT NULL,
+  `html_keywords` varchar(255) DEFAULT NULL,
+  `html_description` varchar(512) DEFAULT NULL,
+  `content` text COMMENT '内容',
+  `image_url` varchar(255) DEFAULT NULL,
+  `contacts` varchar(255) DEFAULT NULL COMMENT '系人联',
+  `address` varchar(255) DEFAULT NULL COMMENT '联系地址',
+  `phone_numbers` varchar(255) DEFAULT NULL COMMENT '联系电话',
+  `begins_at` datetime DEFAULT NULL COMMENT '开始时间',
+  `ends_at` datetime DEFAULT NULL COMMENT '结束时间',
+  `published_at` datetime DEFAULT NULL COMMENT '发布时间',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `brands_sales_promotion_events` (
+  `brand_id` int(11) NOT NULL,
+  `sales_promotion_event_id` int(11) NOT NULL,
+  KEY `sales_promotion_event_id` (`sales_promotion_event_id`),
+  KEY `brand_id` (`brand_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `sales_promotion_events_tags` (
+  `tag_id` int(11) NOT NULL,
+  `sales_promotion_event_id` int(11) NOT NULL,
+  KEY `sales_promotion_event_id` (`sales_promotion_event_id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `promotion_collections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `code` varchar(255) DEFAULT NULL COMMENT '代号',
+  `item_type` varchar(255) DEFAULT NULL COMMENT '推广条目类别',
+  `size` int(11) DEFAULT NULL COMMENT '显示多少条记录',
+  `remark` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `promotion_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `promotion_collection_id` int(11) DEFAULT NULL,
+  `resource_id` int(11) DEFAULT NULL COMMENT '条目所对应的资源对象的id',
+  `priority` int(11) DEFAULT NULL COMMENT '优先级，越小越优先',
+  `published_at` datetime DEFAULT NULL COMMENT '布发时间',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `general_resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+use 51hejia;
+-- table
+CREATE TABLE html_metadata (
+  url VARCHAR(255) PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  keyworkds VARCHAR(255),
+  description VARCHAR(1000)
+) ENGINE InnoDB CHARACTER SET utf8;

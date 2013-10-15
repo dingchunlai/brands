@@ -1,0 +1,32 @@
+<%#
+# 油工搜索结果子部件
+# render :partial => "search_paint_workers", :locals => {:painter_name => @painter_name, :paint_workers => @paint_workers}
+%>
+
+<p>油工管理</p>
+<table width="500" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+  <tbody>
+    <tr>
+      <td colspan="3" align="left">
+        <%= text_field_tag :painter_name,painter_name %>
+        &nbsp;&nbsp;
+        <input name="" type="button" value="搜索" style="width:80px; height:25px;" onclick="search_paint_workers();"></input>（请输入油漆工姓名）
+      </td>
+    </tr>
+    <% unless paint_workers.blank? %>
+      <% for paint_worker in paint_workers %>
+        <tr>
+          <td>
+            <%= radio_button_tag :painter_worker_id, paint_worker.id, false, :onclick => "chech_paint_worker('#{paint_worker.id}');" %>&nbsp;<%= paint_worker.USERBBSNAME %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td>
+          暂无此油工，请重新输入油工名称
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,580 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<script type="text/javascript" src="/javascripts/paint/case.js" ></script>
+
+<script src="/javascripts/paint_case/uploadify.js" type="text/javascript"></script>
+
+<script src="/javascripts/paint_case/jquery.ui.core.js" type="text/javascript"></script>
+<script src="/javascripts/paint_case/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/javascripts/paint_case/jquery.ui.mouse.js" type="text/javascript"></script>
+<script src="/javascripts/paint_case/jquery.ui.draggable.js" type="text/javascript"></script>
+<script src="/javascripts/paint_case/jquery.ui.sortable.js" type="text/javascript"></script>
+
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  function search_paint_workers() {
+    $.ajax({
+      type: "GET",
+      url: "/paint_admin/paint_cases/search_paint_workers",
+      data: "&painter_name=" + encodeURI($('#painter_name').val()),
+      success: function(data){$('#search_paint_workers').html(data);}
+    });
+  }
+
+  function chech_paint_worker(id)
+  {
+    var hid = "#painter_worker_id_" + id
+    $("#paint_case_paint_worker_id").val($(hid).val())
+  }
+
+  function wcss_add(){
+    var index = $('#wcss tr').length - 1
+    var html_str = "<tr><td><input type='text' style='width:170px;' size='30' name='paint_case[wood_construction_specifications_attributes]["
+      + index +"][paint_type]' id='paint_case_wood_construction_specifications_attributes_"+ index +"_paint_type'></td><td><input type='text' "
+      + "style='width:170px;' size='30' name='paint_case[wood_construction_specifications_attributes]["+ index +"][paint_style]' "
+      + "id='paint_case_wood_construction_specifications_attributes_"+ index +"_paint_style'></td><td><input type='hidden' value='0' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][paint_c1]'><input type='checkbox' value='1' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][paint_c1]' "
+      + "id='paint_case_wood_construction_specifications_attributes_"+ index +"_paint_c1'>" +"清漆<input type='hidden' value='0' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][paint_c2]'><input type='checkbox' value='1' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][paint_c2]' "
+      + "id='paint_case_wood_construction_specifications_attributes_"+ index +"_paint_c2'>色漆" +"</td><td><input type='radio' value='true' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][is_palette]' "
+      + "id='paint_case_wood_construction_specifications_attributes_"+ index +"_is_palette_true'>是<input type='radio' value='false' "
+      + "name='paint_case[wood_construction_specifications_attributes]["+ index +"][is_palette]' "
+      + "id='paint_case_wood_construction_specifications_attributes_"+ index +"_is_palette_false'>否"
+      + "</td><td><input type='text' style='width:170px;' size='30' name='paint_case[wood_construction_specifications_attributes]["
+      + index +"][description]' id='paint_case_wood_construction_specifications_attributes_"+ index +"_description'></td></tr>"
+    $('#wcss tbody').append(html_str)
+  }
+
+  function pss_add(){
+    var index = $('#pss tr').length - 1
+    var html_str = "<tr><td><input type='text' style='width:280px;' size='30' name='paint_case[product_specifications_attributes]["+ index
+      + "][name]' id='paint_case_product_specifications_attributes_"+ index +"_name'></td><td><input type='text' style='width:150px;' "
+      + "size='30' name='paint_case[product_specifications_attributes]["+ index +"][specification]' "
+      + "id='paint_case_product_specifications_attributes_"+ index +"_specification'></td><td><input type='text' value='0' style='width:170px;' "
+      + "size='30' name='paint_case[product_specifications_attributes]["+ index +"][number]' id='paint_case_product_specifications_attributes_"
+      + index +"_number'></td></tr>"
+    $('#pss tbody').append(html_str)
+  }
+</script>
+<% stylesheet 'paint/paint_case.css','paint/paint_case_admin.css'%>
+<% form_for [:paint_admin,@paint_case] ,
+  :html => {
+  :id=>'item_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'),
+  :method => (@paint_case.new_record? && :post || :put)} do |f| -%>
+  <% if @paint_worker.blank? %>
+    <div class="new_case_table" id="search_paint_workers">
+      <p>油工管理</p>
+      <table width="500" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+        <tbody>
+          <tr>
+            <td colspan="3" align="left">
+              <%= text_field_tag :painter_name,nil %>
+              &nbsp;&nbsp;
+              <input name="" type="button" value="搜索" style="width:80px; height:25px;" onclick="search_paint_workers();"></input>
+              （请输入油漆工姓名）
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <div class="new_case_table">
+    <p>基本信息</p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+      <tbody>
+        <tr>
+          <td width="60">案例名称：</td>
+          <td><%= f.text_field :title, :style => "width:210px;" %></td>
+        </tr>
+        <tr>
+          <td>关键词：</td>
+          <td><%= f.text_field :keyword, :style => "width:210px;" %>（用逗号隔开）</td>
+        </tr>
+        <tr>
+          <td valign="top">描述：</td>
+          <td>
+            <%= f.text_area :description, :style => "width:335px;height:80px;" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @paint_worker %>
+    <div class="new_case_table">
+      <p>施工师傅资料</p>
+      <% f.fields_for :paint_worker, @paint_worker do |paint_worker| %>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+          <tbody>
+            <tr>
+              <td width="32%">师傅姓名：<%= paint_worker.text_field :USERNAME, :style => "width:174px;" %></td>
+              <td width="32%">联系电话：<%= paint_worker.text_field :USERBBSMOBELTELEPHONE, :style => "width:174px;" %></td>
+              <td width="32%">联系邮箱：<%= paint_worker.text_field :USERBBSEMAIL, :style => "width:174px;" %></td>
+            </tr>
+            <% paint_worker.fields_for :painter, @painter do |painter| %>
+              <tr>
+                <td colspan="2">证书编号：<%= painter.text_field :certificate_number, :style => "width:174px;", :maxlength => 10 %>（最多10个数字）</td>
+              </tr>
+              <tr>
+                <td colspan="3">派发专卖店：<%= painter.text_field :store, :style => "width:300px;", :maxlength => 20 %>（最多20个汉字）</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="new_case_table">
+    <p>客户资料</p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+      <tbody>
+        <tr>
+          <td>
+            服务单号：<%= f.text_field :server_number, :style => "width:130px;" %>
+          </td>
+          <td>
+            姓名：<%= f.text_field :customer_name, :style => "width:130px;" %>
+          </td>
+          <td>
+            联系电话：<%= f.text_field :customer_tel, :style => "width:130px;" %>
+          </td>
+          <td>
+            联系邮箱：<%= f.text_field :customer_email, :style => "width:130px;" %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            省份<select name="paint_case[province]" id="t_province" style="width:90px;">
+              <option value="">请选择</option>
+              <% Province.get_province_jinshuazi.each do |k,v| %>
+                <option value="<%= v %>" <%= 'selected' if @paint_case.province == v %> ><%= k %></option>
+              <% end %>
+            </select>
+          </td>
+          <td>
+            城市<select name="paint_case[city]" id="t_city" style="width:90px;">
+              <option value="">请选择</option>
+              <% unless @paint_case.city.blank?%>
+                <% City.get_cities_for_province_jinshuazi(@paint_case.province).each do |k,v| %>
+                  <option value="<%= k %>" <%= 'selected' if @paint_case.city == k %> ><%= v %></option>
+                <% end %>
+              <% end %>
+            </select>
+          </td>
+          <td colspan="2">
+            施工地址：<%= f.text_field :customer_address,:style => "width:300px;" %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            预约开始时间：<%= f.text_field :appointment_date,:style => "width:174px;", :onclick => "new Calendar().show(this);" %>
+          </td>
+          <td colspan="2">
+            实际施工期限：
+            <%= f.text_field :construction_sdate,:style => "width:174px;", :onclick => "new Calendar().show(this);" %>
+            至
+            <%= f.text_field :construction_edate,:style => "width:174px;", :onclick => "new Calendar().show(this);" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="new_case_table">
+    <p>工程概况</p>
+    <ol>
+      <li>
+        <%= f.check_box :renovation_c1 %>
+        新房装修&nbsp;&nbsp;
+        <%= f.check_box :renovation_c2 %>
+        旧房翻新&nbsp;&nbsp;
+        <%= f.check_box :renovation_other %>
+        其它
+        <%= f.text_field :renovation, :class => "input_text" %>
+      </li>
+      <li>
+        房型：<%= f.select :room  ,PaintCase::ROOM.sort{|x,y| x[1] <=> y[1]}, :style => "width:90px;" %>
+      </li>
+      <li>面积：<%= f.text_field :area ,:class => "input_text" %>平米</li>
+      <li>
+        乳胶漆施工规格：
+        <%= f.check_box :emulsion_paint_s1 %>
+        刷涂
+        <%= f.check_box :emulsion_paint_s2 %>
+        喷涂
+        <%= f.check_box :emulsion_paint_s3 %>
+        无气喷涂 是否调色/色彩描述：
+        <%= f.text_field :emulsion_paint_description, :class => "input_text" %>
+        喷涂物品名称面积：
+        <%= f.text_field :emulsion_paint_area, :class => "input_text" %>
+        平米
+      </li>
+      <li>
+        <span>木器漆施工规格：</span>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none; text-align:center" id="wcss">
+          <tbody>
+            <tr>
+              <td width="180">板材类型</td>
+              <td width="180">涂装风格</td>
+              <td width="120">清漆/色漆</td>
+              <td width="100">是否调色</td>
+              <td width="180">色彩描述</td>
+            </tr>
+            <% f.fields_for :wood_construction_specifications,@wcs do |wcs| %>
+              <tr>
+                <td><%= wcs.text_field :paint_type,:style => "width:170px;" %></td>
+                <td><%= wcs.text_field :paint_style,:style => "width:170px;" %></td>
+                <td>
+                  <%= wcs.check_box :paint_c1 %>
+                  清漆
+                  <%= wcs.check_box :paint_c2 %>
+                  色漆
+                </td>
+                <td>
+                  <%= wcs.radio_button :is_palette, true %>是<%= wcs.radio_button :is_palette, false %>否
+                </td>
+                <td><%= wcs.text_field :description,:style => "width:170px;" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p><%= link_to("添加更多","javascript:void(0)", :onclick => "wcss_add();") %></p>
+      </li>
+      <li>
+        施工环境参数：<br />
+        温度（合理温度10-30度）：<%= f.text_field :temperature, :class => "input_text" %>
+        湿度（请勿在梅雨季节施工）：<%= f.text_field :humidity, :class => "input_text" %>
+        施工环境是否有灰尘：<%= f.radio_button :is_dust, true %>是<%= f.radio_button :is_dust, false %>否 <br />
+        产品配比：主漆（基漆）=<%= f.text_field :product_mix, :class => "input_text" %>
+        稀释剂（清漆）=<%= f.text_field :diluent, :class => "input_text" %>
+        固化剂=<%= f.text_field :curing_agent, :class => "input_text" %>
+        <br />
+        低材状况：表面是否光洁（<%= f.radio_button :is_clean, true %>是<%= f.radio_button :is_clean, false %>否）
+        <%= f.check_box :low_material_c1 %>
+        刨光面
+        <%= f.check_box :low_material_c2 %>
+        砂纸打磨表面
+        <%= f.check_box :low_material_c3 %>
+        抛光表面
+        <%= f.check_box :low_material_other %>
+        其它
+        <%= f.text_field :low_material_other_description, :class => "input_text" %>
+      </li>
+    </ol>
+  </div>
+  <div class="new_case_table">
+    <p>产品概况</p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none;" id="pss">
+      <tbody>
+        <tr>
+          <td width="320">产品名称</td>
+          <td width="190">规格</td>
+          <td width="200">数量</td>
+        </tr>
+        <% f.fields_for :product_specifications,@ps do |ps| %>
+          <tr>
+            <td><%= ps.text_field :name,:style => "width:280px;", :maxlength => 25 %>（最多25个汉字）</td>
+            <td><%= ps.text_field :specification,:style => "width:150px;" %></td>
+            <td><%= ps.text_field :number,:style => "width:170px;" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p><%= link_to("添加更多","javascript:void(0)", :onclick => "pss_add();") %></p>
+  </div>
+  <div class="new_case_table">
+    <p>施工质量验收</p>
+    <ol>
+      <li>
+        <span>乳胶漆验收：</span>
+        <table width="570" border="1" cellspacing="1" cellpadding="1" style="border:1px solid #000000;text-align:center;">
+          <tbody><tr>
+              <td width="50">序号</td>
+              <td width="270">项目</td>
+              <td>评价</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td align="left">墙面、顶面平整</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v1,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td align="left">无掉粉、起皮、漏涂</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v2,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td align="left">无色差、泛减、泛色、刷痕、滚痕不明显</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v3,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td align="left">无流挂、起皮</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v4,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td align="left">无透底</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v5,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td align="left">清洁度</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :emulsion_paint_v6,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>
+        <span>木质表面混色油漆验收：</span>
+        <table width="570" border="1" cellspacing="1" cellpadding="1" style="border:1px solid #000000;text-align:center;">
+          <tbody><tr>
+              <td width="50">序号</td>
+              <td width="300">项目</td>
+              <td>评价</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td align="left">漆膜效果手感（平整、光滑、无颗粒、无挡手感）</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v1,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td align="left">丰满度（丰满、颜色均匀）</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v2,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td align="left">颜色均匀度（颜色均匀、钉眼颜色不明显）</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v3,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td align="left">光泽均匀度（均匀，色泽一致，无刷纹痕迹）</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v4,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td align="left">无流挂、透底、桔皮、脱层、针眼、气泡</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v5,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td align="left">装饰线、分色线平直</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v6,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td align="left">木器相邻的五金件、玻璃及墙壁洁净，无污染现象</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v7,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td align="left">实色开放效果目测和触感达到要求</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_mixing_paint_v8,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>
+        <span>木质表面清漆验收：</span>
+        <table width="570" border="1" cellspacing="1" cellpadding="1" style="border:1px solid #000000;text-align:center;">
+          <tbody>
+            <tr>
+              <td width="50">序号</td>
+              <td width="270">项目</td>
+              <td>评价</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td align="left">全封闭效果漆膜平整、光滑</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_varnish_paint_v1,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td align="left">钉眼颜色1米目测达到要求</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_varnish_paint_v2,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td align="left">无漏刷、刷痕、桔皮、流挂、针眼、气泡</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_varnish_paint_v3,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td align="left">光泽均匀一致</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_varnish_paint_v4,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td align="left">不污染与木器相邻的五金件、墙面、玻璃、地面等</td>
+              <td>
+                <% PaintCase::VSTING.each do |s,v| %>
+                  <%= f.radio_button :wood_varnish_paint_v5,v %><%= s %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ol>
+  </div>
+  <div class="new_case_table">
+    <p>服务质量验收</p>
+    <table width="500" border="1" cellspacing="1" cellpadding="1" style="border:1px solid #000000; line-height:10px;text-align:center;">
+      <tbody>
+        <tr>
+          <td width="200">项目</td>
+          <td>评价</td>
+        </tr>
+        <tr>
+          <td>服务态度</td>
+          <td>
+            <% PaintCase::VSTING.each do |s,v| %>
+              <%= f.radio_button :service_v1,v %><%= s %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>服务速度</td>
+          <td>
+            <% PaintCase::VSTING.each do |s,v| %>
+              <%= f.radio_button :service_v2,v %><%= s %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>解决问题</td>
+          <td>
+            <% PaintCase::VSTING.each do |s,v| %>
+              <%= f.radio_button :service_v3,v %><%= s %>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="qtpj">
+      <p>
+        其它评价：<%= f.text_field :other_evaluation %>
+      </p>
+    </div>
+  </div>
+  <div class="new_case_table">
+    <p>上传案例</p>
+    <span id="swfupload_button"></span>
+    <ul id="pictures" class="upload_case_pic">
+      <% @paint_case_pictures && @paint_case_pictures.each do |paint_case_picture|%>
+        <% picture = paint_case_picture.picture %>
+        <li id="picture_<%= paint_case_picture.id %>" class="line">
+          <%= image_tag picture.url %>
+          <p><%= link_to "删除", "#", :class=>"delete_picture","id" => picture.id,  :title => "删除" %><input name="" type="button" value="预览大图"/></p>
+          <p>
+            <span style="float: left;font-size: 12px;line-height: 25px;padding-left: 10px;">名称：</span>
+            <%= text_field_tag "pictures[][name]", paint_case_picture.name %>
+          </p>
+          <%= hidden_field_tag "pictures[][image_id]", picture.image_id %>
+          <%= hidden_field_tag "pictures[][image_md5]", picture.image_md5 %>
+          <%= hidden_field_tag "pictures[][image_ext]", picture.image_ext %>
+          <%= hidden_field_tag "pictures[][file_name]", picture.file_name %>
+          <%= hidden_field_tag "pictures[][id]", picture.id %>
+        </li>
+      <% end %>
+    </ul>
+    <div class="prompt">（图片大小控制在200K内；图片最佳尺寸500px*375px(长宽比4：3），最多上传4张图片</div><%# 提示：鼠标拖动照片即可排序 %>
+  </div>
+  <div class="qtpj">
+    <p>
+      <span>
+        技术分：<%= f.select :skill_score , -1.upto(8) %>
+      </span>
+      <span>
+        服务分：<%= f.select :service_score , -1.upto(8) %>
+      </span>
+      <span>精华案例：<%= f.check_box :essence %></span>
+    </p>
+  </div>
+  <div class="release">
+    <%= f.hidden_field :status  %>
+    <%= f.hidden_field :paint_worker_id, :value => @paint_worker_id %>
+    <%= f.hidden_field :is_front, :value => '0' %>
+    <%= f.submit "保存发表", :id => "paint_case_submit" %>
+  </div>
+<% end -%>

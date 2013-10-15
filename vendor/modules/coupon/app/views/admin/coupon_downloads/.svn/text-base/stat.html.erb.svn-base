@@ -1,0 +1,100 @@
+<%= top_bar :title => '手机统计页面',
+  :button => ["下载数据统计", data_admin_coupons_path],
+  :breadcrumbs => [
+  ['首页', coupon_admin_index_path],
+  ["抵用券手机下载统计", stat_admin_coupon_downloads_path]
+]
+%>
+<div class="select-bar" style="font-size: 14px;">
+  <% form_for '', :url => stat_admin_coupon_downloads_path, :html => { :id => 'query_form' } do |f| %>
+        起始日期：<input type="text" name="date_begin" id="date_begin" size="10" maxlength="10" value="<%= params[:date_begin] %>" />&nbsp;&nbsp;&nbsp;&nbsp;
+        结束日期：<input type="text" name="date_end" id="date_end"  size="10" maxlength="10" value="<%= params[:date_end] %>" />
+        &nbsp;&nbsp;&nbsp;&nbsp;下载手机确认状态<%= select_tag "confirm_status", options_for_select(%w(全部 未确认 已确认), params[:confirm_status]) %><br />
+        抵用券ID：<input type="text" name="coupon_id" id="coupon_id" size="10" maxlength="10" value="<%= params[:coupon_id] %>"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        抵用券名称：<input type="text" name="coupon_title" id="coupon_title" size="30" maxlength="30" value="<%= params[:coupon_title] %>"/><br />
+        <font color="red">合作渠道</font>：<%= select_tag "cp_source", options_for_select(@partners.unshift(['站内', '']).unshift(['全部', '-']), params[:cp_source]) %><br />
+        城　　市：<%= select_tag "city_id", options_for_select(@cities.unshift(['请选择', '']), params[:city_id].to_i) %>输入<input type="text" name="txt_city" id="txt_city" /><input type="button" id="btn_city" value="定位城市"/><br />
+        行　　业：<%= select_tag "tag_id", options_for_select(@industries.unshift(['请选择', '']), params[:tag_id].to_i) %>输入<input type="text" name="txt_tag" id="txt_tag" /><input type="button" id="btn_tag" value="定位行业"/><br />
+        卖　　场：<%= select_tag "market_id", options_for_select(@markets.unshift(['请选择', '']), params[:market_id].to_i) %>输入<input type="text" name="txt_market" id="txt_market" /><input type="button" id="btn_market" value="定位卖场"/><br />
+        经销商ID：<input type="text" name="distributor_id" id="distributor_id" value="<%= params[:distributor_id] %>" />
+        经销商名称：<input type="text" name="distributor_title" id="distributor_title" value="<%= params[:distributor_title] %>" />
+        经销商门店：<input type="text" name="shop_name" id="shop_name" value="<%= params[:shop_name] %>" /><br />
+        <input type="reset" name="reset" id="reset" value="重置"/>
+        <% if can? :stat_download, CouponDownload %>
+        <input type="submit" name="submit" id="export" value="导出报表" style="background-color: blue; color: white; font-weight: bold; border:1px solid #f4f4f4; cursor: pointer;"/>
+        <% end %>
+        <input type="submit" value="查询" name="query" id="query"  style="background-color: green; color: white; font-weight: bold; border:1px solid #f4f4f4; cursor: pointer;"/>
+  <% end %>
+  <hr/>
+  下载总记录数: <%= @cds.total_entries %>
+</div>
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+        <th>抵用券(ID/编号)</th>
+        <th>抵用券名称</th>
+        <th>抵用券<br />(<font color="green">浏览</font>/<font color="blue">打印</font>/<font color="red">下载</font>)次数</th>
+        <th>城市</th>
+        <th>经销商</th>
+        <th>门店</th>
+        <th>下载手机号(状态)</th>
+    </tr>
+    <%@cds.each do |cd|%>
+    <tr>
+        <td class="first" align="left"><%= cd.send(:coupon_id)%>/<%= cd.send(:coupon_code)%></td>
+        <td align="left"><%= cd.send(:coupon_title)%></td>
+        <td><font color="green"><%= cd.send(:coupon_pv)%></font>&nbsp;/&nbsp;<font color="blue"><%= cd.send(:coupon_prints_count)%></font>&nbsp;/&nbsp;<font color="red"><%= cd.send(:downloads_count)%></font></td>
+        <td align="center"><%= cd.send(:city_name)%></td>
+        <td align="left"><%= cd.send(:distributor_name)%></td>
+        <td align="left"><%= cd.send(:shop_name)%></td>
+        <td class="last" align="center"><a href="javascript:void(0);" style="text-decoration: none;" title="<%= cd.send(:user_mobiles).gsub(",", "&#10;&#13;")%>"><font color="orange">●●●</font></a></td>
+     </tr>
+    <%end%>
+
+  </table>
+
+  <% unless @cds.empty? %>
+    <%= will_paginate @cds , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+  <% end %>
+</div>
+<script type="text/javascript">
+  $(function(){
+     $("#date_begin").datepicker({dateFormat: 'yy-mm-dd'});
+     $("#date_end").datepicker({dateFormat: 'yy-mm-dd'});
+
+      $("input[type=button][id^='btn_']").click(function() {
+          var flag = $(this).attr("id").replace('btn_', '');
+          if ($("#txt_" + flag).val() == "") {
+              alert('请填写' + $(this).val().replace('定位', '') + '!');
+              $("#txt_" + flag).focus();
+          } else {
+              var got = false;
+              $("#"+ flag +"_id").css("background-color", "green");
+              $("#"+ flag +"_id").children().each(function(i) {
+                  if ($(this).text() == $("#txt_" + flag).val()) {
+                      got = true;
+                      $("#txt_" + flag).attr("value", '');
+                      $("#"+ flag +"_id").attr("selectedIndex", $(this).attr("index"));
+                  }
+              });
+              $("#"+ flag +"_id").css("background-color", "");
+              if (!got) {
+                  alert('请填写正确的'+ $(this).val().replace('定位', ''));
+                  $("#txt_" + flag).focus();
+              }
+          }
+      });
+
+      $("#query").click(function() {
+         $("#query_form").attr("action", "<%= stat_admin_coupon_downloads_path %>");
+          $("#query_form").attr("method", "get");
+      });
+      $("#export").click(function() {
+         $("#query_form").attr("action", "<%= stat_download_admin_coupon_downloads_path %>");
+         $("#query_form").attr("method", "post");
+      });
+  });
+</script>

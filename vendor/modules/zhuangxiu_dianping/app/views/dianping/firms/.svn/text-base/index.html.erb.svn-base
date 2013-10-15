@@ -1,0 +1,85 @@
+<% city_name = CITIES[@user_city_code.to_i]%>
+<%
+if @style.to_i > 0 || @price.to_i > 0 || @model.to_i > 0 || @district.to_i > 0
+  location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > #{STYLES[@style.to_i]}" unless @style.to_i == 0
+  unless @model.to_i == 0
+    if @model.to_i == 4
+      location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > 设计工作室"
+    else
+      location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > #{MODELS[@model.to_i]}"
+    end
+  end
+  location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > #{HejiaTag.find_name(@district)}" unless @district.to_i == 0
+  location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > #{(@user_city_code.to_i == 12117) ? DecoFirm::NINBO_PRICE[@price.to_i] : DecoFirm::PRICE[@price.to_i]}" unless @price.to_i == 0
+elsif @page_title == "villa"
+  location "#{link_to '装修公司列表',firms_url(:trailing_slash => true)} > 别墅"
+elsif @page_title == 'decoration'
+  location "工装"
+else
+  location "装修公司列表"
+end
+%>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:公司列表页") %>
+<% @title = (@page_title == 'decoration') ? "工装装修,工装装修设计-装修公司列表-#{city_name}和家网装修点评" : firm_list_title(@user_city_code,@price,@style,@model,html_metadata,@page_title,@district) %>
+<% unless @page_title == 'decoration' %>
+  <% @description = html_metadata.description if params[:condition].blank? %>
+  <% @keywords = "#{city_name}#{html_metadata.keywords}" if params[:condition].blank? %>
+<% end %>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<script type="text/javascript" src="http://js1.51hejia.com/js/textscroll.js"></script>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sousuo02 margin10">
+      <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+    </div>
+    <% if @user_city_code.to_i == 11910 %>
+      <div class="ad margin10"><%= adspace("#{city_name}站-装修公司列表页-大旗帜1", '', '') %></div>
+    <% end %>
+    <script type="text/javascript">
+      $(function(){
+        $(".list_r_li_data01").mouseover(
+        function(){
+          $(this).addClass("list_r_li_data02");
+        }
+      );
+        $(".list_r_li_data01").mouseleave(
+        function(){
+          $(this).removeClass("list_r_li_data02");
+        }
+      )
+      })
+    </script>
+    <div class="zxdp2010_comlist">
+      <% if @alone.nil?%>
+        <%= render :partial=> "firm_list" %>
+      <% else %>
+        <%= render :partial => "other_firm_list"%>
+      <% end %>
+    </div>
+  </div>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => "dianping/shared/yuyue" %>
+
+    <% if @user_city_code.to_i == 12301 %>
+      <div class="margin10">
+        <%= render :partial => "dianping/shared/right_list_afp"%>
+      </div>
+    <% end %>
+
+    <%= render :partial => "assort_firms", :locals => {:firms => @assort_firms } unless @assort_firms.blank? %>
+
+    <%= render :partial => "condition_firms", :locals => {:firms => @newten_firms, :name => "NEW"} unless @newten_firms.blank? %>
+
+    <%= render :partial => "dianping/shared/dianping_help" %>
+    <% if @user_city_code.to_i != 12301 %>
+      <div class="margin10">
+        <%= render :partial => "dianping/shared/right_list_afp"%>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!--end_content_code-->

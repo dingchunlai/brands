@@ -1,0 +1,284 @@
+<% @title = "成套家电设计师"%>
+<div class="he_con">
+  <div class="h_sjs">
+    <div class="sjs_head" id="tab1">
+      <ul>
+        <li id="tab1h1" ><a href="javascript://">家装设计师</a></li>
+        <li id="tab1h2" class="sjs_on"><a href="javascript://">成套家电设计师</a></li>
+      </ul>
+      <div  class="clear"></div>
+
+    </div>
+    <div>
+      <div class="sjs_tabcon" id="tab1h1con" style="display:none;">
+        <div class="sjs_con f_l">
+
+          <p class="sjs_img"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wys.jpg" alt=""/></p>
+          <ul class="f_l">
+            <li>
+              <h3>王一栗</h3>
+            </li>
+            <li><span>毕业学校：</span>中央工艺美院</li>
+            <li><span>专&nbsp;&nbsp;&nbsp;&nbsp;业：</span>环境艺术室内设计专业&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>TEL：</span>15000023567</li>
+            <li><span>工作年限：</span>15年</li>
+            <li><span>设计风格：</span>欧式风格、中式风格</li>
+          </ul>
+        </div>
+        <div class="jz_box f_l">
+          <ul>
+            <li><a href="<%= qa_1_url%>"  target="_blank"></a></li>
+            <li><a href="<%= qa_2_url%>"  target="_blank"></a></li>
+            <li><a href="<%= qa_3_url%>"  target="_blank"></a></li>
+          </ul>
+        </div>
+        <div class="he_con marg10">
+          <div class="h_ques f_l">
+            <h3 class="he_title">问题列表</h3>
+            <a href="http://wb.51hejia.com/detail/new_topic?expert=%E4%B8%8A%E6%B5%B7%E4%B9%9D%E9%BC%8E%E8%AE%BE%E8%AE%A1%E6%80%BB%E7%9B%91" class="h_ask">我要提问</a>
+            <div class="he_table">
+              <ul>
+                <li class="table_th"><span class="table_zt_p">主题（共<%= @questions_jz.size %>项）</span><span class="table_hfdj">回复/点击</span><span class="table_zht">状态</span><span class="table_zhhf">最后回复</span></li>
+                <% @questions_jz[0,15].each do |q| %>
+                  <li>
+                    <span class="table_zt_p"><%= link_to q.subject,get_wenba_url(q.id) ,:target => "_blank"%></span>
+                    <span class="table_hfdj"><%= q.post_counter %>/<%= q.view_counter %></span>
+                    <span class="table_zht"><%if q.post_counter.to_i == 0%>
+                        <img src="http://img.baidu.com/img/iknow/icn_time.gif" alt="待解决" />
+                      <%else%>
+                        <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/jz_ques.jpg" />
+                      <%end%></span>
+                    <span class="table_zhhf"><%= q.created_at.strftime("%Y-%m-%d")%></span>
+                  </li>
+                <% end %>
+                <% if @questions_jz.size > 15 %>
+                  <li class="table_more"><a href="http://wb.51hejia.com/user_answer/7347809.html?&username=%E9%9B%B7%E9%9C%96%E8%B1%AA%E6%9D%B0" target="_blank">查看更多问题...</a></li>
+                <% end %>
+              </ul>
+
+            </div>
+          </div>
+          <div class="ct_box1 f_l">
+            <h3 class="he_title">设计案例</h3>
+            <ul class="he_case1">
+              <li><a href="<%= haier_jzsjs_case_url(:id => 536990) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/zhongshi.jpg" /></a>
+                <dl>
+                  <dt><a href="<%= haier_jzsjs_case_url(:id => 536990) %>" target="_blank">中式情调的风花雪月</a></dt>
+                  <a href="<%= haier_jzsjs_case_url(:id => 536990) %>" target="_blank"><dd>在这里放眼所见的都是柚木醇厚的温润感触，全柚木的实木雕刻遍布了这个家的每个角落。再配上民国初年的民国家具，在其中摇曳生姿，活脱脱的一副老上海风情。对于追求生活品质的人来说，除了日常的基本功能外，休闲的空间也是家里不可或缺的。伴着电影里无声的音乐，有点怀旧，有点浪漫，有家就能演绎一场老上海情调的风花雪月.</dd></a>
+                </dl></li>
+              <li><a href="<%= haier_jzsjs_case_url(:id => 536993) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wubaipin.jpg" /></a>
+                <dl>
+                  <dt><a href="<%= haier_jzsjs_case_url(:id => 536993) %>" target="_blank">500平别墅 独享欧式奢靡</a></dt>
+                  <a href="<%= haier_jzsjs_case_url(:id => 536993) %>" target="_blank"><dd>大宅设计有时如同一件奢侈品，能够拥有的人未必能搭配出完美的姿态，很多人住的起别墅但未必奶装修出别墅独有的格调，而在这套近500平的别墅里，我们却看到不同，不仅仅细致的设计和大胆用材，更多的是由内至外的一种尊贵气质，着实令人眼前一亮。</dd></a>
+                </dl></li>
+              <li><a href="<%= haier_jzsjs_case_url(:id => 536999) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/xintiandi.jpg" /></a>
+                <dl>
+                  <dt><a href="<%= haier_jzsjs_case_url(:id => 536999) %>" target="_blank">新天地精装美式风格别墅</a></dt>
+                  <a href="<%= haier_jzsjs_case_url(:id => 536999) %>" target="_blank"><dd>简介：客厅俯视它特有的感觉，大气，宽敞，明亮。厅是有些大，所以就来个对称的摆放，正适合开会用！整体色调，配合雅致的沙发，更显大气与沉稳，交相辉映，演绎奢华品味。罗马柱是最醒目的欧式符号之一。用它来区分客厅与餐厅，通透又大气。确实也是这样，简洁又富有轻松感！餐厅也较宽敞，窗帘跟客厅是配套的,这套房子,并没有一味地采用欧式家具和装修，而是匠心独具地运用了一些欧式设计符号，让整个家充满了中西交融的和谐之美,女儿的房间典雅、宁静、舒适、温馨、轻松感，全在这可以体现了！暖黄色的壁纸，搭配简单的白色线条造型，没有太奢华，但让整个家充满了温馨！</dd></a>
+                </dl></li>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="sjs_tabcon" id="tab1h2con">
+        <div class="sjs_con f_l">
+          <p class="sjs_img"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wjz.jpg" alt=""/></p>
+          <ul>
+            <li>
+              <h3>王纪柱<a href="javascript:;" class="he_zxyy">在线预约</a></h3>
+            </li>
+            <li><span>地址：上海隋园实业有限公司 隋园社区店  手机：15921267735</span></li>
+            <li class="sjs_li">家电行业从业五年，熟知家电运行原理和成套家电方案设计，有多年的家电客服、销售等经验，针对客户提供的实际建筑空间进行二次处理，例如新婚新居、乔迁新居等用户的海尔成套设计、咨询及一票到底的讲解、设计方案，协助安装等。</li>
+          </ul>
+        </div>
+        <div class="ct_box f_l">
+          <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/ztjiaod.jpg" alt="" />
+          <ul>
+            <li><a href="<%= qa_4_url %>" target="_blank">什么是成套家电？</a></li>
+            <li><a href="<%= qa_4_url %>#a1" target="_blank">为什么要选择成套家电？</a></li>
+            <li><a href="<%= qa_4_url %>#a2" target="_blank">海尔的成套家电有什么优势？</a></li>
+          </ul>
+        </div>
+        <div class="he_con marg10">
+          <div class="h_ques f_l">
+            <h3 class="he_title">问题列表</h3>
+            <a href="http://wb.51hejia.com/detail/new_topic?expert=%E6%B5%B7%E5%B0%94%E5%AE%B6%E7%94%B5%E8%AE%BE%E8%AE%A1%E5%B8%88" class="h_ask">我要提问</a>
+            <div class="he_table margin10">
+              <ul>
+                <li class="table_th"><span class="table_zt_p">主题（共<%= @questions.size %>项）</span><span class="table_hfdj">回复/点击</span><span class="table_zht">状态</span><span class="table_zhhf">最后回复</span></li>
+                <% @questions.each do |q| %>
+                  <li>
+                    <span class="table_zt_p"><%= link_to q.subject,get_wenba_url(q.id) ,:target => "_blank"%></span>
+                    <span class="table_hfdj"><%= q.post_counter %>/<%= q.view_counter %></span>
+                    <span class="table_zht"><%if q.post_counter.to_i == 0%>
+                        <img src="http://img.baidu.com/img/iknow/icn_time.gif" alt="待解决" />
+                      <%else%>
+                        <img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/jz_ques.jpg" />
+                      <%end%></span>
+                    <span class="table_zhhf"><%= q.created_at.strftime("%Y-%m-%d")%></span>
+                  </li>
+                <% end %>
+                <!--<%# if AskZhidaoTopic.user_answer(7356049).size > 15 %>
+                  <li class="table_more"><a href="http://wb.51hejia.com/user_answer/7356049.html?&username=%E6%B5%B7%E5%B0%94%E5%AE%B6%E7%94%B5%E8%AE%BE%E8%AE%A1%E5%B8%88" target="_blank">查看更多问题...</a></li>
+<%# end %>-->
+              </ul>
+
+            </div>
+            <div class="he_tab_con3 f_l">
+              <h3 class="he_title">您可能感兴趣的产品</h3>
+              <ul>               
+                <% hejia_promotion_items(HAIER_JDSJS['jd'], :attributes => ["title","url", "description", "image_url"], :limit => 4).each do |jd|  %>
+                  <li><% if jd.url != "" %><a href="<%= jd.url %>"><%= promotion_image_tag(jd) %></a><% else %><%= promotion_image_tag(jd, :link => false) %><% end %>
+                  <dt><%= jd.title %></dt>
+                  <dt><%= jd.description %></dt>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="ct_box1 f_l">
+            <h3 class="he_title">设计案例</h3>
+            <ul class="he_case1">
+              <li><a href="<%= haier_jdsjs_case_url(:id => 536902) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/tiexin.jpg" /></a>
+                <h4><a href="<%= haier_jdsjs_case_url(:id => 536902) %>" target="_blank">贴心服务 换来四笔订单</a></h4>
+                <p>王阿姨经同事推荐前往海尔社区店，对其贴心服务颇为赏识，并先后下了四笔订单！</p>
+              </li>
+              <li><a href="<%= haier_jdsjs_case_url(:id => 536903) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/xuanzhe.jpg" /></a>
+                <h4><a href="<%= haier_jdsjs_case_url(:id => 536903) %>" target="_blank">选择海尔产品 就会服务到底</a></h4>
+                <p>韩先生购置海尔空调，对其贴心的上门服务非常满意，在小区单元传为佳话⋯⋯</p>
+              </li>
+              <li><a href="<%= haier_jdsjs_case_url(:id => 536904) %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/qijiantao.jpg" /></a>
+                <h4><a href="<%= haier_jdsjs_case_url(:id => 536904) %>" target="_blank">海尔7件套 质优价廉生活无忧</a></h4>
+                <p>付女士家里总共选购了7件海尔家电产品，使用三年没有出现过任何问题！</p>
+              </li>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    tab("tab1","sjs_on");
+  </script>
+
+</div>
+<script type="text/javascript">
+  jQuery(function($){
+    $(".he_zxyy").click(
+    function(){
+      $(".haier_loginboxbg").show();
+      $(".haier_loginbox").show();
+    });
+    $(".haier_top_btn2 a").click(
+    function(){
+      $(".haier_loginboxbg").hide();
+      $(".haier_loginbox").hide();
+    });
+    $("#yuyue_form").submit(function(){
+      var i = 0;
+      var j = 0;
+      if( $.trim($("#c1").val()).length == 0 || $.trim($("#c3").val()).length == 0 || $.trim($("#c4").val()).length == 0 || $.trim($("#c5").val()).length == 0 || $.trim($("#c6").val()).length == 0 || $.trim($("#c7").val()).length == 0 || $.trim($("#c8").val()).length == 0 || $.trim($("#c11").val()).length == 0 ){
+        alert("所有信息都为必填项,请完整的填写信息");
+        return false;
+      }
+      $("input[name*='c9[]']").each(function(){
+        if($(this).attr("checked") == true){
+          i = i + 1;
+        }
+      });
+      $("input[name*='c12[]']").each(function(){
+        if($(this).attr("checked") == true){
+          j = j + 1;
+        }
+      });
+      if(i == 0 || j == 0){
+        alert("所有信息都为必填项,请完整的填写信息");
+        return false;
+      }
+    });
+  });
+</script>
+<div class="haier_loginbox" style="display:none">
+  <div class="haier_top_btn2"><a href="javascript:void(0);" title="close"></a></div>
+  <form action="http://radmin.51hejia.com/form/form_save" method="post" enctype="multipart/form-data" id="yuyue_form" target="hideiframe" onsubmit="return submitForm(this);">
+    <dl>
+      <dt>
+        <label>*</label>
+        填写下列用户信息，免费赠送金牌服务：</dt>
+      <dd>姓名：
+        <input type="text" name="c1" id="c1" size="10" />
+        先生：
+        <input type="radio" name="c2"  value="男" checked />
+        女士：
+        <input type="radio" name="c2"  value="女" />
+        联系电话：
+        <input type="text" name="c3"  id="c3" size="10" value="" />
+      </dd>
+      <dd>Email：
+        <input name="c4" id="c4" type="text" size="10" />
+        户型：
+        <input name="c5" id="c5" type="text" size="10" />
+        <span>*如一室户、一室一厅</span></dd>
+      <dd>面积：
+        <input name="c6" id="c6" type="text" size="10" />
+        m2 QQ号：
+        <input name="c7" id="c7" type="text" size="10" />
+        所属区县街道小区
+        <input name="c8" id="c8" type="text" size="20" />
+      </dd>
+    </dl>
+    <dl>
+      <dt>
+        <label>*</label>
+        倾向选购的家电（轻松勾选，有助于提供针对性的贴心方案）</dt>
+
+
+      <dd>
+        <input type="checkbox" name="c9[]"  value="冰箱" />
+        冰箱
+        <input type="checkbox" name="c9[]"  value="洗衣机" />
+        洗衣机
+        <input type="checkbox" name="c9[]"  value="彩电" />
+        彩电
+        <input type="checkbox" name="c9[]"  value="空调" />
+        空调
+        <input type="checkbox" name="c9[]"  value="热水器" />
+        热水器
+        <input type="checkbox" name="c9[]"  value="油烟机" />
+        油烟机
+        <input type="checkbox" name="c9[]"  value="灶具" />
+        灶具</dd>
+      <dd>
+        <input type="checkbox" name="c9[]"  value="电脑" />
+        电脑
+        <input type="checkbox" name="c9[]"  value="酒柜" />
+        酒柜
+        <input type="checkbox" name="c9[]"  value="生活电器" />
+        生活电器 其他电器：
+        <input type="text" name="c10" id="c10" />
+        <span style="color:red;">*</span>预算：<input  name="c11" id="c11" type="text" size="10" />元</dd>
+    </dl>
+    <dl>
+      <dt>
+        <label>*</label>
+        请选择免费赠送的增值服务（每天限20名）：</dt>
+      <dd>
+        <input name="c12[]" type="checkbox" value="上门为您提供量身定做的专业成套家电设计方案" />
+        上门为您提供量身定做的专业成套家电设计方案
+        <input name="c12[]" type="checkbox" value="享受空调、热水器、油烟机安装免费预留打" />
+        享受空调、热水器、油烟机安装免费预留打</dd>
+      <dd>
+        <input name="c12[]" type="checkbox" value="根据您的装修进度，提供随装随送的人货同步安装服务" />
+        根据您的装修进度，提供随装随送的人货同步安装服务
+        <input name="c12[]" type="checkbox" value="提供家电寿命周期的6次关怀服务" />
+        提供家电寿命周期的6次关怀服务</dd>
+      <dd>
+        <input name="c12[]" type="checkbox" value="用户家电到寿命期，为您提供即买即送即装即时补贴的家电以旧换新服务" />
+        用户家电到寿命期，为您提供即买即送即装即时补贴的家电以旧换新服务</dd>
+    </dl>
+    <input name="formid" type="hidden" value="173" />
+    <p><input value="提交" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><p>
+  </form>
+</div>
+<div class="haier_loginboxbg"></div> 

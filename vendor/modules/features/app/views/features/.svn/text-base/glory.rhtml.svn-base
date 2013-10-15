@@ -1,0 +1,46 @@
+<div class="box box4">
+	<div class="box4_1"></div>
+	<% 
+		@companies[0..2] && @companies[0..2].each_with_index do |firm, index| 
+	%>
+		<div class="box4_<%=index + 2 %>">
+			<div class="box4_<%=index + 2 %>_ad">
+				<a class="a1" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><img src="<%= Features::PromotedCompany.image_of(firm.id) %>" alt="<%= firm.name_abbr %>" /></a>
+				<a class="a2" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><%= firm.name_abbr %></a>
+				<span class="f_l">主打价位：<label><%= diff_city_price_tag_value(params[:city].to_i, firm.price) %></label></span><span class="f_r"><label><%= firm.remark_only_count %></label>人点评</span>
+				<span class="f_l"><label><%= firm.factories && firm.factories.size || 0 %></label>个在建工地</span><span class="f_r"><label><%= firm.pv_count %></label>人浏览</span>
+			</div>
+		</div>
+	<% end %>
+</div>
+ 
+<div class="box box5">
+	<%
+		@companies[3..5] && @companies[3..5].each_with_index do |firm, index| 
+	%>
+		<div class="box5_<%=index + 1 %>">
+			<div class="box5_<%=index + 1 %>_ad">
+				<a class="a1" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><img src="<%= Features::PromotedCompany.image_of(firm.id) %>" alt="<%= firm.name_abbr %>" /></a>
+				<a class="a2" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><%= firm.name_abbr %></a>
+				<span class="f_l">主打价位：<label><%= diff_city_price_tag_value(params[:city].to_i, firm.price) %></label></span><span class="f_r"><label><%= firm.remark_only_count %></label>人点评</span>
+				<span class="f_l"><label><%= firm.factories && firm.factories.size || 0 %></label>个在建工地</span><span class="f_r"><label><%= firm.pv_count %></label>人浏览</span>
+			</div>
+		</div>
+	<% end %>
+	<div class="box5_4"></div>
+</div>
+
+<div class="box box6">
+	<%
+		@companies[6..9] && @companies[6..9].each_with_index do |firm, index| 
+	%>
+		<div class="box6_<%=index + 1 %>">
+			<div class="box6_<%=index + 1 %>_ad">
+				<a class="a1" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><img src="<%= Features::PromotedCompany.image_of(firm.id) %>" alt="<%= firm.name_abbr %>" /></a>
+				<a class="a2" href="<%= generate_firm_url(firm.id) %>" target="_blank" title="<%= firm.name_abbr %>"><%= firm.name_abbr %></a>
+				<span class="f_l">主打价位：<label><%= diff_city_price_tag_value(params[:city].to_i, firm.price) %></label></span><span class="f_r"><label><%= firm.remark_only_count %></label>人点评</span>
+				<span class="f_l"><label><%= firm.factories && firm.factories.size || 0 %></label>个在建工地</span><span class="f_r"><label><%= firm.pv_count %></label>人浏览</span>
+			</div>
+		</div>
+	<% end %>
+</div>

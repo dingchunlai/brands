@@ -1,0 +1,42 @@
+<%= top_bar :title => "#{PrintRecord.human_name}记录管理页",
+  :button => ['创建打印', new_admin_print_record_path],
+  :breadcrumbs => [
+    ['首页', coupon_admin_index_path],
+    ['印刷记录列表', admin_print_records_path]
+  ]
+%>
+<div class="select-bar" >
+  <% form_tag admin_print_records_path do %>
+  <label><%= PrintRecord.human_attribute_name("city") %> : <%= select_tag :city, options_for_select(City.used_cities.map{|c| [c.name, c.pinyin]}.unshift(['-请选择-', '']), @city) %> </label>
+  <label><%= submit_tag " Search " %></label>
+  <% end %>
+</div>
+
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">月份</th>
+      <th>城市</th>
+      <th>数量</th>
+      <th>关联行业</th>
+      <th colspan=2 class="last">操作</th>
+    </tr>
+    <% @print_records.each_with_index do |print_record, index| %>
+      <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+        <td height="25"><%= print_record.month.strftime('%Y年%m月') %></td>
+        <td><% if print_record.city_obj %> <%= print_record.city_obj.name %><% else %> <% if can? :update, print_record %><%= link_to '关联城市', edit_admin_print_record_path(print_record) %><% end %><% end %></td>
+        <td><%= print_record.amount %></td>
+        <td><% if can? :tag, print_record %><%= link_to  print_record.tag_amounts.size, admin_print_record_path(print_record) %><% end %></td>
+        <td><% if can? :update, print_record %><%= link_to '编辑', edit_admin_print_record_path(print_record) %><% end %></td>
+        <td><% if can? :tag, print_record %><%= link_to '行业设置', admin_print_record_path(print_record) %><% end %></td>
+        <td><% if can? :tag, print_record %><%= link_to '全部行业印刷(所有抵用券)', tag_all_admin_print_record_path(print_record) %><% end %></td>
+      </tr>
+    <% end %>
+  </table>
+  <% unless @print_records.empty? -%>
+  <%= will_paginate @print_records, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

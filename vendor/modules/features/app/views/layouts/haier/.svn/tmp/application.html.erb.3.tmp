@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= @title %></title>
+    <meta name="description" CONTENT="<%= @description%>">
+      <meta name="keywords" content="<%= @keywords%>">
+        <link href="http://js3.51hejia.com/all_zhuanti/haierzt/css/jhhaierstyle.css" rel="stylesheet" type="text/css" />
+        <!--<link href="/stylesheets/rrrr.css" rel="stylesheet" type="text/css" />-->
+        <%= javascript_include_tag jquery_resource(:version => '1.4.2') %>
+        <script src="http://js3.51hejia.com/js/AC_RunActiveContent.js" type="text/javascript"></script>
+        <script>
+          function tab(id,act){
+            $("#"+id).find("li").mouseover(function(){
+              var th = $(this).attr("id");
+              $(this).addClass(act).siblings().removeClass(act);
+              $("#"+th+"con").show().siblings().hide();
+            })
+          }
+        </script>
+        </head>
+        <body>
+          <%= render_shared_header :ga_ids => [Hejia::SharedViews::HEJIA_GA_ID,'UA-12518263-2']  %>
+          <div class="he_head">
+            <div class="he_tophead">
+              <script type="text/javascript">
+                AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0','width','960','height','350','src','http://js3.51hejia.net/all_zhuanti/haierzt/img/top','quality','high','pluginspage','http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash','wmode','transparent','movie','http://js3.51hejia.net/all_zhuanti/haierzt/img/top' ); //end AC code
+              </script><noscript><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="960" height="350">
+                  <param name="movie" value="http://js3.51hejia.net/all_zhuanti/haierzt/img/top.swf" />
+                  <param name="quality" value="high" />
+                  <param name="wmode" value="transparent" />
+                  <embed src="http://js3.51hejia.net/all_zhuanti/haierzt/img/top.swf" width="960" height="350" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" wmode="transparent"></embed>
+                </object>
+              </noscript>
+            </div>
+            <% if controller_name == "home" %>
+              <div class="he_bothead">
+                <h3 class="he_title">购海尔整套家电 享受整套增值服务</h3>
+                <img src="http://js3.51hejia.net/all_zhuanti/haierzt/images/haier_head2.jpg" alt="" />
+              </div>
+            <% end %>
+          </div>
+          <%= yield %>
+          <%= render :partial => 'shared/layouts/footer' %>
+        </body>
+        </html>

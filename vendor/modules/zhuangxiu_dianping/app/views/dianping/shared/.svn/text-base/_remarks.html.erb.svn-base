@@ -1,0 +1,40 @@
+<% content_for (:head) do %>
+  <% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+  <% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+  <% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+  <% stylesheet "http://js.51hejia.com/css/api/colorbox.css?1291024352" %>
+  <% javascript 'http://js.51hejia.com/js/jquery.colorbox-min.js'%>
+  <% javascript 'http://js.51hejia.com/js/jquery.colorbox-min.js'%>
+<% end %>
+<div id="remarks_list_wrapper">
+  <%= render :partial => "dianping/shared/remarks_list" %>
+</div>
+<% javascript jquery_resource(:plugin =>'kindeditor',:version =>'3.5.2',:resource =>'kindeditor-min.js') %>
+<% javascript jquery_resource(:plugin =>'kindeditor',:version =>'3.5.2',:resource =>'config/emoticons_config.js') %>
+<div class="gsl_wyly_lyk">
+  <h3>我要评论</h3>
+  <% unless current_user %><span class="the_login_dialog" style="display:block;padding:0 0 0 10px;">友情提示：您还未登陆，请<a style="color:blue;cursor:pointer;text-decoration:underline;">"点击此处"</a>登陆后发表评论，谢谢！</span><% end %>
+  <hr />
+  <div>
+    <% form_for :remark , @remark , :url => remarks_path,:html =>{:id => "remark_form"} do %>
+      <input type="hidden"  name="remark[user_id]" id="user_id" value="<%= current_user.USERBBSID if user_logged_in? %>"/>
+      <input type="hidden" name="remark[resource_id]" value="<%=resource_id%>"/>
+      <input type="hidden" name="remark[resource_type]" value="<%= resource_type%>"/>
+      <input type="hidden" name="popedom" value="<%= @firm.popedom %>"/>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="gsl_wyly_qy"><textarea name="remark[content]" id="reamrk_content" class="kindeditor_only_emoticons" data-toolbar="emoticons" cols="" rows="" style="width:98%;"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="f_l"></span><input type="submit"  id="comment" value="留言提交" class="gsl_wyly_btn f_r" style="margin-right:50px"/>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<div style="display:none;" deco_frim_popedom="<%= @firm.popedom%>" id="deco_firm_others_show"></div>
+<% dp_js 'dianping/shared/remark_public.js'%>

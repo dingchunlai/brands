@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier
+END
+configuration.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/configuration.rb
+END
+railtie.rb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/railtie.rb
+END
+rails.rb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/rails.rb
+END
+shared_tasks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/shared_tasks.rb
+END
+backtrace.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/backtrace.rb
+END
+rack.rb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/rack.rb
+END
+sender.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/sender.rb
+END
+notice.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/notice.rb
+END
+rails3_tasks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/rails3_tasks.rb
+END
+capistrano.rb
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/capistrano.rb
+END
+tasks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/tasks.rb
+END
+version.rb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/hoptoad_notifier-2.4.2/lib/hoptoad_notifier/version.rb
+END

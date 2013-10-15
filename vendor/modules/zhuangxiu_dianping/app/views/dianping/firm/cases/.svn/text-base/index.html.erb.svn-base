@@ -1,0 +1,54 @@
+<% html_metadata = HtmlMetadata.find_by_page_id("#{CITIES[@user_city_code.to_i]}:装修点评:公司案例列表页") %>
+<% @title = html_metadata.title % {:firm_name => @firm.name_zh} %>
+<% firm_sub_menu %>
+<% location "#{link_to @firm.name_abbr,firm_url(:id => @firm.id,:trailing_slash => "/")} > 装修案例列表"%>
+
+<%= render :partial => "dianping/shared/firm_factory_pop" %>
+<div class="width960 clearfix margin10">
+  <% cache @fragment_key , :expires_in => 5.minutes do %>
+    <div class="zxdp2010_l f_l">
+      <div class="zxdp2010_sjlnlist zxdp2010_sgtplist">
+        <div class="zxdp2010_altptab"><dl class="clearfix">
+
+            <dd class="zxdp2010_altptabdd01">经典案例</dd>
+            <% if @office_cases.size > 0 %>
+              <dd class="zxdp2010_altptabdd02">工装案例</dd>
+            <% end -%>
+          </dl></div>
+        <div class="zxdp2010_sjslisthack"></div>
+        <div>
+          <div class="zxdp2010_zxallist">
+            <ul class="margin10 clearfix">
+              <% @home_cases.each do |c|%>
+                <li>
+                  <%= link_to image_tag(c.master_picture_url,:alt=>c.NAME), c.url, :target => "_blank" %>
+                  <%= link_to c.NAME, c.url, :target => "_blank",:class=>"case_title"%>
+                </li>
+              <% end -%>
+            </ul>
+            <div class="zxdp2010_sjsnum f_l">共有<span><%= @home_cases.total_entries%></span>套<%= @firm.name_abbr%>的经典案例图片 </div>
+            <%= will_paginate @home_cases %>
+          </div>
+          <% if @office_cases.size > 0 %>
+            <div class="zxdp2010_zxallist" style="display:none;">
+
+              <ul class="margin10 clearfix">
+                <% @office_cases.each do |c|%>
+                  <li>
+                    <%= link_to image_tag(c.master_picture_url,:alt=>c.NAME), c.url, :target => "_blank" %>
+                    <%= link_to c.NAME, c.url, :target => "_blank",:class=>"case_title"%>
+                  </li>
+                <% end -%>
+              </ul>
+              <div class="zxdp2010_sjsnum f_l">共有<span><%= @office_cases.total_entries%></span>套<%= @firm.name_abbr%>的工装案例图片 </div>
+              <%= will_paginate @office_cases%>
+            </div>
+          <% end -%>
+        </div>
+      </div>
+    </div>
+  <% end -%>
+  <div class="zxdp2010_r f_r">
+    <%= render :partial => 'dianping/shared/firm_right_list' %>
+  </div>
+</div>

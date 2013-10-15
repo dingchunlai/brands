@@ -1,0 +1,63 @@
+<% city_name = CITIES[@user_city_code.to_i] %>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:施工图片列表页") %>
+<% @title = html_metadata.title %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords %>
+
+<% location "施工图片"%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<% javascript 'http://js.51hejia.com/js/jquery.lightbox-0.5.min.js'%>
+<% stylesheet 'http://js.51hejia.com/css/jquery.lightbox-0.5.css'%>
+<script type="text/javascript" charset="utf-8">
+	jQuery(document).ready(function($) {
+	 	// 施工图片的lightbox
+   	function initLightBox(id){
+       $(id).lightBox(
+       {
+         imageLoading:'http://img.51hejia.com/lightbox/lightbox-ico-loading.gif',
+         imageBtnPrev:'http://img.51hejia.com/lightbox/lightbox-btn-prev.gif',
+         imageBtnNext:'http://img.51hejia.com/lightbox/lightbox-btn-next.gif',
+         imageBtnClose:'http://img.51hejia.com/lightbox/lightbox-btn-close.gif',
+         imageBlank:'http://img.51hejia.com/lightbox/lightbox-blank.gif',
+         maxImageWidth:500
+       });
+     }
+    // initLightBox("#photos a");
+     initLightBox(".light_box_pictures a")
+	});
+</script>
+<!--content_code-->
+<div class="width960">
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sousuo02 margin10">
+     <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+    </div>
+    <div class="zxdp2010_comlist">
+      <div class="zxdp2010_zxallisttit">
+        <span class="f_l"><strong>共有<%= @photos.total_entries%>套 图片</strong></span>
+        <span class="f_r">第 <%= params[:page] || 1%> 页 
+				
+				<%= (link_to "&lt;&lt;上一页", construction_photos_page_url(:page => @photos.previous_page, :trailing_slash => true )) if params[:page].to_i > 1 %>
+				<%= (link_to "下一页&gt;&gt;", construction_photos_page_url(:page => @photos.next_page ,:trailing_slash => true )) if params[:page].to_i < @photos.total_pages %>
+				</span>      
+			</div>
+      <div class="zxdp2010_zxallist">
+      <ul class="margin10 clearfix light_box_pictures">
+				<% @photos.each do |photo| %>
+					<li>
+					<%= link_to image_tag(photo.image.url(:medium),:title => photo.title), photo.image.url(:original)%>
+					<%=  truncate(photo.title, :length => 14, :omission => '')%>
+				  </li>
+				<% end %>
+      </ul>
+      <%= will_paginate @photos ,:params => {:trailing_slash => true }%>
+			</div>
+    </div>
+  </div>
+   <%= render :partial => "/dianping/shared/list_side"%>
+</div>
+<!--end_content_code-->

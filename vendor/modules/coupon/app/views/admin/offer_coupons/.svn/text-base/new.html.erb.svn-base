@@ -1,0 +1,80 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '提供抵用券管理页',
+            :button => ['提供抵用券列表', admin_offer_coupons_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['OfferCoupons', admin_offer_coupons_path]
+            ]
+%>
+<% form_for @offer_coupon, :url => admin_offer_coupons_path do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">创建提供抵用券</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :merchant %></strong></td>
+          <td class="last"><%= f.text_field :merchant, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :body %></strong></td>
+          <td class="last"><%= f.text_area :body, :class => "text", :rows => 5, :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last"><%= f.select :city_id, City.find(:all).collect { |item| [item.name, item.id] }, :include_blank => '请选择', :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :district_id %></strong></td>
+          <td class="last"><%= f.select :district_id, [], :include_blank => '请选择',  :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :linkman %></strong></td>
+          <td class="last"><%= f.text_field :linkman, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :telphone %></strong></td>
+          <td class="last"><%= f.text_field :telphone, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :sex %></strong></td>
+          <td class="last"><%= f.text_field :sex, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+       $("#offer_coupon_city_id").change(function(){
+            var district_id = 'offer_coupon_district_id';
+            if ($(this).val() == "") { return null; }
+            $('#' + district_id + ' option').remove();
+            $('#' + district_id).append($('<option value="">loading...</option>'));
+            $.ajax({
+                url: '/remote/districts/',
+                type: 'get',
+                data: {'id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert("请联系管理员");
+                },
+
+                success: function(data) {
+                    $('#' + district_id + ' option').remove();
+                    //if (data.length == 0) $('#' + district_id).append($('<option value="">没有地区</option>'));
+                    $('#' + district_id).append($('<option value="">请选择</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#' + district_id);
+                    }
+                }
+            });
+       });
+    });
+</script>

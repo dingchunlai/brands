@@ -1,0 +1,50 @@
+<%= show_flash_message %>
+<div>
+  (实现功能：快速{检索 | 维护 | 创建} 推广页面以及推广页面的推广项信息)
+  <% if staff_logged_in? && session[:is_hejia_admin] %><%= link_to "新建推广页面", new_admin_promotion_page_path %> <% end %>
+</div>
+<br />
+<div>
+  <table>
+    <tr>
+      <th>页面</th>
+      <th>描述</th>
+      <th>类型</th>
+      <th>操作</th>
+    </tr>
+    <% @promotion_pages.each do |page| %>
+      <tr>
+        <td><%= page.name %></td>
+        <td><%= page.description %></td>
+        <td><%= PromotionPage::MODEL_TYPE[page.type]  %></td>
+        <td>
+          <%= link_to "维护推广内容", search_item_admin_promotion_page_path(page) %> &nbsp;
+          <% if staff_logged_in? && session[:is_hejia_admin] %>
+            <%= link_to "维护推广位", items_admin_promotion_page_path(page) %>  &nbsp;
+            <% if page.is_a?(TaggedBrandPage) %><%= link_to "修改原有code值", modify_admin_promotion_page_path(page), :method => :post  %> &nbsp;<% end %>
+            <%= link_to "编辑", edit_admin_promotion_page_path(page) %> &nbsp;  
+            <%= link_to "删除", admin_promotion_page_path(page), :method => :delete, :confirm => "您确认要删除#{page.name}吗?" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<style type="text/css">
+  table
+  {
+    border-collapse:collapse;
+  }
+  table, td, th
+  {
+    border:1px solid #000999;
+  }
+  td
+  {
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    width: auto;
+  }
+
+</style>
+

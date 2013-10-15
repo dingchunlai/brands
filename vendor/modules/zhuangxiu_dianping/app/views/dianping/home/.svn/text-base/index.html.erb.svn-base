@@ -1,0 +1,109 @@
+<% city_name = CITIES[@user_city_code.to_i]%>
+<% location "首页"%>
+
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:首页") %>
+<% @title = html_metadata.title %>
+<% @description = html_metadata.description %>
+<% @keywords = html_metadata.keywords %>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<script type="text/javascript" src="http://js1.51hejia.com/js/textscroll.js"></script>
+<% dp_js 'dianping/home/gongdi.js'%>
+<script src="http://js2.51hejia.com/js/loopedslider.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    $('#newsSlider').loopedSlider({
+      autoStart: 5000
+    });
+    $('.validate_Slider').loopedSlider({
+      autoStart: 5000
+    });
+    $("#enter_lab").click(function(){
+      window.location=$(this).find("a").attr("href");
+      return false;
+    });
+
+    $('.news_slider').loopedSlider({
+      autoStart: 5000
+    });
+    $('.validate_Slider').loopedSlider({
+      autoStart: 5000
+    });
+  });
+</script>
+<!--content_code-->
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <%= render :partial => "new_top_search", :locals => {:has_district => true} %>
+    <div class="f_r margin10" style="width:483px;">
+      <div class="zxdp2010_focus" style="margin-top:0;">
+        <%= render :partial => "top_img", :locals => { :city => CITIES[@user_city_code.to_i] }%>
+      </div>
+      <%= render :partial =>'middle_roll' %>
+    </div>
+    <div class="clear margin10">
+      <%= render :partial => 'daqi' , :locals => { :city => TAGURLS[@user_city_code.to_i], :title => "大旗帜2" }%>
+    </div>
+    <%= render :partial =>'middle_form' %>
+    <div class="zxdp2011_r_list_height margin10">
+      <%= render :partial =>'zhuanghuang' %>
+    </div>
+    <% cache "dianping:middle:zhuangxiujingli:#{@user_city_code}:index", :expires_in => 5.minutes  do %>
+      <%= render :partial =>'zhuangxiu_jingli' %>
+    <% end %>
+    <div class="zxdp2010_koubtop clear zxdp2010_dianp">
+      <%= render :partial =>'middle_anli' %>
+    </div>
+
+    <% cache "dianping:city_shouye:#{@user_city_code.to_i}:index", :expires_in => 5.minutes do %>
+      <div class="zxdp2010_koubtop clear zxdp2010_dianp">
+        <div class="zxdp2010_koubtxt02 clearfix">
+          <div class="zxdp2010_koubdl">
+            <%= render :partial => 'firms_top_10' , :locals => { :firms => @firms_top_ten_1 , :title => ([12117].include?(@user_city_code.to_i) ? '6万以下' : '8万以下'), :more_url => search_firm_for_options(:price => 1)  }%>
+          </div>
+          <div class="zxdp2010_koubdl zxdp2010_koubhack">
+            <%= render :partial => 'firms_top_10' , :locals => {  :firms => @firms_top_ten_2 , :title => ([12117].include?(@user_city_code.to_i) ? '6-10万' : '8-15万'), :more_url => search_firm_for_options(:price => 2)  }%>
+          </div>
+          <div class="zxdp2010_koubdl">
+            <%= render :partial => 'firms_top_10' , :locals => { :firms => @firms_top_ten_3 , :title => ([12117].include?(@user_city_code.to_i) ? '10万以上' : '15万以上'), :more_url => search_firm_for_options(:price => 3)  }%>
+          </div>
+          <div class="zxdp2010_koubtxt02bies clear"><a target="_blank" href=" http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/villa/">别墅</a></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="zxdp2010_r f_r" >
+    <%= render :partial => "/dianping/shared/home_yuyue" %>
+
+    <div class="margin10 clearfix">
+      <% if ["12122","12093"].include?(@user_city_code) %>
+        <%= render :partial => 'kuanfu' , :locals => { :city => TAGURLS[@user_city_code.to_i], :title => "宽幅" }%>
+      <% else %>
+        <%= render :partial => 'kuanfu' , :locals => { :city => TAGURLS[@user_city_code.to_i], :title => "宽幅1" }%>
+      <% end %>
+    </div>
+    <div class="zxdp2010_do margin10">
+      <%= render :partial =>'shouye_right_youcan' %>
+    </div>
+    <div class="zxdp2010_cur margin10">
+      <%= render :partial => "gongdi" %>
+    </div>
+    <div class="zxdp2010_cur margin10">
+      <%= render :partial =>'shouye_right_visitor' %>
+    </div>
+
+    <div class="zxdp2010_cur margin10">
+      <%= render :partial =>'shouye_right_zixun' %>
+    </div>
+    <div class="zxdp2010_cur margin10">
+      <%= render :partial =>'shouye_right_jingcai' %>
+    </div>
+    <div class="zxdp2010_cur margin10">
+      <%= render :partial =>'shouye_right_cuxiaohuodong' %>
+    </div>
+
+  </div>
+</div>
+<!--end_content_code-->

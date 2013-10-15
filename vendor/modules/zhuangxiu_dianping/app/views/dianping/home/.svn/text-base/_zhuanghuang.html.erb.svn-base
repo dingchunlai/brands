@@ -1,0 +1,65 @@
+<% cache "dianping:city_shouye:talk_zhuanghuang:#{@user_city_code.to_i}:index", :expires_in => 5.minutes do %>
+<% left_links = hejia_promotion_items(55070,:select =>'title,url') %>
+<div class="zxdp2011_r_list">
+<ul class="zxdp2011_r_list_ul1">
+  <li><strong>装修前期</strong></li>
+  <li><a target="_blank" href="<%= left_links[0].url %>"><%= left_links[0].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[1].url %>"><%= left_links[1].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[2].url %>"><%= left_links[2].title %></a></li>
+  <li><strong>选定方案</strong></li>
+  <li><a target="_blank" href="<%= left_links[5].url %>"><%= left_links[5].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[4].url %>"><%= left_links[4].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[3].url %>"><%= left_links[3].title %></a></li>
+  <li><strong>公司选择</strong></li>
+  <li><a target="_blank" href="<%= left_links[24].url %>"><%= left_links[24].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[23].url %>"><%= left_links[23].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[8].url %>"><%= left_links[8].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[9].url %>"><%= left_links[9].title %></a></li>
+  <li><strong>选购主材</strong></li>
+  <li><a target="_blank" href="<%= left_links[10].url %>"><%= left_links[10].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[11].url %>"><%= left_links[11].title %></a></li>
+</ul>
+<ul class="zxdp2011_r_list_ul2">
+  <li><strong>装修施工</strong></li>
+  <li><a target="_blank" href="<%= left_links[12].url %>"><%= left_links[12].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[13].url %>"><%= left_links[13].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[14].url %>"><%= left_links[14].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[15].url %>"><%= left_links[15].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[16].url %>"><%= left_links[16].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[17].url %>"><%= left_links[17].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[18].url %>"><%= left_links[18].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[7].url %>"><%= left_links[7].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[19].url %>"><%= left_links[19].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[20].url %>"><%= left_links[20].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[21].url %>"><%= left_links[21].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[22].url %>"><%= left_links[22].title %></a></li>
+  <li><strong>监理验收</strong></li>
+  <li><a target="_blank" href="<%= left_links[6].url %>"><%= left_links[6].title %></a></li>
+  <li><a target="_blank" href="<%= left_links[25].url %>"><%= left_links[25].title %></a></li>
+</ul>
+</div>
+<div class="f_r">
+<div class="zxdp2010_l_a"> <a target="_blank" class="zxdp2010_l_a1" href="http://zt.51hejia.com/zhuanti/5dajiaju/index.html">装修流程知识</a> <a target="_blank" class="zxdp2010_l_a2" href="http://zt.51hejia.com/zhuanti/zxyihan/index.html">失败的装修案例</a> <a target="_blank" class="zxdp2010_l_a3" href="http://zt.51hejia.com/zhuanti/zxgsduikou/index.html">如何选择合适的公司</a> </div>
+<div class="zxdp2011_l_talk">
+  <span class="f_r zxdp2010_cur_more"><a target="_blank" href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/theme">更多</a></span>
+  <h3>
+    <label><%= CITIES[@user_city_code.to_i] %>装修公司谈装潢</label>
+  </h3>
+  <% zh_api = hejia_promotion_items(NEW_DIANPING_HOME_API[TAGURLS[@user_city_code.to_i]]['装修公司谈装潢'],:select =>'title,url,description,image_url,price_ago,price_now',:limit =>6) %>
+  <% zh_first = zh_api.first %>
+  <div class="zxdp2011_l_talk_list"> <a target="_blank" href="<%= zh_first.url %>"><img src="http://d.51hejia.com/api<%= zh_first.image_url %>" width="210px" height="250px"></a>
+    <ul>
+      <li>
+        <div><strong><a target="_blank" href="<%= zh_first.url %>"><%= zh_first.title %></a></strong></div>
+        <div>发表：<a target="_blank" href="<%= zh_first.price_now %>"><%= zh_first.price_ago %></a></div>
+        <div><%= truncate_u(zh_first.description,46,'...') %><span><a target="_blank" href="<%= zh_first.url %>">[详细]</a></span></div>
+      </li>
+      <% zh_api.shift %>
+      <% zh_api.each do |zi| %>
+        <li><a target="_blank" href="<%= zi.url %>" title="<%= zi.title %>">·<%= truncate_for_zh(zi.title,28) %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+</div>
+<% end %>

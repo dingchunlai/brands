@@ -1,0 +1,96 @@
+<% stylesheet "http://assets.taobaocdn.com/app/chl/info/info_list.css"%>
+
+<div id="infoList">
+  <div class="grid-c crumb-nav"> <span>您当前的位置：</span>
+	<em><a href="http://www.taobao.com">淘宝网</a></em>
+	<em><a href="http://info.taobao.com/list/life/19/15/1915aa61-84a5-4a4b-a296-2411a2820e86_1.php">居家频道</a></em>
+	<em><a href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_1.php">恋恋家居</a></em> 
+	<%= TaobaoArticle::KEYWORD.invert[@keyword_id.to_i]%> </div>
+  <div class="grid-c2-s8f">
+    <div class="col-main">
+      <div class="main-wrap">
+        <div class="list-box">
+          		<% @articles.each do |article|%>
+							<% image_url = get_article_url_image_url(article.ID, article.FIRSTCATEGORY, article.CREATETIME, article.IMAGENAME) %>
+          <div class="list-item">
+            <h3><%= link_to h(article.title), taobao_article_path(@keyword_id, article.ID)%></h3>
+            <ul>
+
+              <li>发表时间：<%= article.CREATETIME.to_date%></li>
+            </ul>
+            <p class="abstract">
+							【导语】<%= article.SUMMARY %>
+							<%= link_to "查看全文",taobao_article_path(@keyword_id, article.ID) %>
+						</p>
+            <div class="pic">
+							<%= link_to image_tag(image_url,:alt=>article.title), taobao_article_path(@keyword_id, article.ID) if image_url%>
+						</div>
+            <div class="keywords">
+              <p>关键字： 
+								 <%HejiaIndexKeyword.get_keywords_by_index_id(article.id,8).each do |kw| %>
+	                  <%= link_to kw, zq_url(kw)%>&nbsp;&nbsp;&nbsp;
+	                <%end%>
+							</p>
+            </div>
+          </div>
+					<% end -%>
+          <ul id="art-list" class="item-list-simple" style="display:none;">
+          </ul>
+          <div class="list-box-bottom">
+				<%= will_paginate @articles, :class=>"page-navigation" %>
+				<!--
+            <div class="page-navigation" id="J_pageNav"><a class="page-up">上一页</a><span class="page-cur">1</span><a href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_2.php" target="_self">2</a><a href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_3.php" target="_self">3</a>...<a href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_499.php" target="_self">499</a><a href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_500.php" target="_self">500</a><a class="page-down" href="http://info.taobao.com/list/life/14/ab/14ab5047-3623-4cb9-aa1d-7d3c1423f922_2.php" target="_self">下一页</a></div>
+         	-->
+ </div>
+
+        </div>
+    
+</div>
+    </div>
+    <!--右栏 start-->
+    <div class="col-sub">
+      <div class="sub-module">
+        <h3>家居美图</h3>
+        <div class="sub-module-bd focus-tj-bd">
+          <ul class="focus-pic-list">
+						<%  @pictures.each do |picture|%>
+            <li>
+		<%= link_to image_tag("http://d.51hejia.com/api/#{picture.image_url}", :size => "110x90"),picture.url %>
+		<span><%= link_to truncate_u(picture.title,9), picture.url %></span>
+		</li>
+						<% end -%>
+          </ul>
+        </div>
+      </div>
+      <!--Start:24Hour点击排行榜-->
+      <!--Start:点击排行-->
+      <div class="sub-module">
+        <h3>24小时点击排行</h3>
+        <div class="sub-module-bd">
+          <p class="hours-rank-title"><span class="topic-title">标题</span></p>
+          <ol class="hours-rank-list">
+						<% @top_articles.each do |article|%>
+            <li><span><%= link_to truncate_u(article.title,20), article.url%></span></li>
+						<% end -%>
+          </ol>
+        </div>
+      </div>
+      <!--End:点击排行-->
+      <!--End:24Hour点击排行榜-->
+      <div class="sub-module">
+        <h3>热点专题</h3>
+        <div class="sub-module-bd poster-tj-bd">
+          <ul class="poster-list">
+						<% @hot_topics.each do |topic|%>
+            <li>
+							<%= link_to image_tag("http://d.51hejia.com/api/#{topic.image_url}",:alt=>topic.title, :size => "110x90"), topic.url %>
+							<span><%= link_to topic.title, topic.url %></span>
+						</li>
+						<% end -%>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--右栏 end-->
+  </div>
+</div>

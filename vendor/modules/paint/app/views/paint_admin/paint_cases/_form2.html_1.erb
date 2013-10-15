@@ -1,0 +1,144 @@
+<% javascript 'paint/uploadify.js',
+  'paint/case.js'
+%>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="http://member.51hejia.com/javascripts/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://member.51hejia.com/javascripts/jquery.livequery.js" type="text/javascript"></script>
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+  });
+</script>
+<% stylesheet 'paint/paint_case.css','paint/paint_case_admin.css'%>
+<% form_for [:paint_admin,@paint_case] ,
+  :html => {
+  :id=>'item_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'),
+  :method => (@paint_case.new_record? && :post || :put)} do |f| -%>
+  <ul id="case_form">
+    <li>标题: <%= f.text_field :title %></li>
+    <li>油漆工: <%= @paint_worker.USERNAME %></li>
+    <li>
+                  房主: <%= f.text_field :customer_name ,:size => 3 %>
+                  房主电话: <%= f.text_field :customer_tel ,:size => 11 %>
+    </li>
+    <li>
+                  省份<select name="paint_case[province]" id="t_province" >
+        <option value="">请选择</option>
+        <% Province.get_province_douleshi.each do |k,v| %>
+          <option value="<%= v %>" <%= 'selected' if @paint_case.province == v %> ><%= k %></option>
+        <% end %>
+      </select>
+                          城市<select name="paint_case[city]" id="t_city" >
+        <option value="">请选择</option>
+        <% unless @paint_case.city.blank?%>
+          <% City.get_cities_for_province_douleshi(@paint_case.province).each do |k,v| %>
+            <option value="<%= k %>" <%= 'selected' if @paint_case.city == k %> ><%= v %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </li>
+    <li>
+                  工程施工地址: <%= f.text_field :customer_address %>
+    </li>
+    <li>服务单号码:<%= f.text_field :server_number ,:size => 20 %>&nbsp;施工时间:<%= f.text_field :start_date,:size => 12,:class => "datepicker" %></li>
+    <li>
+                  房型: <%= f.select :room  ,PaintCase::ROOM.sort{|x,y| x[1] <=> y[1]} %> &nbsp;
+                  装修面积: <%= f.text_field :area ,:size=>3 %>平米
+    </li>
+    <li>
+                  装修类型:
+      <% PaintCase::RENOVATION.each do |v| %>
+        <%= f.radio_button :renovation,v %><%= v%>
+      <% end %>
+      <%= f.radio_button :renovation,"其它",:checked => renovation_is_other(@paint_case)[:result]%>其它(请注明):<input type="text" size="15" name="other_renovation" value="<%= renovation_is_other(@paint_case)[:this_value]%>" >
+    </li>
+    <li>
+                  墙面工艺: <%= f.select :wall_technology  , PaintCase::WALL_TECHNOLOGY  %> &nbsp;
+                  木漆工艺: <%= f.select :wood_paint_technology  ,PaintCase::WOOD_PAINT_TECHNOLOGY %>
+    </li>
+    <li style="width:500px;line-height:24px;">
+      <div style="float:left;">木器漆:</div><div style="float:left;"><% PaintCase::WOOD_PAINT.each do |k|%>
+          <%=check_box_tag "paint_case[wood_paint][]", k ,is_wood_paint(k,@paint_case) %><%= k%><br/>
+        <% end %>
+                          其它(请注明)<input type="text" name="other_wood_paint" value="<%= is_other_wood_paint(@paint_case) %>"></div>
+      <div style="clear:both;"></div>
+    </li>
+    <li>乳胶漆: <%= f.text_field :emulsion_paint %>
+    </li>
+    <li>
+                  技术分: <%= f.select :skill_score , -1.upto(8) %> &nbsp;
+                  服务分: <%= f.select :service_score , -1.upto(8) %> &nbsp;
+                  精华案例: <%= f.check_box :essence%>
+    </li>
+    <li>
+      <%= f.text_area :content ,:id=>"content_editor" ,:style=>"width:750px;height:300px" %>
+      <script type="text/javascript">
+        //<![CDATA[
+        CKEDITOR.replace('paint_case[content]', {
+          height: '300px',width: '750px'
+        });
+        //]]>
+        CKEDITOR.instances.content_editor.insertHtml($("content_editor").val());
+      </script>
+    </li>
+    <li class="scrj_tjtp clearfix">
+      <span  id="swfupload_button" ></span>
+      <span>提示：添加的图片可复选批量上传； 图片最佳尺寸500px*375px(长宽比4：3)； 单图大小不能超过200K</span>
+    </li>
+
+    <li class="scrj_caoz">
+      <table width="500" border="0" cellspacing="0" cellpadding="0" id="picyl" data_index="0">
+        <thead>
+          <tr>
+            <td width="55">操作</td>
+            <td width="100">文件名</td>
+            <td width="130">删除</td>
+            <td width="220">设定主图</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @paint_case.cloud_pictures.size > 0 && @paint_case.cloud_pictures.each_with_index do |picture,i| %>
+            <tr class="line">
+              <td width="55"><a href="<%= cloud_fs_url_for(picture.url)%>" target="_blank" class="scrj_czt02_cr insert_img_to_editor" title="将该图片插入至文档">插入</a></td>
+              <td width="210">
+                <span class="scrj_czt02_pic" style="float:left;">
+                  <a><img src="http://js.51hejia.com/img/zxdpimg/zxrj_picicon.gif" /></a>
+                  <%= picture.file_name %>
+                </span>
+              </td>
+              <td>
+                <a href="#" target="_self" id="<%= picture.id%>" title="删除图片" class="scrj_czt02_sc delete_picture">删除图片</a>
+              </td>
+              <td width="220">
+                <input name="pictures[][is_master]" type="radio" class="f_l master" value="<%= picture.image_id%>" <%= "checked='checked'" if picture.is_master == 1 %> />
+                <span class="scrj_czt02_jdt"><label style="width:155px;"></label></span>
+              </td>
+              <td>
+                <input type="hidden" name="pictures[][image_id]"  value = "<%= picture.image_id %>"/>
+                <input type="hidden" name="pictures[][image_md5]"  value = "<%= picture.image_md5 %>"/>
+                <input type="hidden" name="pictures[][image_ext]"  value = "<%= picture.image_ext %>"/>
+                <input type="hidden" name="pictures[][file_name]" value="<%= picture.file_name %>" />
+                <input type="hidden" name="pictures[][id]" value = "<%= picture.id %>" class="image_id"/>
+              </td>
+            </tr>
+
+          <% end -%>
+
+        </tbody>
+      </table>
+    </li>
+    <li id="save_time_tip"></li>
+    <li class="clearfix">
+      <%= hidden_field_tag :id,  @paint_case.id ,:id=>"id" %>
+      <%= f.hidden_field :status, :value => status  %>
+      <%= f.hidden_field :paint_worker_id, :value => paint_worker_id %>
+      <%= f.hidden_field :is_front, :value => '0' %>
+      <%= f.submit "保存为草稿" ,:class=>"bt2" ,:id=>"save_draft"  %> <br/>
+      <%= f.submit "正式发表" ,:class=>"bt2" %>
+    </li>
+  </ul>
+<% end -%>
+
+

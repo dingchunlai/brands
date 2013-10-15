@@ -1,0 +1,61 @@
+<%Impression.find(@tagged_brand.id, :limit => 15).each do |e|%>
+  <%=e%>
+<%end%>
+
+<% form_tag ajax_post_path(@brand.permalink, "impression_form_save"), :id=>'impression_form' do %>
+  请输入您的印象词：<%=text_field_tag :title, "", :style => "width: 150px;"%>
+  <%=submit_tag '添加'%>
+<% end %>
+
+最新添加印象：
+<span id="new_impression">
+  <%Impression.latest(@tagged_brand.id).each do |e|%>
+    <%=e%>
+  <%end%>
+</span>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript">
+  $('#impression_form').submit(function(event) {
+    var submitBtn = $(this).find(':submit');
+    submitBtn.attr('disabled', 'disabled');
+    $.ajax({
+      url: '<%=ajax_post_path(@brand.permalink, "impression_form_save")%>',
+      type: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+
+      error: function(request) {
+        var msg = request.responseText;
+        if(!msg || msg == '') msg = '很抱歉，处理发生错误，请稍后重试。';
+        alert(msg);
+        submitBtn.attr('disabled', null);
+      },
+
+      success: function(data) {
+        a = [];
+        for (i in data) a.push(data[i]);
+        $("#new_impression").text(a.join(" "));
+        submitBtn.attr('disabled', null);
+      }
+    });
+    event.preventDefault();
+    return false;
+  });
+</script>
+
+<br /><br /><br /><br /><br /><br />
+
+梁智敏  16:02:12
+首先：
+Impression.count(tagged_brand.id) 得出所有印象的得票数之和
+梁智敏  16:02:49
+这个你最好用个变量先保存一下，因为这个方法每次调用都会查一次redis，虽然说很快，减少点开支总是好的
+梁智敏  16:03:24
+然后通过：
+Impression.find tagged_brand.id, :limit => 10, :with_count => true
+梁智敏  16:03:58
+返回一个类似这样的数组：
+['小毛病太多', 10, '故障之王', 8, ...]
+梁智敏  16:04:30
+数字代表前面一个tag的得票数，用这个数除一下总数就是得票率了

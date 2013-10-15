@@ -1,0 +1,45 @@
+<%= top_bar :title => '业务员管理页',
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['业务员列表', admin_sales_profiles_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">业务员</th>
+      <th>角色</th>
+      <th>城市</th>
+      <th class="last">操作</th>
+    </tr>
+    <% @sales_users.each_with_index do |user, index| %>
+      <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+        <td><%= user.rname %></td>
+        <td><%= user.role_names.join("、") %></td>
+        <td>
+          <% if can? :update, SalesProfile %>
+            <% if user.profile.blank?  %>
+              <%= link_to '未绑定', new_admin_sales_profile_path(:user_id => user.id) %> 
+            <% else %> 
+              <%= user.profile.city.name %>
+            <% end %>
+          <% end %>
+        </td> 
+        <td>
+          <% if can? :update, SalesProfile %>
+            <% if user.profile.blank?  %>
+              <%= link_to '未设置', new_admin_sales_profile_path(:user_id => user.id) %> 
+            <% else %> 
+              <%= link_to "已设置", edit_admin_sales_profile_path(user.profile) %>
+            <% end %>
+          <% end %>
+        </td> 
+      </tr>
+    <% end %>
+  </table>
+  <% unless @sales_users.empty? -%>
+    <%= will_paginate @sales_users, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

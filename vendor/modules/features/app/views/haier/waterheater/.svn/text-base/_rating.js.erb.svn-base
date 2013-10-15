@@ -1,0 +1,13 @@
+(function() {
+    <%
+    h_like = $redis.hget("hejia:zhuanti:jiadian:Waterheater:haier:#{params[:item]}",'like')
+    h_nolike = $redis.hget("hejia:zhuanti:jiadian:Waterheater:haier:#{params[:item]}",'nolike')
+    %>
+  <% if %w[plan_first plan_second plan_third plan_four].include?(params[:item]) %>
+    $('#<%= params[:item] %>_like').replaceWith('<div id="<%= params[:item] %>_like"><span class="q_vote" style="width:<%= (h_like.to_f / (h_like.to_i + h_nolike.to_i).to_f * 100.0).round %>px;"></span><span class="font_w"><%= h_like %></span></div>');
+    $('#<%= params[:item] %>_nolike').replaceWith('<div id="<%= params[:item] %>_nolike"><span class="q_vote" style="width:<%= (h_nolike.to_f / (h_like.to_i + h_nolike.to_i).to_f * 100.0).round %>px;"></span><span class="font_w"><%= h_nolike %></span></div>');
+  <% elsif %w[wasterecovery zerowater solarenergy resolveplan].include?(params[:item]) %>
+    $('#<%= params[:item] %>_like').replaceWith('<div id="<%= params[:item] %>_like"><span class="q_vote" style="width:<%= h_nolike.to_i == 0 ? 60 : (h_like.to_f / (h_like.to_i + h_nolike.to_i).to_f * 60.0).round %>px;"></span><span class="font_w"><%= h_like %></span></div>');
+    $('#<%= params[:item] %>_nolike').replaceWith('<div id="<%= params[:item] %>_nolike"><span class="q_vote" style="width:<%= h_like.to_i == 0 ? 60 : (h_nolike.to_f / (h_like.to_i + h_nolike.to_i).to_f * 60.0).round %>px;"></span><span class="font_w"><%= h_nolike %></span></div>');
+  <% end %>
+})();

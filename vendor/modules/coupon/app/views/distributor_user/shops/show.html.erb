@@ -1,0 +1,64 @@
+<%= top_bar :title => "#{Distributor::Shop.human_name}管理",
+  :button => ["#{Distributor::Shop.human_name}编辑", edit_distributor_user_shop_path(@shop)],
+  :breadcrumbs => [
+  ['首页', distributor_user_index_path],
+  ["#{Distributor::Shop.human_name}管理", distributor_user_shops_path]
+]
+%>
+<div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">店面信息管理</th>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("name") %></strong></td>
+          <td class="last">
+            <%= @shop.name %>
+          </td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("city_id") %></strong></td>
+          <td class="last"><%= @shop.city_name %> </td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><span id="district_msg" style="color:red;"></span><strong><%= Distributor::Shop.human_attribute_name("district_id") %></strong></td>
+          <td class="last">
+            <%= @shop.district %>
+          </td>
+        </tr>
+        <tr id="business_zone_area">
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("business_zone_id") %></strong></td>
+          <td class="last"><%= @shop.business_zone %></td>
+        </tr>
+        <% if @mshop %>
+        <tr id="markets_area">
+          <td class="first" width="172"><strong>卖场</strong></td>
+          <td class="last">
+            <%= @mshop.market.name %>
+          </td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("market_shop_id") %></strong></td>
+          <td class="last"><%= @mshop.name %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("linkman") %></strong></td>
+          <td class="last"><%= @shop.linkman %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("address") %></strong></td>
+          <td class="last"><%= @shop.address %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= Distributor::Shop.human_attribute_name("telphone") %></strong></td>
+          <td class="last"><%= @shop.telphone %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first"></td>
+          <td class="last"><%= link_to '编辑', edit_distributor_user_shop_path(@shop) %></td>
+        </tr>
+      </table>
+    </div>

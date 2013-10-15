@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object
+END
+extending.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/extending.rb
+END
+blank.rb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/blank.rb
+END
+singleton_class.rb
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/singleton_class.rb
+END
+conversions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/conversions.rb
+END
+misc.rb
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/misc.rb
+END
+instance_variables.rb
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/instance_variables.rb
+END
+metaclass.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/object/metaclass.rb
+END

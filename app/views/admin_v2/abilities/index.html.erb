@@ -1,0 +1,85 @@
+<%=include_jquery_easy_validator%>
+
+<style type="text/css">
+  #datalist {
+    border-collapse:collapse;
+    border:1px solid #BED0E2;
+  }
+  #datalist th
+  {
+    text-align:center;
+    font-family:Verdana;
+    padding: 5px 15px 3px 15px;
+    letter-spacing: 12px;
+    background-color: #45719C;
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    border:1px solid white;
+  }
+  #datalist td {
+    color: #757575;
+    font-family:Verdana;
+    padding: 5px 8px 5px 8px;
+    letter-spacing: 1px;
+    font-size: 9pt;
+    border:1px solid #D9E3EE;
+  }
+  #datalist a {
+    color: #2853FF;
+    text-decoration: none;
+  }
+  #datalist a:hover {
+    color: #FD352B;
+    text-decoration: none;
+  }
+</style>
+
+<h1>角色权限管理 -> 《<%=RoleAbility::ROLES[@role_id]%>》权限列表</h1>
+
+<table id="datalist">
+
+  <tr>
+    <th>用户角色</th>
+    <th>操作类型</th>
+    <th>操作对象</th>
+    <th>管理</th>
+  </tr>
+ 
+  <%form_for RoleAbility.new, :url => admin_abilities_path, :html => {:id => 'ability_form', :method => :post} do |f|%>
+    <tr style="background-color: #C2CBE0">
+      <td><%=f.select :role_id, RoleAbility::ROLES.zip((0...RoleAbility::ROLES.length).to_a).unshift(['请选择','']), {}, :reg => '^\w+$', :tip => "用户角色必须选择"%></td>
+      <td><%=f.select :operation, RoleAbility::OPERATIONS.zip((0...RoleAbility::OPERATIONS.length).to_a).unshift(['请选择','']), {}, :reg => '^\w+$', :tip => "操作类型必须选择"%></td>
+      <td><%=f.select :object, [['请选择','']].concat(RoleAbility::OBJECTS), {}, :reg => '^\w+$', :tip => "操作对象必须选择"%></td>
+      <td>
+        <%=submit_tag '添加'%> 
+      </td>
+    </tr>
+  <%end%>
+
+
+
+  <% @abilitys.each do |ability| %>
+    <%form_for ability, :url => admin_ability_path(ability), :html => { :method => :put} do |f|%>
+      <tr>
+        <td><%=f.select :role_id, RoleAbility::ROLES.zip((0...RoleAbility::ROLES.length).to_a) %></td>
+        <td><%=f.select :operation, RoleAbility::OPERATIONS.zip((0...RoleAbility::OPERATIONS.length).to_a) %></td>
+        <td><%=f.select :object, RoleAbility::OBJECTS %></td>
+        <td>
+          <%=submit_tag '保存'%>
+          <%=link_to "删除", admin_ability_path(ability)+"?page=#{page}", :confirm =>"您确定要删除该记录吗？", :method => :delete %>
+        </td>
+      </tr>
+    <%end%>
+  <% end %>
+</table>
+
+<br />
+
+<%= will_paginate @abilitys , :previous_label => "上一页", :next_label => "下一页"%>
+
+<br />
+
+<%#=link_to '新建纪录', new_admin_ability_path, :target => '_blank'%>
+

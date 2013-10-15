@@ -1,0 +1,47 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '打印记录管理页',
+            :button => ['打印列表', admin_print_records_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['打印列表', admin_print_records_path],
+              ['新建打印设置']
+            ]
+%>
+<% form_for @print_record, :url => admin_print_records_path do |f| %>
+  <%= f.error_messages %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2">创建打印记录</th>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :month %></strong></td>
+        <td class="last"><%= f.text_field :month, :class => "text", :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => "请正确选择日期格式" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172"><strong><%= f.label :city %></strong></td>
+        <td class="last"><%= f.select :city, City.used_cities.map{|c| [c.name, c.pinyin]}.unshift(['-请选择-', '']), {}, :class => "text", :reg => '^\S+$', 
+          :tip => "请选择城市" %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :amount %></strong></td>
+        <td class="last"><%= f.text_field :amount, :class => "text", :reg => '^[1-9]\d*$', :tip => "不能为空 格式:不以0开头的全数字" %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= submit_tag "保存" %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+<div>
+
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    //加载日期元素插件
+    $("#print_record_month").datepicker({dateFormat: 'yy-mm-dd'});
+  });
+</script>

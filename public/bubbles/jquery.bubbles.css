@@ -1,0 +1,102 @@
+/*-- 泡泡 --*/
+.bubbles{overflow:hidden;position:relative;}
+.bubbles a{ blr:expression(this.onFocus=this.blur()); /*    IE Opera    */ outline:none;   /*    FF Opera    */display:block; background:url(jquery.bubbles_bg.gif) no-repeat 0 0; color:#666; font-weight:bold; text-align:center;line-height:120%;height:100%;}
+.bubbles a:hover{ text-decoration:none;outline:none;/*  FF Opera  */ cursor:pointer;}
+.bubbles a span{ font-size:12px; font-weight:400; display:block; padding:28% 5px 5px; line-height:14px; height:70%;}
+.bubbles a:link{color:#164A84;}
+.bubbles div{ position:absolute; float:left; overflow:hidden;}
+/*--橙黄色球--*/
+
+.bubbles .popo1_1{width:49px; height:49px; position:absolute; float:left;}
+.bubbles .popo1_1 a{ background-position:-273px -14px; line-height:49px;}
+.bubbles .popo1_1 a:hover{background-position:-645px -14px;}
+.bubbles .popo1_2{ width:57px; height:57px; position:absolute; float:left;}
+.bubbles .popo1_2 a{background-position:-216px -12px; line-height:57px;}
+.bubbles .popo1_2 a:hover{background-position:-586px -12px;}
+.bubbles .popo1_3{width:65px; height:65px; position:absolute; float:left;}
+.bubbles .popo1_3 a{ background-position:-152px -8px; line-height:65px;}
+.bubbles .popo1_3 a:hover{background-position:-516px -8px;}
+.bubbles .popo1_4{width:73px; height:73px; position:absolute; float:left;}
+.bubbles .popo1_4 a span{ padding-top:35%;}
+.bubbles .popo1_4 a{ background-position:-77px -4px; line-height:65px;}
+.bubbles .popo1_4 a:hover{background-position:-437px -4px;}
+.bubbles .popo1_5{width:81px; height:81px; position:absolute; float:left;}
+.bubbles .popo1_5 a span{ padding-top:38%;}
+.bubbles .popo1_5 a{background-position:3px 0; line-height:65px;}
+.bubbles .popo1_5 a:hover{background-position:-351px 0;}
+/*--紫色球--*/
+
+.bubbles .popo2_1{ width:49px; height:49px;}
+.bubbles .popo2_1 a{background-position:-273px -103px; line-height:49px;}
+.bubbles .popo2_1 a:hover{background-position:-648px -102px;}
+.bubbles .popo2_2{ width:57px; height:57px;}
+.bubbles .popo2_2 a{background-position:-216px -99px; line-height:57px;}
+.bubbles .popo2_2 a:hover{background-position:-586px -99px;}
+.bubbles .popo2_3{ width:65px; height:65px;}
+.bubbles .popo2_3 a{background-position:-152px -95px; line-height:65px;}
+.bubbles .popo2_3 a:hover{background-position:-516px -95px;}
+.bubbles .popo2_4{width:74px; height:74px;}
+.bubbles .popo2_4 a span{ padding-top:35%;}
+.bubbles .popo2_4 a{ background-position:-77px -91px; line-height:65px;}
+.bubbles .popo2_4 a:hover{background-position:-437px -90px;}
+.bubbles .popo2_5{width:83px; height:83px;}
+.bubbles .popo2_5 a span{ padding-top:38%;}
+.bubbles .popo2_5 a{ background-position:3px -86px; line-height:65px;}
+.bubbles .popo2_5 a:hover{background-position:-350px -86px;}
+/*--蓝色球--*/
+
+.bubbles .popo3_1{ width:49px; height:49px;}
+.bubbles .popo3_1 a{background-position:-271px -190px; line-height:49px;}
+.bubbles .popo3_1 a:hover{background-position:-647px -190px;}
+.bubbles .popo3_2{ width:57px; height:57px;}
+.bubbles .popo3_2 a{background-position:-216px -186px; line-height:57px;}
+.bubbles .popo3_2 a:hover{background-position:-586px -186px;}
+.bubbles .popo3_3{ width:65px; height:65px;}
+.bubbles .popo3_3 a{background-position:-151px -181px; line-height:65px;}
+.bubbles .popo3_3 a:hover{background-position:-515px -182px;}
+.bubbles .popo3_4{width:73px; height:73px;}
+.bubbles .popo3_4 a span{ padding-top:35%;}
+.bubbles .popo3_4 a{ background-position:-78px -178px; line-height:65px;}
+.bubbles .popo3_4 a:hover{background-position:-437px -178px;}
+.bubbles .popo3_5{ width:82px; height:82px;}
+.bubbles .popo3_5 a span{ padding-top:38%;}
+.bubbles .popo3_5 a{background-position:3px -174px; line-height:65px;}
+.bubbles .popo3_5 a:hover{background-position:-351px -174px;}
+/*--红色球--*/
+
+.bubbles .popo4_1{ width:49px; height:49px;}
+.bubbles .popo4_1 a{background-position:-271px -277px; line-height:49px;}
+.bubbles .popo4_1 a:hover{background-position:-647px -277px;}
+.bubbles .popo4_2{ width:57px; height:57px;}
+.bubbles .popo4_2 a{background-position:-216px -273px; line-height:57px;}
+.bubbles .popo4_2 a:hover{background-position:-586px -273px;}
+.bubbles .popo4_3{ width:65px; height:65px;}
+.bubbles .popo4_3 a{background-position:-151px -270px; line-height:65px;}
+.bubbles .popo4_3 a:hover{background-position:-516px -269px;}
+.bubbles .popo4_4{ width:73px; height:73px;}
+.bubbles .popo4_4 a span{ padding-top:35%;}
+.bubbles .popo4_4 a{background-position:-77px -265px; line-height:65px;}
+.bubbles .popo4_4 a:hover{background-position:-438px -265px;}
+.bubbles .popo4_5{width:82px; height:82px;}
+.bubbles .popo4_5 a span{ padding-top:38%;}
+.bubbles .popo4_5 a{ background-position:3px -262px; line-height:65px;}
+.bubbles .popo4_5 a:hover{background-position:-351px -261px;}
+/*--绿色球--*/
+
+.bubbles .popo5_1{ width:49px; height:49px;}
+.bubbles .popo5_1 a{background-position:-271px -363px; line-height:49px;}
+.bubbles .popo5_1 a:hover{background-position:-647px -363px;}
+.bubbles .popo5_2{ width:57px; height:57px;}
+.bubbles .popo5_2 a{background-position:-216px -359px; line-height:57px;}
+.bubbles .popo5_2 a:hover{background-position:-586px -359px;}
+.bubbles .popo5_3{ width:65px; height:65px;}
+.bubbles .popo5_3 a{background-position:-150px -354px; line-height:65px;}
+.bubbles .popo5_3 a:hover{background-position:-515px -355px;}
+.bubbles .popo5_4{ width:74px; height:74px;}
+.bubbles .popo5_4 a span{ padding-top:35%;}
+.bubbles .popo5_4 a{background-position:-78px -351px; line-height:65px;}
+.bubbles .popo5_4 a:hover{background-position:-437px -351px;}
+.bubbles .popo5_5{ width:82px; height:82px;}
+.bubbles .popo5_5 a span{ padding-top:38%;}
+.bubbles .popo5_5 a{background-position:3px -347px; line-height:65px;}
+.bubbles .popo5_5 a:hover{background-position:-351px -347px;}

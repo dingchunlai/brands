@@ -1,0 +1,23 @@
+<% title "【油漆工】申请成功_申请成为会员油漆工_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current margin10">
+      <h3>在线申请金刷子油工会员 </h3>
+      <div class="yg_sqjsz_txt">
+      	<div class="yg_success"><a href="<%= root_path %>" target="_self" title="返回"></a></div>
+	  </div>
+	 </div>
+	</div>
+	<div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10"><img src="http://js.51hejia.com/img/brandimg/ad01.jpg" /></div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+        <%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+	  

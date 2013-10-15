@@ -1,0 +1,236 @@
+<!--location_code-->
+<div class="width960">
+  <div class="diyq_location">您的位置：<%= link_to "首页", coupon_index_path, :target => '_blank' %> > <span><%= @city.name %><%= Coupon.human_name %>列表</span></div>
+</div>
+<div class="width960 clearfix margin10">
+  <div class="diyq_list_l f_l">
+    <script type="text/javascript">
+        $(function(){
+          $(".diyq_listl_slideimg a:first").show();
+          $(".diyq_listl_slidetxt li:first").addClass("active");
+          $(".diyq_listl_slidetxt li").mouseover(
+                  function(){
+                          $(this).addClass("active")
+                                  .siblings().removeClass("active");
+                          $(".diyq_listl_slideimg a").eq($(this).index())
+                                  .siblings().fadeOut().end().fadeIn();
+                                          }
+                                                                  );
+                                                                  
+          function switchImages() {
+            var nextLi = $(".diyq_listl_slidetxt li.active").next();
+            (nextLi.size() < 1 ? $(".diyq_listl_slidetxt li:eq(0)") : nextLi).mouseover();
+                                                          }
+          
+          setInterval(switchImages, 5000);
+        })
+    </script>
+    <% four_promotions = promotion_items("抵用劵:列表页:#{@city.pinyin}:切换抵用劵") %>
+    <div class="diyq_listl_slide margin10">
+      <div class="diyq_listl_slideimg"> 
+        <% 
+          four_promotions.each do |item|
+            coupon = Coupon.find_by_id item.title
+            unless coupon.blank?
+        %>
+          <a href="<%= item.url %>" target="_blank" title="<%= coupon.title %>"><img src="<%= item.image %>" alt="<%= coupon.title %>" /></a> 
+        <% 
+            end 
+          end 
+        %>
+      </div>
+      <div class="diyq_listl_slidetxt">
+        <ul>
+          <% 
+            four_promotions.each_with_index do |item, index|
+              coupon = Coupon.find_by_id item.title
+              unless coupon.blank?
+                shop = coupon.distributor_shop
+          %>
+          <li class="<% index == 0 ? 'active' : '' %>">
+            <h3><%= shop.name %>（<%= shop.address %>）</h3>
+            <p><span>共<strong><%= coupon.total_issue_number %></strong>张<%= Coupon.human_name %></span><%= coupon.title %></p>
+            <a class="left" href="<%= item.url %>" target="_blank" title="<%= coupon.title %>"></a>
+            <div class="diyq_listbtn"><a href="javascript:void(0);" title="点击短信下载" class="right" data-id="<%= coupon.id %>" data-title="<%= coupon.title %>"></a></div>
+          </li>
+          <% 
+              end
+            end
+          %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="djq_lcur margin10">
+      <%if [@tag_id, @pc_id, @brand_id, @district_id, @bz_id, @shop_id].sum > 0%>
+        <div class="djq_xuanzhong"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+          <td width="60" valign="top">您已选择：</td>
+          <td>
+            <%select_items_for_search.each do |item|%>
+              <div><label update-url="<%=item[:url]%>"><%=item[:title]%>：<span><%=item[:value]%></span></label></div>
+            <%end%>
+          </td>
+        </tr>
+          </table>
+        </div>
+      <%end%>
+
+      <%@seo_scopes = [@city.name, @keyword] unless @keyword.to_s.blank?%>
+      <%@seo_scopes && set_coupon_page_meta_data(
+        "#{@seo_scopes.join}，无条件现金抵用券，建材优惠券_和家网装修省钱狂频道",
+        "#{@seo_scopes.join(',')},优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券",
+        "#{@seo_scopes.join}，使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"
+      ) || set_coupon_page_meta_data%>
+
+      <div class="djq_lcurtxt">
+        <%if @tag_id==0 || @pc_id==0 || @brand_id==0%>
+          <div class="djq_tigyhq">
+            <h4>产品类别</h4>
+            <table width="720" border="0" cellspacing="0" cellpadding="0">
+              <%=render :partial => 'coupons/index/search_option',
+                :locals => {:name => '行业', :id => 'tag_id', :options => @tag_options, :limit => 22} %>
+              <%=render :partial => 'coupons/index/search_option',
+                :locals => {:name => '产品', :id => 'pc_id', :options => @pc_options, :limit => 22} %>
+              <%=render :partial => 'coupons/index/search_option',
+                :locals => {:name => '品牌', :id => 'brand_id', :options => @brand_options, :limit => 22} if @tag_id!=0 || @pc_id!=0%>
+            </table>
+          </div>
+        <%end%>
+        <%if @bz_id==0 || @district_id==0 || @shop_id==0%>
+          <div class="djq_tigyhq djq_tigyhq_hack">
+            <h4>区域卖场</h4>
+            <script type="text/javascript">
+              $(function() {
+                $('.djq_tgmaiclist').hide();
+                $('.djq_tgmaic').css("position", 'static');
+                $('.djq_tgmaic > a').mouseover(function() {
+                  $(this).parent().css("position", 'relative');
+                  $(this).next().show();
+                });
+                $('.djq_tgmaiclist').mouseover(function() {
+                  $(this).parent().css("position", 'relative');
+                  $(this).show();
+                });
+                $('.djq_tgmaic > a').mouseout(function() {
+                  $(this).parent().css("position", 'static');
+                  $(this).next().hide();
+                });
+                $('.djq_tgmaiclist').mouseout(function() {
+                  $(this).parent().css("position", 'static');
+                  $(this).hide();
+                });
+              });
+
+            </script>
+            <table width="720" border="0" cellspacing="0" cellpadding="0">
+              <%=render :partial => 'coupons/index/search_option',
+                :locals => {:name => '地区', :id => 'district_id', :options => @district_options, :limit => 22} %>
+              <% if @city.pinyin != 'nanjing' %>
+              <%=render :partial => 'coupons/index/search_option',
+                :locals => {:name => '商圈', :id => 'bz_id', :options => @bz_options, :limit => 22} %>
+              <% end %>
+              <%if @market_options%>
+                <%=render :partial => 'coupons/index/market_option',
+                  :locals => {:name => '卖场', :id => 'shop_id', :options => @shop_options, :market_options => @market_options, :limit => market_options_limit} %>
+              <%else%>
+                <%=render :partial => 'coupons/index/search_option',
+                  :locals => {:name => '分店', :id => 'shop_id', :options => @shop_options, :limit => 22} %>
+              <%end%>
+            </table>
+          </div>
+        <%end%>
+      </div>
+    </div>
+
+    <a name="paixu"></a>
+    <div class="daijq_lall">
+    	<h3>所有现金券</h3>
+        <div class="num"> 共有<span><%= @coupons.total_entries %></span>张现金券</div>
+        <% if @coupons.total_pages > 1 %>
+        <div class="pagination f_r">
+          <%= will_paginate @coupons , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+        </div>
+        <% end %>
+        <div class="djq_listtop clear">
+        <div class="djq_sort"> 排序方式： <a href="/0-0-0-0-0-0-2.html#paixu">下载次数</a><a href="/0-0-0-0-0-0-5.html#paixu">优惠比例</a> </div>
+      </div>
+    </div>
+    <div>
+      <script type="text/javascript">
+        $(function(){
+          $(".diyq_listtxt ul:first").show();
+                                  
+          $(".diyq_listimg").mouseover(
+                function(){
+                    if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+                                      });	
+          $(".diyq_listimg").mouseout(
+                function(){
+                    $(".diyq_coupon").hide();
+                                      });	
+          $(".diyq_coupon").mouseover(
+                function(){
+                    if(!$(".diyq_coupon").is(":animated")){$(".diyq_coupon").show();}
+                                      });	
+          $(".diyq_coupon").mouseout(
+                function(){
+                    $(".diyq_coupon").hide();
+                                      });
+          
+          $(".diyq_listbtn a").click(
+          function(){
+                  $(".diyq_sms").show(300);
+                  $(".diyq_smscont").show(300);
+                                  });
+                                          
+          $(".diyq_smscloseup a").click(
+          function(){
+                  $(".diyq_smscont").hide(300);
+                                  });	
+          $(".diyq_smsexpand a").click(
+          function(){
+                  $(".diyq_smscont").show(300);
+                                        });	
+        });
+      </script>
+      <div class="diyq_list clear">
+        <div class="diyq_listtxt clearfix">
+          <ul class="clearfix">
+          <% 
+            @coupons.each do |coupon| 
+              @coupon = coupon
+          %>
+            <%= render :partial => '/share/coupon', :object => @coupon %>
+          <% end %>
+          </ul>
+          <% if @coupons.total_pages > 1 %>
+          <div class="pagination f_r">
+            <%= will_paginate @coupons , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="diyq_list_r f_r">
+    <div class="margin10"><img src="http://img3.51hejia.net/img/diyongquan/diyq_phone.gif" width="190" height="68" /></div>
+    <%= render  :partial => '/share/title_search' %>
+    <%= render_cell :coupon, :one_week_top, :tag_id => 0 %>
+    <%= render_cell :coupon, :hot_coupons, :tag_id => 0, :city_id => @city.id, :limit => 5 %>
+    <!-- coupon_image_hover -->
+    <%= render :partial => '/share/coupon_image_hover' %>
+    <!-- coupon_download_pop -->
+    <%= render :partial => '/share/coupon_download_pop' %>
+  </div>
+</div>
+<%= render :partial => '/share/common_help' %>
+<script type="text/javascript">
+  $(function(){
+    $('label[update-url]').click(function(){
+      window.open($(this).attr('update-url'), '_top');
+    });
+
+  });
+</script>
+

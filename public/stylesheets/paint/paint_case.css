@@ -1,0 +1,12 @@
+#case_form li{
+  margin-top:10px;
+}
+#case_form{
+  margin-bottom:20px;
+}
+.errorFlag{
+  padding:1px 10px;
+  border:1px solid red;
+  background:#FFC2C4;
+  margin-left:5px;
+}

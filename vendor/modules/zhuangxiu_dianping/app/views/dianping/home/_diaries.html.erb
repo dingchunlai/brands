@@ -1,0 +1,32 @@
+<dt><%= title %>最热日记·案例</dt>
+<% diaries[0..2].each do |d| %>
+  <% diary = DecorationDiary.find_by_id(d.title) %>
+  <% unless diary.nil?%>
+    <dd>
+      <div class="zxdp2010_koubimg f_l"><a href="<%= diary_url(diary) %>" target="_blank"><img src="<%= diary.master_picture.url('50x50') %>" alt="<%= diary.title %>" /></a></div>
+      <div class="zxdp2010_koubtext f_r">
+        <h4><a href="<%= diary_url(diary) %>" target="_blank"><%= diary.title %></a></h4>
+        <p><%= truncate(strip_tags(diary.content),:length => 31, :omission => '')%></p>
+      </div>
+      <div class="zxdp2010_koubmenu clear">
+        <a href="<%= firm_url(:id => diary.deco_firm.id,:trailing_slash => "/") %>" target="_blank" class="f_r"><%= diary.deco_firm.name_abbr %></a>
+        <a href="<%= diary_url(diary) %>" target="_blank">查看<em>(<%= diary.pv%>)</em></a> 更新：<label><%= diary.order_time ? diary.order_time.strftime("%m-%d") : diary.updated_at.strftime("%m-%d")%></label>
+      </div>
+    </dd>
+  <% end %>
+<% end %>
+<% t_case = HejiaCase.find_by_ID(diaries[3].title) %>
+<% unless t_case.nil? %>
+  <dd>
+    <div class="zxdp2010_koubimg f_l"><a href="<%= case_url(:id => t_case.id) %>" target="_blank"><img src="<%= t_case.master_picture_url %>" alt="<%= t_case.NAME %>" /></a></div>
+    <div class="zxdp2010_koubtext f_r">
+      <h4><a href="<%= case_url(:id => t_case.id) %>" target="_blank"><%= t_case.NAME %></a></h4>
+      <p><%= truncate(strip_tags(t_case.INTRODUCE),:length => 31, :omission => '')%></p>
+    </div>
+    <div class="zxdp2010_koubmenu clear">
+      <a href="<%= firm_url(:id => t_case.deco_firm.id,:trailing_slash => "/") %>" target="_blank" class="f_r"><%= t_case.deco_firm.name_abbr %></a>
+      <a href="<%= case_url(:id => t_case.id) %>" target="_blank">查看<label>(<%= t_case.VIEWCOUNT%>)</label>
+      </a> 更新：<label><%= t_case.CREATEDATE.strftime("%m-%d")%></label>
+    </div>
+  </dd>
+<% end %>

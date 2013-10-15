@@ -1,0 +1,64 @@
+<% title "【油漆工】油漆工在线培训业务_提供油漆工在线培训服务_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_6 %>
+<% description PAINT_DESCRIPTION_6 %>
+<link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/messages_cn.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.validator.setDefaults({ 
+			onkeyup: false
+		});
+		$("#new_paint_training").validate();
+		$("#paint_training_hope_grade").change(function(){
+			if($("#paint_training_hope_grade").val() == '3'){
+				$("#grade_3").show();
+			}else{
+				$("#grade_3").hide();
+			}
+		});
+	});
+</script>
+<% javascript 'paint/jquery.hejia.city_select.js' %>
+<%= render :partial => '/shared/top_location', :locals => { :location => (link_to "油工培训申请" ,"/training",:target => '_self'), :location_end => "提交培训申请" }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_current margin10">
+      <h3>在线培训申请</h3>
+      <div class="yg_sqjsz_txt yg_zxpxsq">
+        <h4>填写您的申请信息：</h4>
+        <% form_for @paint_training , :url => '/online/training_create' do |f| %>
+		<% if @paint_worker.nil? %>
+		<%= render :partial => 'new_training', :locals => {:f => f}%>
+		<% else%>
+		<%= render :partial => 'member_training', :locals => {:f => f}%>
+		<% end %>
+          <h4>希望参加课程：</h4>
+        <div style="margin:5px 50px;">
+			<p>级别： <%= f.select :hope_grade, PaintTraining::HOPE_GRADE.sort{|x,y| x[1] <=> y[1]} %></p>
+				<ul id="grade_3" style="display:none;">
+         		<li style="float:none;">您是否试用过喷枪：<%=f.radio_button(:hope_spray_gun, 1 )%>是<%=f.radio_button(:hope_spray_gun, 0)%>否</li>
+				<li style="float:none;">您是否做过点睛/修色/擦色：<%=f.radio_button(:hope_brush, 1)%>是<%=f.radio_button(:hope_brush, 0)%>否</li>
+				</ul>
+			</div>
+          <div class="yg_sqjsz_btn clear">
+           	<%= f.submit "提交申请" ,:style => "cursor:pointer;"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+    <div class="yg_p1_r f_r">
+         <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

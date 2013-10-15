@@ -1,0 +1,38 @@
+<script>
+	$(document).ready(function(){
+	function isRightMobileNumber(m){
+		var patrn=/^0?1(3\d|4\d|5[012356789]|8[056789])\d{8}$/;
+		if (!patrn.exec(m)) return false
+		return true
+	}
+	$("#index_search").submit(function(){
+		var phone = $.trim($("#phone").val())
+		if(phone.length > 0){
+			if(isNaN(phone)){
+				alert("请填写正确的手机号");
+			}
+		}
+	});
+});
+</script>
+<div>
+	<form id="index_search" name="index_search" method="get" action="<%= paint_admin_paint_workers_path %>">
+	姓名：<input type="text" id="userbbsname"  name="userbbsname" value="<%=@userbbsname%>" style="width:50px;">
+	等级：<select name="grade" id="grade" style="width:60px;">
+				<option value="0">请选择</option>
+				<% Painter::GRADE.sort{|x,y| x[1] <=> y[1]}.each do |k,v| %>
+				<option value="<%= v %>" <%= "selected='selected'" if @grade.to_i == v %>><%= k %></option>
+				<% end %>	
+		 </select>
+	邮箱：<input type="text" id="email" name="email" value="<%=@email%>" style="width:80px;">
+	省份：<select name="province" id="province" style="width:65px;">
+				<option value="">请选择</option>
+                                <% Province.get_province_douleshi.each do |k, v| %>
+				<option value="<%= v %>" <%= 'selected' if @province == v %>><%= k %></option>
+				<% end %>
+		 </select>
+	手机：<input type="text" id="phone" name="phone" value="<%= @phone %>" style="width:80px;">
+	身份证：<input type="text" id="id_number" name="id_number" value="<%= @id_number %>" style="width:120px;">
+	<input type="submit" value="检索">
+	</form>
+</div>

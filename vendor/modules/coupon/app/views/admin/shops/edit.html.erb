@@ -1,0 +1,268 @@
+<%= include_jquery_easy_validator %>
+
+<%= top_bar :title => '店面管理',
+            :button => ['店面列表', admin_distributor_shops_path(@distributor_id)],
+            :breadcrumbs => [
+                    ['抵用券后台', coupon_admin_index_path],
+                    ["#{Distributor.id_to_title(@distributor_id)}", admin_distributor_shops_path(@distributor_id)],
+            ]
+%>
+
+<!--
+<div class="select-bar">
+  <label>
+    <input type="text" name="textfield" />
+  </label>
+  <label>
+    <input type="submit" name="Submit" value="Search" />
+  </label>
+</div>
+-->
+
+<% form_for :shop, :url => (@shop.new_record? && admin_distributor_shops_path(@distributor_id) || admin_distributor_shop_path(@distributor_id, @shop)),
+            :html => {:id=>'shop_form', :method => (@shop.new_record? && :post || :put)} do |f| %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">店面信息管理</th>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last">
+            <%= f.text_field :name, :reg => '^\S+$', :tip => "店面名称必须填写且不能包含空格" %>
+            <%#= f.text_field :name, :reg => '^[\u4e00-\u9fa5]+$', :tip => "必须填写且只允许是中文字符"%>
+          </td>
+        </tr>
+        <% if action_name=='edit' %>
+            <tr>
+              <td class="first" width="172"><strong><%= f.label :distributor_id %></strong></td>
+              <td class="last"><%= f.select :distributor_id, Distributor.all(:select => 'id, title').map { |r| [r.title, r.id] } %></td>
+            </tr>
+        <% end %>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last"><%= f.select :city_id, City.select_options %><input type="text" id="txt_city" name="txt_city" /><input type="button" id="btn_fetch_city" value="定位城市" /></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :district_id %></strong></td>
+          <td class="last">
+            <%= f.select :district_id, @shop.district_options, {}, :reg => '^\w+$', :tip => '地区必须选择' %>
+          </td>
+        </tr>
+        <tr id="business_zone_area">
+          <td class="first" width="172"><strong><%= f.label :business_zone_id %></strong></td>
+          <td class="last"><%= f.select :business_zone_id, @business_zone_options %></td>
+        </tr>
+        <tr id="markets_area">
+          <td class="first" width="172"><strong><label>卖场</label></strong></td>
+          <td class="last">
+            <%= select_tag 'market_list', options_for_select(@market_list_options) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :market_shop_id %></strong></td>
+          <td class="last"><%= f.select :market_shop_id, @market_shop_options %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :linkman %></strong></td>
+          <td class="last"><%= f.text_field :linkman %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :address %></strong></td>
+          <td class="last"><%= f.text_field :address %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :telphone %></strong></td>
+          <td class="last"><%= f.text_field :telphone, :reg => '(^(\d{2,4}[-_－—]?)?\d{3,8}([-_－—]?\d{3,8})?([-_－—]?\d{1,7})?$)|(^0?1[35]\d{9}$)', :tip => "请填写正确的电话格式" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first"></td>
+          <td class="last"><%= f.submit @shop.new_record? ? "添 加" : "更 新" %></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+    </div>
+<% end %>
+
+
+<script type="text/javascript">
+    $(function() {
+        //加载日期元素插件
+        //$("#coupon_activity_began_at").datepicker({dateFormat: 'yy-m-d'});
+        //$("#coupon_activity_end_at").datepicker({dateFormat: 'yy-m-d'});
+
+        //动态调整界面元素宽度和高度
+        $('tr').css('height', '35px');
+        $('textarea').css('width', '400px').css('height', '100px');
+        $('.hasDatepicker, #coupon_discount_amount, #coupon_return_amount, #coupon_priority').css('width', '75px');
+
+        $("#btn_fetch_city").click(function() {
+            if ($("#txt_city").val() == "") {
+                alert('请填写城市!');
+                $("#txt_city").focus();
+            } else {
+                var got = false;
+                $("#shop_city_id").css("background-color", "green");
+                $("#shop_city_id").children().each(function(i) {
+                    if ($(this).text() == $("#txt_city").val()) {
+                        got = true;
+                        $("#txt_city").attr("value", '');
+                        $("#shop_city_id").attr("selectedIndex", $(this).attr("index"));
+                        $("#shop_city_id").trigger('change');
+                    }
+                });
+                $("#shop_city_id").css("background-color", "");
+                if (!got) {
+                    alert('请填写正确的城市名称');
+                    $("#txt_city").focus();
+                }
+            }
+        });
+
+        $('#market_list').change(function(){
+            if ($(this).val() != "")
+            {
+                $('#shop_market_shop_id option').remove();
+                $('#shop_market_shop_id').append($('<option value="">数据查询中</option>'));
+                $.ajax({
+                    url: '/remote/market_shops_for_market/' + $(this).val(),
+                    type: 'get',
+                    dataType: 'json',
+                    error: function(request) {
+                        alert('系统异常,请联系管理员');
+                    },
+                    success: function(data) {
+                        $('#shop_market_shop_id option').remove();
+                        if (data.length == 0)
+                            $('#shop_market_shop_id').append($('<option value="">没有分店</option>'));
+                        else
+                            $('#shop_market_shop_id').append($('<option value="">请选择</option>'));
+                        for (var i = 0; i < data.length; i++) {
+                            $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#shop_market_shop_id');
+                        }
+                    }
+                });   
+            }
+        });
+
+        //城市-地区 联动选择
+        $('#shop_city_id').change(function() {
+            $('#shop_district_id option').remove();
+            $('#shop_district_id').append($('<option value="">数据查询中</option>'));
+            $.ajax({
+                url: '/remote/districts/' + $(this).val(),
+                type: 'get',
+                //data: {'distributor_id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert('系统异常,请联系管理员');
+                },
+
+                success: function(data) {
+                    $('#shop_district_id option').remove();
+                    if (data.length == 0) {
+                        $('#shop_district_id').append($('<option value="">没有地区</option>'));
+                    }
+                    else
+                    {
+                        $('#shop_district_id').append($('<option value="">请选择</option>'));
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#shop_district_id');
+                    }
+                    $('#shop_district_id').trigger('change');
+                }
+            });
+        });
+
+        //地区-商圈 及 地区-卖场分店 联动选择
+        $('#shop_district_id').change(function() {
+            //地区-商圈
+            $('#shop_business_zone_id option').remove();
+            $('#shop_business_zone_id').append($('<option value="">数据查询中</option>'));
+            $.ajax({
+                url: '/remote/business_zones/' + $(this).val(),
+                type: 'get',
+                //data: {'distributor_id' : $(this).val()},
+                dataType: 'json',
+                error: function(request) {
+                    alert('系统异常,请联系管理员');
+                },
+                success: function(data) {
+                    $('#shop_business_zone_id option').remove();
+                    $('#shop_business_zone_id').append($('<option value="">不在商圈内</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#shop_business_zone_id');
+                    }
+                    $('#shop_business_zone_id').trigger('change');
+                }
+            });
+        });
+
+        //商圈-卖场分店 联动选择 (同时判断地区)
+        $('#shop_business_zone_id').change(function() {
+            $('#shop_market_shop_id option').remove();
+            var district_id = $.trim($('#shop_district_id').val());
+            if (district_id==''){
+              alert('地区必须选择！');
+              return false;
+            }
+            $('#shop_market_shop_id').append($('<option value="">数据查询中</option>'));
+            $.ajax({
+                url: '/remote/market_shops/' + $(this).val() + '?district_id=' + district_id,
+                type: 'get',
+                //data: {'distributor_id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert('系统异常,请联系管理员');
+                },
+
+                success: function(data) {
+                    $('#shop_market_shop_id option').remove();
+                    if (data.length == 0)
+                        $('#shop_market_shop_id').append($('<option value="">没有分店</option>'));
+                    else
+                        $('#shop_market_shop_id').append($('<option value="">请选择</option>'));
+                    var shop_ids = [];
+                    for (var i = 0; i < data.length; i++) {
+                        shop_ids.push(data[i][1]);
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#shop_market_shop_id');
+                    }
+                    get_markets_by_shop_ids(shop_ids.join(','));
+                }
+            });
+        });
+
+        //取得卖场列表
+        function get_markets_by_shop_ids(shop_ids){
+          $('#market_list option').remove();
+          $('#market_list').append($('<option value="">数据查询中</option>'));
+          $.ajax({
+                url: '/remote/markets_by_market_shop_ids/?market_shop_ids=' + shop_ids,
+                type: 'get',
+                //data: {'distributor_id' : $(this).val()},
+                dataType: 'json',
+
+                error: function(request) {
+                    alert('系统异常,请联系管理员');
+                },
+
+                success: function(data) {
+                    $('#market_list option').remove();
+                    if (data.length == 0)
+                        $('#market_list').append($('<option value="">没有卖场</option>'));
+                    else
+                        $('#market_list').append($('<option value="">请选择</option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        $('<option value="' + data[i][1] + '">' + data[i][0] + '</option>').appendTo('#market_list');
+                    }
+                }
+            });
+        }
+    });
+</script>

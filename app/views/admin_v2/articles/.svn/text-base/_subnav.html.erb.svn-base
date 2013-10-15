@@ -1,0 +1,3 @@
+<ul class="vertical menu_padding">
+  <li><%= link_to '文章推广', admin_articles_path, :class => 'current' %></li>
+</ul>

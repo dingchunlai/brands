@@ -1,0 +1,41 @@
+<input type="hidden" id="cookie_id" value="<%= current_user.USERBBSID if user_logged_in? %>">
+<div style="display:none;" deco_frim_popedom="<%= @firm.popedom%>" id="deco_firm_others_show"></div>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $("#login_form").submit(function() {
+      if($("#user_name").val()== ""||$("#user_name").val().length ==0  ){
+        alert("请输入用户名");
+
+      }else if($("#password").val()== ""||$("#password").val().length ==0 ){
+        alert("请输入密码");
+      }else{
+        $("#login_submit").attr("disabled","disabled");
+        $.ajax({
+          type: "POST",
+          url:"/user_sessions/user_login",
+          dataType:"script",
+          data: jQuery(this).serialize(),
+          success: function(html){
+            $("#login_submit").removeAttr("disabled");
+            if(html == "error"){
+              alert("用户名或密码错误");
+              $("#password").val("");
+            }else if(html == "freeze"){
+              alert("您的帐户已暂被冻结，如有疑问可直接联系客服人员！");
+              $("#password").val("");
+            }else{
+              $("#login").css("display","none");
+              $("#login").attr("data-current-user-id","xxx");
+              $("#user_id").val(html);
+            }
+          }
+        });
+      };
+      return false;
+    });
+  });
+   
+	
+</script>
+
+ 

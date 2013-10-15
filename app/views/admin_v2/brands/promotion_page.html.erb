@@ -1,0 +1,19 @@
+<% is_new = @promotion_page.new_record? %>
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %> 
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > <%= link_to "推广页管理", promotion_pages_admin_brand_path(@brand, :tag_id => @tag.TAGID) %> > <%= is_new ? "新建" : "编辑" %> 推广页
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<% form_for @promotion_page, :url => (is_new ? create_promotion_page_admin_brand_path(@brand) : update_promotion_page_admin_brand_path(@brand)), :html => {:method => (is_new ? :post : :put), :id => 'promotion_page'} do |f| %>
+  <% if is_new %><%= hidden_field_tag "[promotion_page][type]", PromotionPage::TYPE_NAME['品牌页'] %><%else%><%= f.hidden_field :type %><% end %>
+  <fieldset>
+    <legend><%= is_new ? "新建推广页" : "编辑推广页" %></legend>
+    <ul class="vertical">
+      <li>页面位置:  <%= f.text_field :name %></li>
+      <li>页面描述:  <%= f.text_field :description %></li>
+      <li><%= submit_tag "保存" %></li>
+    </ul>
+<% end %>

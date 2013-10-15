@@ -1,0 +1,42 @@
+<% trainings = PaintTraining.mail_show %>
+<div>
+<h1>在线培训申请名单</h1>
+<table style="BORDER-COLLAPSE: collapse" borderColor="#000000" cellPadding="1" border="1">
+			<tr>
+				<td>省份</td>
+				<td>城市</td>
+				<td>姓名</td>
+				<td>电话</td>
+				<td>性别</td>
+				<td>邮箱</td>
+				<td>工龄</td>
+				<td>证书</td>
+				<td>学历</td>
+				<td>是否试用过喷枪</td>
+				<td>是否做过点睛/底擦色</td>
+				<td>课程</td>
+				<td>是否试用过喷枪(高级)</td>
+				<td>是否做过点睛/底擦色(高级)</td>
+				<td>申请时间</td>
+			</tr>
+			<% trainings.each do |t| %> 
+			<tr>
+				<td><%= Province.name_for_code(t.province) %></td>
+				<td><%= City.name_for_code(t.city) %></td>
+				<td><%= t.user_name %></td>
+				<td><%= t.phone %></td>
+				<td><%= Painter::GENDER.index(t.gender) %></td>
+				<td><%= t.email %></td>
+				<td><%= t.job_year %></td>
+				<td><%= Painter::CERTIFICATES.index(t.certificate) %></td>
+				<td><%= t.education %></td>
+				<td><%= t.spray_gun.to_i == 1 ? "是" : "否" %></td>
+				<td><%= t.brush.to_i == 1 ? "是" : "否" %></td>
+				<td><%= PaintTraining::HOPE_GRADE.index(t.hope_grade) %></td>
+				<td><%= t.hope_spray_gun.to_i == 1 ? "是" : "否" %></td>
+				<td><%= t.hope_brush.to_i == 1 ? "是" : "否" %></td>
+				<td><%= t.created_at.strftime("%Y-%m-%d") %></td>
+			</tr>
+			<% end %>
+</table>
+</div>

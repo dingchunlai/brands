@@ -1,0 +1,50 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title       => '合作伙伴管理页',
+            :button      => ['合作伙伴列表', admin_partner_ships_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['合作伙伴', admin_partner_ships_path]
+            ]
+%>
+<% form_for(@partner_ship, :url => admin_partner_ship_path(@partner_ship)) do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">修改合作伙伴信息</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :domain %></strong></td>
+          <td class="last"><%= f.text_field :domain, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :name %></strong></td>
+          <td class="last"><%= f.text_field :name, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :summary %></strong></td>
+          <td class="last"><%= f.text_field :summary, :class => "text" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :activity_begin_at %></strong></td>
+          <td class="last"><%= f.text_field :activity_begin_at, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :activity_end_at %></strong></td>
+          <td class="last"><%= f.text_field :activity_end_at, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+       $("#partner_ship_activity_begin_at").datepicker({dateFormat: 'yy-mm-dd'});
+       $("#partner_ship_activity_end_at").datepicker({dateFormat: 'yy-mm-dd'});
+    });    
+</script>

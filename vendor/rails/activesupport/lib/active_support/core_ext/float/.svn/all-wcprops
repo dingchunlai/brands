@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/float
+END
+rounding.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/float/rounding.rb
+END
+time.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/float/time.rb
+END

@@ -1,0 +1,12 @@
+<% cache "dianping:city_shouye:right_cuxiaohuodong:#{@user_city_code.to_i}:index", :expires_in => 5.minutes do %>
+<h3>最近促销活动</h3>
+<div id="<%= ([12117,12306].include? @user_city_code.to_i) ? "ScrollMe1" : "ScrollMe2" %>" class="zxdp2010_txt zxdp2011_huodong" style="<%= ([12117,12306].include? @user_city_code.to_i) ? "overflow: hidden;" : "overflow: hidden;height:350px;" %>">
+<ul>
+  <% @coupons.each do |coupon| %>
+  <li><a target="_blank" href="<%= two_coupon_urls(@user_city_code,coupon)%>"><img src="<%= coupon.banner %>" alt="<%= coupon.title %>" width="187" height="77" /></a><p><a href="<%=two_coupon_urls(@user_city_code,coupon)%>" title="<%= coupon.title %>"><%= truncate_for_zh(coupon.title,24) %></a></p></li>
+  <% end %>
+</ul>
+</div>
+<script type="text/javascript">new srcMarquee("ScrollMe1", 0, 1, 230, 550, 30, 5000, 0, 550)</script>
+<script type="text/javascript">new srcMarquee("ScrollMe2", 0, 1, 230, 350, 30, 5000, 0, 350)</script>
+<% end %>

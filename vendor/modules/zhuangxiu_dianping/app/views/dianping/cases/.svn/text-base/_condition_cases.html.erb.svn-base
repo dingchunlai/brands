@@ -1,0 +1,12 @@
+<div class="zxdp2010_cur margin10">
+  <h3><%= name %></h3>
+  <div class="zxdp2010_txt zxdp2010_txttop zxdp2010_kbtop">
+    <dl>
+      <% cases.each do |hcase| %>
+        <dd>
+          <a href="<%= hcase.url %>" target="_blank" title="<%= hcase.NAME %>"><%= truncate(hcase.NAME, 15) %></a>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

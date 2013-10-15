@@ -1,0 +1,113 @@
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(
+
+  ['_setAccount', 'UA-7619267-1'],
+  ['_setDomainName', '.51hejia.com'],
+  ['_addOrganic', "baidu", "kw"],
+  ['_addOrganic', "baidu", "word"],
+  ['_addOrganic', "soso", "w"],
+  ['_addOrganic', "3721", "name"],
+  ['_addOrganic', "yodao", "q"],
+  ['_addOrganic', "vnet", "kw"],
+  ['_addOrganic', "sogou", "query"],
+  ['_trackPageview']
+  );
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-12518263-3']);
+  ['_addOrganic', "baidu", "kw"];
+  ['_addOrganic', "baidu", "word"];
+  ['_addOrganic', "soso", "w"];
+  ['_addOrganic', "3721", "name"];
+  ['_addOrganic', "yodao", "q"];
+  ['_addOrganic', "vnet", "kw"];
+  ['_addOrganic', "sogou", "query"];
+
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script src="http://hm.baidu.com/h.js?413eb88661221537985a18b6638be957" type="text/javascript"></script>
+
+<!-- 预约单弹出框 -->
+<style type="text/css">
+  .gsl_yy2 td{
+    padding :2px 4px;
+  }
+  .gsl_yy2 h4 {
+    display: block;
+    height: 25px;
+    line-height: 25px;
+    margin: 2px 25px;
+  }
+</style>
+<div class="gsl_yy2"  style="position:absolute;left:0;top:1px;width:500px;background:url(http://js.51hejia.com/img/zxdpimg/art_10.jpg) repeat-x scroll 0 0 #FFFFFF">
+  <div><h4>预约单</h4></div>
+  <% form_for [:dianping, @deco_register], :html => {:id => "register_form"} do |f| -%>
+    <table width="80%" border="0" cellspacing="0" cellpadding="0" style="margin:20px auto">
+      <tr>
+        <td align="right" width="90">姓名：</td>
+        <td><%= f.text_field :name, :size => 23, :class => "required" %><span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="90">性别：</td>
+        <td><%= f.select :sex, DecoRegister::SEX ,{ :include_blank => "- 请选择 -"}, {:class => "required"} %><span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="90">所在城市：</td>
+        <td><%= f.text_field :in_city, :size => 23 %></td>
+      </tr>
+      <tr>
+        <td align="right" width="90">联系电话：</td>
+        <td><%= f.text_field :phone, :size => 23 , :class => "required"%><span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="90">E-mail：</td>
+        <td><%= f.text_field :email, :size => 23, :class => "required" %><span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="90">希望参观时间：</td>
+        <td><%= f.select :the_time_to_visit, DecoRegister::THE_TIME_TO_VISIT , :include_blank => "- 请选择 -"%></td>
+      </tr>
+      <tr>
+        <td align="right" width="90" valign="top">备注：</td>
+        <td><%= f.text_area :remark,:rows=>2,:cols => 25 %></td>
+      </tr>
+      <%= f.hidden_field :event_id, :value => params[:event_id] %>
+      <tr>
+        <td colspan="2" style="color:red;">温馨提示：请输入正确手机号，方便装修公司及时和您联系，谢谢！</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="gsl_btndiv">
+            <% firm_name = @firm.blank? ? '和家网' : @firm.name_zh %>
+            <%= f.hidden_field :firmname, :value => firm_name %>
+            <%= f.submit "预约", :class => "gsl_zjgd_btn f_l", 
+								:onclick =>"pageTracker._trackEvent('[#{@city_name}]在建工地', '预约', '#{firm_name}', 1);"  %>
+            <%= f.submit "返回", :class => "gsl_zjgd_btn f_r", :type => "button", :id => "close_box"%>
+          </div>
+        </td>
+      </tr>
+    </table>
+  <% end -%>
+</div>

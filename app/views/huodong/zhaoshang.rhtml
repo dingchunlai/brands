@@ -1,0 +1,20 @@
+<%set_page_meta_data '活动', '招商'%>
+
+<div class="b_width960 margin10">
+  <div class="b_zsjm">
+    <h3>招商加盟</h3>
+    <div class="b_zxjm_txt">
+      <ul class="clearfix">
+        <%PromotionCollection.published_items_for("招商加盟").each do |item|%>
+          <li>
+            <a href="<%=item.resource.promotion(:url)%>" target="_blank">
+              <img alt="<%=item.resource.promotion(:title)%>" border="0" src="<%=cloud_fs_url_for(item.resource.image_url)%>" />
+            </a>
+            <h4><a href="<%=item.resource.promotion(:url)%>" target="_blank"><%=item.resource.promotion(:title)%></a></h4>
+            <p><%=ul(item.resource.promotion(:description),66)%></p>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>

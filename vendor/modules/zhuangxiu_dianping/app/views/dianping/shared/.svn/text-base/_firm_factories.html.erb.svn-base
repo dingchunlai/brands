@@ -1,0 +1,29 @@
+<%
+  factories = CaseFactoryCompany.latest_factories(@user_city_code, 4)
+  if factories.size > 0
+%>
+<%= render :partial => "dianping/shared/firm_factory_pop" %>
+<div class="zxdp2011_mfcg margin10">
+  <h3>有哪些免费工地可以参观... </h3>
+  <ul>
+    <li>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="tit">
+          <td>在建工地</td>
+          <td width="60">户型</td>
+          <td width="75">开工时间</td>
+          <td width="61"></td>
+        </tr>
+      <% factories.each do |factory| %>
+        <tr class="txt">
+          <td><div><%= truncate(factory.NAME, 4, '') %></div></td>
+          <td><%= factory.FANGXING %></td>
+          <td><%= factory.CREATETIME.strftime("%Y-%m-%d") rescue Time.now.strftime("%Y-%m-%d") %></td>
+          <td><a href="/dianping/deco_registers/new?event_id=<%= factory.id %>" class="fancy_box">预约</a></td>
+        </tr>
+      <% end  -%>
+      </table>
+    </li>
+  </ul>
+</div>
+<% end -%>

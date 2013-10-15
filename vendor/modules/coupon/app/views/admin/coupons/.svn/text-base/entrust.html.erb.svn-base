@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>现金抵用券——委托发行确认单</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<!--<script type="text/javascript" src="http://jquery-jsonp.googlecode.com/files/jquery.jsonp-2.1.0.min.js"></script>-->
+<style type="text/css" media="all">
+*{margin:0;padding:0;}body{color:#333;}img{border:none;}li{list-style:none;}.f_l{float:left;}.f_r{float:right;}div,img{margin:0 auto;}.clearfix {zoom:1;}.clearfix:after {content: '\20'; display: block; clear: both;}.clear{clear:both;}
+#box{width:649px;}
+.print{padding:10px 20px;background:#eee;font-size:14px;}
+.header{border-bottom:1px solid #333;}
+.logo{width:98px; height:52px; overflow:hidden;margin-right:10px;}
+.info{height:20px;line-height:20px;margin-top:30px;}
+.content{padding:0 10px;}.content h1{text-align:center;padding:16px 0;}.content p{line-height:20px;}.content p.hack{text-align:right;position:absolute;bottom:0;right:0;margin-right: 15px}.content p.hack2{text-align:center;}.content table{margin:5px 0;}.content td{padding:5px 0;}.content td span{display:block;float:left;overflow:hidden;}.content td span.a{width:45px;}.content td span.b{width:59px;}.content td span.c{width:80px;}.content td span.d{width:171px;}.content td span.e{width:9px;text-align:center;}.content td label{border-bottom:1px solid #333;display:block;float:left;height:16px;}.content td label.a{width:189px;}.content td label.b{width:180px;}.content td label.c{width:315px;}.content td label.d{width:215px;}.content td label.e{width:128px;}.content td label.f{width:85px;}.content td label.g{width:584px;}.content em{display:block;border-bottom:1px dashed #333;height:1px;overflow:hidden;font-size:0;margin:5px 0;}
+.conthack p{padding:1px 0;}
+.diyq_listtxt{padding-bottom:5px;text-align:left;}.diyq_listtxt ul{width:236px;margin:0 auto;}.diyq_listtxt li{width:216px;height:251px;padding:5px 10px;position:relative;color:#333;}.diyq_listtxt li p {height:20px;line-height:20px;overflow:hidden;font-weight:normal;}
+.diyq_listno{position:absolute;top:5px;left:10px;height:13px;line-height:13px;overflow:hidden;font-family:Arial, Helvetica, sans-serif;color:#381805; }
+.diyq_listtit{position:absolute;top:18px;left:10px;width:160px;height:24px;line-height:24px;overflow:hidden;font-family:"微软雅黑";float:left;}.diyq_listtit a,.diyq_listtit a:hover {color:#381805; text-decoration:none;}
+.diyq_listimg{position:absolute;top:42px;left:10px;width:132px;height:92px;border:1px solid #dedede;padding:3px;float:left;margin:5px 0;}.diyq_listimg img{width:132px;height:92px;display:block;}.diyq_listimg a{display:block;}
+.diyq_listphack{position:absolute;top:152px;left:10px;}
+.diyq_listbtn{position:absolute;top:212px;left:10px;width:60px;height:23px;line-height:23px;text-align:center;margin:15px 0 0 84px;}.diyq_listbtn a,.diyq_listbtn a:hover{color:#381805;text-decoration:none;}
+.diyq_listdiy{position:absolute;top:5px;right:5px;width:85px;text-align:right;}.diyq_listdiy strong{color:#f00;display:block;width:75px;height:18px;line-height:18px;padding-right:10px;}
+.diyq_listimgbg{position:absolute;top:0;left:0;z-index:-1;}
+
+.info p{font-size:12px;}.info p span{font-size:12px;}
+.content h1{font-size:28px;}.content p{font-size:12px;}.content p span{font-size:12px;}.content td{font-size:14px;}
+.diyq_listtxt li p {font-size:12px;}
+.diyq_listno{font-size:10px;}
+.diyq_listtit{font-size:18px;}
+.diyq_listbtn a,.diyq_listbtn a:hover{font-size:12px;}
+.diyq_listdiy strong {font-size:12px;}
+</style>
+</head>
+<body>
+<div id="box">
+  <div class="print">
+    <input type="button" id="entrust_print" value="打印委托确认单" class="f_r" />
+    <span>操作提示:</span><%= link_to '重新生成图', entrust_regen_admin_coupon_path(params[:id]) %> (仅在现金券信息发生变更时使用)</div>
+  <div id="container">
+    <div class="header clearfix">
+      <div class="logo f_l"><img src="http://img1.51hejia.com/img/2010/headerimg.gif" /></div>
+      <div class="info f_l">
+        <p>和家网（上海）信息技术有限公司</p>
+      </div>
+      <div class="info f_r">
+        <p><span>宜山路439号七建大厦16层 电话：400 602 5151</span></p>
+      </div>
+    </div>
+    <div class="content">
+      <h1>现金抵用券——委托发行确认单</h1>
+      <p>兹委托和家网发行我公司“现金抵用券”，发行方式：互联网、DM印刷品，内容已经我方确认无误，特此确认。</p>
+      <p>一、网站列表样式</p>
+    </div>
+    <div class="diyq_listtxt">
+      <ul class="clearfix">
+        <li>
+          <div class="diyq_listno">NO.<%= @coupon.code %></div>
+          <div class="diyq_listtit"><a href="#" target="_blank"><%= @coupon.brand_industry_name %></a></div>
+          <div class="diyq_listimg"><a href="#" target="_blank" id="img_list_thumbnail">
+                  <% if @agreement.status == 1 %>
+                  <img src="<%= cloud_fs_domain('image') %><%= @agreement.list_thumbnail %>"/>
+                  <% else %>
+                    <font color="red" style="font-size: 6px">小图生成中...</font>
+                  <% end %>            
+          </a></div>
+          <div class="diyq_listphack clear">
+              <p><strong>总发行<%= @coupon.total_issue_number %>张 当前可用<%= @coupon.existing_number %>张</strong></p>
+              <p>经营范围：<%= @coupon.production_categories.map(&:short_name).join(" ")%></p>
+              <p>使用地址：<%= @coupon.distributor_shop.address %></p>
+          </div>
+          <div class="diyq_listbtn"><a href="javascript:void(0);">短信下载</a></div>
+          <div class="diyq_listdiy"><strong>抵用</strong>
+            <div class="f_r">
+                  <% @coupon.return_amount.to_s.split("").each do |num| %>
+                    <div style="width:12px;overflow:hidden;float:left;"><img src="http://img3.51hejia.com/img/diyongquan/<%= num %>.png" style="margin-left: -4px;"/></div>
+                    <% end %>
+                    <div style="width:13px;overflow:hidden;float:left;"><img src="http://img3.51hejia.com/img/diyongquan/yuan.png"  style="margin-left: -4px;"/></div>
+            </div>
+          </div>
+          <div class="diyq_listimgbg"><img src="http://img3.51hejia.com/img/diyongquan/diyq_rboxbg3.gif?123"></div>
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <p>1、本现金券供和家网网友在门店消费时无条件抵用现金__________元（满__________元起用，发行__________张）。</p>
+      <p>2、现金券使用方式：①手机短信 ②和家网的纸质现金券。（现金券如有版式调整无须再确认）</p>
+      <p>3、该现金券在和家网上免费发布，委托方按消费者凭券购物总额的3%支付佣金。<span>（每月5日前结清上月佣金）</span></p>
+      <p>4、和家网对“现金抵用券”的使用及兑现有监督权，任何恶意的不兑现行为，有权协调处理及客观公正的媒体曝光。</p>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="369"><span class="d">委托方公司名称（盖章）：</span><label class="a"></label></td>
+          <td width="260"><span class="c">行业/产品：</span><label class="b"></label></td>
+        </tr>
+        <tr>
+          <td><span class="a">地址：</span><label class="c"></label></td>
+          <td><span class="a">品牌：</span><label class="d"></label></td>
+        </tr>
+        <tr>
+          <td><span class="b">负责人：</span><label class="e"></label><span class="a">邮箱：</span><label class="e"></label></td>
+          <td><span class="c">电话/手机：</span><label class="f"></label><span class="e">/</span><label class="f"></label></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right">签约日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日</td>
+        </tr>
+      </table>
+    </div>
+    <div class="content"><em class="hack"></em></div>
+    <div class="content conthack">
+    	<div style="position:relative;height:42px;"><p><strong class="f_l" style="width:19px;">◆</strong><strong class="f_l" style="display:block;width:610px;_width:608px;">为了扩大用户量，和家网将每月印刷3万册DM现金券线下推广，发行渠道： ①12个建材大卖场；②每月新交房小区；③每月装修类展会。</strong></p>
+        <p class="hack"><strong>贵公司是否需要DM推广？</strong> □ 需要&nbsp;&nbsp;&nbsp;□ 不需要</p></div>
+        <div><p><strong class="f_l" style="display:block;width:19px;">&nbsp;&nbsp;</strong><strong class="f_l" style="display:block;">以下为1/4版DM样式，您选择DM广告版面：</strong><span class="f_l"> □ 1/4版(<%= (@coupon.tag_id==44590) ? "1000" : "400" %>元/期)<% if @coupon.tag_id != 44590 %>&nbsp;&nbsp;&nbsp;□ 1/2版(800元/期)&nbsp;&nbsp;&nbsp;□ 整版(1600元/期)<% end %></span></p></div>
+        <p class="hack2 clear">
+            <% if @agreement.status == 1 %>
+                <img src="<%= cloud_fs_domain('image') %><%= @agreement.image_url %>" width="629" height="215"/>
+            <% else %>
+                <font color="red">图片生成中,请稍后....(系统自行检测,无须刷新页面)</font>
+            <% end %>
+        </p>
+      <div><p>
+        <strong class="f_l" style="display:block;width:19px;">◆ </strong><strong class="f_l" style="display:block;">是否需要会员服务(在网页上增加企业介绍、装修日记和网友点评)：</strong>
+         □ 需要(<%= (@coupon.tag_id==44590) ? "3000" : "600" %>元/月)&nbsp;&nbsp;&nbsp;□ 不需要</p></div>
+    </div>
+    <div class="content">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><span class="a">备注：</span><label class="g"></label></td>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+  var ajax_interval_id = null;
+  var img_host = '<%= cloud_fs_domain('image')%>';
+
+  function check_status(id)
+  {
+      $.ajax({
+          url: '/remote/entrust/',
+          type: 'get',
+          data: {'id' : id, "rnd" : Math.random()},
+          dataType: 'json',
+          error: function(request) {
+              alert("请联系管理员");
+          },
+
+          success: function(data) {
+              if (data.status.toString() == "1") {
+                 $("#img_list_thumbnail").html('<img src="' + img_host + data.list_thumbnail + '" width="132" height="94"/>');
+                 $(".hack2").html('<img src="' + img_host + data.image_url + '" width="629" height="215"/>');
+                 window.clearInterval(ajax_interval_id);
+                 if (confirm('是否生成前端页?')) {
+                     $.ajax({
+                         async:false,
+                         url: 'http://youhui_php.51hejia.com/coupon_html/make_html.php',
+                         type: 'GET',
+                         dataType: 'jsonp',
+                         data: { "couponid" : <%= @coupon.id %>, "rnd" : Math.random() },
+                         timeout: 5000,
+                         success: function(json) {
+                             if(json.status) {
+                                alert('前端页生成成功!');
+                             } else {
+                                alert('前端页生成失败!'); 
+                             }
+                         },
+                         error: function(xhr) {
+                             //jsonp 方式此方法不被触发
+                             //请求出错处理
+                             alert("请求出错(请检查相关度网络状况.)");
+                         }
+                     });
+                 }
+              }
+          }
+      });
+  }
+
+  $(function() {
+      $("#entrust_print").click(function(){
+        try{
+            var print_range = $('#container').html();
+            window.document.body.innerHTML = print_range;
+            window.print();
+        } catch(e){
+            alert('打印异常!');
+        }
+      });
+
+  });
+
+  // 每隔 一定时间确认一次生成图状态
+  <% if @agreement.status != 1 %>
+    ajax_interval_id = window.setInterval("check_status('<%= @agreement.id %>');", 15 * 1000);
+  <% end %>
+
+</script>
+</body>
+</html>

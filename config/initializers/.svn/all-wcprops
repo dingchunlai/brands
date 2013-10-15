@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/282/51hejia/repos/brands/release/config/initializers
+END
+inflections.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/inflections.rb
+END
+features.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/features.rb
+END
+will_paginate.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/will_paginate.rb
+END
+i18n.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/i18n.rb
+END
+001_rails_hack.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/001_rails_hack.rb
+END
+hejia.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/282/51hejia/repos/brands/release/config/initializers/hejia.rb
+END
+zhuangxiuzixun_api_promoted.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/zhuangxiuzixun_api_promoted.rb
+END
+api_promoted.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/api_promoted.rb
+END
+mail.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/238/51hejia/repos/brands/release/config/initializers/mail.rb
+END
+dalli.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/dalli.rb
+END
+backtrace_silencers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/backtrace_silencers.rb
+END
+002_redis.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/002_redis.rb
+END
+erubis.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/erubis.rb
+END
+api_promotion_mapping.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/api_promotion_mapping.rb
+END
+dianping_api_promoted.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/dianping_api_promoted.rb
+END
+hoptoad.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/hoptoad.rb
+END
+cache.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/cache.rb
+END
+promotable.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/promotable.rb
+END
+resque.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/resque.rb
+END
+new_rails_defaults.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/new_rails_defaults.rb
+END
+html_meta.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/html_meta.rb
+END
+paint.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/paint.rb
+END
+mime_types.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/mime_types.rb
+END
+brand_show_config.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/brand_show_config.rb
+END
+subdomain_fu.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/subdomain_fu.rb
+END
+constants.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/config/initializers/constants.rb
+END

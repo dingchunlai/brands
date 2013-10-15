@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/authentication_and_authorization/app/models/ability
+END
+authority.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/authentication_and_authorization/app/models/ability/authority.rb
+END
+permission.rb
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/authentication_and_authorization/app/models/ability/permission.rb
+END
+user.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/authentication_and_authorization/app/models/ability/user.rb
+END
+role.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/authentication_and_authorization/app/models/ability/role.rb
+END

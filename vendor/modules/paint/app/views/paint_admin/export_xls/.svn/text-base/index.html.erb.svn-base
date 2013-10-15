@@ -1,0 +1,74 @@
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+</script>
+<style type="text/css">
+	.export_ul	{margin:5px 0;padding:10px;border:1px solid #f60;width:750px;}
+	.export_ul li{list-style:none;padding:5px 0;}
+	.export_ul em{color:red;}
+</style>
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>数据导出</h1>
+  <div class="breadcrumbs">数据导出 / 数据导出页面</div>
+</div>
+<div>
+	<div class="clearfix">
+		<ul class="export_ul">
+			<li>
+				<form method="get" action="/paint_admin/export/xls_paint_workers">
+					油漆工导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="hidden" name="is_applicant" value="1">
+					<input type="submit" value="导出">
+				</form>
+				</li>
+			<li>
+				<form method="get" action="/paint_admin/export/xls_paint_workers">
+					油漆工申请列表 导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="hidden" name="is_applicant" value="2">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+			<li>
+				<form method="get" action="/paint_admin/export/xls_cases">
+					案例导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+			<li>
+				<form method="get" action="/paint_admin/export/xls_contacts">
+					服务中心导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+			<li>
+				<form method="get" action="/paint_admin/export/xls_sends">
+					在线派遣导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+			<li>
+				<form method="get" action="/paint_admin/export/xls_training">
+					在线培训申请导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+                        <li>
+				<form method="get" action="/paint_admin/export/xls_concerned_paint">
+					关注油漆施工质量用户导出：开始时间<input type="text" class="datepicker" name="start_date" size="10">
+					结束时间<input type="text" name="end_date" class="datepicker" size="10">
+					<input type="submit" value="导出">
+				</form>
+			</li>
+			<li><em>*注：不选择时间则默认全部</em></li>
+		</ul>
+	</div>
+</div>

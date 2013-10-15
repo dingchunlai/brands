@@ -1,0 +1,32 @@
+<%= top_bar :title => '打印预览页面',
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['打印列表', admin_print_records_path],
+              ['打印预览页面']
+            ]
+%>
+
+<div class="select-bar" >
+  <span style="margin-left: 50px; center;font-size: 15px;color: #461B7E"> 印刷月份信息
+  <%= PrintRecord.human_attribute_name("month") %> : <%= @print_record.month.strftime('%Y年%m月') %> 
+  <%= PrintRecord.human_attribute_name("amount") %> : <%= @print_record.amount %></span>
+</div>
+
+<% unless @print_record.tag_amounts.blank? %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <% @print_record.tag_amounts.each do |tag_amount| %>
+        <tr class="bg">
+          <td><%= tag_amount.tag && tag_amount.tag.TAGNAME || '---' %></td>
+          <td><%= tag_amount.amount %></td>
+        </tr>
+      <% end %>
+        <tr class="bg">
+          <td colspan="2"><% if can? :print, @print_record %><%= button_to "确认打印", print_admin_print_record_path(@print_record) %>
+          <%= button_to "取消打印", cancel_admin_print_record_path(@print_record) %><% end %></td>
+        </tr>
+   </table>
+  </div>   
+<% end %>

@@ -1,0 +1,60 @@
+<%= render :partial => "sub_menu" %>
+<div class="top-bar">
+    <h1>回收站</h1>
+	<div class="breadcrumbs">油漆工管理 / 回收站</div>
+</div>
+<script>
+  $(document).ready(function(){
+	$(".worker_table tr:odd").addClass("odd");
+	$(".worker_table tr:even").addClass("even");
+	$('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+  });
+</script>
+<style type="text/css">
+	.worker_table td{height:30px;line-height:30px;padding:0 4px;}
+	.worker_table .odd{background:#fff;}
+	.worker_table .even{background:#dedede;}
+</style>
+<div class="clearfix">
+	<div><%= show_flash_message%></div>
+	<div class="select-bar"></div>
+	<div>
+   <% form_tag "/paint_admin/paint_workers/regain",:method => "post" do%>
+	<table width="880" class="worker_table">
+	<tr>
+		<td><input type="checkbox" id="select_all"></td>
+		<td>用户名</td>
+		<td>姓名</td>
+		<td>性别</td>
+		<td>城市</td>
+		<td>等级</td>
+		<td>手机</td>
+		<td>邮箱</td>
+		<td>身份证</td>
+		<td>申请日期</td>
+		<td>操作</td>
+	</tr>
+	<% @paint_workers.each do |worker| %>
+	<tr>
+		<td><input type="checkbox" name="painter_ids[]" class="check_box" value="<%=worker.painter.id%>"></td>
+		<td><%= worker.USERNAME %></td>
+		<td><%= worker.USERBBSNAME %></td>
+		<td><%= Painter::GENDER.index(worker.painter.gender) %></td>
+		<td><%= City.name_for_code(worker.painter.city) %></td>
+		<td><%= Painter::GRADE.index(worker.painter.grade)%></td>
+		<td><%= worker.USERBBSMOBELTELEPHONE %></td>
+		<td><%= worker.USERBBSEMAIL %></td>
+		<td><%= worker.painter.id_number %></td>
+		<td><%= worker.painter.created_at.strftime("%Y-%m-%d") %></td>
+		<td><% if can? :update, :paint_workers %><%= link_to "编辑" , edit_paint_admin_paint_worker_path(worker.id)%>&nbsp;|&nbsp;<% end %>
+			<% if can? :recycle, :paint_workers %><%= link_to "恢复", "/paint_admin/paint_workers/regain?painter_ids[]=#{worker.painter.id}" %><% end %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<input type="submit" value="批量恢复" >
+		<% end %>
+	</div>
+</div>

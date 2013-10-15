@@ -1,0 +1,99 @@
+<%= show_flash_message %>
+<div class="search">
+  <% form_tag admin_promotion_collections_path, :method => :get do %>
+  <div style="line-height: 35px;">
+      名称或代号：<%= text_field_tag :search, @search, {:size => 13} %>&nbsp;&nbsp;
+      <%= submit_tag '搜索' %>
+    </div>
+  <% end %>
+</div>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @collections, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+<table border="1" >
+  <tr style="height:22px;">
+    <th>推广位名称</th>
+    <th>代号</th>
+    <th>截字</th>
+    <th>类别</th>
+    <th>推广项数</th>
+    <th>推广项</th>
+    <th>操作</th>
+  </tr>
+  <%@collections.each do |collection|%>
+  <tr style="height:22px;">
+      <td style="width:250px;">
+          <%=link_to collection.name, admin_promotion_items_path(collection.code), :target => '_blank'%>
+      </td>
+      <td style="width:300px;"><%=collection.code%></td>
+      <td style="width:40px;"><%=collection.chars_size%></td>
+      <td style="width:100px;"><%=Hejia::Promotable.all[collection.item_type]%></td>
+      <td style="width:50px;">
+        <b><%=collection.items_length%></b> / <%=collection.size%>
+      </td>
+      <td>
+        <%=link_to '管理', admin_promotion_items_path(collection.code), :target => '_blank'%>
+      </td>
+      <td>
+        <%=link_to '编辑', edit_admin_promotion_collection_path(collection.id), :target => '_blank'%>
+      </td>
+    </tr>
+  <%end%>
+</table>
+<div style="padding: 10px;">
+  <%= paginate_content = will_paginate @collections, :previous_label => "上一页", :next_label => "下一页" %>
+</div>
+<script type="text/javascript">
+  (function() {
+    function enableFormValidation() {
+      $('form').submit(function(event) {
+        var checked = false;
+        alert($(this).children().size());
+        $(this).find(':input').each(function() {
+          alert($(this).val());
+          if($(this).val() && $(this).val() != '') {
+            checked = true;
+          }
+        });
+        if(checked) { return true }
+        else {
+          event.preventDefault();
+          alert('f');
+          return false;
+        }
+      });
+    }
+		
+    $(function() {
+      // enableFormValidation();
+    });
+  })();
+</script>
+<!-- TABLE样式 -->
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+    background-color: #FFC;
+    text-align: center;
+  }
+
+  /* ]]> */
+</style>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <title>品牌库管理后台</title>
+    <meta charset="utf-8" />
+    <%= javascript_include_tag 'html5' %>
+    <%= stylesheet_link_tag 'admin_v2' %>
+    <link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <%= yield :html_head %>
+  </head>
+  <body>
+    <div id="brand_admin_page">
+      <div id="brand_admin_header">
+        <br />
+        <ul class="horizontal" style="padding-left: 50px;">
+          <li><%= link_to "首页", admin_index_index_path %> </li>
+          <li><%= link_to "文章推广", admin_articles_path %> </li>
+          <li><%= link_to '促销活动', admin_promotions_path%></li>
+          <li><%= link_to '类别管理', admin_production_categories_path%></li>
+          <li><%= link_to '产品系列管理', admin_chanpinxilie_path%></li>
+          <li><%= link_to '推广位', admin_promotion_pages_path%></li>
+          <li><%= link_to "经销商后台", coupon_admin_index_path %> </li>
+          <li><%= link_to '权限管理', admin_web_permissions_path %></li>
+          <li><%= link_to '评论管理', "/admin_v2/comments/all" %></li>
+        </ul>
+        <br /><br />
+      </div>
+      <div id="brand_admin_lefter">
+        <%= render_subnav %>
+      </div>
+      <div id="brand_admin_righter">
+        <% content_for :navigation do  %>
+          <span>当前位置：</span>
+          <%= link_to "首页", admin_index_index_path %> > 评论管理页面
+        <% end %>
+
+        <div>
+          <h3>搜索</h3>
+          <% form_tag "/admin_v2/comments/all" do %>
+            <%= text_field_tag :keyword %>
+            <%= submit_tag "搜索" %>
+          <% end %>
+        </div>
+
+        <%= show_flash_message %>
+        <div style="padding: 10px;">
+          <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+        </div>
+        <table>
+          <tr>
+            <th>编号</th>
+            <th>标题</th>
+            <th>品牌</th>    
+            <th>内容</th>
+            <th>时间</th>
+            <th>用户</th>
+            <th>好评/差评</th>
+            <th>操作</th>
+          </tr>
+          <% @comments.each do |comment|%>
+            <tr>
+              <td style="width:40px;"><%= comment.id %></td>
+              <td><%= link_to ul(comment.title, 10), admin_brand_comment_path(comment.tagged_brand.brand, comment, :tag_id => comment.tagged_brand.tag_id), :title => comment.title rescue "" %></td>
+              <td><%= link_to ul(comment.tagged_brand.brand.name_zh, 10), admin_brand_comment_path(comment.tagged_brand.brand, comment, :tag_id => comment.tagged_brand.tag_id) rescue "" %></td>
+              <td><%= link_to ul(comment.body, 20), admin_brand_comment_path(comment.tagged_brand.brand, comment, :tag_id => comment.tagged_brand.tag_id), :title => comment.body rescue "" %></td>
+              <td><%= comment.created_at.strftime("%Y-%m-%d") %></td>
+              <td><%= comment.user_name  %></td>
+              <td><%= comment.remark_zh %></td>
+              <td style="width:50px;"><%=link_to '删除', admin_brand_comment_path(comment.tagged_brand.brand, comment, :tag_id => comment.tagged_brand.tag_id)+"?page=#{params[:page]}", :method => :delete, :confirm => "您确定要删除这条点评吗？" rescue "" %></td>
+            </tr>
+          <%end%>
+        </table>
+        <div style="padding: 10px;">
+          <%= paginate_content = will_paginate @comments, :previous_label => "上一页", :next_label => "下一页" %>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

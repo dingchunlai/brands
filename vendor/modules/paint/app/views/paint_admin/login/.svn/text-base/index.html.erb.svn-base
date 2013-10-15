@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8">
+	<title>管理登录</title>
+	
+	<link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+	<style type="text/css" media="screen">
+		body{background-color:#ccc;}
+		#login_area{border:1px solid #333;
+			margin-top:200px;}
+		#login_area label{float:right;}
+		#submit{float:right;}
+		#login_area{background-color:#E6E6E6;}
+	</style>
+	
+	<script type="text/javascript" charset="utf-8">
+	jQuery.preventDefaultEvent = function(callback) {
+	  return function(event) {
+	    callback.apply(this);
+	    event.preventDefault();
+	    return false;
+	  }
+	}
+	
+		function login_callback(arg) {
+      if(arg == 'error') {
+        alert('帐号有误，请重新输入。');
+      } else {
+        window.location.href="/paint_admin/home";
+      }
+    }
+
+		jQuery(document).ready(function($) {
+			
+			$('#login_form').submit($.preventDefaultEvent(function(event) {
+				if ($("#user_name").val().length == 0 ||$("#password").val().length == 0  ) {
+					alert("用户密码不能为空");
+					return false;
+				};
+	      $.ajax({
+	        dataType: 'jsonp',
+	        jsonpCallback: 'login_callback',
+	        url: $(this).attr('action'),
+	        data: $(this).serialize(),
+	        error: function() {
+	          alert('很抱歉，发生未知错误，请稍后重试。')
+	        }
+	      });
+	    }));
+	
+		});
+		
+	</script>
+	
+</head>
+<body>
+	<% form_tag "http://api.51hejia.com/sessions/user_login" , :id=>"login_form" ,:method=>:post do %>
+	  <table border="0" cellspacing="5" cellpadding="5" id="login_area" align="center">
+			<tr><th colspan="2">油漆涂料后台用户登录</th></tr>
+			<tr><td><label for="name">用户名:</label></td><td><%= text_field_tag "user_name"%></td></tr>
+			<tr><td><label for="password">密码:</label></td><td><%= password_field_tag "password"%></td></tr>
+			<tr><td></td><td><%= submit_tag "登录",:id=>"submit"%></td></tr>
+		</table>
+	<% end -%>
+</body>
+</html>

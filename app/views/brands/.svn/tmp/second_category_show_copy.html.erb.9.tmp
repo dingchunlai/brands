@@ -1,0 +1,321 @@
+<%
+page_key = "#{@brand.name_zh}#{@category.name}"
+set_page_title "【#{page_key}】#{page_key}评价_#{page_key}价格_和家网"
+set_page_meta_keywords "#{page_key}报价,#{page_key}价格,#{page_key},#{page_key}怎么样"
+set_page_meta_desc "#{page_key}品牌专区，包括#{page_key}报价、#{page_key}图片、#{page_key}产品参数、#{page_key}网友评论、#{page_key}关注度、#{page_key}导购、#{page_key}测评、#{page_key}资料下载等相关信息，#{page_key}最新报价就在和家网品牌库"
+synthesis_name = "品牌库:二级分类:#{@tag.TAGURL}:#{@category.name}:#{@brand.permalink}:"
+content_for :html_head do
+%>
+  <link href="http://zt.51hejia.com/zhuanti/haier0302/css/haier.css" type="text/css" rel="stylesheet" />
+  <%= javascript_include_tag 'brand_rating' %>
+<% end %>
+<%
+im = promotion_items("#{synthesis_name}头部图片").first
+unless im.blank?
+%>
+  <div class="haier_pic">
+    <%= image_tag(im.description, :alt => im.title) %>
+  </div>
+<% end %>
+<div class="haier_head">
+  <span class="haier_name"><%= @brand.name_zh %></span>
+  <span class="haier_kb">口碑评价</span>
+  <span class="haier_gz">目前共有<i><%=@brand.pv(@tag.TAGID)%></i>人关注[上月共有<i><%=@brand.last_month_pv(@tag.TAGID)%></i>人关注]</span>
+  <% if @brand_category and  !@brand_category.microblogging.blank? %>
+    <span class="haier_gzb"><img src="http://zt.51hejia.com/zhuanti/haier0302/img/sinalogo.png" /></span>
+    <span class="haier_dym"><a href="<%= @brand_category.microblogging %>" target="_blank"><%= @brand.name_zh %><%= @category.name %>官方微博</a></span>
+  <% end -%>
+</div>
+
+<div style="width:923px;margin-top: -15px;margin-bottom: 5px">
+  <embed align="middle" width="923" height="85" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" name="gamefile" quality="high" id="gamefile" src="http://b.51hejia.com/swf/haier_960_85.swf">
+</div>
+
+<!-- 左上 start -->
+<div class="haier_con clearfix">
+  <% image_items = promotion_items("#{synthesis_name}图片切换") %>
+  <div class="haier_mainbar haier_f_l">
+    <div class="haier_slide haier_f_l">
+      <div class="haier_slide_box" id="imgbox">
+        <% image_items.each do |item| %>
+          <%= link_to image_tag(item.image, :alt => item.title), item.url, :target => '_blank', :title => item.title %>
+        <% end %>
+      </div>
+      <div class="haier_page">
+        <ul>
+          <%
+          image_items.each_with_index do |item, index|
+            n = index + 1
+          %>
+            <li class="<%= index == 0 ? 'haier_imgactive' : '' %>"><%= n %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var height = $("#imgbox img").height();
+      //var n = $("#imgbox img").size();
+      function rotate(a){
+        var triggerId = a.text()-1;
+        //alert(triggerId);
+        //var imgPosition = triggerId*height/n;
+        var imgPosition = triggerId*height;
+        //alert(imgPosition);
+        if(!$("#imgbox").is(":animated")){
+          $("#imgbox").animate({top:-imgPosition},"fast");
+          a.addClass("haier_imgactive").siblings().removeClass("haier_imgactive");
+        }
+      }
+
+      function rotateSwitch(b){
+        play = setInterval(function(){
+          b = $(".haier_page li.haier_imgactive").next();
+          if(b.length == 0){
+            b = $(".haier_page li:first");
+          }
+          rotate(b);
+        }, 4000);
+      }
+      rotateSwitch();
+      $(".haier_page li").mouseover(function(){
+        clearInterval(play);
+        var on = $(this);
+        rotate(on);
+        rotateSwitch(on);
+      });
+
+      $("#imgbox").hover(function(){
+        //alert("a");
+        clearInterval(play);
+      },function(){
+        rotateSwitch();
+      })
+    </script>
+    <div class="haier_news haier_f_l">
+      <% retui = promotion_items("#{synthesis_name}热推").first %>
+      <% unless retui.blank? %>
+        <h3>
+          <p><%= truncate_u(retui.title, 10 , '') %></p>
+          <p><%= truncate_u(retui.description, 16, '') %></p>
+        </h3>
+        <div class="haier_newsdetail">
+          <%= link_to_with_title retui.content, retui.url, :truncate => 70, :target => '_blank', :title => retui.title %>
+        </div>
+      <% end %>
+      <div class="haier_news_con">
+        <div>
+          <h4>活动</h4>
+          <% promotion_items("#{synthesis_name}活动").each do |item| %>
+            <span><%= link_to_with_title item.title, item.url, :target => '_blank', :title => item.title %></span>
+          <% end %>
+        </div>
+        <div>
+          <h4><span>新闻</span></h4>
+          <% promotion_items("#{synthesis_name}新闻").each do |item| %>
+            <p><%= link_to_with_title item.title, item.url, :target => '_blank', :title => item.title %></p>
+          <% end %>
+        </div>
+        <div>
+          <h4><span>导购</span></h4>
+          <% promotion_items("#{synthesis_name}导购").each do |item| %>
+            <p><%= link_to_with_title item.title, item.url, :target => '_blank', :title => item.title %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="haier_yyal">
+      <div class="haier_title"><h3>应用案例</h3></div>
+      <ul id="cont_m_5">
+        <% promotion_items("#{synthesis_name}应用案例").each do |item| %>
+          <li>
+            <dl>
+              <dd><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></dd>
+            </dl>
+            <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="haier_clear"></div>
+    </div>
+    <script src="http://z.shanghai.51hejia.com/zhuanti/haier0302/js/txt_auto.js"></script>
+    <div class="haier_showtab">
+      <div class="haier_showtab_title" id="tabtitle">
+        <ul>
+          <li id="cpzs1" class="haier_active" onmouseover="haierTab('tabtitle',1,'showbox','cpzs','haier_active')">产品展示</li>
+          <li id="cpzs2" onmouseover="haierTab('tabtitle',2,'showbox','cpzs','haier_active')">新品推荐</li>
+        </ul>
+      </div>
+      <div class="haier_showbox" id="showbox1">
+        <ul>
+          <% promotion_items("#{synthesis_name}产品推荐").each do |item| %>
+            <li>
+              <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title %>
+              <dl>
+                <dt><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></dt>
+                <dd><%= item.content %></dd>
+              </dl>
+            </li>
+          <% end %>
+        </ul>
+        <div class="haier_clear"></div>
+      </div>
+      <div class="haier_showbox" id="showbox2">
+        <ul>
+          <% promotion_items("#{synthesis_name}热品推荐").each do |item| %>
+            <li>
+              <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title %>
+              <dl>
+                <dt><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></dt>
+                <dd><%= item.content %></dd>
+              </dl>
+            </li>
+          <% end %>
+        </ul>
+        <div class="haier_clear"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 左上 end -->
+  <!-- 右上 start -->
+  <div class="haier_majorbar">
+    <%
+    se_im = promotion_items("#{synthesis_name}右上图片").first
+    unless se_im.blank?
+    %>
+      <div>
+        <%= link_to image_tag(se_im.description), se_im.url, :target => '_blank', :title => se_im.title %>
+      </div>
+    <% end %>
+    <div class="b_pln_sidety margin10">
+<%# 品牌口碑信息部分 %>
+      <%= render :partial => "layouts/brands/categroy_rating" %>
+    </div>
+    <div class="haier_rswt">
+      <div class="haier_title"><h3>热水问题</h3></div>
+      <ul>
+        <% promotion_items("#{synthesis_name}热水问题").each do |item| %>
+          <li><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="haier_cpcp">
+      <div class="haier_title"><h3>产品测评</h3></div>
+      <div class="haier_cpcp_box">
+        <ul>
+          <% promotion_items("#{synthesis_name}产品评测").each do |item| %>
+            <li>
+              <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title %>
+              <dl>
+                <dt>
+                <p><%= link_to truncate(item.title, 18, ''), item.url, :target => '_blank', :title => item.title %></p>
+                </dt>
+                <dd><%= truncate(item.description, 33, '...') %></dd>
+              </dl>
+              <div class="haier_clear"></div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <script>
+        $(".haier_cpcp_box").find("li:last").css("border","none");
+      </script>
+    </div>
+  </div>
+  <!-- 右上 end -->
+
+  <div class="haier_questab">
+    <div class="haier_questab_title" id="questabtitle">
+      <ul>
+        <li id="wt1" class="haier_tabacitve" onmouseover="haierTab('questabtitle',1,'quesbox','wt','haier_tabacitve')">电热水器</li>
+        <li id="wt2" onmouseover="haierTab('questabtitle',2,'quesbox','wt','haier_tabacitve')">燃气热水器</li>
+        <li id="wt3" onmouseover="haierTab('questabtitle',3,'quesbox','wt','haier_tabacitve')">其他热水器</li>
+      </ul>
+    </div>
+    <!-- 此处的排序不能乱 完全取决于页面的显示顺序 -->
+    <%
+    items = []
+    items << promotion_items("#{synthesis_name}电气").first
+    items << promotion_items("#{synthesis_name}燃气").first
+    items << promotion_items("#{synthesis_name}其它").first
+    items
+  %>
+    <%
+    items.each_with_index do |item, index|
+      i = index + 1
+      unless item.blank?
+      %>
+        <div class="haier_quesbox" id="quesbox<%= i %>">
+          <div class="haier_questxt">
+            <h3><%= link_to truncate_u(item.title, 8, ''), item.url, :target => '_blank' %></h3>
+            <p class="haier_questitle"><%= truncate_u(item.description, 13, '') %></p>
+            <p><%= item.content %></p>
+          </div>
+          <div class="haier_answtxt">
+            <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title  %>
+          </div>
+        </div>
+      <%
+      end
+    end
+  %>
+  </div>
+  <div class="haier_spzs">
+    <div class="haier_title"><h3>视频展示</h3></div>
+    <div class="haier_spzs_box">
+      <ul>
+        <% promotion_items("#{synthesis_name}视频展示").each do |item| %>
+          <li>
+            <%= link_to image_tag(item.image), item.url, :target => '_blank', :title => item.title %>
+            <dl><dd><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></dd>
+            </dl>
+            <a href="<%= item.url %>"  target="_blank"><div class="haier_spbf"></div></a>
+            <div class="haier_clear"></div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <script>
+    $(".haier_spzs_box").find("li:last").css("border","none");
+  </script>
+
+  <div class="haier_clear"></div>
+  <!-- ad -->
+  <%= adspace("#{@middle_adspace_page}", "", "<div class='haier_ad2' style='border:1px solid #dcdcdc;margin-bottom:10px;'></div>") unless @middle_adspace_page.blank? %>
+
+  <div class="haier_wyrj">
+    <div class="haier_title"><h3>网友日记</h3></div>
+    <div class="haier_wyrj_box">
+      <ul>
+        <% promotion_items("#{synthesis_name}网友日记").each do |item| %>
+          <li><%= link_to image_tag(item.image), item.url,  :target => '_blank', :title => item.title %>
+            <dl>
+              <dd><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></dd>
+            </dl></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="haier_xts">
+    <div class="haier_title"><h3>小贴士</h3></div>
+    <ul>
+      <% promotion_items("#{synthesis_name}小贴士").each do |item| %>
+        <li><%= link_to item.title, item.url, :target => '_blank', :title => item.title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<script>
+  function haierTab(ulId,nowNum,showId,liId,classname){
+    var tabSum = $("#"+ulId).find("li").size();
+    //alert(tabSum);
+    for(var i=1;i<=tabSum;i++){
+      if(nowNum == i){
+        $("#"+showId+i).show();
+        $("#"+liId+i).addClass(classname).siblings().removeClass(classname);
+      }else{
+        $("#"+showId+i).hide();
+      }
+    }
+  }
+</script>

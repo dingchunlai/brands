@@ -1,0 +1,33 @@
+<p>
+  <b>Title:</b>
+  <%=h @contract.title %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%=h @contract.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%=h @contract.end_date %>
+</p>
+
+<p>
+  <b>Dealer:</b>
+  <%=h @contract.dealer %>
+</p>
+
+<p>
+  <b>Discount rate:</b>
+  <%=h @contract.discount_rate %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @contract.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

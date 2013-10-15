@@ -1,0 +1,136 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】#{@coupon.title}手机下法_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<%= javascript_include_tag "jrails" %>
+<div class="width960">
+  <div class="djq_location">
+    您当前的位置：<%= link_to "狂省钱首页", coupon_index_path %> > <span><%= @coupon.title %></span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_xiazai">
+    <% form_for @coupon_download do |f|%>
+      <table width="800" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><h3><%= @coupon.title %> </h3></td>
+        </tr>
+        <tr>
+          <td><p class="djq_xiazai_p01">以下内容将通过手机短信的形式，发送到您指定的手机：</p>
+            <div class="djq_xiazai_box01"><%= @coupon.sms_msg %></div></td>
+        </tr>
+        <tr>
+          <td><div class="djq_xiazai_box02"><%= f.label :mobile %></div>
+            <%= f.text_field :mobile %> <div><p id="msg_for_mobile"></p></div>
+        </tr>
+        <tr>
+          <td><div class="djq_xiazai_box02">验证码</div>
+            <img id="image_code_area" src="http://api.51hejia.com/user/get_image_code?<%= rand() %>">
+           <br/><input type="text" size="4" name="image_code" id="image_code" /><span><a onclick="document.getElementById('image_code_area').src = 'http://api.51hejia.com/user/get_image_code?' + Math.random();" style="cursor: pointer;" target="_blank">看不清楚？换一张</a></span> <div><p id="msg_for_image_code"></p></div>
+            </td>
+        </tr>
+        <tr>
+          <td><input name="" type="submit" class="djq_tigong_btn" value="发送" />
+            <input name="" type="reset" class="djq_tigong_btn" value="取消" />
+            <%= f.hidden_field :coupon_id, :value => @coupon.id  %>
+            <div class="djq_xiazai_box03">*短信可能有几分钟的延迟，请不要在短时间内重复下载。</div></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+<!--content_code_end-->
+<script type="text/javascript">
+ $(function(){
+
+    $(".djq_tanbtn").click(
+      function(){
+      $(".djq_tancboxbg").hide();
+      $(".djq_tancbox").hide();
+      window.location.href = "/coupon/"+$("#coupon_download_coupon_id").val();
+    });
+    
+    $("#coupon_download_mobile").blur(function(){
+       var mobile_reg= /^1[3|5|8]\d{9}$/;
+       // /^((13[0-9]{1})|159|153|152|158|189|188)+\d{8}$/;
+       var mobile = $('#coupon_download_mobile');
+       // 验证手机
+       if(mobile.val() == ''){
+          show_message($("#msg_for_mobile"), "请输入号码");
+        }else{ 
+          if(!mobile_reg.test(mobile.val())){
+            show_message($("#msg_for_mobile"), "格式错误");
+          }else{
+            hide_message($("#msg_for_mobile"));
+         }
+       }
+    });
+
+    $("#image_code").blur(function(){
+       // 验证验证码
+       if($("#image_code").val() == ''){
+          show_message($("#msg_for_image_code"), "输入验证码");
+       }else{
+         if($("#image_code").val().length != 4){
+            show_message($("#msg_for_image_code"), "验证码错误");
+         }else{
+            hide_message($("#msg_for_image_code"));
+         }
+       }
+    });
+
+   $("#new_coupon_download").submit(function(){
+     var flg = true;
+     var mobile_reg= /^1[3|5|8]\d{9}$/;
+     // /^((13[0-9]{1})|159|153|152|158|189|188)+\d{8}$/;
+     var mobile = $('#coupon_download_mobile');
+     // 验证手机
+     if(mobile.val() == ''){
+        show_message($("#msg_for_mobile"), "请输入号码");
+        flg = false;
+      }else{ 
+        if(!mobile_reg.test(mobile.val())){
+          show_message($("#msg_for_mobile"), "格式错误");
+          flg = false; 
+       }
+     }
+     // 验证验证码
+     if($("#image_code").val() == ''){
+        show_message($("#msg_for_image_code"), "输入验证码");
+        flg = false;
+     }else{
+        if($("#image_code").val().length != 4){
+          show_message($("#msg_for_image_code"), "验证码错误");
+          flg = false;
+        }
+     }
+
+     if(!flg){ return flg; }
+
+     jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'/coupon/coupon_downloads',beforeSend:function(){$('.djq_tigong_btn').attr('disabled', false);}}); return false;
+
+     });
+   });
+
+  function show_message(obj, msg){
+    obj.addClass('djq_alert');
+    obj.html(msg);
+  }
+
+  function hide_message(obj){
+    obj.removeClass('djq_alert');
+    obj.html('');
+  }
+
+</script>
+
+<div class="djq_tancboxbg"></div>
+<div class="djq_tancbox">
+  <div class="djq_tanclogo"></div>
+  <h3>麦高装饰 / 发送短信<%= Coupon.human_name %></h3>
+  <div class="djq_tancicon">
+    <p>· 短信已成功发送至<span></span></p>
+    <p>· 由于短信发送尚处于测试阶段，网络繁忙时可能会延迟3-5分钟</p>
+  </div>
+  <div class="djq_tanbtn">关闭</div>
+</div>
+
+

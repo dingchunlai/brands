@@ -1,0 +1,65 @@
+<% title "【油漆施工】_文章详情_#{@article.TITLE}_#{@youqi}施工资讯_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_5 %>
+<% description PAINT_DESCRIPTION_5 %>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var link = $(".next_page").attr("href")
+		function get_next_page(){
+			if (link == undefined) {
+				return false
+			}else {
+				return true
+			}		
+		}
+		function next_page_show(){
+			if(get_next_page()){
+				$("#cont_next_show").attr("href",link);
+				$(".yg_cont_page").show();
+				$(".yg_cont_txt img").attr("title","点击进入下一页").attr("alt","点击进入下一页").attr("style","cursor:pointer;");
+			} 
+		}
+		next_page_show();
+		$(".yg_cont_txt img").click(function(){
+			if(get_next_page()){
+				location.href = link
+			}
+		});
+	});
+</script>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/#{@youqi}/articles' target='_self' title='#{@youqi}'>#{@youqi}</a>", :location_end => '文章详情' }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_cont_tit">
+      <h2><%= @article.TITLE %></h2>
+      <span><%= @article.CREATETIME.strftime("%Y-%m-%d %H:%M") %>&nbsp;&nbsp;&nbsp;作者：<%= @article.AUTHOR %>&nbsp;&nbsp;&nbsp;来源：<%= @article.SOURCE %></span>
+      <div class="yg_cont_keys">关键字：<%= get_article_keyword(@article.KEYWORD1)%></div>
+      <div class="yg_cont_page" style="display:none;"><a href="#" target="_self" title="点击图片，进入下一页" id="cont_next_show">点击图片，进入下一页</a></div>
+      <% unless @article.SUMMARY.blank? %>
+	  <div class="yg_cont_lead">
+	  <%if @article.insert_summary.to_i == 1%>
+      <strong>导语：</strong><%= @article.SUMMARY %>
+      <%end%>
+	  </div>
+	  <% end %>
+    </div>
+    <div class="yg_cont_txt">
+        <%=@article_page %>
+    </div>
+    <div class="pagination"><%= will_paginate @article_page %></div>
+    <div class="yg_cont_related"><span class="f_l"><%=get_previous_article(@article)%></span>
+	<span class="f_r"><%=get_next_article(@article)%></span></div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10">
+    	<%= render :partial => "/shared/right_top_img"%>
+    </div>
+    <div class="yg_current">
+		<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+		<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

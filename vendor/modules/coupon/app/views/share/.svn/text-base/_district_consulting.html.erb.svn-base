@@ -1,0 +1,16 @@
+<% 
+  if consults = promotion_items("抵用券:频道首页:#{@city.pinyin}:本地资讯")
+    unless consults.blank?
+%>
+<div class="diyq_contbox7 diyq_listrbox">
+  <h3 style="text-indent:15px;"><%= @city.name %>资讯</h3>
+  <ul class="clearfix">
+    <% consults.each do |item| %>
+      <li><%= link_to item.title, item.url, :title => item.title, :target => '_blank' %></li>
+    <% end -%>
+  </ul>
+</div>
+<% 
+    end
+  end 
+-%>

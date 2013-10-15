@@ -1,0 +1,18 @@
+  	<div class="magazine">
+        <div class="explain clearfix">
+        	<div class="title_box">
+            	<h3><%=@brand.name_zh %>产品资料</h3>
+            </div>
+            <ul class="clear">
+            <%if @brand.documents %>
+            	<% @brand.documents.each do |document|%>
+            	<li class="clearfix">
+                	<span><%=document.created_at.strftime('%Y-%m-%d')%></span>
+                		<%= link_to_with_title document.name, document.download_link, :class => 'list', :target => '_blank' %>
+                		<%= link_to(image_tag("http://js.51hejia.com/img/brandimg/D-icon.jpg"), document.download_link, :target => '_blank') %>
+                </li>
+                <%end%>
+               <%end%>
+            </ul>
+        </div>
+    </div>

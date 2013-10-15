@@ -1,0 +1,39 @@
+<%=include_jquery_easy_validator%>
+<% form_for @activity, :url => (@activity.new_record? ? distributor_user_activities_path : distributor_user_activity_path(@activity))  do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2"><%= @activity.new_record? ? "新增" : "修改" %>活动</th>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :title %></strong></td>
+          <td class="last"><%= f.text_field :title, :reg => '^\S\s?+\S$', :tip => "必填" %>*</td>
+        </tr>
+
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :begin_at %></strong></td>
+          <td class="last"><%= f.text_field :begin_at, :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => '格式:2010-05-28' %>*</td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :end_at %></strong></td>
+          <td class="last"><%= f.text_field :end_at, :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => '格式:2010-05-28' %>*</td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %>&nbsp;&nbsp;
+          <% unless @activity.new_record? %>
+            <%= link_to '查看', distributor_user_activity_path(@activity) %>
+          <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+$(function(){
+        $("#vip_distributor_activity_begin_at").datepicker({dateFormat: 'yy-m-d'});
+        $("#vip_distributor_activity_end_at").datepicker({dateFormat: 'yy-m-d'});
+});
+</script>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array
+END
+access.rb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/access.rb
+END
+random_access.rb
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/random_access.rb
+END
+extract_options.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/extract_options.rb
+END
+conversions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/conversions.rb
+END
+grouping.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/grouping.rb
+END
+wrapper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/array/wrapper.rb
+END

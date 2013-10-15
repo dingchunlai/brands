@@ -1,0 +1,13 @@
+<div class="djq_rcur margin10">
+  <h3>推荐<%= Coupon.human_name %></h3>
+  <div class="djq_rcurtxt">
+    <ul class="djq_zxyh_list">
+      <% Coupon.most_discounted(@city.id, 4).each do |coupon| %>
+        <li><span><%= link_to_with_title coupon.title, coupon_show_path(coupon), :truncate => 18, :target => '_blank' %></span>
+        <p>满<%= coupon.discount_amount %>元抵用现金<%= coupon.return_amount %>元 </p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

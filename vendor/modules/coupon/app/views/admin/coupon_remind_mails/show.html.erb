@@ -1,0 +1,32 @@
+<%= top_bar :title       => '提示邮件接收人管理页',
+            :button      => ['创建接收人', new_admin_coupon_remind_mail_path],
+            :breadcrumbs => [
+                    ['管理首页', coupon_admin_index_path],
+                    ['接收人列表', admin_coupon_remind_mails_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">提示邮件接收人信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponRemindMail.human_attribute_name("city_id") %></strong></td>
+      <td class="last"><%= Coupon::CITIES[@coupon_remind_mail.city_id] %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= CouponRemindMail.human_attribute_name("recipient") %></strong></td>
+      <td class="last"><%= @coupon_remind_mail.recipient.to_s.gsub("\n", "<br />") %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponRemindMail.human_attribute_name("cc") %></strong></td>
+      <td class="last"><%= @coupon_remind_mail.cc.to_s.gsub("\n", "<br />") %></td>
+    </tr>
+    <tr class="bg">
+      <td colspan="2" class="first last"><%= link_to '修改', edit_admin_coupon_remind_mail_path(@coupon_remind_mail) %></td>
+    </tr>
+
+  </table>
+</div>

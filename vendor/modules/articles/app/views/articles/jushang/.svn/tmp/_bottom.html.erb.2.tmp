@@ -1,0 +1,97 @@
+<%= render :partial => 'articles/detail/share_to' %>
+<div class="tuijian clearfix" style='background:url("http://img3.51hejia.com/img/zhuangxiu1023/txtarea_bg.jpg") left top no-repeat;margin-left:8px;padding-top:10px'>
+  <h2><a href="http://<%=@article.subdomain%>.51hejia.com/<%=@article.sort_sign%>/" target="_blank"><%= @article.sort_name %> 相关文章推荐</a></h2>
+  <ul class="text_list clearfix">
+    <% Article.articles(6, @article.SECONDCATEGORY, 'hot', @article.FIRSTCATEGORY).each do |a| %>
+      <li><a href="<%= a.detail_url %>" target="_blank" title="<%= a.title %>"><%= truncate_u(a.title, 18) %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="tuijian">
+  <ul class="text_list2 clearfix clear">
+    <% results = hejia_promotion_items(54308, :attributes => ['title','url','image_url']) %>
+    <li>
+      <% if results[0] %>
+        <%= promotion_image_tag results[0] %>
+        <p><a href="<%= results[0]["url"] %>" target="_blank" title="<%= results[0]["title"] %>"><%= results[0]["title"] %></a></p>
+      <% end %>
+    </li>
+    <li class="center">
+      <p><a href="http://<%=@article.subdomain%>.51hejia.com/<%=@article.sort_sign%>/" class="a1" target="_blank"></a></p>
+      <p class="a2"><a href="http://www.51hejia.com" class="a2" target="_blank"></a></p>
+    </li>
+    <li>
+      <% if results[1] %>
+        <%= promotion_image_tag results[1] %>
+        <p>
+          <% if results[1]["url"] == "http://www.ellechina.com/deco/idea/lanbaitiaowen-20110902?s_cid=hejia" %>
+            <a href="<%= results[1]["url"] %>" target="_blank" title="<%= results[1]["title"] %>" onclick="_gaq.push(['_trackEvent','导流效果', '居尚终端页', 'ELLE图片', 1]);"><%= results[1]["title"] %></a>
+          <% else %>
+            <a href="<%= results[1]["url"] %>" target="_blank" title="<%= results[1]["title"] %>"><%= results[1]["title"] %></a>
+          <% end %>
+        </p>
+      <% end %>
+    </li>
+  </ul>
+</div>
+
+<div class="box1 clearfix">
+  <h2><a href="http://www.51hejia.com/jushang/articleList/s-<%= @article.SECONDCATEGORY %>" target="_blank">居尚最新更新</a></h2>
+  <% ee = hejia_promotion_items(54309, :attributes => ['title','url','image_url']) %>
+  <ul class="list1">
+    <% s_second = Article.articles(24, @article.SECONDCATEGORY, 'time', @article.FIRSTCATEGORY) %>
+    <% if ee[0] %>
+      <%= promotion_image_tag ee[0] %>
+    <% end %>
+    <% if s_second.size >= 6 %>
+      <% s_second[0..5].each do |a| %>
+        <li><%= link_to truncate_u(a.title, 10), a.detail_url, :title => a.title, :target => '_blank' %></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul class="list1 list2">
+    <% if ee[1] %>
+      <%= promotion_image_tag ee[1] %>
+    <% end %>
+    <% if s_second.size >= 12 %>
+      <% s_second[6..11].each do |a| %>
+        <li><%= link_to truncate_u(a.title, 10), a.detail_url, :title => a.title, :target => '_blank' %></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul class="list1 list2">
+    <% if ee[2] %>
+      <%= promotion_image_tag ee[2] %>
+    <% end %>
+    <% if s_second.size >= 18 %>
+      <% s_second[12..17].each do |a| %>
+        <li><%= link_to truncate_u(a.title, 10), a.detail_url, :title => a.title, :target => '_blank' %></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul class="list1 list2">
+    <% if ee[3] %>
+      <%= promotion_image_tag ee[3] %>
+    <% end %>
+    <% if s_second.size >= 24 %>
+      <% s_second[18..23].each do |a| %>
+        <li><%= link_to truncate_u(a.title, 10), a.detail_url, :title => a.title, :target => '_blank' %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<%= render :partial => 'articles/detail/pinglun', :locals => {:article_id => @article.id} %>
+
+<div class="box1 clearfix">
+  <h2><a href="http://www.51hejia.com" target="_blank">全站精彩内容</a></h2>
+  <ul class="list4">
+    <% hejia_promotion_items(54311, :attributes => ['title','url','image_url']).each do |e| %>
+      <li>
+        <%= promotion_image_tag e %>
+        <p><a href="<%= e["url"] %>" target="_blank" title="<%= e["title"] %>"><%= e["title"] %></a></p>
+      </li>
+    <% end %>
+  </ul>
+</div>

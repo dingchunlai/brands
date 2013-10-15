@@ -1,0 +1,140 @@
+<div>
+  <h3>[<%= @promotion_page.name %>] - 内容快速检索页面</h3>
+  <fieldset>
+    <legend style="font-size: 15px;font-weight: bolder;">查询条件</legend>
+    <div style="float: left;">
+      <% form_tag search_item_admin_promotion_page_path(@promotion_page), :method => :get do %>
+        <% if @promotion_page.is_a?(TaggedBrandPage) || @promotion_page.is_a?(TagPage) %>
+          品类：
+            <%= select_tag :tag_id, "<option selected='selected' value=''>-- 请选择 --</option>" +  options_for_select(Tag.categories.map{|tag| [tag.TAGNAME, tag.TAGID]}, @tag && @tag.TAGID || nil) %>
+          <% if @promotion_page.is_a?(TaggedBrandPage) %>
+            <% if @brands && @brand %>
+              品牌：<%= select_tag :brand_id, "<option selected='selected' value=''>-- 请选择 --</option>" +  options_for_select(@brands.map{|brand| [brand.name_zh, brand.id]}, @brand.id) %>
+            <% else %>
+              品牌：<%= select_tag :brand_id, [["<option selected='selected' value=''>-- 请先选择品类 --</option>", '']] %>
+            <% end %>
+          <% end %>
+          <%= submit_tag "查询" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div>
+      &nbsp;&nbsp;&nbsp;  
+      <% if @tag || @brand %>
+        <span style="color: #339933;font-size:15px;font-weight:bolder">
+          您当前所选择: <%= @tag ? @tag.TAGNAME : '' %> <%= @brand ? (" -- ".concat(@brand.name_zh)) : '' %>
+        </span>
+      <% end %>
+    </div>
+  </fieldset>
+  <hr />
+  <% unless @tag.blank?  %>
+  <table>
+    <tr>
+      <th>推广项名称</th>
+      <th>推广项描述</th>
+      <th>推广类型</th>
+      <th>截字</th>
+      <th>推广数量</th>
+      <th>操作</th>
+    </tr>
+    <% 
+      @promotion_page.promotion_page_parts.each do |item| 
+      if (@promotion_page.type == "TagPage" && @tag) 
+        promotion_collection_item = @promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, item.name)
+        collection_item_url = admin_promotion_items_path(@promotion_page.item_code(@promotion_page.name, @tag.TAGURL, item.name))
+        edit_item_url = edit_admin_promotion_collection_path(@promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, item.name))
+      elsif (@promotion_page.type == "TaggedBrandPage" && @tag && @brand)
+        promotion_collection_item = @promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name)
+        collection_item_url = admin_promotion_items_path(@promotion_page.item_code(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name))
+        edit_item_url = edit_admin_promotion_collection_path(@promotion_page.collection_item(@promotion_page.name, @tag.TAGURL, @brand.permalink, item.name))
+      end
+    %>
+    <tr>
+      <td><%= promotion_collection_item ? promotion_collection_item.name : '----' %> </td>
+      <td><%= promotion_collection_item ? promotion_collection_item.remark : '----'  %></td>
+      <td><%= promotion_collection_item ? Hejia::Promotable.all[promotion_collection_item.item_type] : '----' %></td>
+      <td><%= promotion_collection_item ? promotion_collection_item.chars_size : "----" %></td>
+      <td>
+        <% if promotion_collection_item  %>
+          <b><%= promotion_collection_item.items_length %></b> / <%= promotion_collection_item.size %>
+        <% else %>
+          ----
+        <% end %>
+      </td>
+      <td>
+        <% if (promotion_collection_item && collection_item_url && edit_item_url) %>
+          <%= link_to "维护推广内容", goto_admin_redirection_addresses_path(:url => collection_item_url)  %>
+          <%= link_to "维护推广名称", goto_admin_redirection_addresses_path(:url => edit_item_url) %>
+        <% else %>
+          <label style="color:red"> 请选择相关信息后进行查询 </label>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+  <% else %>
+    请选择条件进行查询
+  <% end %>
+</div>
+<script type="text/javascript">
+  $('#tag_id').attr("data-ajax-url", "/pinlei/:id:/pinpai")
+    // 处理品类发生变化之后的情况
+    $('#tag_id').change(function(event) {
+      event.preventDefault();
+      var id = $(this).val();
+      if(!id || id == '') {
+        updateBrandSelectElement([]);
+        return false;
+      }
+      var url = $(this).attr('data-ajax-url').replace(':id:', id);
+      $.getJSON(url, function(data, textStatus) {
+        if(textStatus == 'success') {
+          updateBrandSelectElement(data);
+        } else {
+          alert('读取品牌数据出错！');
+        }
+      });
+      return false;
+    });
+    // 更新品牌下拉框
+    function updateBrandSelectElement(brands) {
+      var dom = $('#brand_id').empty();
+      if(!brands || brands.length < 1) {
+        $('<option />').val('').text('-- 没有品牌可选 --').appendTo(dom);
+      } else {
+        $('<option />').val('').text('-- 请选择 --').appendTo(dom);
+        $.each(brands, function(_, brand) {
+          $('<option />').val(brand.id).text(brand.name_zh).appendTo(dom);
+        })
+      }
+    }
+  </script>
+<!-- TABLE样式 -->
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 1;
+    padding: 4px;
+    border-width: 1px 1px 1px 1px;
+    background-color: #FFC;
+    text-align: center;
+  }
+
+  /* ]]> */
+</style>

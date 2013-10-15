@@ -1,0 +1,40 @@
+<%= render :partial => 'articles/jushang/top_menu' %>
+
+<div class="width960" style="margin-bottom: 10px;">
+  <%= render_ad 80881, "装修资讯-首页-通栏1+", "afp" %>
+  <!--embed align="middle" width="960" height="85" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" name="gamefile" quality="high" id="gamefile" src="http://js.51hejia.com/flash/zd.swf"-->
+</div>
+
+<div class="f2" id="f2">
+  <div class="mapsite clear">
+    <% rrr = hejia_promotion_items(54304, :attributes => ['title','url','image_url'], :limit => 2) %>
+    <span><p><% if rrr[1] %><a href="<%= rrr[1]["url"] %>" target="_blank"><%= rrr[1]["title"] %></a><% end %></p><a href="http://www.51hejia.com" target="_blank" class="zx_btn"></a></span>
+    <p class="left"> <%=@article.route_sign(@is_preview)%> </p>
+  </div>
+
+  <div class="topbg clearfix">
+
+    <div class="f2_content">
+
+      <div style="padding:5px;">
+        <%= render_ad 56155, "居尚终端页-大旗1", "afp" %>
+      </div>
+
+      <%= render :partial => 'articles/detail/content' %>
+
+      <%=render :partial => 'articles/jushang/bottom'%>
+
+    </div>
+
+    <%=render :partial => 'articles/jushang/right'%>
+
+    <% rails_env = RAILS_ENV == "development" ? ":3000" : "" %>
+
+    <iframe width="0" scrolling="no" height="0" frameborder="0" noresize="" name="framelink" id="framelink" border="0" src=""></iframe>
+    <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6HG"></script>
+
+    <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6AJ"></script>
+    <script type="text/javascript" src="http://api.51hejia.com/analog_codes?code=SYVE5vGqkRtWvrJMd6AK"></script>
+
+  </div>
+</div>

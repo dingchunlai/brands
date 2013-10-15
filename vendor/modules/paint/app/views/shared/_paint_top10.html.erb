@@ -1,0 +1,12 @@
+<% paint_workers_top10 = PaintWorker.paint_top10 %>
+<h3>推荐油工</h3>
+<div class="yg_tjyg">
+<ul>
+  <% paint_workers_top10.each do |worker|%>
+  <li>
+    <div class="yg_tjygimg f_l"><a href="<%= get_paint_worker_url(worker.id)%>" target="_self" title="<%= worker.USERBBSNAME %>"><%= image_tag get_avatar_img(worker.painter.avatar_file_name)  %></a></div>
+    <div class="yg_tjygtxt f_r"> <span>姓名：<%= worker.USERBBSNAME %></span> <span>证书等级：<%= Painter::GRADE.index worker.painter.grade %></span> <a >经典案例</a></div>
+  </li>
+  <% end %>
+</ul>
+</div>

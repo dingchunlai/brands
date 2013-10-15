@@ -1,0 +1,127 @@
+<%= top_bar :title => '抵用券管理',
+  :button => ['添加抵用券', new_admin_coupon_path],
+  :breadcrumbs => [
+  ['抵用券后台', coupon_admin_index_path],
+  ['抵用券管理', admin_coupons_path]
+]
+%>
+
+<div class="select-bar">
+  <%form_tag admin_coupons_path, :method => :get do%>
+
+    经销商：<%=text_field_tag :distributor, @distributor%>
+    有效期在 <%=select_tag :validity_num, options_for_select((1..30).to_a.unshift(['--',0]), @validity_num)%>
+    <%=select_tag :validity_unit, options_for_select([['天','days'],['周','weeks'],['月','months'],['年','years']], @validity_unit)%> 内　
+    行业： <%=select_tag :tag_id, options_for_select(Tag.all_categories.map{ |t| [t.TAGNAME, t.TAGID] }.unshift(['请选择',0]), @tag_id)%>
+    品牌： <%=select_tag :brand_id, options_for_select(@tag_id==0 ? [['请选择',0]] : Brand.of_tag(@tag_id, true).map{|b| [b.name_zh, b.id]}.unshift(['请选择',0]), @brand_id)%>
+    <br />
+    编号：<%=text_field_tag :code, @code%>
+    标题：<%=text_field_tag :title, @title%> 　
+    城市： <%= select_tag :city_id, options_for_select(Coupon::CITIES.map{ |value, key| [key, value] }.unshift(['请选择',0]), @city_id) %>
+    状态： <%= select_tag :status, options_for_select(Coupon::STATUS.map{ |value, key| [key, value] }.unshift(['全部', -1]), @status) %>
+
+    <input type="submit" value="搜索" />
+
+  <%end%>
+</div>
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>编号</th>
+      <th class="first" width="177">抵用券标题</th>
+      <th>经销商</th>
+      <th>状态</th>
+      <th>起始日期</th>
+      <th>管理</th>
+    </tr>
+    <%@coupons.each do |coupon|%>
+      <tr>
+        <td> <%=coupon.code%> </td>
+        <td class="first">
+          <%= coupon.title %>
+        </td>
+        <td> <%=coupon.distributor_title%> </td>
+        <td> <%=coupon.status_explain%> </td>
+        <td> <%=coupon.activity_began_at%> </td>
+        <td class="last">
+  <%#=link_to coupon.status == 1 ? '下线' : '上线', "/remote/change_coupon_status/#{coupon.id}/?statu=#{coupon.status == 1 ? '3' : '1'}" %>
+          <% if can? :putonline, coupon %>
+            <%=link_to '上线', putonline_admin_coupon_path(coupon) %> |
+          <% end %>
+          <% if can?(:update, coupon) %>
+            <%=link_to '编辑', edit_admin_coupon_path(coupon), :target => '_blank'%> |
+          <% elsif can?(:edit_owned_coupon, :coupons) %>
+            <%=link_to '编辑', edit_admin_coupon_path(coupon), :target => '_blank'%> |
+          <% end %>
+  <%#=link_to '删除', admin_coupon_path(coupon)+ "?page=#{page}", :method => :delete, :confirm => '您确定要删除这条抵用券记录吗？'%>
+          <% if can? :read, Complaint %>
+            <%= link_to "查看投诉", admin_complaints_path(:coupon_id => coupon.id) %> |
+          <% end %>
+          <% if can? :create, Complaint %>
+            <%= link_to "新建投诉", new_admin_complaint_path(:coupon_id => coupon.id) %> |
+          <% end %>
+          <% if can? :read, CouponCommission %>
+            <% if coupon.activity_end_at.to_date >= Time.zone.today %>
+              <%= link_to "佣金管理", admin_coupon_commissions_path(:coupon_id => coupon.id) %> |
+            <% end %>
+          <% end %>
+          <% if can? :entrust, Coupon %>
+            <%= link_to '委托确认单', entrust_admin_coupon_path(coupon.id)%> |
+          <% end %>
+          <% if can? :edit_existing_number, :coupons %>
+            <%= link_to '发行量管理', admin_coupon_issue_num_stats_path(:coupon_id => coupon.id)%> |
+          <% end %>
+          <% if can? :second_killing, Coupon %>
+            <%= link_to '销售方式', sell_style_admin_coupon_path(coupon.id), :target => "_blank" %> |
+          <% end %>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+
+  <div>
+    <%= will_paginate @shops , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    //动态调整界面元素宽度和高度
+    $('input[type=text]').css('width', '100px');
+    $('tr').css('height', '30px');
+    $('#validity_num, #validity_unit').css('width', '40px')
+    $('#brand_id, #tag_id').css('width', '100px')
+
+    //行业-品牌联动选择
+    $('#tag_id').change(function(){
+      var tag_id = $(this).val();
+      if (tag_id=='') tag_id = '0'
+      $('#brand_id option').remove();
+      $('#brand_id').append($('<option value="">数据查询中</option>'));
+      $.ajax({
+        url: '/pinlei/' + tag_id + '/pinpai',
+        type: 'get',
+        //data: {'distributor_id' : $(this).val()},
+        dataType: 'json',
+
+        error: function(request) {
+          alert(request.responseText);
+        },
+
+        success: function(data) {
+          $('#brand_id option').remove();
+          $('#brand_id').append($('<option value="0">请选择</option>'));
+          for(var i=0;i<data.length; i++){
+            $('<option value="' + data[i].id + '">' + data[i].name_zh + '</option>').appendTo('#brand_id');
+          }
+          get_production_categories();
+        }
+      });
+    });
+
+  });
+</script>

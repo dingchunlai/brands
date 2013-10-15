@@ -1,0 +1,42 @@
+<div class="jiaju_wrapper clearfix">
+  <ul class="jiaju_sidebox">
+    <h2>相关家居商品</h2>
+    <% items = hejia_promotion_items(55706, :attributes => ['url', 'title']) %>
+    <% for item in items[0..8] %>
+        <% @album = HejiaCase.get_case(item["url"]) %>
+        <% if @album and !@album.photos.blank? %>
+            <% @photo = @album.photos.first %>
+            <li>
+              <a target="_blank" href="http://tuku.51hejia.com/zhuangxiu/tuku-<%= item.url %>" title="<%= item.title %>" onclick="_gaq.push(['_trackEvent','终端页导流', '右侧', '<%= item.url %>', 1]);">
+                <img height="80" width="80" src="<%= @photo.get_photo_url %>" />
+              </a>
+            </li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>
+<div id="case_wrapper">
+
+  <ul class="seo_tian clearfix sidebox_3 "><h2 class="title_s"><%= @tui_city %>装修图片推荐</h2>
+    <% @case_api[0,2].each do |cases| %>
+        <li class="tian">
+          <a title="<%=h cases.NAME %>" target="_blank" href="<%= cases.url %>">
+            <img width="100%" height="80" alt="<%=h cases.NAME %>" src="<%= cases.master_picture_url %>">
+          </a>
+          <a title="<%=h cases.NAME %>" target="_blank" href="<%= cases.url %>"><%=h truncate_for_zh(cases.NAME,36) %></a>
+        </li>
+    <% end %>
+  </ul>
+
+</div>
+
+<div class="ltext_list">
+  <ul>
+    <% if @case_api[2,8] %>
+        <% @case_api[2,8].each do |tc| %>
+            <li>·<a target="_blank" href="<%= tc.url %>"><%= h truncate_for_zh(tc.NAME,36) %></a></li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>
+

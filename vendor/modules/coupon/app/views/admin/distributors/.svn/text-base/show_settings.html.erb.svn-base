@@ -1,0 +1,33 @@
+<div class="content">
+  经销商名称：<%= @distributor.title %>
+  <% form_for @account, :url => save_settings_admin_distributor_path(@distributor) do |f| %>
+      <%= f.error_messages %>
+      <p>
+        经销商用户登录名:
+        <%= @account.USERNAME %>
+        <%= f.hidden_field :USERNAME %>
+      </p>
+      <% @account.settings.each do |setting| %>
+          <% fields_for_setting setting do |builder| %>
+              <%= builder.error_messages :header_message => '请检查以下信息' %>
+              <div style="border: 2px dotted #336699; width: 500px; margin-top: 5px; padding: 10px;">
+                <p>
+                  <%= builder.label :name %>:
+                  <%= setting.name %><br/>
+                  <%= builder.hidden_field :name%>
+                  <%= builder.hidden_field :key%>
+                  <%= builder.label :value %>:
+                  <%= builder.text_field :value %><br/>
+                  <%= builder.label :summary %>:<br/>
+                  <%= setting.summary %>
+                  <%= builder.hidden_field :summary %>
+                  <%= builder.hidden_field :channel %>
+                </p>
+              </div>
+          <% end %>
+      <% end %>
+      <p><%= f.submit "更新配置" %></p>
+  <% end %>
+</div>
+<font color=red><%= flash[:notice] %></font>
+<h1><%= link_to '重置密码为111111', reset_password_admin_distributor_path(@distributor)%></h1>

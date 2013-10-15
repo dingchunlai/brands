@@ -1,0 +1,47 @@
+<%= show_flash_message %>
+<% is_new_record = @collection.new_record? %>
+<% form_for :collection, :url => (is_new_record && admin_promotion_collections_path || admin_promotion_collection_path(@collection)), :html => {:method => (is_new_record && :post || :put)}  do |f| %>
+
+  <fieldset>
+    <legend style="font-size: 15px; font-weight: bolder;"><%= is_new_record ? "新建" : "编辑" %>推广位</legend>
+    <table>
+      <tr>
+        <th>推广位名称</th>
+        <td><%= f.text_field :name, :size => "60px" %></td>
+        <td></td>
+      </tr>
+      <%if session[:is_hejia_admin]%>
+        <tr>
+          <th>推广位代号</th>
+          <td><%= f.text_field :code, :size => "60px" %></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>推广位类别</th>
+          <td><%= f.select :item_type, Hejia::Promotable.all.invert.to_a%></td>
+          <td></td>
+        </tr>
+      <%end%>
+      <tr>
+        <th>截字长度</th>
+        <td><%= f.text_field :chars_size %></td>
+        <td style="color: gray;">不填则不截取</td>
+      </tr>
+      <tr>
+        <th>限制记录数</th>
+        <td><%= f.text_field :size %></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><%= f.text_area :remark, :rows => 8 %></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= submit_tag '提交保存' %><% if session[:back] %>&nbsp;&nbsp;&nbsp;<%= link_to "返回上级目录", back_admin_redirection_addresses_path %><% end %></td>
+        <td></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>

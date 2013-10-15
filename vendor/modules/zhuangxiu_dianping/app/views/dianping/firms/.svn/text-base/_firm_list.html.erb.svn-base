@@ -1,0 +1,46 @@
+<div class="zxdp2010_comlisttit">
+  <% company_sort =  Marshal.load(Marshal.dump(COMPANY_SORT_ORDERS))%>
+  <div class="list_r_tr f_l list_r">
+    <ul class="firm_order_2011">
+      <li>排序： </li>
+      <li>
+        <select style="vertical-align:middle;" id="change_order">
+          <option value="<%=search_firm_for_options( :order => 0, :condition => params[:condition]) %>" <%= "selected='selected'" if @order.to_i == 0 %> >请选择</option>
+          <% company_sort.sort.each do |k,v| %>
+            <option value="<%=search_firm_for_options(:order => k, :condition => params[:condition] ) %>" <%= "selected='selected'" if @order.to_i == k %> ><%= v[1] %></option>
+          <% end %>
+        </select>
+      </li>
+    </ul>
+  </div>
+  <% if @user_city_code.to_i == 11910 %>
+    <div class="list_r_tr f_r list_r" style="width:110px;">
+      <ul>
+        <li>筛选： </li>
+        <li class="list_r_tr_mfdk" > <a href="/free_loan" title="免费贷款"></a> </li>
+      </ul>
+    </div>
+  <% end -%>
+  <div class="list_r_tr f_r list_r" style="<%= @user_city_code.to_i == 11910 ? 'width:197px;' : 'width:240px;'%>">
+    <ul>
+      <li>排序： </li>
+      <% this_company_sort = @user_city_code.to_i == 11910 ?  company_sort.sort[1..-1] : company_sort.sort%>
+      <% this_company_sort.each do |k,v| %>
+        <li class="<%= @order.to_i == k ? 'list_r_tr_on' : 'list_r_tr_off'%>" >
+          <%= link_to v[1],search_firm_for_options(:order => k,:condition => params[:condition] )%>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class=list_r_li>
+  <ul class="clearfix">
+    <% @promoted_companies.each_with_index do |firm, index| %>
+      <%= render :partial => 'firm_summary', :locals => {:firm => firm, :index => index, :promoted => true} %>
+    <% end %>
+    <% @companies.each_with_index do |firm,index| %>
+      <%= render :partial => 'firm_summary', :locals => {:firm => firm, :index => index, :promoted => false} %>
+    <% end %>
+  </ul>
+</div>
+<div class="clearfix"><%= will_paginate @companies ,:params => {:trailing_slash => true }%></div>

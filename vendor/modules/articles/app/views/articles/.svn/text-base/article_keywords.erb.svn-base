@@ -1,0 +1,17 @@
+$(function(){
+  if ($('div.intextarea').html().indexOf('<a ') == -1) {
+    var article_content = $('div.intextarea').html();
+    var keywords = '';
+    var str = '';
+    <%@keywords.each do |keyword|%>
+      if (keywords.indexOf('<%=keyword.sort_name%>') == -1){
+        str = article_content.replace('<%=keyword.sort_name%>', "<a href='http://<%=ZHUANQU_BOARD_SPELL[keyword.board_id]%>.51hejia.com/zq/<%=keyword.sort_name%>/' title='点击访问《<%=keyword.sort_name%>》专区' target='_blank' class='keywlinks'><%=keyword.sort_name%></a>");
+        if (str.length != article_content.length){
+          keywords += '<%=keyword.sort_name%>';
+          article_content = str;
+        }
+      }
+    <%end%>
+    $('div.intextarea').html(article_content);
+  }
+});

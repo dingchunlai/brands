@@ -1,0 +1,39 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %><% end %> 
+    > <% if @agency.new_record? %> 新建经销商页面 <% else %> 编辑经销商页面 <% end %>
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+
+<%= show_flash_message %>
+<% is_new_record = @agency.new_record? %>
+<% form_for @agency, :url => (is_new_record ? admin_brand_agencies_path : admin_brand_agency_path(@brand, @agency)), :html => {:method => (is_new_record ? :post : :put), :id => 'agency'} do |f| %>
+  <%= f.error_messages %>
+  <fieldset>
+    <legend><%= is_new_record ? "新建" : "编辑" %>经销商</legend>
+    <table>
+      <tr>
+        <td>城 市: </td><td><%= f.text_field :city, :value => (is_new_record ? City.name_for_code(@agency.city) : nil) %></td>
+        <td><span style="color:red">   *  必填  </span></td>
+      </tr>
+      <tr><td>经销商：</td><td><%= f.text_field :title %></td><td><span style="color:red">  *  必填 </span></td></tr>
+      <tr><td>电 话：</td><td><%= f.text_field :telephone %></td><td>&nbsp;</td></tr>
+      <tr><td>地 址：</td><td><%= f.text_area :address, :size => '50 * 20' %></td><td>&nbsp;</td></tr>
+    <% if is_new_record %><%= hidden_field_tag :tagged_brand_id, @tagged_brand.id  %><% else %><%= f.hidden_field :tagged_brand_id %><% end %>
+    <%= hidden_field_tag :brand_id, @brand.id  %>
+    <%= hidden_field_tag :tag_id, @tag.id  %>
+    <tr><td cols="3"><%= submit_tag (is_new_record ? "保存" : "修改") %></td></tr>
+    </table>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  $('#agency').submit(function(event){
+    if($('#agency_title').val() == ''){
+      alert('请输入经销商名称');
+      return false;
+    }
+   });
+</script>

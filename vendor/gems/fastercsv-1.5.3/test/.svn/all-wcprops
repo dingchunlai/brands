@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test
+END
+line_endings.gz
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/line_endings.gz
+END
+tc_row.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_row.rb
+END
+tc_table.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_table.rb
+END
+ts_all.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/ts_all.rb
+END
+tc_encodings.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_encodings.rb
+END
+test_data.csv
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/test_data.csv
+END
+tc_headers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_headers.rb
+END
+tc_serialization.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_serialization.rb
+END
+tc_csv_parsing.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_csv_parsing.rb
+END
+tc_csv_writing.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_csv_writing.rb
+END
+tc_features.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_features.rb
+END
+tc_interface.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_interface.rb
+END
+tc_speed.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_speed.rb
+END
+tc_data_converters.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/94/51hejia/repos/brands/release/vendor/gems/fastercsv-1.5.3/test/tc_data_converters.rb
+END

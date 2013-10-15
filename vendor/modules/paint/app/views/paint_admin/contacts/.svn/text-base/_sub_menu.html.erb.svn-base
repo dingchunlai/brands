@@ -1,0 +1,4 @@
+<% content_for :sub_menu do %>
+	<li><%= link_to "联络列表查看", paint_admin_contacts_path%></li>
+	<li><%= link_to "联络列表添加", new_paint_admin_contact_path %></li>
+<% end %>

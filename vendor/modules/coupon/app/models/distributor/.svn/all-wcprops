@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/models/distributor
+END
+shop.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/models/distributor/shop.rb
+END
+picture_type.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/models/distributor/picture_type.rb
+END
+contract.rb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/models/distributor/contract.rb
+END
+upload_picture.rb
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/models/distributor/upload_picture.rb
+END

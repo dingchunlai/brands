@@ -1,0 +1,46 @@
+<%= top_bar :title       => '抵用券领取点管理页',
+            :button      => ['创建抵用券领取点', new_admin_coupon_leaflet_point_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['抵用券领取点列表', admin_coupon_leaflet_points_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr><th colspan="10"><%= link_to "城市默认设置", city_default_admin_coupon_leaflet_points_path %></th></tr>
+    <tr>
+      <th class="first">编号</th>
+      <th><%= CouponLeafletPoint.human_attribute_name("name") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("address") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("telephone") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("shop_name") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("linkman") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("city_id") %></th>
+      <th><%= CouponLeafletPoint.human_attribute_name("district_id") %></th>
+      <!--<th><%#= CouponLeafletPoint.human_attribute_name("activity_begin_at") %></th>-->
+      <!--<th><%#= CouponLeafletPoint.human_attribute_name("activity_end_at") %></th>-->
+      <th colspan=2 class="last">操作</th>
+    </tr>
+    <% @coupon_leaflet_points.each_with_index do |coupon_leaflet_point, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= coupon_leaflet_point.id %></td>
+          <td><%= coupon_leaflet_point.name %></td>
+          <td><%= coupon_leaflet_point.address %></td>
+          <td><%= coupon_leaflet_point.telephone %></td>
+          <td><%= coupon_leaflet_point.shop_name %></td>
+          <td><%= coupon_leaflet_point.linkman %></td>
+          <td><%= coupon_leaflet_point.city && coupon_leaflet_point.city.name || "--" %></td>
+          <td><%= coupon_leaflet_point.district && coupon_leaflet_point.district.name || "--" %></td>
+          <!--<td><%#= coupon_leaflet_point.activity_begin_at %></td>-->
+          <!--<td><%#= coupon_leaflet_point.activity_end_at %></td>-->
+          <td><%= link_to '修改', edit_admin_coupon_leaflet_point_path(coupon_leaflet_point) %></td>
+          <td><%= link_to '删除', admin_coupon_leaflet_point_path(coupon_leaflet_point), :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @coupon_leaflet_points.empty? -%>
+      <%= will_paginate @coupon_leaflet_points, :class => "digg_pagination" -%>
+  <% end -%>
+</div>

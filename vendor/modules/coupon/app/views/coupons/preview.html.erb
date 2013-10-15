@@ -1,0 +1,42 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】抵用券预览_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页" %> > <span>预览页面</span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_yulan">
+    <div class="djq_yulan_top">
+      <div class="djq_page" style="height:32px;margin:15px auto 0 auto;width:135px;">
+        <a id="print_button" style="height:32px;" class="djq_dayinbtn" title="确认并打印" href="javascript://"></a>
+      </div>
+    </div>
+    <div class="djq_yulan_middle">
+    	<ul class="djq_yulan_mul clearfix">
+           <%Coupon.by_ids(cookies[:mycoupons]).each do |coupon|%>
+                <%
+                  if params[:print]
+                    coupon.increase_count!({:key => 'print'})
+                  else
+                    coupon.increase_count!({:key => 'pv'})
+                  end
+                %>
+        	<li><a href="<%= coupon_show_path(coupon) %>" target="_blank"><%= image_tag(coupon_image_url(coupon.image_url), :alt => coupon.title)  %></a></li>
+           <%end%>
+        </ul>
+    </div>
+    <div class="djq_yulan_bottom"></div>
+  </div>
+</div>
+<!--content_code_end-->
+
+<script type="text/javascript">
+  $(function(){
+    $('#print_button').click(function(){
+      document.body.innerHTML = $('div.djq_yulan_middle').html();
+      window.print();
+    })
+    <%if params[:print]%>$('#print_button').trigger('click');<%end%>
+  })
+</script>
+

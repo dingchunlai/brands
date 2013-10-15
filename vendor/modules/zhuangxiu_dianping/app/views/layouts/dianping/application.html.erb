@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <% @keywords = @title.split("-")[0] if @keywords.blank? %>
+    <% @description = @title.split("-")[0] if @description.blank? %>
+    <% unless @description.blank? %><meta name="description" CONTENT="<%= @description %>" /><% end %>
+    <% unless @keywords.blank? %><meta name="keywords" content="<%= @keywords %>" /><% end %>
+    <title><%= @title%></title>
+    <link href="http://js1.51hejia.com/css/2010/header.css?<%= TIMESTAMPS %>" rel="stylesheet" type="text/css" />
+    <link href="http://js.51hejia.com/css/zxdpcss.css?<%= TIMESTAMPS %>" rel="stylesheet" type="text/css" />
+    <% if RAILS_ENV == "production" %>
+      <link href="http://js.51hejia.com/css/zxdp20101111.css?<%=TIMESTAMPS %>" rel="stylesheet" type="text/css" />
+    <% else %>
+      <link href="http://js.51hejia.com/css/rehearsal/zxdp20101111.css?<%=TIMESTAMPS %>" rel="stylesheet" type="text/css" />
+    <% end %>
+    <% css_url "2011_dianping.css" %><!--这个样式表是5月9日优化时整合起来的一个文件-->
+    <script type="text/javascript" src="http://js.51hejia.com/js/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://js.51hejia.com/js/dianping/dianping/shared/2011_public.js"></script>
+    <script type="text/javascript">
+      (function() {
+        var ra = document.createElement('script'); ra.type = 'text/javascript'; ra.async = true;
+        ra.src = 'http://js.51hejia.com/ra.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ra, s);
+      })();
+    </script>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    <%if controller.controller_name == 'home' && controller.action_name == 'index'%>
+      <%= AdSpace.render("#{CITIES[@user_city_code.to_i]}站-点评首页-通栏1", '', "<div class=\"width960\"></div>") %>
+    <% elsif controller.controller_name == 'cases' && controller.action_name == 'index' %>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-案例图片列表页-顶部通栏", '', '<div class="width960"></div>')%>
+    <% elsif controller.controller_name == 'cases' && controller.action_name == 'show' %>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-案例图片终端页-顶部通栏", '', '<div class="width960"></div>')%>
+    <%elsif controller.controller_name == 'decoration_diaries' && controller.action_name == 'index' %>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-装修日记列表页-顶部通栏", '', '<div class="width960"></div>')%>
+    <%elsif controller.controller_name == 'firms' && controller.action_name == 'index' %>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-装修公司列表页-顶部通栏", '', '<div class="width960"></div>')%>
+    <%elsif controller.controller_name == 'decoration_diaries' && controller.action_name == 'show'%>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-装修日记终端页-顶部通栏", '', '<div class="width960"></div>')%>
+    <%elsif controller.controller_name == 'coupons' && controller.action_name == 'index'%>
+      <%=AdSpace.render("#{CITIES[@user_city_code.to_i]}站-促销优惠列表页-顶部通栏", '', '<div class="width960"></div>')%>
+    <%end%>
+
+    <% #渲染公共头，现在不需要公共头,但要google的js统计代码  %>
+    <%= render :partial =>'dianping/shared/new_common_header' %>
+
+    <% if controller.controller_name != 'zhuan_ti' && controller.action_name != 'super_man_game' %>
+      <%= render :partial => "/layouts/dianping/sub_menu",:locals => {:location_text => yield(:location) } %>
+    <% end %>
+    <%= yield %>
+    <!--coupon_code-->
+    <div class="diyq_coupon"><img src="javascript:void(0);" id="pop_img"/></div>
+    <!--end_coupon_code-->
+    <%= render :partial => 'shared/layouts/footer' %>
+  </body>
+</html>

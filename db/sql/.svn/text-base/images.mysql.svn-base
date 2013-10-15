@@ -1,0 +1,15 @@
+-- table: images
+CREATE TABLE images (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  mongo_file_id VARCHAR(32),
+  md5 CHAR(32),
+  filename VARCHAR(255) NOT NULL,
+  parent_id INTEGER,
+  thumbnail VARCHAR(255),
+  attachable_id INTEGER NOT NULL,
+  attachable_type VARCHAR(255) NOT NULL
+) ENGINE InnoDB CHARACTER SET utf8;
+
+-- indexes: images
+CREATE INDEX images_attachable_id_attachable_type_index ON images (attachable_id, attachable_type);
+CREATE INDEX images_parent_id_index ON images (parent_id);

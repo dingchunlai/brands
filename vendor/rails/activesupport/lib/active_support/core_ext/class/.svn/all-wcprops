@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class
+END
+attribute.rb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class/attribute.rb
+END
+removal.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class/removal.rb
+END
+attribute_accessors.rb
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class/attribute_accessors.rb
+END
+delegating_attributes.rb
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class/delegating_attributes.rb
+END
+inheritable_attributes.rb
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/core_ext/class/inheritable_attributes.rb
+END

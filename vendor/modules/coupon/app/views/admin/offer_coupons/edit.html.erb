@@ -1,0 +1,63 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '提供抵用券管理页',
+            :button => ['提供抵用券列表', admin_offer_coupons_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['OfferCoupons', admin_offer_coupons_path]
+            ]
+%>
+<% form_for(@offer_coupon, :url => admin_offer_coupon_path(@offer_coupon)) do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">修改提供抵用券信息</th>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="100"><strong><%= f.label :merchant %></strong></td>
+          <td class="last"><%= @offer_coupon.merchant %></td>
+        </tr>
+        <tr>
+          <td class="first"><strong><%= f.label :body %></strong></td>
+          <td class="last"><%= @offer_coupon.body %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :city_id %></strong></td>
+          <td class="last"><%= @offer_coupon.city.name %><%#= f.select :city_id, City.find(:all).collect{ |item| [item.name, item.id] }, :include_blank => '请选择', :selected => @offer_coupon.city_id, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :district_id %></strong></td>
+          <td class="last"><%= @offer_coupon.district.name %><%#= f.select :district_id, @districts.collect{ |item| [item.name, item.id] }, :include_blank => '请选择', :selected => @offer_coupon.district_id, :class => "text", :reg => '^\S+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first"><strong><%= f.label :linkman %></strong></td>
+          <td class="last"><%= @offer_coupon.linkman %></td>
+        </tr>
+        <tr>
+          <td class="first"><strong><%= f.label :telphone %></strong></td>
+          <td class="last"><%= @offer_coupon.telphone %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first"><strong><%= f.label :sex %></strong></td>
+          <td class="last"><%= @offer_coupon.sex? ? "男" : "女" %></td>
+        </tr>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :status %></strong></td>
+          <td class="last">
+            <% if @offer_coupon.status != 1 %>
+                <%= f.select :status, [["标志为已处理", 1]] %>
+            <% else %>
+                已处理
+            <% end %>
+          </td>
+        </tr>
+        <% if @offer_coupon.status != 1 %>
+            <tr>
+              <td colspan="2"><%= f.submit '提交' %></td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+<% end %>

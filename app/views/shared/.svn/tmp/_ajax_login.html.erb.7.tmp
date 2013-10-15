@@ -1,0 +1,35 @@
+<style type="text/css" media="screen">
+  .signup_input{width:100px;}
+</style>
+<div class="dafenbox denglzhuc" id="ajaxLoginForm">
+  <table width="600" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="255" valign="top"><h3>已有和家帐号 </h3>
+        <form action="http://api.51hejia.com/sessions/user_login" id="pop_login_form" method="post">
+          <ul>
+            <li>用&nbsp;户&nbsp;名：<input id="pop_user_name" name="user_name" type="text" /><em></em></li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input id="pop_password" name="password" type="password" /></li>
+            <li><input name="self_login" id="pop_self_login" type="checkbox" value="0" style="vertical-align:middle;" />自动登录</li>
+            <li style="padding:10px;text-align:center;"><input id="pop_login_submit" type="submit" value="登录" class="gsl_wyly_btn" /></li>
+          </ul>
+        </form>
+      </td>
+      <td width="1" bgcolor="#cccccc"></td>
+      <td width="325"><h3>注册和家帐号</h3>
+        <% form_tag reg_save_url, :method => :post, :id => "signup_form" do %>
+        <!--form action="http://b.51hejia.com:3000/users/reg_save" method="post" id="signup_form"-->
+          <ul style="width:300px;">
+            <li>用&nbsp;户&nbsp;名：<input id="signup_username" name="username" type="text" class="signup_input"/> <em></em></li>
+            <li>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input id= "signup_password" name="userpassword" type="password"  class="signup_input"/> <em></em></li>
+            <li>重复密码：<input id= "signup_password_confirm" name="userpasswordconfirm" type="password"  class="signup_input"/> <em></em></li>
+            <li>&nbsp;E-mail&nbsp;：<input id="user_email" name="userbbsemail" type="text"  class="signup_input"/> <em></em></li>
+            <li>验&nbsp;证&nbsp;码：<input type="text" size="5"  name="image_code" />
+              <img id="image_code_area" src="http://b.51hejia.com:3000/users/get_image_code?<%= Time.now.to_i %>" width="50" height="20" style="vertical-align:middle;" onclick="this.src += (new Date()).getTime();" />
+            </li>
+            <li style="padding-top:10px;text-align:center;"><input id="signup_submit" type="submit" value="点击注册" class="gsl_wyly_btn" /></li>
+          </ul>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,108 @@
+<%=include_jquery_autocomplete%>
+
+<%= top_bar :title => '经销商详情',
+  :button => ['经销商列表', admin_distributors_path],
+  :breadcrumbs => [
+  ['抵用券后台', coupon_admin_index_path],
+  ["#{Distributor.id_to_title(@distributor)}-装修公司绑定", decofirm_admin_distributor_path(@distributor)],
+]
+%>
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first" width="33%">经销商编号</th>
+      <th class="last">经销商简称</th>
+      <th class="last">对应装修公司</th>
+    </tr>
+    <tr>
+      <td class="first" width="33%"><%= @distributor.code %></td>
+      <td class="last"><%= @distributor.short_title %></td>
+      <td class="last">
+        <% if @decofirm %>
+            (已关联--<%= @decofirm.name_zh %>)
+        <% else %>
+            <span style="color:red;font-weight:bold;">未关联</span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <% form_for @associated, :url => associate_decofirm_admin_distributor_path(@distributor), :html => {:method => :post} do |f| %>
+            <%= f.hidden_field :distributor_id %>
+            <div id="deco_firm_container" style="display:none;">
+                公司ID:<%= f.text_field :deco_firm_id %>
+            </div>
+            <div id="auto_complete_container">
+                * <%= text_field_tag 'deconame' %> (请输入装修公司名称进行匹配)
+            </div><input type="button" id="use_decofirm_id" value="直接使用装修公司ID" />
+            </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <%= f.submit "确认关联" %>
+                <input type="reset" name="reset" value="重置"/>
+              </td>
+        <% end %>
+        </tr>
+  </table>
+</div>
+<script type="text/javascript">
+  $(function() {
+      $("#use_decofirm_id").click(function(){
+        if ($(this).attr("value") == "直接使用装修公司ID")
+        {
+            $("#deco_firm_container").css("display", "");
+            $("#auto_complete_container").css("display", "none");
+            $(this).attr("value", "使用匹配搜索");
+        }
+        else
+        {
+            $("#deco_firm_container").css("display", "none");
+            $("#auto_complete_container").css("display", "");
+            $(this).attr("value", "直接使用装修公司ID");
+        }
+      });
+
+      //按名称 检索装修公司
+      $('#deconame').autocomplete("/remote/decofirm_by_name", {
+          max: 20,
+          minChars: 2,
+          width: 200,
+          dataType: 'json',
+          parse: function(data) {
+              var rows = [];
+              for (var i = 0; i < data.length; i++) {
+                  rows[rows.length] = {
+                      data: data[i].id + "-" + data[i].name_zh,
+                      value: data[i].id,
+                      result: data[i].name_zh
+                  };
+              }
+              return rows;
+          },
+          formatItem: function(row, i, n) {
+              return row;
+          }
+      });
+      $('#deconame').result(function(event, data, formatted) {
+          $("#distributor_decofirm_deco_firm_id").attr("value", formatted);
+          alert("当前经销商已与\n\n[ "+ data +" ]装修公司绑定,点[ 确认关联 ]按钮确认绑定关系!\n\n 若想更新关联,请输入装修公司名称并选择新的关联!");
+      });
+
+
+      $("#new_distributor_decofirm").submit(function(){
+          var result = true;
+        if ($("#distributor_decofirm_deco_firm_id").attr("value") == "") {
+            alert('请选择关联在装修公司！');
+            $('#deconame').focus();
+            result = false;
+        }
+          return result;
+      });
+
+  });
+</script>

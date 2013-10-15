@@ -1,0 +1,5 @@
+<%= menu 'Dashboard',
+         ["门店图片", distributor_user_hy_images_path(:type => "shop")],
+         ["产品图片", distributor_user_hy_images_path(:type => "case")],
+         ["荣誉证书", distributor_user_hy_images_path(:type => "glory")]
+%>

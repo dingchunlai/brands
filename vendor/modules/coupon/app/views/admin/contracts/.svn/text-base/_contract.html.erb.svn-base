@@ -1,0 +1,68 @@
+<%=include_jquery_easy_validator%>
+<%
+  is_new = @contract.new_record? ? true : false
+  distributor_title = @distributor && @distributor.title || @contract.distributor.title
+  title = is_new ? "新建#{distributor_title}经销商合同" : "编辑#{distributor_title}经销商合同" 
+%>
+<%= top_bar :title => title,
+      :button => ['返回', admin_distributor_path(is_new ? @distributor : @contract.distributor_id)],
+      :breadcrumbs => [
+        ['首页', coupon_admin_index_path],
+        ['经销商', admin_distributor_path(is_new ? @distributor : @contract.distributor_id)],
+        ['合同列表', admin_distributor_contracts_path(is_new ? @distributor : @contract.distributor_id)],
+        [title]
+      ]
+%>
+
+<% form_for @contract, :url => (is_new ? admin_distributor_contracts_path : admin_distributor_contract_path(@contract.distributor_id)), :html => {:method => (is_new ? :post : :put)} do |f| %>
+  <%= f.error_messages  %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2"><%= title %></th>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :distributor_id %></strong></td>
+        <td class="last"><%= is_new ? @distributor.short_title : @contract.distributor.short_title  %></td>
+      </tr>
+      <tr>
+        <td class="first" width="172"><strong><%= f.label :title %></strong></td>
+        <td class="last"><%= f.text_field :title, :reg => '^\S+$', :tip => "合同标题必须" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :start_date %></strong></td>
+        <td class="last"><%= f.text_field :start_date, :value => f.object.start_date && f.object.start_date.strftime("%Y-%m-%d"), :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => "日期格式: 2010-05-28" %></td>
+      </tr>
+      <tr>
+        <td class="first"><strong><%= f.label :end_date %></strong></td>
+        <td class="last"><%= f.text_field :end_date, :value => f.object.end_date && f.object.end_date.strftime("%Y-%m-%d"), :reg => '^2\d\d\d-[01]?\d-[0123]?\d$', :tip => "日期格式: 2010-05-28" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :code %></strong></td>
+        <td class="last"><%= f.text_field :code, :reg => '^([\u4e00-\u9fa5]|\w)+$', :tip => "请输入一个合同序列编号" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :description %></strong></td>
+        <td class="last"><%= f.text_area :description, :size => '60 * 25' %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first"><strong><%= f.label :radmin_user_id %></strong></td>
+        <td class="last"><%= f.select :radmin_user_id, @users.map{|u| [u.rname, u.id]}.unshift(['-请选择-', '']), {}, :reg => '^\w+$', :tip => "必须选择业务员" %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first">&nbsp;<% if is_new %><%= hidden_field_tag "distributor_contract[distributor_id]", @distributor.id %><% end %></td>
+        <td class="last"><%= f.submit '保存' %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+      $("#distributor_contract_end_date").datepicker({dateFormat: 'yy-mm-dd'});
+      $("#distributor_contract_start_date").datepicker({dateFormat: 'yy-mm-dd'});
+    });
+</script>

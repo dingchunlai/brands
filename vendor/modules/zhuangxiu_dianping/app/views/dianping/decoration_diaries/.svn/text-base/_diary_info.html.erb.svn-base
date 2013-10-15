@@ -1,0 +1,16 @@
+<div class="diary_contlist" id="diary_contlist">
+
+  <% if @case.nil? %>
+    <div class="zxdp2011_continfotit" style="border-bottom:none;"><h1><%= @diary.title %></h1></div>
+    <%= render :partial => 'diary_keyword' %>
+  <% else %>
+    <div class="zxdp2011_anlirj"><h3>这篇案例来自 <span><%= truncate(@diary.user_name, :length => 7 ,:omission => '') %></span> 网友的装修日记：<span><%= @diary.title %></span></h3></div>
+  <% end %>
+  <div class="zxdp2011_anlixg f_l">
+    <p>发表&nbsp;&nbsp;<%= @diary.created_at.strftime("%Y-%m-%d") if @diary.created_at %>&nbsp;&nbsp;更新<%= @diary.order_time.strftime("%Y-%m-%d") if @diary.order_time %>&nbsp;&nbsp;日记：<%= @diary.decoration_diary_posts.size %>篇&nbsp;&nbsp;阅读：(<%= @diary.pv %>) 次&nbsp;&nbsp;评论：(<%= @diary.remarks_count %>) 次</p>
+  </div>
+  <div class="diary_contpaix zxdp2010_rjpaix f_r"><strong>阅读方式：&nbsp;</strong><span class="case_diary_posts_on"><input type="hidden" id="diary_id" value="<%= @diary.id %>"/><input type="hidden" id="deco_firm_id" value="<%= @diary.deco_firm_id %>"/><input type="hidden" id="page" value="<%= @page %>"/><a style="cursor:pointer;">正序</a></span><span class="case_diary_posts_off"><input type="hidden" id="diary_id" value="<%= @diary.id %>"/><input type="hidden" id="deco_firm_id" value="<%= @diary.deco_firm_id %>"/><input type="hidden" id="page" value="<%= @page %>"/><a style="cursor:pointer;">倒序</a></span></div>
+<%# cache "diary:itself_informations:#{@diary_id}:#{@page}", :expires_in => 5.minutes  do %>
+  <div id="case_diary_contlist"><%= render :partial => "diary_post_show", :locals => { :diary => @diary, :page => @page, :diary_posts => @diary_posts } %></div>
+<%# end %>
+</div>

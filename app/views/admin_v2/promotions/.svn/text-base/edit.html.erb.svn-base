@@ -1,0 +1,216 @@
+<div class="page_navigate page_padding">
+  <span>当前位置：</span> <%= link_to "促销活动", admin_promotions_path %> > 新建活动页面
+  <br /><br />
+</div>
+
+<%= show_flash_message %>
+<% is_new_record = @promotion.new_record? %>
+<% form_for :promotion, @promotion, :url => (is_new_record && admin_promotions_path || admin_promotion_path(@promotion)), 
+  :html => {:id=>'promotion_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'), :method => (is_new_record && :post || :put)}  do |f| %>
+    <div style="text-align: center; font-weight: bolder; font-size: 17px; letter-spacing: 3px; height: 30px;">
+    <%if is_new_record%>
+      新建促销活动
+    <%else%>
+      编辑促销活动
+    <%end%>
+  </div>
+
+  <fieldset style="padding: 10px;">
+    <table>
+      <tr>
+        <th>活动主题</th>
+        <td><%= f.text_field :subject %></td>
+      </tr>
+
+      <tr>
+        <th>副主题</th>
+        <td><%= f.text_field :short_subject %></td>
+      </tr>
+
+      <tr>
+        <th>品类品牌</th>
+        <td>
+          <%Tag.all_categories.each do |tag|%>
+            <div>
+              <div>
+                <%=check_box_tag "tag_ids[]", tag.TAGID, @tag_ids.include?(tag.TAGID) ? true : false, :id => "tag_id_#{tag.TAGID}", :onclick => "if (this.checked){$('#'+this.id+'_brands').show();}else{$('#'+this.id+'_brands input').attr('checked',false);$('#'+this.id+'_brands').hide();}" %>
+                <%= tag.TAGNAME %>
+              </div>
+              <div id="tag_id_<%=tag.TAGID%>_brands" style="<%="display:none;" unless @tag_ids.include?(tag.TAGID)%>margin:5px 5px 5px 25px; border: 1px solid gray; padding:5px;">
+                <%Brand.for_tag(tag.TAGID, true, "product_brands.id, name_zh").each do |brand|%>
+                  <%=check_box_tag "brand_ids[]", brand.id, (@tag_ids.include?(tag.TAGID) && @brand_ids.include?(brand.id)) ? true : false %>
+                  <%= brand.name_zh %>
+                <%end%>
+              </div>
+            </div>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>所在城市</th>
+        <td><%= f.text_field :city %></td>
+      </tr>
+
+      <tr>
+        <th>主题图片</th>
+        <td>
+          <img id="image_thumb" width="110" height="110" alt="主题图片预览" />
+          <span id="main_image_upload_button"></span>
+          <%= f.text_field :image_url, :style => "display:none;" %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>组织者</th>
+        <td><%= f.text_field :organizer %></td>
+      </tr>
+
+      <tr>
+        <th>活动地点</th>
+        <td><%= f.text_field :location %></td>
+      </tr>
+
+      <tr>
+        <th>联系人</th>
+        <td><%= f.text_field :contacts %></td>
+      </tr>
+
+      <tr>
+        <th>联系地址</th>
+        <td><%= f.text_field :address %></td>
+      </tr>
+
+      <tr>
+        <th>联系电话</th>
+        <td><%= f.text_field :phone_numbers %></td>
+      </tr>
+
+      <tr>
+        <th>开始时间</th>
+        <td><%= f.text_field :begins_at, :value => f.object.begins_at && f.object.begins_at.strftime("%Y-%m-%d %H:%M:%S"), :style => "width:114px;"%></td>
+      </tr>
+
+      <tr>
+        <th>结束时间</th>
+        <td><%= f.text_field :ends_at, :value => f.object.begins_at && f.object.ends_at.strftime("%Y-%m-%d %H:%M:%S"), :style => "width:114px;"%></td>
+      </tr>
+
+      <tr>
+        <th>发布时间</th>
+        <td><%= f.text_field :published_at, :value => f.object.begins_at && f.object.published_at.strftime("%Y-%m-%d %H:%M:%S"), :style => "width:114px;"%></td>
+      </tr>
+
+      <tr>
+        <th></th>
+        <td>
+
+          <table  border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="padding-left: 10px;background:none repeat scroll 0 0 #EFEFDE; border:1px solid #8C99A9;">
+                <span id="upload_notice">提示：点击右边的按钮上传图片，单图大小不能超过200K。</span>
+              </td>
+              <td style="padding-left: 10px"><span id="swfupload_button"></span></td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr>
+        <th>活动内容</th>
+        <td><%= f.text_area :content, :class => 'mceEditor' %></td>
+      </tr>
+
+    </table>
+  </fieldset>
+
+  <fieldset style="margin-top: 5px; padding: 10px;">
+    <table>
+      <tr>
+        <th>html关键词</th>
+        <td><%= f.text_field :html_keywords %></td>
+        <td class="input_explain">多个关键词之间用逗号分隔</td>
+      </tr>
+      <tr>
+        <th>html描述</th>
+        <td><%= f.text_area :html_description, :rows => 5 %></td>
+        <td class="input_explain"></td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <div style="text-align: center; padding-top: 15px;">
+    <%= submit_tag '提交保存', :style => "width: 100px; padding-top:3px;"%>
+  </div>
+
+<% end %>
+
+<%= render :partial => 'shared/enable_tinymce' %>
+
+<%content_for :html_head do%>
+  <style type="text/css">
+    input[type=text], textarea {
+      width: 300px;
+    }
+    select {
+      width: 100px;
+    }
+    td {
+      height: 30px;
+    }
+    th {
+      padding-right: 10px;
+    }
+    .input_explain {
+        padding-left: 20px;
+        color: gray;
+     }
+  </style>
+  
+  <script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+  <script src="http://js.51hejia.com/js/brands/uploadify/admin_promotion_1.js?<%=Time.now.to_i%>" type="text/javascript"></script>
+  <script src="http://js.51hejia.com/js/brands/uploadify/admin_promotion_2.js?<%=Time.now.to_i%>" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+      set_main_image();
+      $("#promotion_form").submit(form_on_submit);
+      $("#promotion_begins_at").datepicker({dateFormat: 'yy-m-d'});
+      $("#promotion_ends_at").datepicker({dateFormat: 'yy-m-d'});
+      $("#promotion_published_at").datepicker({dateFormat: 'yy-m-d'});
+    });
+    function mce_insertimage(image_url){
+      tinyMCE.execCommand('mceInsertContent',false,"<img src='" + image_url + "' />");
+    }
+    function set_main_image(){
+      if ($.trim($("#promotion_image_url").val())=="")
+        $("#image_thumb").attr('src', "http://js.51hejia.com/img/nil.gif");
+      else
+        $("#image_thumb").attr('src', ($("#promotion_form").attr("data-assetsurl") + $("#promotion_image_url").val()).replace(".com//",".com/"));
+    }
+    function form_on_submit(){
+      //表单提交时验证
+      if ($.trim($("#promotion_subject").val())==""){
+        alert("活动主题必须填写！");
+        return false;
+      }
+      if ($.trim($("#promotion_begins_at").val())==""){
+        alert("请填写活动开始时间！");
+        return false;
+      }
+      if ($.trim($("#promotion_ends_at").val())==""){
+        alert("请填写活动结束时间！");
+        return false;
+      }
+      if ($.trim($("#promotion_city").val())==""){
+        alert("请填写城市信息");
+        return false;
+      }
+      if ($.trim($("#promotion_published_at").val())==""){
+        alert("请填写活动发布时间！");
+        return false;
+      }
+    }
+  </script>
+<%end%>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test
+END
+plugin_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/plugin_test.rb
+END
+resque-web_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/resque-web_test.rb
+END
+test_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/test_helper.rb
+END
+resque_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/resque_test.rb
+END
+redis-test.conf
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/redis-test.conf
+END
+worker_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/worker_test.rb
+END
+job_plugins_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/job_plugins_test.rb
+END
+job_hooks_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/vendor/plugins/resque/test/job_hooks_test.rb
+END

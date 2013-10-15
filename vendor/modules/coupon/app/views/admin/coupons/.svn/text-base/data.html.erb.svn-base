@@ -1,0 +1,105 @@
+<%= top_bar :title => '抵用券管理',
+  :button => ['添加抵用券', new_admin_coupon_path],
+  :breadcrumbs => [
+  ['首页', coupon_admin_index_path],
+  ['抵用券管理', admin_coupons_path],
+  ['数据统计']
+]
+%>
+
+<div class="select-bar">
+  <%form_tag data_admin_coupons_path, :method => :get do %>
+      起始日期：<input type="text" name="date_begin" id="date_begin" size="10" maxlength="10" value="<%= params[:date_begin] %>"/>&nbsp;&nbsp;&nbsp;&nbsp;
+      结束日期：<input type="text" name="date_end" id="date_end" size="10" maxlength="10" value="<%= params[:date_end] %>"/><br/>
+      抵用券ID：<input type="text" name="coupon_id" id="coupon_id" size="10" maxlength="10" value="<%= params[:coupon_id] %>"/>&nbsp;&nbsp;&nbsp;&nbsp;
+      抵用券名称：<input type="text" name="coupon_title" id="coupon_title" size="30" maxlength="30" value="<%= params[:coupon_title] %>"/><br />
+      城　　市：<%= select_tag "city_id", options_for_select(@cities.unshift(['请选择', '']), params[:city_id].to_i) %>
+      输入<input type="text" name="txt_city" id="txt_city"/><input type="button" id="btn_city" value="定位城市"/><br/>
+      行　　业：<%= select_tag "tag_id", options_for_select(@industries.unshift(['请选择', '']), params[:tag_id].to_i) %>
+      输入<input type="text" name="txt_tag" id="txt_tag"/><input type="button" id="btn_tag" value="定位行业"/><br/>
+      卖　　场：<%= select_tag "market_id", options_for_select(@markets.unshift(['请选择', '']), params[:market_id].to_i) %>
+      输入<input type="text" name="txt_market" id="txt_market"/><input type="button" id="btn_market" value="定位卖场"/><br/>
+      经销商ID：<input type="text" name="distributor_id" id="distributor_id" value="<%= params[:distributor_id] %>"/>
+      经销商名称：<input type="text" name="distributor_title" id="distributor_title" value="<%= params[:distributor_title] %>"/>
+      经销商门店：<input type="text" name="shop_name" id="shop_name" value="<%= params[:shop_name] %>"/><br/>
+      <input type="reset" name="reset" id="reset" value="重置"/>
+      <input type="submit" value="查询" name="query" id="query" style="background-color: green; color: white; font-weight: bold; border:1px solid #f4f4f4; cursor: pointer;"/>
+  <%end%>
+  <% if can? :stat, CouponDownload %>
+  <br />
+  <div><%= link_to '进入抵用券手机下载报表(查看,导出)页面', stat_admin_coupon_downloads_path, :style => "padding: 5px; background-color: #784; text-decoration: none; color: white; font-weight: bold;" %></div>
+  <% end %>
+</div>
+
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>序列号</th>
+      <th>抵用卷标题</th>
+      <th>经销商</th>
+      <th>过期时间</th>
+      <th>下载次数<br />
+        (当天下载数/已确认数/未确认数/总数)
+      </th>
+      <th>打印次数<br />(当天/总数)</th>
+      <th>浏览次数<br />(当天/总数)</th>
+    </tr>
+    <%@coupons.each do |coupon|%>
+      <tr>
+        <td> <%= coupon.code %> </td>
+        <td> <%= h coupon.title %> </td>
+        <td> <%= coupon.send(:coupon_distributor_title) %> </td>
+        <td> <%= coupon.activity_end_at %> </td>
+        <td> <%= coupon.download({:when => Time.now.strftime("%Y%m%d")}) %> /
+             <%
+                confirmed_downloads_count =  coupon.coupon_confirmed_downloads.size
+                total_downloads_count =  coupon.coupon_downloads.size
+             %>
+             <font color="green"><%= confirmed_downloads_count %></font> /
+             <font color="red"><%= total_downloads_count - confirmed_downloads_count %></font> /
+          <% if can?(:read, CouponDownload) or can?(:read_owned_coupon_downloads, :coupon_downloads) %>
+          <%= link_to total_downloads_count, admin_coupon_downloads_path(:id => coupon.id), :style=> "color:blue" %><br /><%= link_to "点击查看", admin_coupon_downloads_path(:id => coupon.id) %>
+          <% else %>
+            <font color="blue"><%= total_downloads_count%></font>
+          <% end %>
+        </td>
+        <td> <%= coupon.print({:when => Time.now.strftime("%Y%m%d")})  %> / <%= coupon.prints_count %>  </td>
+        <td> <%= coupon.pv({:when => Time.now.strftime("%Y%m%d")})  %> / <%= coupon.send(:coupon_pv) %> </td>
+      </tr>
+    <%end%>
+  </table>
+    <div>
+      <%= will_paginate @shops , :class => "digg_pagination", :previous_label => "上一页", :next_label => "下一页"%>
+    </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+     $("#date_begin").datepicker({dateFormat: 'yy-mm-dd'});
+     $("#date_end").datepicker({dateFormat: 'yy-mm-dd'});
+
+      $("input[type=button][id^='btn_']").click(function() {
+          var flag = $(this).attr("id").replace('btn_', '');
+          if ($("#txt_" + flag).val() == "") {
+              alert('请填写' + $(this).val().replace('定位', '') + '!');
+              $("#txt_" + flag).focus();
+          } else {
+              var got = false;
+              $("#"+ flag +"_id").css("background-color", "green");
+              $("#"+ flag +"_id").children().each(function(i) {
+                  if ($(this).text() == $("#txt_" + flag).val()) {
+                      got = true;
+                      $("#txt_" + flag).attr("value", '');
+                      $("#"+ flag +"_id").attr("selectedIndex", $(this).attr("index"));
+                  }
+              });
+              $("#"+ flag +"_id").css("background-color", "");
+              if (!got) {
+                  alert('请填写正确的'+ $(this).val().replace('定位', ''));
+                  $("#txt_" + flag).focus();
+              }
+          }
+      });
+  });
+</script>

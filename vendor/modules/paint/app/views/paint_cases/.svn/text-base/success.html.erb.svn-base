@@ -1,0 +1,16 @@
+<% title "【油漆工】_案例发布成功_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<div class="width960 margin10 clearfix"> 
+  <div class="yg_web_l f_l">
+  	<%= render :partial => '/shared/front_admin_left'%>
+  </div>
+  <div class="yg_web_r f_r"> 
+    <div class="yg_web_rbox margin10"> 
+      <div><%=render :partial => '/shared/front_admin_top', :locals => { :top_name => "案例发布" }%></div> 
+       <div class="yg_success">
+        <a href="/paint_worker/admin" target="_self" title="返回"></a>
+      </div>
+    </div> 
+  </div> 
+</div> 

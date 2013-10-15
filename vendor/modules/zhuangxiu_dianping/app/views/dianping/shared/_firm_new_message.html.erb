@@ -1,0 +1,13 @@
+    <% 
+      deco_ideas = @firm.deco_ideas 
+      if deco_ideas.size > 0
+    %>
+    <div class="zxdp2011_zxxx margin10">
+      <h3>最新消息...</h3>
+      <ul>
+        <% deco_ideas.to_a.each do |idea| %>
+        <li><a href="<%= deco_idea_path(idea) %>" target="_blank"><%= idea.title %></a></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>

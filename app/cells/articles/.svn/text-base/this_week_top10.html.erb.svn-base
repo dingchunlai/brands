@@ -1,0 +1,48 @@
+<script type="text/javascript">
+  $(function(){
+    $(".sidebox_n03_cont ul:gt(0)").hide();
+    $("#sidebox_n03_tab span:first").addClass("active");
+    $("#sidebox_n03_tab span").mouseover(
+    function(){
+      $(this).addClass("active")
+      .siblings().removeClass("active");
+      $(".sidebox_n03_cont ul").eq($(this).index())
+      .siblings().hide().end().show();
+    }
+  )
+  }
+)
+</script>
+<div class="sidebox_n03 sidebox_6">
+  <h3>一周关注TOP10</h3>
+  <div id="sidebox_n03_tab" class="clearfix">
+    <span>户型</span> <span>房间</span> <span>风格</span> <span>预算</span>
+  </div>
+
+  <div class="sidebox_n03_cont">
+    <ul>
+      <%Article.articles(10, 42225, 'hot').each do |a|%>
+        <li><%=link_to a.TITLE, a.detail_url, :target => '_blank'%></li>
+      <%end%>
+    </ul>
+
+    <ul>
+      <%Article.articles(10, 42241, 'hot').each do |a|%>
+        <li><%=link_to a.TITLE, a.detail_url, :target => '_blank'%></li>
+      <%end%>
+    </ul>
+
+    <ul>
+      <%Article.articles(10, 42233, 'hot').each do |a|%>
+        <li><%=link_to a.TITLE, a.detail_url, :target => '_blank'%></li>
+      <%end%>
+    </ul>
+
+    <ul>
+      <%Article.articles(10, 42229, 'hot').each do |a|%>
+        <li><%=link_to a.TITLE, a.detail_url, :target => '_blank'%></li>
+      <%end%>
+    </ul>
+
+  </div>
+</div>

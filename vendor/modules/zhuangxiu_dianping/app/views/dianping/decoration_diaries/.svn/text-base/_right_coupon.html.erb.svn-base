@@ -1,0 +1,15 @@
+      <div class="zxdp2011_daohang clear">
+        <ul>
+          <li><%= link_to "对这家装修公司感兴趣 看公司资料...",firm_url, :target => "_blank"%></li>
+					
+          <% unless @case.nil? %><li><a href="#" target="_blank">喜欢这套案例图片 关注设计师...</a></li><% end%>
+          <li><a href="#" target="_blank">这家公司提供<span>200</span>张现金券 还剩<span>50</span>张</a><br/>
+            <label><a href="#1" target="_blank">(什么叫现金券？)</a></label>
+          </li>
+        </ul>
+      </div>
+      <div class="diyq_listimg diyqimg"> <img src="http://assets2.image.51hejia.com/4d8017a9470dbb760f001643-535951444912eb101899dc772ddc3653.jpg" /> </div>
+      <div class="zxdp2011_yyxz clearfix">
+        <div class="f_l"><a href="#" target="_blank">预约这家公司</a></div>
+        <div class="f_r"><a href="#" target="_blank">下载现金券</a></div>
+      </div>

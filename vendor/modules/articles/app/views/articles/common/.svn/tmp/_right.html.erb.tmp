@@ -1,0 +1,193 @@
+<div class="sidelist clearfix" >
+  <style media="screen" type="text/css">
+    #f2 .seo_tian li.tian{
+      height:100px;width:119px;
+      overflow:hidden;
+      margin:0 5px;
+      text-align:center;
+      float:left;
+      _display:inline;
+    }
+    #f2 .sidebox_3 li.tian img{
+      width:110px;height:80px;
+    }
+    a.WQbaomingbox{font-size:12px;display:inline; color:#6d0200; width:84px;height:20px; padding:2px 5px 5px 5px; text-transform:none; background:url(http://js.51hejia.com/img/zhuangxiu1023/sqmf_btn.gif) center no-repeat;}
+    a.WQbaomingbox hover:{color:#6d0200; text-transform:none;}
+    .tab_jzsb{font-size:14px; padding-top:4px; margin-top:10px;width:260px;height:30px; display:block; text-indent:30px; background:url(http://js.51hejia.com/img/zhuangxiu1023/zd_bg.gif) no-repeat;}
+    /*表单样式*/
+    .bmbg2 { display:none; background:#000; opacity:0.5; filter:alpha(opacity=50); width:100%; height:100%; position:fixed!important; position:absolute; left:0; top:0;  _top:expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+             z-index:99; }
+    .bmform2 { display:none; background:#fff; border:8px solid #D1D1D1; width:400px;left:50%; margin-left:-200px!important; top:50%; margin-top:-130px!important; margin-top:0; position:fixed!important; position:absolute;  _top:expression(eval(documentElement.scrollTop+(document.documentElement.clientHeight-this.offsetHeight)/2));
+               z-index:999; }
+    .bmform2 table {margin:10px 0px;}
+    .bmform2 td { padding:6px 5px; color:#333; }
+  </style>
+
+  <% if @channel == "xinwen" %>
+    <%= render :partial => "articles/detail/jiazhuang_wenzhang" %>
+    <%= render :partial => "articles/detail/jiazhuang_xiaoshuo" %>
+  <% end %>
+
+  <% promotion_id = case @article.channel_sign; when 'pinlei' then 54271; when 'dianxing' then 54265; when 'gongyu' then 54265; when 'hunfang' then 54265; when 'pinpaiku' then 55353; else 54782; end %>
+  <% results = hejia_promotion_items(promotion_id, :attributes => ['title','url','image_url'], :limit => 7) %>
+  <!--水处理的终端页把API的推广换成广告-->
+  <div class="ad_3 clearfix">
+    <% if @channel == 'shuichuli' && controller.action_name == 'detail' %>
+      <%=adspace('水处理-终端页-宽幅1')%>
+    <% else %>
+      <%= promotion_image_tag results[0] if results[0] %>
+    <% end %>
+  </div>
+  <!--end-->
+  <ul class="sidebox_1">
+    <% 1.upto(6) do |i| %>
+      <%break if results[i].nil?%>
+      <li><a href="<%= results[i]["url"] %>" target="_blank" title="<%= results[i]["title"] %>"><%= truncate_u(results[i]["title"], 17) %></a></li>
+    <% end %>
+  </ul>
+  <form id="baidu_search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+    <input name="s" type="hidden" value="7289350921164188503" />
+    <input type="text" name="q" size="30" style="width:155px;border:1px solid #e0e0e0;height:23px;height:21px;line-height:22px;margin-right:3px;margin-left:6px;" />
+    <a onclick="document.getElementById('baidu_search').submit()"><img src="http://www.51hejia.com/images/zhuangxiu1023/f2_btn.gif" alt=""/></a>
+  </form>
+
+  <%= render_cell :articles, :zixun_top5 %>
+
+  <% promotion_title = case @article.channel_sign; when 'pinlei' then '精选文章推荐'; when 'dianxing' then '装修美家推荐'; when 'hunfang' then '装修美家推荐'; when 'gongyu' then '装修美家推荐'; else '本周关注'; end %>
+  <% promotion_id = case @article.channel_sign; when 'pinlei' then 55265; when 'dianxing' then 54266; when 'hunfang' then 54266; when 'gongyu' then 54266; else 54789; end %>
+
+  <ul class="sidebox_6">
+    <h2 class="title_s">最新更新</h2>
+    <% if @article and @article.article_sort %>
+      <% articles = @article.newest_articles(8)
+      str = ''
+      articles.each do |article|
+        domain = 'http://www.51hejia.com/'
+        if article.sort_sign == 'zhuangxiu'
+          domain = 'http://d.51hejia.com/'
+        end
+        if article.sort_sign != ''
+          domain = domain + article.sort_sign + '/'
+        end
+        if article.CREATETIME
+          domain = domain + article.CREATETIME.strftime('%Y%m%d') + '/' 	 end
+        domain = domain + article.ID.to_s
+        str = str + '<li><a href='+domain+' target=_blank title="'+article.TITLE+'">' + truncate(article.TITLE,:length => 16,:omission => "") +'</a></li>'
+      end
+    %>
+      <%=str%>
+    <% end %>
+  </ul>
+
+
+  <ul class="sidebox_3" >
+    <h2><%=promotion_title%></h2>
+    <% for r in hejia_promotion_items(promotion_id, :attributes => ['title','url','image_url','description'], :limit => 4) %>
+      <%break if r.nil?%>
+      <li class="clearfix">
+        <%= promotion_image_tag r unless r.image_url.nil?%>
+        <div class="listright">
+          <a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><h4><%= r["title"] %></h4></a>
+          <p><%= truncate_u(r["description"], 42, "...") %>[<a href="<%= r["url"] %>" target="_blank">详细</a>]</p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <div id="side2">
+    <div class="sidebox_2" id="y0" style="display:block;">
+      <h2> <span><a href="http://www.51hejia.com/articleList/s-31939" target="_blank">>>更多</a></span>和家视点</h2>
+      <p class="title_2 clearfix">
+        <a  class="now" onmouseover="javascript:setFocus2('div','side2','y',0);" target="_blank">访谈</a>
+        <a  onmouseover="javascript:setFocus2('div','side2','y',1);" target="_blank">展会</a>
+        <a  onmouseover="javascript:setFocus2('div','side2','y',2);" target="_blank">直播</a>
+      </p>
+      <ul>
+        <% for r in hejia_promotion_items(54790, :attributes => ['title','url','image_url','description'], :limit => 5) %>
+          <li><a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><%= truncate_u(r["title"], 15) %></a></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="sidebox_2" id="y1" style="display:none;">
+      <h2> <span><a href="http://www.51hejia.com/articleList/s-31939" target="_blank">>>更多</a></span>和家视点</h2>
+      <p class="title_2 clearfix">
+        <a  onmouseover="javascript:setFocus2('div','side2','y',0);" target="_blank">访谈</a>
+        <a  class="now" onmouseover="javascript:setFocus2('div','side2','y',1);" target="_blank">展会</a>
+        <a  onmouseover="javascript:setFocus2('div','side2','y',2);" target="_blank">直播</a>
+      </p>
+      <ul>
+        <% for r in hejia_promotion_items(54791, :attributes => ['title','url','image_url','description'], :limit => 5) %>
+          <li><a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><%= truncate_u(r["title"], 15) %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="sidebox_2" id="y2" style="display:none;">
+      <h2> <span><a href="http://www.51hejia.com/articleList/s-31939" target="_blank">>>更多</a></span>和家视点</h2>
+      <p class="title_2 clearfix">
+        <a  onmouseover="javascript:setFocus2('div','side2','y',0);" target="_blank">访谈</a>
+        <a  onmouseover="javascript:setFocus2('div','side2','y',1);" target="_blank">展会</a>
+        <a  class="now" onmouseover="javascript:setFocus2('div','side2','y',2);" target="_blank">直播</a>
+      </p>
+      <ul>
+        <% for r in hejia_promotion_items(54792, :attributes => ['title','url','image_url','description'], :limit => 5) %>
+          <li><a href="<%= r["url"] %>" target="_blank" title="<%= r["title"] %>"><%= truncate_u(r["title"], 15) %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <ul class="sidebox_4 clearfix">
+    <h2><a target="_blank">热点推荐</a></h2>
+    <% results = hejia_promotion_items(54793, :attributes => ['title','url','image_url']) %>
+    <% for result in results[0..3] %>
+      <li>
+        <%= promotion_image_tag result %>
+        <p><a href="<%= result["url"] %>" target="_blank" title="<%= result["title"] %>"><%= truncate_u(result["title"], 9) %></a></p>
+      </li>
+    <% end %>
+  </ul>
+
+  <div id="side3">
+    <div class="sidebox_8" id="zz0" style="display:block;">
+      <p class="title_2 clearfix">
+        <a href="http://bbs.51hejia.com/portal.php" class="now" onmouseover="javascript:setFocus2('div','side3','zz',0);" target="_blank">装修论坛</a>
+        <a href="http://wb.51hejia.com/" onmouseover="javascript:setFocus2('div','side3','zz',1);" target="_blank">问吧</a>
+      </p>
+      <ul class="cl">
+        <% BbsTopic.recent_topics.each do |a| %>
+          <li><a href="http://bbs.51hejia.com/forum.php?mod=viewthread&tid=<%= a.id %>&extra=page%3D1" target="_blank" title="<%= strip_tags(a.subject) %>"><%= truncate_u(strip_tags(a.subject), 16) %></a></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="sidebox_8" id="zz1" style="display:none;">
+      <p class="title_2 clearfix">
+        <a href="http://bbs.51hejia.com/list/484" onmouseover="javascript:setFocus2('div','side3','zz',0);" target="_blank">装修论坛</a>
+        <a href="http://wb.51hejia.com/" class="now" onmouseover="javascript:setFocus2('div','side3','zz',1);" target="_blank">问吧</a>
+      </p>
+      <ul>
+        <% AskZhidaoTopic.recent_topics.each do |a| %>
+          <li><a href="http://wb.51hejia.com/q/<%= a.id %>.html" target="_blank" title="<%= strip_tags(a.subject) %>"><%= truncate_u(strip_tags(a.subject), 16) %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <ul class="sidebox_5">
+    <h2>热门专区</h2>
+    <li class="clearfix">
+      <% results = hejia_promotion_items(54136, :attributes => ['title','url']) %>
+      <% for result in results %>
+        <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+      <% end %>
+    </li>
+  </ul>
+
+  <%= render_cell :articles, :for_brands %>
+
+  <% if CITIES.keys.include?(@city_id) %>
+    <%= render :partial => "articles/detail/photo_recommend", :locals => {:page_class => "sidebox_3"}%>
+  <% end %>
+
+</div>

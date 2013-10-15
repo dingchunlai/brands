@@ -1,0 +1,103 @@
+<script type="text/javascript">
+  function setFocus2(p,y,o,m){selectLayer2(p,y,o,m);}
+  function selectLayer2(p,y,o,m){for (var i=0;i<document.getElementById(y).getElementsByTagName(p).length;)
+    {document.getElementById(o+i).style.display="none";i++;}document.getElementById(o+m).style.display="block";}
+  function daohang(m){for(var z=0;z<=9;){
+      document.getElementById(z+1).style.backgroundImage='url(http://www.51hejia.com/images/jiaju1123/btn_bg_bk.gif)';
+      document.getElementById(z+1).style.color='#1a4176';z++;};
+    document.getElementById(m).style.backgroundImage='url(http://www.51hejia.com/images/jiaju1123/btn_bg.gif)';
+    document.getElementById(m).style.color='#fff';}
+</script>
+
+<div class="top_menu clearfix" style="padding:0">
+  <div class="menu_main clearfix">
+    <div class="title clearfix">
+      <a href="http://www.51hejia.com" target="_blank"><img src="http://www.51hejia.com/images/zhuangxiu1126/51hejia.jpg" /></a>
+      <a href="http://www.51hejia.com/jushang/" target="_blank"><img src="http://www.51hejia.com/images/zhuangxiu1126/jslogo.jpg" /></a>
+      <ul>
+        <% for result in hejia_promotion_items(54303, :attributes => ['title','url'], :limit => 3) %>
+          <li><a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <style type="text/css">
+    .first_menu li a{width:92px;}
+    .menubg .sc_menu .sc_tuig,.menubg .sc_menu .sc_tuig:hover{font-size:14px;font-weight:bold;color:white;text-decoration:underline;float:right;background:none;}
+  </style>
+
+  <div class="main_menu">
+    <div class="menubg">
+      <ul class="first_menu">
+        <li class="first"><a id="1" href="http://www.51hejia.com/jushang/articleList/s-12428" onmouseover="javascript:setFocus2('li','U1','x',0);javascript:daohang(1);"   target="_blank">新品介绍</a></li>
+        <li><a id="2" href="http://www.51hejia.com/jushang/articleList/s-12421" onmouseover="javascript:setFocus2('li','U1','x',1);javascript:daohang(2);" target="_blank">海外人家</a></li>
+        <li><a id="3" href="http://www.51hejia.com/jushang/articleList/s-12425" onmouseover="javascript:setFocus2('li','U1','x',2);javascript:daohang(3);"   target="_blank">经典设计</a></li>
+        <li><a id="4" href="http://www.51hejia.com/jushang/articleList/s-12419" onmouseover="javascript:setFocus2('li','U1','x',3);javascript:daohang(4);" target="_blank">风格美家</a></li>
+        <li><a id="5" href="http://www.51hejia.com/jushang/articleList/s-12418" onmouseover="javascript:setFocus2('li','U1','x',4);javascript:daohang(5);"  target="_blank">装饰搭配</a></li>
+        <li><a id="6" href="http://www.51hejia.com/jushang/articleList/s-12420" onmouseover="javascript:setFocus2('li','U1','x',5);javascript:daohang(6);"   target="_blank">贴心买手</a></li>
+        <li><a id="7" href="http://www.51hejia.com/jushang/articleList/s-12429" onmouseover="javascript:setFocus2('li','U1','x',6);javascript:daohang(7);"   target="_blank">家居风水</a></li>
+        <li><a id="8" href="http://deco.51hejia.com/zq/家居风格/" onmouseover="javascript:setFocus2('li','U1','x',7);javascript:daohang(8);"  target="_blank">家居风格</a></li>
+        <li><a id="9" href="http://deco.51hejia.com/zq/家居收纳/" onmouseover="javascript:setFocus2('li','U1','x',8);javascript:daohang(9);"  target="_blank">家居收纳  </a></li>
+        <li><a id="10" href="http://deco.51hejia.com/zq/" onmouseover="javascript:setFocus2('li','U1','x',9);javascript:daohang(10);"  target="_blank">装饰专区 </a></li>
+        <script>
+          daohang(1);
+        </script>
+      </ul>
+      <ul class="sc_menu" id="U1"  >
+        <li id="x0" style="display:block;" >
+          <% for result in hejia_promotion_items(54319, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+
+          <%=render_ad(53075, "家居频道-文章终端页-顶部文字链")%>
+
+        </li>
+        <li id="x1" style="display:none;">
+          <% for result in hejia_promotion_items(54320, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x2" style="display:none;">
+          <% for result in hejia_promotion_items(54321, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x3" style="display:none;">
+          <% for result in hejia_promotion_items(54322, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x4" style="display:none;">
+          <% for result in hejia_promotion_items(54323, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x5" style="display:none;">
+          <% for result in hejia_promotion_items(54324, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x6" style="display:none;">
+          <% for result in hejia_promotion_items(54326, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x7" style="display:none;">
+          <% for result in hejia_promotion_items(54584, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>                    </li>
+        <li id="x8" style="display:none;">
+          <% for result in hejia_promotion_items(54585, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+        <li id="x9" style="display:none;">
+          <% for result in hejia_promotion_items(54586, :attributes => ['title','url'], :limit => 10) %>
+            <a href="<%= result["url"] %>" target="_blank"><%= result["title"] %></a>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> 
+  <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> > 产品管理页面
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<div>
+  <ul class="horizontal">
+    <li class="last"><%= link_to '添加产品', new_admin_brand_production_path(@brand, :tag_id => @tag.TAGID) %></li>
+  </ul>
+  <br />
+
+  <%= paginate_content = will_paginate @productions %>
+  <table border="0" cellpadding="0" cellspacing="1" bgcolor="#99ccff" width="100%">
+    <caption>产品列表　共搜索到 <b><%=@productions.total_entries%></b> 条产品记录</caption>
+    <thead>
+      <tr bgcolor="#ccff66">
+        <th>名称</th>
+        <th>型号</th>
+        <th>产品类别</th>
+        <th>所属系列</th>
+        <th>首页推广</th>
+        <th>品类首页推广</th>
+        <th>品牌首页推广</th>
+        <th>保存</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @productions.each do |production| %>
+        <tr bgcolor="white">
+          <% form_for :production, :url => admin_production_path(production.id) + "/save_promotion_info", :html => {:method => :put, :multipart => true} do |f| %>
+            <%= hidden_field_tag :brand_id, @brand.id %><%= hidden_field_tag :tag_id, @tag.TAGID %>
+            <td><%= production.name %></td>
+            <td><%= production.model %></td>
+            <td><%= production.category && production.category.name %></td>
+            <td><%= production.series && production.series.name %></td>
+            <td>
+              位置<input type="text" size=1 name="shouye_index" value="<%if production.production_promotion_info && production.production_promotion_info.index_priority.to_i > 0%><%=production.production_promotion_info.index_priority %><%end%>" />
+            </td>
+            <td>            
+              位置<input type="text" size=1 name="pinlei_index" value="<%if production.production_promotion_info && production.production_promotion_info.category_index_priority.to_i > 0%><%=production.production_promotion_info.category_index_priority %><%end%>" />
+            </td>
+            <td>
+              位置<input type="text" size=1 name="pinpai_index" value="<%if production.production_promotion_info && production.production_promotion_info.brand_index_priority.to_i > 0%><%=production.production_promotion_info.brand_index_priority %><%end%>" />
+            </td>
+            <td><input type="submit" value="保存" /></td>
+            <td><%= production.created_at.strftime("%Y-%m-%d") rescue "" %> </td>
+            <td><%= production.updated_at.strftime("%Y-%m-%d %H:%M:%S") rescue "" %> </td>
+            <td>
+              <ul class="horizontal">
+                <li>
+                  <%if production.is_valid.to_i == 1%>
+                    <%= link_to '下架', admin_production_path(production) + "/set_is_valid", :onclick => "this.disabled = true;" %>
+                  <%else%>
+                    <%= link_to '上架', admin_production_path(production) + "/set_is_valid", :style=>"color:red", :onclick => "this.disabled = true;" %>
+                  <%end%>
+                </li>
+                <li><%= link_to '编辑', edit_admin_brand_production_path(@brand, production.id, :tag_id => @tag.TAGID) %></li>
+                <li><%= link_to '图片管理', admin_production_pictures_path(production) %></li>
+                <li class="last"><%= link_to '删除', admin_brand_production_path(@brand, production.id, :tag_id => @tag.TAGID), :confirm => "确定删除#{production.name}吗？", :method => :delete %></li>
+              </ul>
+            </td>
+          <%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate_content %>
+</div>

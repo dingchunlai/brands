@@ -1,0 +1,9 @@
+
+<h3><%= CITIES[@user_city_code.to_i] %>装修资讯</h3><span class="f_r zxdp2010_cur_more"><a target="_blank" href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/theme">更多</a></span>
+<div class="zxdp2010_txt zxdp2010_kbtop">
+<ul>
+  <% new_cu_xiao_huo_dong(@user_city_code).each do |cuxiao| %>
+  <li>·<a target="_blank" href="<%= cuxiao.url%>"><%= cuxiao.title%></a></li>
+  <% end %>
+</ul>
+</div>

@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  var _raq = _raq || [];
+  _raq.push(
+    ['_setAccount', 'UA-7619267-1'],
+    ['_setDomainName', '.51hejia.com'],
+    ['_trackPageview']
+  );
+
+  (function() {
+    var ra = document.createElement('script'); ra.type = 'text/javascript'; ra.async = true;
+    ra.src = 'http://js.51hejia.com/ra.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ra, s);
+  })();
+</script>

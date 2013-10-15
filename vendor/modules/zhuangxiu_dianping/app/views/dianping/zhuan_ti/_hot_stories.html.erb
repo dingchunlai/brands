@@ -1,0 +1,7 @@
+<ul>
+<% @hot_stories.each do |f| %>
+    <li>
+      <div><span class="f_l">·<a href="http://z.shanghai.51hejia.com/stories/<%= f.id %>" target="_blank" title="<%=h f.title %>"><%= truncate(h((f.title.strip)),:length =>12,:omission =>'') %></a></span><span class="right_div2_span"><%= f.pv %>次阅读</span></div>
+    </li>
+<% end %>
+</ul>

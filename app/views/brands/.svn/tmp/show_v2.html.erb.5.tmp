@@ -1,0 +1,653 @@
+<% default_impression_text = '不多于5个字' %>
+<%# 样式添加在页头 %>
+<% content_for :html_head do %>
+  <style type="text/css">
+    .post_comment_table {
+      border: 1px solid #D4D4D4;
+      width: 450px;
+      heigth: 300px;
+    }
+    .post_comment_table th {
+      color: #044FB3;
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 3px;
+      width: 50px;
+      padding: 5px 0;
+    }
+    .post_comment_table td {
+      color: #8A8A8A;
+      font-size: 12px;
+      line-height: 30px;
+      padding: 5px 0 5px 15px;
+    }
+  </style>
+  <%=
+  stylesheet_link_tag(
+    jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0', :resource => :css),
+    jquery_resource(:plugin => 'jgrowl', :version => '1.2.4', :resource => :css)
+  )
+%>
+<% end %>
+
+<%# js添加到页脚 %>
+<% content_for :html_body_end do %>
+  <%=
+  javascript_include_tag(
+    jquery_resource(:plugin => 'tag_cloud', :version => '1.0.0'),
+    jquery_resource(:plugin => 'jgrowl', :version => '1.2.4')
+  )
+%>
+  <script type="text/javascript">
+    function login_callback(arg) {
+      if(arg == 'error') {
+        alert('帐号有误，请重新输入。');
+      } else {
+        $('#comment_btn').colorbox({'open': true});
+      }
+    }
+
+    function register_callback(arg) {
+      if(arg) {
+        if(typeof(arg) == 'object') {
+          if(arg['error'] == 'code')
+            alert('验证码错误。');
+          else
+            //alert('注册信息有误，请检查。');
+              alert(arg['error']);
+        } else {
+          document.cookie = "ind_id" + "="+ arg + ";path=/;domain=.51hejia.com";
+          $('#comment_btn').colorbox({'open': true});
+        }
+      } else {
+        alert('很抱歉，发生未知错误，请稍后重试。');
+      }
+    }
+
+    $(function(){
+      $('.colorbox').colorbox();
+
+      // 添加印象
+      function addImpression(impression) {
+        $.ajax({
+          url: $('#impression_form').attr('action'),
+          type: 'POST',
+          data: $.param({title: impression}),
+          dataType: 'json',
+
+          error: function(request) {
+            var msg;
+            try {
+              msg = eval('(' + request.responseText + ')').join('<br/>');
+            } catch(e) {
+              msg = '未知错误，请稍后再尝试。';
+            }
+            $.jGrowl(msg, {header: '出错啦'});
+          },
+
+          success: function(data) {
+            $("#new_impression").text(data.join(" "));
+            $.jGrowl('印象添加成功', {header: '感谢您的参与'});
+          }
+        });
+      }
+
+      $('#impression_form').submit(function(event) {
+        event.preventDefault();
+        var textField = $(this).find(':text'),
+        impression = $.trim(textField.val());
+        textField.val('<%= default_impression_text %>');
+        if (impression != '' && impression != '<%= default_impression_text %>') addImpression(impression);
+        return false;
+      }).find(':text').
+        focus(function() { if( $.trim($(this).val()) == '<%= default_impression_text %>' ) $(this).val('') }).
+        blur(function() { if( $.trim($(this).val()) == '' ) $(this).val('<%= default_impression_text %>') });
+
+      $('.impression').click(function(event) {
+        addImpression($(this).text());
+        event.preventDefault();
+        // return false;
+      });
+
+      // 点评
+      $('#comment_form').live('submit', function(event) {
+        var submitBtn = $(this).find(':submit');
+        submitBtn.attr('disabled', 'disabled');
+        $.ajax({
+          url: '<%=ajax_post_path(@brand.permalink, "comment")%>',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+
+          error: function(request) {
+            var msg = "由于以下错误，您的评论未能保存：\n  "
+            try {
+              msg +=
+                $.map(eval('(' + request.responseText + ')'), function(error) {
+                return error[1];
+              }).join("\n  ");
+            } catch(e) {
+              msg += "未知错误"
+            }
+
+            alert(msg);
+            submitBtn.attr('disabled', null);
+          },
+
+          success: function(data) {
+            //alert(data.title);
+            alert('点评添加成功！');
+            submitBtn.attr('disabled', null);
+            $.fn.colorbox.close();
+          }
+        });
+        event.preventDefault();
+        return false;
+      });
+
+      //
+      $('#pop_login_form').live('submit', function(event) {
+        if ($.trim($('#pop_user_name').val())==''){
+          alert('请填写用户名！');
+        }
+        if ($.trim($('#pop_password').val())==''){
+          alert('请填写登录密码！');
+        }
+        event.preventDefault();
+        $.ajax({
+          dataType: 'jsonp',
+          jsonpCallback: 'login_callback',
+          url: $(this).attr('action'),
+          data: $(this).serialize(),
+          error: function() {
+            alert('很抱歉，发生未知错误，请稍后重试。')
+          }
+        });
+      });
+
+      //
+      $('#signup_form').live('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+          dataType: 'jsonp',
+          jsonpCallback: 'register_callback',
+          url: $(this).attr('action'),
+          data: $(this).serialize(),
+          error: function() {
+            alert('您填写的注册信息有误，请更正后重试。')
+          }
+        });
+      });
+
+      // 印象标签
+      $('.tag_cloud').tagCloud();
+    });
+  </script>
+<% end %>
+
+<%# 页面内容开始 %>
+<div class="margin10 clearfix">
+  <div class="b_pln_ljj margin10 f_l">
+    <div class="b_pln_ltit01">
+      <h3><%=@brand.name_zh%>简介</h3>
+    </div>
+    <div class="b_pln_ltxt01">
+
+      <%if @brand_logo %>
+        <% if @brand.name_zh.strip == "大金" %>
+          <%= link_to image_tag(@brand_logo.public_filename, :width => 168, :alt => @brand.name_zh), "http://mingrunlengqi.51hejia.com/", :target => "_blank" %>
+        <% else %>
+          <%= get_brand_logo(@brand , @brand_detail, @brand_logo, 168) %>
+        <% end %>
+      <%end%>
+
+      <p>
+        <%=ul(@brand_detail.comment, 43)%>
+        <%=link_to "[详细]", pinpai_info_path(@brand.permalink)%>
+      </p>
+    </div>
+  </div>
+  <div class="b_pln_lhot f_r">
+    <%
+    news  = find_promotion_item(@promotion_page, @tag, @brand, "焦点新闻")
+    first_new = news.shift
+    unless first_new.blank?
+    %>
+      <h2><%= link_to first_new.title, first_new.url, :target => '_blank' %></h2>
+      <p><%= ul(strip_tags(first_new.content), 82)%><%= link_to '[详细]', first_new.url, :target => '_blank'%></p>
+    <% end %>
+    <ul>
+      <% news.each do |item| %>
+        <li>
+          <span><%= item.published_at.strftime("%m-%d") %></span>
+          <%= link_to item.title, item.url, :target => '_blank'  %>
+        </li>
+      <%end%>
+    </ul>
+    <div class="b_pln_ldp clearfix">
+      <%=link_to '我要点评', ajax_get_path(@brand.permalink, "comment"), :id => 'comment_btn', :class => 'colorbox b_pln_ldpa01', :title => '我要点评'%>
+      <%=link_to '资料下载', pinpai_documents_path(@brand.permalink, :subdomain => false, :trailing_slash => true), :target => "_blank", :class => 'b_pln_ldpa02' %>
+      <%=link_to '导购测试', pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true), :target => "_blank", :class => 'b_pln_ldpa03' %>
+    </div>
+  </div>
+  <div class="b_pln_lgs f_l">
+    <div class="b_pln_ltit01">
+      <h3><%=@brand.name_zh%>品牌故事</h3>
+    </div>
+    <div class="b_pln_ltxt01">
+      <p>
+        <%=ul(@brand_detail.story, 81)%>
+        <%=link_to "[详细]", pinpai_info_path(@brand.permalink)%>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="b_pln_lbox02 margin10">
+  <div class="b_pln_ltit02">
+    <h3><%= brand_name = @brand.name_zh%>精选点评</h3>
+    <div class="b_pln_ltit02_more">
+      <%=link_to '我要点评', ajax_get_path(@brand.permalink, "comment"), :class => 'colorbox', :title => '我要点评'%>
+      <%
+      comments_count = Comment.comments_count(@tagged_brand.id) rescue 0
+      comments_good_count = Comment.good_comments(@tagged_brand.id, nil).length rescue 0
+    %>
+      已有<%=comments_count%>条点评 其中<%=comments_good_count%>条好评 <%=comments_count - comments_good_count%>条差评
+    </div>
+  </div>
+  <style type="text/css">
+    .b_pln_ltit02_more{width:300px;}
+    .b_dianpnew{background:#f5f5f7;padding:2px 0;}
+    .b_dianpnew li{border-bottom:1px dashed #dedede;}
+    .b_dianpnew li div{overflow:hidden;}
+    .b_dianpnewdiv01{float:left;width:330px;height:30px; color:#164a84;font-size:14px;}
+    .b_dianpnewdiv02{height:13px;margin-top:8px;float:right;}
+    .b_dianpnewdiv03{height:30px;float:right;width:200px;text-align:right;}
+    .b_dianpnewdiv04{text-align:right;}
+    .b_dianpnewicon01{background:url(http://js.51hejia.com/img/brandimg/b_pln_pinl.gif) no-repeat 0 8px;text-indent: 20px;color:#db3400;}
+    .b_dianpnewicon02{background:url(http://js.51hejia.com/img/brandimg/b_pln_pinl.gif) no-repeat 0 -32px;text-indent: 20px;color:#6d6d6d;}
+  </style>
+  <div class="b_pln_ltxt02 clearfix">
+    <div class="b_dianpnew">
+      <ul>
+        <%Comment.all_comments(@tagged_brand.id, 6).each do |comment|%>
+          <li class="clearfix">
+            <div class="b_dianpnewdiv01 b_dianpnewicon0<%= comment.remark_zh=='好评' ? '1' : '2' %>">
+              [<%=comment.remark_zh%>]<%=link_to comment.title, pinpai_show_comment_path(:permalink => @brand.permalink, :id => comment.id), :target => '_blank' %>
+            </div>
+            <div class="b_dianpnewdiv02 dafenstars02"><p style="width:<%=comment.remark * 20%>%;"></p></div>
+                                                         <div class="b_dianpnewdiv03"><%= comment.user_name %> 对<%=brand_name%>的评分：</div>
+          </li>
+        <%end%>
+        <li class="clearfix">
+          <div class="b_dianpnewdiv04">
+            <%= link_to '更多精选点评', pinpai_show_comment_path(:permalink => @brand.permalink), :target => '_blank' %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%if @brand.part_render_type('品牌印象') == 1%>
+  <div class="margin10 clearfix">
+    <div class="b_pln_lyinx f_l">
+      <div class="b_pln_ltit01">
+        <h3>你对<%=@brand.name_zh%>的品牌印象是</h3>
+      </div>
+      <div class="b_pln_ltxt01">
+        <div class="tag_cloud b_pln_lyinxbox">
+          <%Impression.find(@tagged_brand.id, :limit => 15).each do |e|%>
+            <div>
+              <%= link_to h(e), ajax_post_path(@brand.permalink, "save_impression"), :class => 'impression' %>
+            </div>
+          <%end%>
+        </div>
+        <div class="b_pln_lyinxinput">
+          <% form_tag ajax_post_path(@brand.permalink, "save_impression"), :id => 'impression_form' do %>
+            请输入您的印象词：<%= text_field_tag :title, default_impression_text, :class => 'b_pln_lyinxinputt' %>
+            <%=submit_tag '添加', :class => 'b_search_btn'%>
+          <% end %>
+        </div>
+        <div class="b_pln_wtmore"><strong>最新添加印象：</strong>
+          <span id="new_impression">
+            <%
+            Impression.latest(@tagged_brand.id).each do |impression|
+              impression = h impression
+            %>
+              <%= content_tag :span, impression, :title => impression %>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="b_pln_lyanz f_r">
+      <div class="b_pln_ltit01">
+        <h3>网友眼中的<%=@brand.name_zh%></h3>
+      </div>
+      <div class="b_pln_ltxt01 clearfix">
+        <table width="230" border="0" cellspacing="0" cellpadding="0" class="f_r">
+          <thead>
+            <tr>
+              <th width="90">品牌口碑</th>
+              <th width="80" align="right">得票数</th>
+              <th width="60" align="right">支持率</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%Impression.charts(@tagged_brand.id, 8).each do |r|%>
+              <tr class="b_pln_lqian3">
+                <td><%= h r[:name]%></td>
+                <td align="right"><%=r[:score]%></td>
+                <td align="right"><%=r[:percent]%></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+<%if @brand.part_render_type('组合案例') == 1%>
+  <div class=" margin10">
+    <div class="b_pln_ltit02">
+      <h3>
+        <% unless @brand.name_zh == "林内" %>
+          <%= @brand.name_zh + (@tag ? @tag.TAGNAME : "") + "组合案例" %>
+        <% else %>
+          <%= @brand.name_zh + "明星组合案例" %>
+        <% end %>
+      </h3>
+    </div>
+    <div class="b_pln_ltxt02  clearfix">
+      <div class="b_pln_floor">
+        <ul id="b_pln_wrap1" class="b_pln_wrap" style="left: 0px;">
+          <% for combination_case in @combination_cases %>
+            <li>
+              <div class="b_pln_lanlimg f_l">
+                <%= image_tag(combination_case.master_picture.public_filename) if combination_case && combination_case.master_picture %>
+              </div>
+              <div class="b_pln_lanltxt f_r">
+                <h4>·<%= truncate_u(combination_case.title, 18, "") if combination_case %></h4>
+                <p>
+                  <%= ul combination_case.content, 163 if combination_case %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <ul class="lb_num cf" id="lb_num1">
+          <% for i in 1..@combination_cases.size %>
+            <li class="<% if i == 1 %>focus<% end %>"><%= i %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+<script src="http://z.shanghai.51hejia.com/zhuanti/haier0302/js/txt_auto.js"></script>
+<%if @brand.part_render_type('单品推荐') == 1%>
+  <div class="margin10">
+    <div class="b_pln_ldptj">
+      <div class="b_pln_ltit01">
+        <h3>
+          <% unless @brand.name_zh == "林内" %>
+            <%= @brand.name_zh + @tag.TAGNAME + "单品推荐" %>
+          <% else %>
+            <%= @brand.name_zh + "单品推荐" %>
+          <% end %>
+        </h3>
+      </div>
+      <div class="b_pln_ltxt01">
+        <ul class="clearfix" id="cont_m_5_2">
+          <%@products.each do |product|%>
+            <li>
+              <%= link_to  show_production_master_picture(product), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id), :alt => product.name , :target => "_blank" %>
+              <h4><%= link_to_with_title  product.name, pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => product.id) ,:truncate => 16 , :target => "_blank" %></h4>
+              <% if @brand.name_zh == "林内" %>
+                <p style="text-align: center;">
+                  <%= product.model %>
+                </p>
+              <% end %>
+              <p><%= link_to  truncate_u(product.description, 45, ""), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id) , :target => "_blank" %></p>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  </div>
+<%elsif @brand.part_render_type('单品推荐') == 2%>
+  <div class="margin10">
+    <div class="b_pln_ldptj">
+      <div class="b_pln_ltit01">
+        <h3>
+          <% unless @brand.name_zh == "林内" %>
+            <%= @brand.name_zh + @tag.TAGNAME + "单品推荐" %>
+          <% else %>
+            <%= @brand.name_zh + "单品推荐" %>
+          <% end %>
+        </h3>
+      </div>
+      <div class="b_pln_ltxt01">
+        <%[0..2, 3..5, 6..8].each do |range|%>
+          <ul class="clearfix" id="cont_m_5_2">
+            <%@products[range] && @products[range].each do |product|%>
+              <%break if product.nil?%>
+              <li>
+                <%= link_to  show_production_master_picture(product), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id), :alt => product.name , :target => "_blank" %>
+                <h4><%= link_to_with_title  product.name, pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => product.id) ,:truncate => 16 , :target => "_blank" %></h4>
+                <p><%= link_to  truncate_u(product.description, 45, ""), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink, :id => product.id) , :target => "_blank" %></p>
+              </li>
+            <%end%>
+          </ul>
+        <%end%>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+
+<div class="margin10">
+  <div class="b_pln_lwenda">
+    <div class="b_pln_ltit01">
+      <h3><%=@brand.name_zh%><%=@tag.TAGNAME%>问答</h3>
+      <div class="b_pln_lwendas">
+        <form action="http://wb.51hejia.com/list/sort/0.html" method="post" target="_blank">
+          <span><a href="http://wb.51hejia.com/detail/new_topic" target="_blank">我要提问</a></span>
+          <input name="wd" type="text" class="b_pln_lwdput" />
+          <input name="" type="submit" value="搜索" class="b_search_btn" />
+        </form>
+      </div>
+    </div>
+    <div class="b_pln_ltxt01">
+      <ul class="clearfix">
+        <%@questions.each do |item|%>
+          <li>
+            <h4>
+              <span><%=item.user ? h(item.user.USERNAME) : "和家网友"%></span>
+              [问] <%=link_to_with_title item.subject, get_wb_question_link(item.id), :truncate => 30,:target => "_blank" %>
+            </h4>
+            <%if item.first_answer %>
+              <p>
+                <label>[答]</label>
+                <%= item.first_answer ? truncate_u(item.first_answer.content,50,'...') : "还没有人回答，赶紧抢沙发吧" %>
+              </p>
+            <%end%>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="margin10">
+  <div class="b_pln_ltit02">
+    <h3><%= link_to (@brand.name_zh == "林内" ? "林内最新活动与视频" : "#{@brand.name_zh}品牌俱乐部" ), "http://bbs.51hejia.com/forum.php?mod=select&name=#{@brand.name_zh}", :target=>'_blank', :style=>'color:white' %></h3>
+  </div>
+  <div class="b_pln_ltxt02 clearfix">
+    <% bbs_topics = find_promotion_item(@promotion_page, @tag, @brand, "俱乐部") %>
+    <% if @brand.name_zh == "林内" %>
+      <div class="b_pln_zhuanti f_l">
+        <ul class="b_pln_wrap2" id="b_pln_wrap2">
+          <li>
+            <div class="b_pln_ljlbhot f_l">
+              <h4><a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201211/index.html ">燃气之道 林内创造</a></h4>
+              <div class="b_pln_ljlbhotimg big">
+                <a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201211/index.html">
+                  <img width="370" height="194" border="0" alt="燃气之道 林内创造" src="http://js.51hejia.com/img/linnei/linnei1.jpg" />
+                </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="b_pln_ljlbhot f_l">
+              <h4><a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201304/index.html">林内·ISH中国暖通卫浴展 </a></h4>
+              <div class="b_pln_ljlbhotimg big">
+                <a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201304/index.html">
+                  <img width="370" height="194" border="0" alt="林内·ISH中国暖通卫浴展 " src="http://js.51hejia.com/img/linnei/linnei2.jpg" />
+                </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="b_pln_ljlbhot f_l">
+              <h4><a target="_blank" href="http://www.51hejia.com/huodong/436">“舌尖上的林内”美食体验活动</a></h4>
+              <div class="b_pln_ljlbhotimg big">
+                <a target="_blank" href="http://www.51hejia.com/huodong/436">
+                  <img width="370" height="194" border="0" alt="“舌尖上的林内”美食体验活动" src="http://js.51hejia.com/img/linnei/linnei3.jpg" />
+                </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="b_pln_ljlbhot f_l">
+              <h4><a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201306/index.html">“舌尖上的林内”智能厨房体验之旅</a></h4>
+              <div class="b_pln_ljlbhotimg big">
+                <a target="_blank" href="http://www.51hejia.com/zhuanti/linnei201306/index.html">
+                  <img width="370" height="194" border="0" alt="“舌尖上的林内”智能厨房体验之旅" src="http://js.51hejia.com/img/linnei/linnei4.jpg" />
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="lb_num2 cf" id="lb_num2">
+          <li class="">1</li>
+          <li class="">2</li>
+          <li>3</li>
+          <li>4</li>
+        </ul>
+        <script type="text/javascript">
+          function fbwrap(fbnav, fbstage, fbdis){
+            var target = fbnav.index();
+            var total = fbnav.length - 1;
+
+            fbnav.mouseover(function(){
+              clearInterval(fbtimer);
+              $(this).addClass("focus").siblings().removeClass("focus");
+              target = $(this).index();
+              fbslider(fbstage,target);
+            });
+
+            fbnav.mouseout(function(){
+              fbtimer = setInterval(
+              function(){
+                fbauto();
+              },2000);
+            });
+
+            fbstage.mouseover(function(){
+              clearInterval(fbtimer);
+            });
+
+            fbstage.mouseout(function(){
+              fbtimer = setInterval(
+              function(){
+                fbauto();
+              },2000);
+            });
+
+            var fbslider = function (obj, attr){
+              dis = attr * -fbdis;
+              obj.css({left: dis},"slow");
+            }
+
+            var fbauto = function(){
+              if( target < total){
+                target++;
+              }
+              else{
+                target = 0;
+              }
+              fbnav.eq(target).addClass("focus").siblings().removeClass("focus");
+              fbslider(fbstage,target);
+            }
+
+            var fbtimer = setInterval(
+            function(){
+              fbauto();
+            },2000);
+          }
+          //调用
+          fbwrap($("#lb_num1 li"), $("#b_pln_wrap1"), 658);
+          fbwrap($("#lb_num2 li"), $("#b_pln_wrap2"), 398);
+        </script>
+      </div>
+    <% else %>
+      <div class="b_pln_ljlbhot f_l">
+        <% bbs_topic = bbs_topics[0] %>
+        <% unless bbs_topic.blank? %>
+          <h4><%=link_to bbs_topic.title, bbs_topic.url, :target=>'_blank'%></h4>
+          <div class="b_pln_ljlbhotimg">
+            <img src="<%=bbs_topic.image%>" alt="<%=bbs_topic.title%>" />
+          </div>
+          <p>
+            <%=ul(bbs_topic.content, 190)%>
+            <%=link_to '[详情]', bbs_topic.url, :target=>'_blank'%>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="b_pln_ljlb f_r">
+      <ul>
+        <% unless bbs_topics.nil? %>
+          <% if bbs_topics.size > 1 %>
+            <% bbs_topics[1,8].each do |topic| %>
+              <li><%= link_to topic.title, topic.url, :target => '_blank' %></li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%if @brand.part_render_type('联系方式') == 1%>
+  <div class="clearfix">
+    <div class="b_pln_llxfs f_l">
+      <div class="b_pln_ltit01">
+        <h3><%=@brand.name_zh%>联系方式</h3>
+      </div>
+      <div class="b_pln_ltxt01">
+        <%=@brand_detail.contact %>
+      </div>
+    </div>
+    <div class="b_pln_lnext f_r">
+      <h4>接下来要看:</h4>
+      <ul class="clearfix">
+        <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "导购测评", pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink)  %></li>
+        <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "产品信息", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink) %>  </li>
+        <%
+        bbs_tag_e = BbsTag.with_tag_brand(@tagged_brand.tag_id, @tagged_brand.brand_id).first
+        unless bbs_tag_e.blank?
+        %>
+          <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "品牌论坛", "http://bbs.51hejia.com/forums/#{bbs_tag_e.id}", :target => "_blank" %></li>
+        <% end %>
+
+        <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "精选点评", pinpai_comments_path(:subdomain => false, :permalink => @brand.permalink) %></li>
+        <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "品牌信息", pinpai_info_path(:subdomain => false, :permalink => @brand.permalink) %> </li>
+        <li>·<span><%= link_to @brand.name_zh, "#n", :onclike => 'return false' %></span> <%= link_to "资料下载", pinpai_documents_path(:subdomain => false, :permalink => @brand.permalink) %></li>
+      </ul>
+    </div>
+  </div>
+<%end%>

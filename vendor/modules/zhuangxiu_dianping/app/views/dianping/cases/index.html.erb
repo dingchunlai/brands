@@ -1,0 +1,68 @@
+<% city_name = CITIES[@user_city_code.to_i]%>
+<% html_metadata = HtmlMetadata.find_by_page_id("#{city_name}:装修点评:案例图片列表页") %>
+<% @title = cases_list_title(@user_city_code,@price,@style,@model,@room,html_metadata) %>
+<% @description = html_metadata.description if params[:condition].blank? %>
+<% @keywords = html_metadata.keywords if params[:condition].blank? %>
+
+<%
+if @room.to_i > 0 || @style.to_i > 0 || @price.to_i > 0 || @model.to_i > 0
+  location "#{link_to '案例列表',cases_url(:trailing_slash => true)} > #{STYLES[@style.to_i]}" unless @style.to_i == 0
+  unless @model.to_i == 0
+    if @model.to_i == 4
+      location "#{link_to '案例列表',cases_url(:trailing_slash => true)} > 设计工作室"
+    else
+      location "#{link_to '案例列表',cases_url(:trailing_slash => true)} > #{MODELS[@model.to_i]}"
+    end
+  end
+  location "#{link_to '案例列表',cases_url(:trailing_slash => true)} > #{ROOM[@room.to_i]}" unless @room.to_i == 0
+  location "#{link_to '案例列表',cases_url(:trailing_slash => true)} > #{(@user_city_code.to_i == 12301 || @user_city_code.to_i == 12117) ? DecoFirm::NINBO_PRICE[@price.to_i] : DecoFirm::PRICE[@price.to_i]}" unless @price.to_i == 0
+else
+  location "案例列表"
+end
+%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<!--content_code-->
+<div class="width960">
+  <div class="width960 clearfix margin10">
+    <div class="zxdp2010_l f_l">
+      <div class="zxdp2010_sousuo02 margin10">
+        <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+      </div>
+      <div class="zxdp2010_comlist">
+        <div class="zxdp2010_zxallisttit">
+          <span class="f_l"><strong>共有<%= @cases.total_entries%>套 图片</strong></span>
+          <span class="f_r">第 <%= params[:page] || 1%> 页
+            <%= link_to "&lt;&lt;上一页", cases_page_url(:page => @cases.previous_page ,:trailing_slash => "/") unless @cases.previous_page.nil?%>
+            <%= link_to "下一页&gt;&gt;", cases_page_url(:page => @cases.next_page ,:trailing_slash => "/") unless @cases.next_page.nil? %>
+          </span>      </div>
+        <div class="zxdp2010_zxallist">
+          <ul class="margin10 clearfix">
+            <% @cases.each do |c|%>
+              <li>
+                <%= link_to image_tag(c.master_picture_url,:alt=>c.NAME), c.url, :target => "_blank" %>
+                <%= link_to truncate_u(c.NAME,12), c.url, :target => "_blank",:class=>"case_title"%>
+              </li>
+            <% end -%>
+          </ul>
+          <%= will_paginate @cases ,:params => {:trailing_slash => true }%>
+        </div>
+
+      </div>
+    </div>
+    <div class="zxdp2010_r f_r">
+      <%= render :partial => "dianping/shared/yuyue" %>
+      <% if @user_city_code.to_i == 12301 %>
+        <%= render :partial => "dianping/shared/right_list_afp" %>
+      <% end %>
+      <%= render :partial => "dianping/cases/condition_cases", :locals => {:cases => @topten_cases, :name => "装修案例Top10"} unless @topten_cases.blank? %>
+      <%= render :partial => "dianping/shared/dianping_help" %>
+      <% if @user_city_code.to_i != 12301 %>
+        <%= render :partial => "dianping/shared/right_list_afp" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!--end_content_code-->

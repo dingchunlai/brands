@@ -1,0 +1,43 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> >  <%= link_to @brand.name_zh %> > 印象管理数据
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<div>
+  <ul class="horizontal">
+    <% Impression.find(@tagged_brand.id, :with_count => true).each do |e| %>
+      <li><%= e %></li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<div id="form_1">
+  <fieldset>
+    <legend>添加<%= @brand.name_zh %>-<%= @tag.TAGNAME %>印象信息</legend>
+    <% form_tag impressions_admin_brand_path(@brand), :method => :post do %>
+    <input type="hidden" name="tag_id" value="<%= @tag.TAGID %>" />
+    <div>
+      <input type="button" value="添加印象" id="add-attribute" />
+    </div>
+    <%= submit_tag "保存", :disabled => true %>
+    <% end %>
+  </fieldset>
+</div>
+
+<script type="text/javascript">
+  (function() {
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        $('#form_1 input[type=submit]').attr("disabled", false);
+        var index = $(this).parent().siblings().length;
+        $('<input type="text" name="attributes[' + index + ']" id="attributes_' + index + '" />数量: <input type="type" name="values[' + index + ']" id="values_'+ index +'" />').appendTo($('<div />').insertBefore($(this).parent()));
+      });
+    }
+
+    $(function() {
+      enableAttributeAdding();
+    });
+  })();
+</script>

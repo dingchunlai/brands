@@ -1,0 +1,13 @@
+.bt2 {
+background:url("http://js.51hejia.com/img/ucenter/bt1.gif") no-repeat scroll left top transparent;
+border:0 none;
+color:#FFFFFF;
+display:block;
+font-size:12px;
+font-weight:bold;
+height:25px;
+line-height:25px;
+text-align:center;
+width:109px;
+float:right;
+}

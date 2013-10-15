@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend
+END
+key_value.rb
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/key_value.rb
+END
+gettext.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/gettext.rb
+END
+cldr.rb
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/cldr.rb
+END
+simple.rb
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/simple.rb
+END
+pluralization.rb
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/pluralization.rb
+END
+flatten.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/flatten.rb
+END
+cache.rb
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/cache.rb
+END
+memoize.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/memoize.rb
+END
+active_record.rb
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/active_record.rb
+END
+base.rb
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/base.rb
+END
+transliterator.rb
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/transliterator.rb
+END
+metadata.rb
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/metadata.rb
+END
+interpolation_compiler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/interpolation_compiler.rb
+END
+fallbacks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/fallbacks.rb
+END
+chain.rb
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/chain.rb
+END
+cascade.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/activesupport/lib/active_support/vendor/i18n-0.4.1/i18n/backend/cascade.rb
+END

@@ -1,0 +1,11 @@
+<ul class="vertical menu_padding">
+  <li>
+    <%= link_to '推广位管理', admin_promotion_collections_path, :class => 'current' %>
+  </li>
+  <li>
+    (<%= link_to '新建', new_admin_promotion_collection_path %>)
+  </li>
+  <li>
+    <%= link_to '推广位维护', admin_promotion_pages_path %>
+  </li>
+</ul>

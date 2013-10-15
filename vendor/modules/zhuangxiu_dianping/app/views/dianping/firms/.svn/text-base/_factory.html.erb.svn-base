@@ -1,0 +1,26 @@
+
+<div class="zxdp2010_zjgd margin10 f_l" style="margin-left:9px">
+     <table width="376" border="0" cellspacing="0" cellpadding="0">
+       <tr class="zxdp2010_zjgdtd01">
+         <td width="140" align="center">在建工地</td>
+         <td width="60">户型</td>
+         <td width="75">开工时间</td>
+         <td width="61"><%= link_to "更多&gt;&gt;", firm_factories_url(:firm_id => @firm.id) if @firm.is_cooperation == 1%></td>
+       </tr>
+				<% if @factories.size > 0 %>
+				<% @factories.each do |factory|%>
+	        <tr class="zxdp2010_zjgdtd02">
+	          <td style="text-align:center"><%= truncate_u(factory.NAME,12)%></td>
+	          <td><%= factory.FANGXING%></td>
+	          <td><%= factory.STARTENABLE.to_date if factory.STARTENABLE %></td>
+	          <td><%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id) %></td>
+	        </tr>
+				<% end -%>
+				<% else %>
+					 <tr class="zxdp2010_zjgdtd02">
+		          <td style="text-align:center" colspan="4">暂无信息</td>
+
+		        </tr>
+				<% end -%>
+     </table>
+  </div>

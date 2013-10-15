@@ -1,0 +1,70 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title       => '抵用券佣金管理页',
+            :button      => ['抵用券佣金列表', admin_coupon_commissions_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['抵用券佣金管理', admin_coupon_commissions_path(:coupon_id => @coupon.id)]
+            ]
+%>
+<div class="searchbar">
+  <div style="color: #358; font-size: 13px;"><%= @coupon.title %> -- <%= @coupon.code %></div>
+</div>
+<% form_for @coupon_commission, :url => admin_coupon_commissions_path do |f| %>
+    <%= f.error_messages %>
+    <div class="table">
+      <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+      <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+      <table class="listing form" cellpadding="0" cellspacing="0">
+        <tr>
+          <th class="full" colspan="2">创建抵用券佣金<div style="color:blue; font-size: 14px; font-weight: bold;">设定本月份佣金请注意--设定本月佣金，确认之后不可修改！</div></th>
+        </tr>
+        <%= f.hidden_field :coupon_id %>
+        <tr>
+          <td class="first" width="172"><strong><%= f.label :commission %></strong></td>
+          <td class="last"><%= f.text_field :commission, :class => "text", :reg => '^[1-9]\d+$', :tip => "必须*" %></td>
+        </tr>
+        <tr class="bg">
+          <td class="first" width="172"><strong><%= f.label :activity_in %></strong></td>
+          <td class="last"><%= f.text_field :activity_in, :class => "text", :reg => '^\S+$', :tip => "必须*", :size => 15, :maxlength => 15 %></td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><%= f.submit '提交' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+       $("#coupon_commission_activity_in").datepicker({dateFormat: 'yy-m-1'});
+       $("#coupon_commission_commission").removeAttr("class");
+       $("#coupon_commission_commission").attr("size", 10);
+       $("#coupon_commission_commission").attr("maxlength", 5);
+       $("#coupon_commission_activity_in").removeAttr("class");
+       $("#coupon_commission_activity_in").attr("size", 10);
+       $("#new_coupon_commission").submit(function(){
+           var isSubmit = true;
+           $(this).find("[reg],[url]:not([reg])").each(function(){
+               if($(this).attr("reg") == undefined){
+                   if(!ajax_validate($(this))){
+                       isSubmit = false;
+                   }
+               }else{
+                   if(!validate($(this))){
+                       isSubmit = false;
+                   }
+               }
+           });
+           if(typeof(isExtendsValidate) != "undefined"){
+                  if(isSubmit && isExtendsValidate){
+                   return extendsValidate();
+               }
+              }
+           if (isSubmit) {
+                return confirm('确定相关信息填写正确?');
+           } else {
+                return false;
+           }
+       });
+    });
+</script>

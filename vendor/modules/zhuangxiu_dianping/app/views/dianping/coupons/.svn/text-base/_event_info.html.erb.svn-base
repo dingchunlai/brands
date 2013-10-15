@@ -1,0 +1,91 @@
+<div class="zxdp2011_diyq_contbox" style="display: <%= params[:action] == 'show' ? 'block' : 'none' %>;">
+  <div class="zxdp2010_comlist">
+    <div class="zxdp2010_zxallist">
+      <div class="youhuixx margin10">
+        <!-- event -->
+        <div class="zxdp2010_yhuiqtab">
+          <dl class="clearfix"></dl>
+        </div>
+        <div>
+          <div class="youhuibox">
+            <!--startprint1-->
+            <div class="yhpic">
+              <%= whitelist_strip_tags(@event.summary, :tags => ["a", "A", "script", "style"], :include => false) %>
+            </div>
+            <div class="youhuiinfo">
+              <div class="tool">
+                <a href="javascript:doSaveAs()"><img src="http://js.51hejia.com/img/sdeco/baocun.gif"/></a>
+                <a href="javascript:window.print();"><img src="http://js.51hejia.com/img/sdeco/dayin.gif"/></a></div>
+              <p><span>(有效期至<%= @event.ends_at.strftime("%Y-%m-%d") %>)</span></p>
+
+              <p>1.请将此优惠打印使用；<br/>
+                2.除特殊注明外，本优惠不能与其他优惠同时享受；<br/>
+                3.本优惠最终解释权归商家所有，如有疑问请与商家联系；<br/>
+                4.本优惠请务必从和家网下载使用，否则无效。<br/>
+                提示：此信息仅供参考，建议您在使用前进行确认。</p>
+            </div>
+          </div>
+        </div>
+        <%= render :partial => "/dianping/shared/remarks", :locals=>{:resource_id => @event.id, :resource_type=> "DecoEvent"} %>
+        <!-- event end -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 等比缩放图片 -->
+<script type="text/javascript">
+    var flag = false;
+    function DrawImage(ImgD) {
+        var image = new Image();
+        var iwidth = 686; //定义允许宽度，当宽度大于这个值时等比例缩小
+        var iheight = 450; //定义允许高度，当高度大于这个值时等比例缩小
+        image.src = ImgD.src;
+        if (image.width > 0 && image.height > 0) {
+            flag = true;
+            if (image.width / image.height >= iwidth / iheight) {
+                if (image.width > iwidth) {
+                    ImgD.width = iwidth;
+                    ImgD.height = (image.height * iwidth) / image.width;
+                } else {
+                    ImgD.width = image.width;
+                    ImgD.height = image.height;
+                }
+            } else {
+                if (image.height > iheight) {
+                    ImgD.height = iheight;
+                    ImgD.width = (image.width * iheight) / image.height;
+                } else {
+                    ImgD.width = image.width;
+                    ImgD.height = image.height;
+                }
+            }
+        }
+    }
+</script>
+<!--endprint1-->
+<script language="javascript">
+    function preview(oper) {
+        if (oper < 10) {
+            bdhtml = window.document.body.innerHTML;//获取当前页的html代码
+            sprnstr = "<!--startprint" + oper + "-->";//设置打印开始区域
+            eprnstr = "<!--endprint" + oper + "-->";//设置打印结束区域
+            prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+            prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html
+            window.document.body.innerHTML = prnhtml;
+            window.print();
+            window.document.body.innerHTML = bdhtml;
+        } else {
+            window.print();
+        }
+    }
+    var isReady = true;
+    function doSaveAs() {
+        if (window.document.execCommand) {
+            if (isReady) {
+                window.document.execCommand("SaveAs");
+            }
+        } else {
+            alert('Feature available only in Internet Exlorer 4.0 and later.');
+        }
+    }
+</script>

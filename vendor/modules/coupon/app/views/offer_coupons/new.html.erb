@@ -1,0 +1,240 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】提供抵用券_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<%= javascript_include_tag "jrails" %>
+<%#= include_jquery_easy_validator %>
+<!--content_code-->
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页", coupon_index_path %> >
+    <span>提供<%= Coupon.human_name %></span></div>
+</div>
+<style type="text/css">
+    .error_msg {
+        width: 450px;
+        paddimg: 0 25px;
+        margin: 0 auto;
+        font-size: 12px;
+    }
+
+    .error_msg span {
+        color: #f60;
+        margin: 0 5px 0 10px;
+        font-weight: bold;
+    }
+</style>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong">
+    <% form_for @offer_coupon do |f| %>
+        <div id="error_message" class="error_msg"></div>
+        <%= f.error_messages %>
+        <table width="500" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td colspan="2">
+              <h3>请输入如下信息</h3>
+              欢迎商户提供更多抵用券，给广大家装家居用户更多优惠。
+              <br />
+              联系电话： 400-602-5151
+              <br />
+              周一至周五 9:00-17:30
+              <br />
+              网上提交仅限上海.无锡.苏州.宁波.杭州.南京商户
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" align="left"><span>*</span><%= f.label :merchant %>：
+            </td>
+            <td><%= f.text_field :merchant, :class => 'djq_tigong_input', :size => 30, :maxlength => 50 %>
+              <div><p id="msg_for_merchant"></p></div></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><span>*</span><%= f.label :body %>:
+            </td>
+            <td><%= f.text_area :body, :class => "djq_tigong_input", :rows => '4' %>
+              <div><p id="msg_for_body"></p></div></td>
+          </tr>
+          <tr>
+            <td valign="top" align="left"><span>*</span>所在区域:</td>
+            <td>
+              <%= f.select :city_id, City.used_cities.map { |c| [c.name, c.id] }.unshift(['-请选择城市-', '']), {}, :size => '1' %>
+              <%= f.select :district_id, [], { :include_blank => "-请选择-" }, :size => '1' %>
+              <div><p id="msg_for_city"></p><p id="msg_for_district"></p></div>
+          </tr>
+          <tr>
+            <td valign="top" align="left"><span>*</span><%= f.label :linkman %>:
+            </td>
+            <td><%= f.text_field :linkman, :size => 30, :maxlength => 30 %>
+              <div><p id="msg_for_linkman"></p></div>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" align="left"><span>*</span><%= f.label :sex %>:
+            </td>
+            <td>
+              <%= f.radio_button :sex, '1' %>
+              男
+              <%= f.radio_button :sex, '0' %>
+              女
+              <div><p id="msg_for_sex"></p></div>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" align="left"><span>*</span><%= f.label :telphone %>:</td>
+            <td><%= f.text_field :telphone, :class => "djq_tigong_input", :size => 10, :maxlength => 30 %>
+              <div><p id="msg_for_telphone"></p></div></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center"><%= submit_tag "确认提交", :class => "djq_tigong_btn", :name => nil %></td>
+          </tr>
+        </table>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+    jQuery(function($) {
+        $(".djq_tanbtn").click(
+                function() {
+                    $(".djq_tancboxbg").hide();
+                    $(".djq_tancbox").hide();
+                });
+    });
+    var intervalId = null;
+    function redirect_to_index() {
+        var cur = parseInt($('#seconds_count').text());
+        if (cur > 0)
+        {
+            $('#seconds_count').text(cur - 1);
+        } else {
+            $(".djq_tancboxbg").hide();
+            $(".djq_tancbox").hide();
+            window.clearInterval(intervalId);
+            location.href='<%= coupon_index_path %>';
+        }
+    }
+</script>
+<div class="djq_tancboxbg">
+  <iframe frameborder='0'></iframe>
+</div>
+<div class="djq_tancbox">
+  <div class="djq_tanclogo"></div>
+  <div class="djq_tancicon djq_tanccolor">· 您已成功提交<%= Coupon.human_name %>, <span id="seconds_count">10</span>秒后返回首页.</div>
+  <div class="djq_tanbtn" onclick="location.href='<%= coupon_index_path %>';">关闭</div>
+</div>
+
+<!--content_code_end-->
+<script type="text/javascript">
+    $(function() {
+        $("#offer_coupon_city_id").change(function() {
+            $('#msg_for_city').text("");
+            $('#msg_for_city').removeClass("djq_alert");
+            $('#msg_for_district').text("");
+            $('#msg_for_district').removeClass("djq_alert");
+            var dom = $("#offer_coupon_district_id").empty();
+            $('<option />').val('').text("-请选择区域-").appendTo(dom);
+            if (parseInt($("#offer_coupon_city_id").val()) != 0) {
+                $.get("/remote/districts/" + $("#offer_coupon_city_id").val(), function(data) {
+                    if (data.length > 0) {
+                        $.each(data, function(_, area) {
+                            $('<option />').val(area[1]).text(area[0]).appendTo(dom);
+                        });
+                    }
+                });
+            } else {
+                return false;
+            }
+        });
+
+        $('#offer_coupon_merchant').blur(function() {
+            if ($(this).val() == "") {
+                $('#msg_for_merchant').text("商户名称不能为空");
+                $('#msg_for_merchant').addClass("djq_alert");
+            } else {
+                $('#msg_for_merchant').text("");
+                $('#msg_for_merchant').removeClass("djq_alert");
+            }
+        });
+        $('#offer_coupon_body').blur(function() {
+            if ($(this).val() == "") {
+                $('#msg_for_body').text("请填写内容");
+                $('#msg_for_body').addClass("djq_alert");
+            } else {
+                $('#msg_for_body').text("");
+                $('#msg_for_body').removeClass("djq_alert");
+            }
+        });
+
+        $('#offer_coupon_linkman').blur(function() {
+            if ($(this).val() == "") {
+                $('#msg_for_linkman').text("请填写联系人");
+                $('#msg_for_linkman').addClass("djq_alert");
+            } else {
+                $('#msg_for_linkman').text("");
+                $('#msg_for_linkman').removeClass("djq_alert");
+            }
+        });
+        $('#offer_coupon_telphone').blur(function() {
+            if ($(this).val() == "") {
+                $('#msg_for_telphone').text("请填写联系电话");
+                $('#msg_for_telphone').addClass("djq_alert");
+            } else if (!/(^(\d{2,4}[-_－—]?)?\d{3,8}([-_－—]?\d{3,8})?([-_－—]?\d{1,7})?$)|(^0?1[35]\d{9}$)/.test($(this).val())) {
+                $('#msg_for_telphone').text("电话格式错误");
+                $('#msg_for_telphone').addClass("djq_alert");
+            } else {
+                $('#msg_for_telphone').text("");
+                $('#msg_for_telphone').removeClass("djq_alert");                
+            }
+        });
+        $("input[id^='offer_coupon_sex_']").click(function() {
+                $('#msg_for_sex').text("");
+                $('#msg_for_sex').removeClass("djq_alert");
+        });
+
+    $("#new_offer_coupon").submit(function(){
+        var result = true;
+        if ($("#offer_coupon_merchant").val() == "") {
+            $('#msg_for_merchant').text("商户名称不能为空");
+            $('#msg_for_merchant').addClass("djq_alert");
+            result = false;
+        }
+        if ($("#offer_coupon_body").val() == "") {
+            $('#msg_for_body').text("请填写内容");
+            $('#msg_for_body').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#offer_coupon_city_id').val() == "") {
+            $('#msg_for_city').text("请选择城市");
+            $('#msg_for_city').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#offer_coupon_district_id').val() == "") {
+            $('#msg_for_district').text("请选择城区");
+            $('#msg_for_district').addClass("djq_alert");
+            result = false;
+        }
+        if (!($('#offer_coupon_sex_1').attr("checked") || $('#offer_coupon_sex_0').attr("checked"))) {
+            $('#msg_for_sex').text("请选择性别");
+            $('#msg_for_sex').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#offer_coupon_linkman').val() == "") {
+            $('#msg_for_linkman').text("请填写联系人");
+            $('#msg_for_linkman').addClass("djq_alert");
+            result = false;
+        }
+        if ($('#offer_coupon_telphone').val() == "") {
+            $('#msg_for_telphone').text("请填写联系电话");
+            $('#msg_for_telphone').addClass("djq_alert");
+            result = false;
+        } else if (!/(^(\d{2,4}[-_－—]?)?\d{3,8}([-_－—]?\d{3,8})?([-_－—]?\d{1,7})?$)|(^0?1[35]\d{9}$)/.test($('#offer_coupon_telphone').val())) {
+            $('#msg_for_telphone').text("电话格式错误");
+            $('#msg_for_telphone').addClass("djq_alert");
+            result = false;
+        }
+
+        if (!result) { return result; }
+        jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()) + '&amp;authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>'), dataType:'script', type:'post', url:'/coupon/offer_coupons'}); return false;
+
+    });
+
+    });
+</script>
+<!--stags_code-->

@@ -1,0 +1,43 @@
+<% distributor_name = @contract.distributor.title %>
+<%= top_bar :title => "查看 #{distributor_name} 经销商合同页面",
+      :button => ['返回', admin_distributor_contracts_path(@contract.distributor_id)],
+      :breadcrumbs => [
+        ['首页', coupon_admin_index_path],
+        ["经销商", admin_distributor_path(@contract.distributor_id)],
+        ['合同列表', admin_distributor_contracts_path(@contract.distributor_id)],
+        ['合同信息页']
+      ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2"><%= distributor_name %>  [<%= @contract.code %>]合同 </th>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= Distributor::Contract.human_attribute_name("title") %></strong></td>
+      <td class="last"><%=h @contract.title %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= Distributor::Contract.human_attribute_name("code") %></strong></td>
+      <td class="last"><%=h @contract.code %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= Distributor::Contract.human_attribute_name("start_date") %></strong></td>
+      <td class="last"><%= @contract.start_date.strftime("%Y-%m-%d") %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= Distributor::Contract.human_attribute_name("end_date") %></strong></td>
+      <td class="last"><%= @contract.end_date.strftime("%Y-%m-%d") %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong><%= Distributor::Contract.human_attribute_name("radmin_user_id") %></strong></td>
+      <td class="last"><%= @contract.radmin_user && @contract.radmin_user.rname || '---' %></td>
+    </tr>
+    <tr>
+      <td class="first" width="172" valign="top"><strong><%= Distributor::Contract.human_attribute_name("description") %></strong></td>
+      <td class="last"><%=h @contract.description %></td>
+    </tr>
+  </table>
+</div>

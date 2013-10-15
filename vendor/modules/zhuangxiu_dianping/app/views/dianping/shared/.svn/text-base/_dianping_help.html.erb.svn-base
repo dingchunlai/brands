@@ -1,0 +1,11 @@
+<% @help_infos = hejia_promotion_items(55253, :attributes => ["title", "url"],:limit => 10) %>
+<div class="zxdp2010_cur margin10">
+  <h3>使用说明</h3>
+  <div class="zxdp2010_txt zxdp2010_kbtop zxdp2010_shiysm">
+    <ul>
+      <% @help_infos.each do |info|%>
+        <li>· <%= link_to info.title, info.url, :target => "_blank" %></li>
+      <% end -%>
+    </ul>
+  </div>
+</div>

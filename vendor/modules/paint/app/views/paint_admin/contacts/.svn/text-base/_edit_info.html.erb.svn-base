@@ -1,0 +1,65 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#t_province").change(function(){
+			if ($("#t_province").val().length == 0) {
+			  $("#t_city").empty();
+	          $("<option value=''>请选择</option>").appendTo("#t_city");
+			}else {
+			  $.getJSON("/public/get_city_json",{province: $("#t_province").val()}, function(data){
+	          $("#t_city").empty();
+	          $("<option value=''>请选择</option>").appendTo("#t_city");
+	          $.each(data,function(i){
+	            $("<option value='"+ data[i][0] +"'>"+ data[i][1] +"</option>").appendTo("#t_city");
+	            });
+	          });
+			}
+    });	
+	});
+</script>
+<style type="text/css">
+	.suib_table{width:500px;}
+	.suib_table td{height:30px;line-height:30px;padding:0 5px;}
+	.contact_input{width:100px;}
+</style>
+<input type="hidden" id="element_name" value="paint_contact[city]">
+<input type="hidden" id="element_id" value="paint_contact_city">
+<% form_for @paint_contact ,:url => (@paint_contact.id.nil? ? paint_admin_contacts_path : paint_admin_contact_path) do |f|%>
+	<table class="suib_table">
+		<tr>
+			<td>服务中心名称</td>
+			<td><%=f.text_field :contact_name%></td>
+		</tr>
+		<tr>
+			<td>服务中心地址</td>
+			<td><%=f.text_field :address%></td>
+		</tr>
+		<tr>
+			<td>地区</td>
+			<td>
+				省份<select name="paint_contact[province]" id="t_province" class="" >
+				<option value="">请选择</option>
+				<% Province.get_province_douleshi.each do |k,v| %>
+					<option value="<%= v %>" <%= 'selected' if @paint_contact.province == v %> ><%= k %></option>
+				<% end %>
+			</select>
+			城市<select name="paint_contact[city]" id="t_city" >
+				<option value="">请选择</option>
+				<% unless @paint_contact.city.blank?%>
+				<% City.get_cities_for_province_douleshi(@paint_contact.province).each do |k,v| %>
+					<option value="<%= k %>" <%= 'selected' if @paint_contact.city == k %> ><%= v %></option>
+				<% end %>
+				<% end %>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>电话</td>
+			<td><%=f.text_field :phone, :class => "contact_input"%></td>
+		</tr>
+		<tr>
+			<td>联系人</td>
+			<td><%=f.text_field :contact_people, :class => "contact_input"%></td>
+		</tr>
+		<tr><td colspan="2"><%= f.submit "确认提交", :disable_with => '提交中...' %></td></tr>
+	</table>
+<% end %>

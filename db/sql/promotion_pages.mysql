@@ -1,0 +1,18 @@
+USE product;
+CREATE TABLE `promotion_pages`(
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(255),
+    `type` VARCHAR(50) NOT NULL 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `promotion_page_parts`(
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(255),
+    `item_type` VARCHAR(100) NOT NULL.
+    `page_id` int(11) NOT NULL,
+    `page_type` VARCHAR(100) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX `promotion_page_parts_page_id_or_page_type` ON `promotion_page_parts` (`page_id`, `page_type`) 

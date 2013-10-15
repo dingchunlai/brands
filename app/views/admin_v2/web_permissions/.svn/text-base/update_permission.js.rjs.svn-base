@@ -1,0 +1,9 @@
+if @permission.errors.empty?
+  page << '$("#edit_ability_permission_reset").click();'
+  page << '$("#edit_permission_form").css("display", "");'
+  #permission_item_
+  page << "$(\"li[id='permission_item_#{@permission.id}']\").css('border', '');"
+  page << "$(\"span[id='peritem_title_#{@permission.id}']\").text('#{@permission.title}');"
+else
+  page << "alert('#{@permission.errors.full_messages.join("\n")}');"
+end

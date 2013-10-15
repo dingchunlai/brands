@@ -1,0 +1,170 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】推荐抵用券_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页", coupon_index_path, :target => "_blank" %> > <%= link_to @coupon.title, coupon_show_path(@coupon)  %> > <span> 推荐给朋友 </span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong">
+    <div class="djq_tuijian">
+      <dl>
+        <dt>值得推荐的抵用券&gt;&gt;</dt>
+        <% Coupon.most_discounted(@city, 15).each do |coupon| %>
+          <dd><%= link_to coupon.title, coupon_show_path(coupon), :target => '_blank' %></dd>
+        <% end %>
+      </dl>
+      <div class="djq_tjmail">
+        <% form_tag save_recommended_path, :method => :post do %>
+          <input type="hidden" name="id" value="<%= @coupon.id %>" />
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>请输入您朋友的姓名和邮箱地址</td>
+            </tr>
+           <tr>
+             <td id="items">
+               <div id="div_0" style="margin-bottom:5px;">
+                 <div class="clear">
+                 姓名：
+                 <input type="text" my="names" name="names[0]" id="names_0" size="10" /> 
+                 Email：
+                 <input type="text" my="emails" name="emails[0]" id="emails_0" size="17" />
+                 </div> 
+                 <div class="clear">
+                   <div style="margin-left:48px;" class="f_l">
+                     <span id="msg_for_name_0"></span>
+                    </div>
+                   <div style="margin-right:39px;" class="f_r">
+                     <span id="msg_for_email_0"></span> 
+                   </div>
+                  </div>
+               </div>
+             </td>
+            </tr>
+            <tr>
+              <td align="center"><input id="add-attribute" type="button" value="增加朋友 最多5个" class="djq_tigong_btn02" />
+                <input name="" type="submit" value="提交" class="djq_tigong_btn" /></td>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->
+<script type="text/javascript">
+  (function() {
+
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        var items = $("#items").children();
+        var index = items.length;
+        var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(index < 5){
+          var dom = $("#items");
+          last_index = items.last().attr('id').split('_')[1];
+          index = parseInt(last_index) + 1;
+          var all_dom = $('<div />').attr('id', 'div_'+index).attr("style", "margin-bottom:5px");
+          var first_dom = $('<div />').addClass('clear').html(' <label id="removes_'+ index +'" style="float: right;cursor: pointer; margin-top:2px;"><img src=" http://img3.51hejia.net/img/brandimg/djq_icon02.gif" /></label> 姓名：' + '  <input type="text" my="names" name="names[' + index + ']" id="names_' + index + '" size="10" /> Email：  <input type="text" my="emails" name="emails[' + index + ']" id="emails_' + index + '" size="17" />');
+          var second_dom = $('<div />').addClass('clear').html('<div style="margin:0 0 2px 48px;" class="f_l"> <span id="msg_for_name_' + index + '"> </span> </div> <div style="margin:0 39px 2px 0;" class="f_r"> <span id="msg_for_email_'+ index +'"></span> </div>');
+          first_dom.appendTo(all_dom);
+          second_dom.appendTo(all_dom);
+          all_dom.appendTo(dom);
+          $('#removes_'+index).click(function(){
+            $('#div_'+index).remove();
+          });
+          $('#names_'+index).blur(function(){
+            if($('#names_' + index).val() == ''){
+              show_message($('#msg_for_name_' + index), '请输入姓名');
+            }else{
+              hide_message($('#msg_for_name_' + index));
+            }
+          });
+           $('#emails_'+index).blur(function(){
+            var value = $('#emails_' + index).val();
+            if(value == ''){
+              show_message($('#msg_for_email_' + index), '请输入邮箱地址');
+            }else{
+              if(!email_reg.test(value)){
+                show_message($("#msg_for_email_" + index), '邮箱地址不正确'); 
+              }else{
+                hide_message($('#msg_for_email_' + index));
+              }
+            }
+          });
+        }
+      });
+    }
+
+   function addSubmit(){
+      $(".djq_tjmail form").submit(function(){
+        var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        var flg = true;
+        var names = $("input[my=names]");
+        names.each(function(_){
+          var index = $(this).attr('id').split('_')[1];
+          if($(this).val() == ""){
+            show_message($("#msg_for_name_" + index), '请输入姓名'); 
+            flg = false;
+          }else{
+            hide_message($("#msg_for_name_" + index));
+          }
+        });
+        var emails = $("input[my=emails]");
+        emails.each(function(_){
+          var index = $(this).attr('id').split('_')[1];
+          var value = $(this).val();
+          if(value == ""){
+            show_message($("#msg_for_email_" + index), '请输入邮箱地址'); 
+            flg = false;
+          }else{
+            if(!email_reg.test(value)){
+              show_message($("#msg_for_email_" + index), '邮箱地址不正确'); 
+              flg = false;
+            }else{
+              hide_message($("#msg_for_email_" + index));
+            }
+          }
+        });
+        if(!flg) { return flg; }
+        $(".djq_tjmail form").submit();
+      });
+    }
+    
+    function show_message(obj, msg){
+      obj.addClass('djq_alert').html(msg);
+    }
+    function hide_message(obj){
+      obj.removeClass('djq_alert').html('');
+    }
+
+    function msg_blur_on_filed(index){
+      var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      $('#names_' + index).blur(function(){
+        if($('#names_' + index).val() == ''){
+          show_message($('#msg_for_name_' + index), '请输入姓名');
+        }else{
+          hide_message($('#msg_for_name_' + index));
+        }
+      });
+       $('#emails_' + index).blur(function(){
+        var value = $('#emails_' + index).val();
+        if(value == ''){
+          show_message($('#msg_for_email_' + index), '请输入邮箱地址');
+        }else{
+          if(!email_reg.test(value)){
+            show_message($("#msg_for_email_" + index), '邮箱地址不正确'); 
+          }else{
+            hide_message($('#msg_for_email_' + index));
+          }
+        }
+      });
+
+  }
+    $(function() {
+      enableAttributeAdding();
+      addSubmit();
+      msg_blur_on_filed(0);
+    });
+  })();
+</script>
+

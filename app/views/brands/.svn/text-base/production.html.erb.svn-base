@@ -1,0 +1,152 @@
+  	<div class="b_width138 f_l margin10">
+    	<div class="detail_left">
+            <div class="logo margin5">
+              <%if @brand_logo %><%=get_brand_logo(@brand, @brand_detail, @brand_logo, 140) %><%end%>
+            </div>
+            <div class="menu">
+              <SCRIPT>
+// --- 获取ClassName
+ document.getElementsByClassName = function(cl) {
+  var retnode = [];
+  var myclass = new RegExp('\\b'+cl+'\\b');
+  var elem = this.getElementsByTagName('*');
+  for (var j = 0; j < elem.length; j++) {
+   var classes = elem[j].className;
+   if (myclass.test(classes)) retnode.push(elem[j]);
+  }
+  return retnode;
+ }
+ 
+ // --- 隐藏所有
+ function HideAll() {
+  var items = document.getElementsByClassName("optiton");
+  var items2 = document .getElementsByClassName("title");
+  for (var j=0; j<items.length; j++) {
+   items[j].style.display = "none";
+   items2[j].className = "title close";
+  }
+ }
+ 
+ window.onload = function() {
+  var items = document.getElementsByClassName("title");
+  for (var j=0; j<items.length; j++) {
+   items[j].onclick = function() {
+    var o = document.getElementById("opt_" + this.name);
+	HideAll();
+	showmenu(this.name);
+    if (o.style.display != "block") 
+	{
+	
+	o.style.display = "block";
+	}
+    else {
+     o.style.display = "none";
+    }
+   }
+  }
+ }
+
+function showmenu(sid)
+{
+	var o = document.getElementById("opt_" + sid);
+	
+if (o.style.display!='block')
+	{
+		document.getElementById("menu"+sid).className="title open";
+	}
+else
+	{
+		document.getElementById("menu"+sid).className="title close";
+		}
+}
+</SCRIPT>
+            <div class="menu_top">产品分类</div>
+			    <ul id="menu">
+                  <% unless @p_category_id %>
+                     <%if @production_category %>
+                       <%@production_category.each do |category|%>
+                         <li class="item"><a href="javascript:void(0)" id="menu<%=category.id%>" class="title close" name="<%=category.id%>"><%=category.name %></a>
+                           <ul id="opt_<%=category.id%>" class="optiton">
+                            <%product = category.get_product_by_brand_category(@tag.TAGID,@brand.id,category.id) %>
+                            <%if product && product.size >  0%>
+                                <% product.first(10).each do |prod| -%>
+                                   <li><%= link_to_with_title prod.name, pinpai_production_path(:permalink => @brand.permalink,:id => prod.id),:truncate => 9 %></li>
+                                <%end -%>
+                            <%end%>
+                           </ul>
+                         </li>
+                       <%end%>
+                     <%end%>
+                  <% else %>
+                     <%if @production_category %>
+
+                         <li class="item"><a href="javascript:void(0)" id="menu<%=@production_category.id%>" class="title close" name="<%=@production_category.id%>"><%=@production_category.name %></a>
+                           <ul id="opt_<%=@production_category.id%>" class="optiton">
+                            <%product = @production_category.get_product_by_brand_category(@tag.TAGID,@brand.id,@production_category.id) %>
+                            <%if product && product.size >  0%>
+                                <% product.first(10).each do |prod| -%>
+                                   <li><%= link_to_with_title prod.name, second_category_production_path(:category_url=>params[:category_url],:permalink => @brand.permalink,:id => prod.id),:truncate => 9 %></li>
+                                <%end -%>
+                            <%end%>
+                           </ul>
+                         </li>
+                     <%end%>
+                  <% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="b_width532 f_l">
+    	<div class="detail_right">
+        	<div class="detail_box">
+            	<div class="detail_title">
+                	<strong><%=@production.category.name %></strong> >> <%=@production.name %> <%=@production.model %>
+                </div>
+                <div class="detail_content">
+                	<div class="album">
+                		<div id="carousel_photo_container">
+                			<%if @production.not_master_picture %>
+                				<%=image_tag  @production.not_master_picture.public_filename  %>
+                			<%end%>
+                			</div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail_box margin10">
+            	<div class="detail_title">
+                	<strong>产品详细信息</strong>
+                </div>
+                <div class="txt clearfix"><%=@production.description %></div>
+            </div>
+            <%if @brand.documents && @brand.documents.size > 0 %>
+            <div class="detail_box margin10">
+            	<div class="detail_title">
+                	<strong>资料下载</strong>
+                </div>
+                <ul class="wc clearfix">
+	                <%@brand.documents.each do |document|%>
+	                		<li><%= link_to_with_title document.name, document.download_link, :target=>'_blank' %></li>
+	                <%end%>
+                </ul>
+            </div>
+            <%end%>
+            <%if  @production.properties && @production.properties.size > 0%>
+            <div class="detail_box margin10">
+            	<div class="detail_title">
+                	<strong>技术参数</strong>
+                </div>
+                <div class="argument">
+                	<table border="0" cellspacing="0" cellpadding="0"  width="440">
+                    	<%@production.properties.each do |pro| %>
+                    		 <tr>
+                        	<td width="30%"><%=pro.attribute_name %></td>
+                            <td width="70%"><%=pro.value %></td>
+                        </tr>
+              				<%end%>
+                    </table>
+              </div>
+            </div>
+            <%end%>
+        </div>
+    </div>

@@ -1,0 +1,237 @@
+<% @title = "海尔整套家电互动专区" %>
+<div class="he_conbox">
+  <div class="he_con">
+    <div class="he_con_l f_l">
+      <ul class="he_imgbox" id="imgbox">
+        <% hejia_promotion_items(HAIER_SHOUYE['焦点图'], :attributes => ["title", "url", "image_url"], :limit => 3).each do |r| %>
+          <li><a href="<%= r["url"] %>" target="_blank" title="<%=r["title"]%>"><%= promotion_image_tag(r) %></a></li>
+        <% end %>
+      </ul>
+      <ul class="he_page">
+        <li class="he_act0">1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+    <script>
+      var imgHeight = $("#imgbox").find("li").height();
+      var imgSize = $("#imgbox").find("li").size();
+      //alert(imgSize);
+      function rotate(id){
+        var now = id.text()-1;
+        var movePos = now*imgHeight;
+        if(!$("#imgbox").is(":animated")){
+          $("#imgbox").animate({top:-movePos},300);
+          id.addClass("he_act0").siblings().removeClass("he_act0");
+        }
+      }
+      function autoSwitch(){
+        play = setInterval(function(){
+          id = $(".he_page li.he_act0").next();
+          if(id.length == 0){
+            id = $(".he_page li:first");
+          }
+          rotate(id);
+        },3000)
+      }
+      autoSwitch();
+      $(".he_page").find("li").mouseover(function(){
+        clearInterval(play);
+        var id = $(this);
+        rotate(id);
+        autoSwitch();
+      });
+    </script>
+    <div class="he_conbox1 f_l">
+      <h3 class="he_title">热点</h3>
+      <ul>
+        <% hejia_promotion_items(HAIER_SHOUYE['热点文章'], :attributes => ["title", "url"], :limit => 9).each do |r| %>
+          <li><a href="<%= r["url"] %>" target="_blank" title="<%=r["title"]%>"><%=r["title"]%></a> </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="he_conbox2 f_l">
+      <h3 class="he_title">海尔产品专区</h3>
+      <div class="he_tab">
+        <div class="he_tab_head f_r" id="tab1">
+          <ul>
+            <li id="tab1h1" class="he_act1"><a href="http://Jiadian.51hejia.com/bingxiang/haier" target="_blank">冰箱</a></li>
+            <li id="tab1h2"><a href="http://jiadian.51hejia.com/caidian/haier" target="_blank">彩电</a></li>
+            <li id="tab1h3"><a href="http://jiadian.51hejia.com/kongtiao/haier" target="_blank">空调</a></li>
+            <li id="tab1h4"><a href="http://chugui.51hejia.com/haier/" target="_blank">橱柜</a></li>
+            <li id="tab1h5"><a href="http://jiadian.51hejia.com/xiyiji/haier" target="_blank">洗衣机</a></li>
+            <li id="tab1h6"><a href="http://chufangdianqi.51hejia.com/c-134/haier" target="_blank">热水器</a></li>
+            <li id="tab1h7"><a href="http://chufangdianqi.51hejia.com/haier/" target="_blank">厨房电器</a></li>
+          </ul>
+        </div>
+        <div class="he_tab_con f_l">
+          <ul>            
+            <% i = 0 %>
+            <% hejia_promotion_items(HAIER_SHOUYE['产品专区'], :attributes => ["title", "url", "image_url"], :limit => 7).each do |r| %>
+              <li id="tab1h<%= i += 1 %>con"><% if r["url"] != "" %><a href="<%=r["url"]%>"><%= promotion_image_tag(r) %></a><% else %><%= promotion_image_tag(r, :link => false) %><% end %>
+                <dl>
+                  <dd><% if r["url"] != "" %><a href="<%=r["url"]%>"><%= r["title"] %></a><% else %><%= r["title"] %><% end %></dd>
+                </dl>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <script>
+        var n =1;
+        var prodNum = $("#tab1").find("li").size();
+        function autoTab(){
+          n = n>prodNum?1:n;
+          for(i=1;i<=prodNum;i++){
+            if(i == n){
+              $("#tab1h"+i).addClass("he_act1");
+              $("#tab1h"+i+"con").show();
+            }else{
+              $("#tab1h"+i).removeClass("he_act1");
+              $("#tab1h"+i+"con").hide();
+            }
+          }
+          n++;
+        }
+        setInterval("autoTab()",3000);
+        tab("tab1","he_act1");
+      </script>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="he_con">
+    <div class="he_solution f_l">
+      <h3 class="he_title">海尔整套家电解决方案</h3>
+      <div class="he_tab1">
+        <div id="tab2" class="he_tab_head1 f_r">
+          <ul>
+            <li id="tab2h1" class="he_act2">卧室</li>
+            <li id="tab2h2">客厅</li>
+            <li id="tab2h3">书房</li>
+            <li id="tab2h4">厨房</li>
+            <li id="tab2h5">卫生间</li>
+          </ul>
+        </div>
+        <div class="he_tab_con1 f_l">
+          <ul>
+            <% i = 0 %>
+            <% hejia_promotion_items(HAIER_SHOUYE['解决方案'], :attributes => ["title", "url", "image_url"], :limit => 5).each do |r| %>
+              <li id="tab2h<%= i += 1 %>con"><% if r["url"] != "" %><a href="<%=r["url"]%>"><%= promotion_image_tag(r) %></a><% else %><%= promotion_image_tag(r, :link => false) %><% end %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <script>tab("tab2","he_act2");</script>
+    </div>
+    <div class="he_conbox2 f_l">
+      <h3 class="he_title">明星设计师在线资讯</h3>
+      <ul class="he_sjs">
+        <li> <a href="<%= jdsjs_url %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wjz.jpg" alt="" /></a>
+          <dl>
+            <dt><a href="<%= jdsjs_url %>" target="_blank">王纪柱</a><a href="<%= jdsjs_url %>" target="_blank" class="he_zxyy">在线预约</a></dt>
+            <dd>海尔整套家电设计师</dd>
+          </dl>
+        </li>
+        <li> <a href="<%= jzsjs_url %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/wys.jpg" alt="" /></a>
+          <dl>
+            <dt><a href="<%= jzsjs_url %>" target="_blank">王一栗</a></dt>
+            <dd>九鼎装饰家装设计师</dd>
+          </dl>
+        </li>
+      </ul>
+      <div class="he_yhgy">
+        <h4>用户感言</h4>
+        <p><a href="http://b.51hejia.com/pinpaiku/20110308/653494" target="_blank">【张女士】一直听说海尔的洗衣机很好，本来只是想买个洗衣机，去卖场逛了一圈下来，发现海尔的冰箱也不错，后来又看了电视机和热水器，发现海尔的性价比真不错，老公就说，不如买整套海尔家电吧，有问题维修起来也方便，呵呵。</a></p>
+        <p><a href="http://b.51hejia.com/pinpaiku/20110308/653495" target="_blank">【洪先生】海尔家电给我的感觉是：实惠又时尚，性价比很高。以前我们都盲目追溯日本品牌，后来发现，原来我们本土的品牌一点都不比别人差，用下来才发现，海尔比其他国外品牌强多了。</a></p>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="he_con">
+    <h3 class="he_title">海尔整套家电案例展示</h3>
+    <ul class="he_case he_case_wh">
+      <% hejia_promotion_items(HAIER_SHOUYE['案例展示'], :attributes => ["title", "url", "image_url", "description"], :limit => 6).each do |r| %>
+        <li><a href="<%= r["url"] %>" target="_blank"><%= promotion_image_tag(r)%></a>
+          <dl>
+            <dt><a href="<%= r["url"] %>" target="_blank"><%= r["title"] %></a></dt>
+            <dd><a href="<%= r["url"] %>" target="_blank"><%= r["description"] %></a></dd>
+          </dl>
+        </li>
+      <% end %>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="he_con">
+    <div class="he_show f_l">
+      <h3 class="he_title">产品展示</h3>
+      <div class="he_tab_head2">
+        <ul id="tab3">
+          <li id="tab3h1" class="he_act3"><a href="http://Jiadian.51hejia.com/bingxiang/haier" target="_blank">冰箱</a></li>
+          <li id="tab3h2"><a href="http://jiadian.51hejia.com/xiyiji/haier" target="_blank">洗衣机</a></li>
+          <li id="tab3h3"><a href="http://jiadian.51hejia.com/caidian/haier" target="_blank">彩电</a></li>
+          <li id="tab3h4"><a href="http://jiadian.51hejia.com/kongtiao/haier" target="_blank">空调</a></li>
+          <li id="tab3h5"><a href="http://chufangdianqi.51hejia.com/haier/" target="_blank">厨房电器</a></li>
+          <li id="tab3h6"><a href="http://chugui.51hejia.com/haier/" target="_blank">橱柜</a></li>
+          <li id="tab3h7"><a href="http://chufangdianqi.51hejia.com/c-134/haier" target="_blank">热水器</a></li>
+        </ul>
+      </div>
+      <div class="he_tab_con2">
+        <% array = hejia_promotion_items(HAIER_SHOUYE['产品展示'], :attributes => ["title", "url", "image_url", "description"], :limit => 28) %>
+        <% arry = [array[0,4], array[4,4], array[8,4], array[12,4], array[16,4], array[20,4], array[24,4]] %>
+        <% i = 0 %>
+        <% arry.each do |ar| %>
+          <ul id="tab3h<%= i += 1 %>con">
+            <% ar.each do |r| %>
+              <li><% if r["url"] != "" %><a href="<%=r["url"]%>"><%= promotion_image_tag(r) %></a><% else %><%= promotion_image_tag(r, :link => false) %><% end %>
+                <dl>
+                  <dd><%= r["title"] %></dd>
+                  <dd><%= r["description"] %></dd>
+                </dl>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <script>
+      $("#tab3").find("li:first").css("background","none");
+      tab("tab3","he_act3");
+    </script>
+    <div class="he_conbox2 f_l">
+      <h3 class="he_title">导购&middot;评测</h3>
+      <% array = hejia_promotion_items(HAIER_SHOUYE['导购评测'], :attributes => ["title", "url", "image_url", "description"], :limit => 4) %>
+      <div class="he_cp"> <img src="http://img.51hejia.com/api<%= array[0]["image_url"] %>" alt="" class="he_cpimg f_l" /><% p array[0]["image_url"] %>
+        <div class="he_cptxt f_l">
+          <h4><%= array[0]["title"] %></h4>
+          <p> <%= truncate(array[0]["description"], :length => 45, :omission => '') %><a href="<%= array[0]["url"] %>">[详细]</a> </p>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <ul class="he_dg">
+        <% array[1,3].each do |r| %>
+          <li><a href="<%= r["url"] %>" target="_blank"><%=r["title"]%></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="he_con marg10">
+    <div class="he_conbox3 f_l nomar">
+      <h3 class="he_title">关于海尔</h3>
+      <p><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/haier.jpg" alt="" />海尔集团是世界白色家电第一品牌、中国最具价值品牌。海尔在全球建立了29个制造基地，8个综合研发中心，19个海外贸易公司，全球员工总数超过6万人，已发展成为大规模的跨国企业集团，2008年海尔集团实现全球营业额1190亿元。</p>
+    </div>
+    <div class="he_conbox3 he_pic f_l">
+      <h3 class="he_title">热点活动</h3>
+      <% hejia_promotion_items(HAIER_SHOUYE['热点活动'], :attributes => ["title", "url", "image_url"], :limit => 1).each do |r| -%>
+        <a href="<%= r["url"] %>" target="_blank" title="<%=r["title"]%>"><%= promotion_image_tag(r) %></a>
+      <% end %> </div>
+    <div class="he_conbox3 he_pic f_l">
+      <h3 class="he_title">门店信息</h3>
+      <a href="<%= map_url %>" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/mdzp.jpg" alt="" /> </a></div>
+    <div class="he_conbox3 he_pic f_l">
+      <h3 class="he_title">品牌商城</h3>
+      <a href="http://www.ehaier.com/" target="_blank"><img src="http://js3.51hejia.net/all_zhuanti/haierzt/img/ppsc.jpg" alt="" /> </a></div>
+    <div class="clear"></div>
+  </div>
+
+</div>

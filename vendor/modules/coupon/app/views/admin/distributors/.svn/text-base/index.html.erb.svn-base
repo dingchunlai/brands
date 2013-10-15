@@ -1,0 +1,84 @@
+<%= top_bar :title => '经销商管理页',
+            :button => ['创建经销商', new_admin_distributor_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['经销商管理', admin_distributors_path]
+            ]
+%>
+<div class="select-bar">
+  <% form_for "", :url => admin_distributors_path, :html => {:method => :get} do %>
+      名称:<input type="text" name="title" value="<%= params[:title] %>"/>编号:<input type="text" name="code" value="<%= params[:code] %>"/>
+      是否签约中
+      <input type="radio" name="contract_status" value="1" <%= params[:contract_status].nil? ? "" : ((params[:contract_status] == "1") ? "checked" : "") %>/>签约中
+      <input type="radio" name="contract_status" value="0" <%= params[:contract_status].nil? ? "" : ((params[:contract_status] == "0") ? "checked" : "") %>/>未签约
+      <input type="submit" value="查找"/>
+  <% end %>
+</div>
+<%= flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>" %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first"><%= Distributor.human_attribute_name("code") %></th>
+      <th><%= Distributor.human_attribute_name("title") %></th>
+      <th>店面数</th>
+      <th>是否签约中</th>
+      <th>有效抵用券数</th>
+      <th>联系电话</th>
+      <th colspan=6 class="last">操作</th>
+    </tr>
+    <% @distributors.each_with_index do |distributor, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td><%= distributor.code %></td>
+          <td><%= distributor.title %></td>
+          <td><%= distributor.shops_count %></td>
+          <td><%= (distributor.valid_contracts.to_i > 0) ? "是" : "否" %></td>
+          <td><%= distributor.coupons_count %></td>
+          <td><%= @account_hash[distributor.id] &&@account_hash[distributor.id].USERBBSMOBELTELEPHONE %></td>
+          <td>
+            <% if can?(:read, distributor) || can?(:read_owned_distributors, distributor) %>
+              <%= link_to "查看", admin_distributor_path(distributor) %>
+            <% end %>
+          </td>
+          <td>
+            <% if can?(:read, Coupon) || can?(:read_owned_coupons, :coupons) %>
+              <%= link_to "抵用券", admin_coupons_path(:distributor_id => distributor.id) %>
+            <% end %>
+          </td>
+          <td>
+            <% if can?(:read, Distributor::Contract) || can?(:read_owned_contracts, Distributor::Contract) %>
+              <%= link_to "合同", admin_distributor_contracts_path(distributor) %>
+            <% end %>
+          </td>
+          <td>
+            <% if can?(:read, Distributor::Shop) || can?(:read_owned_shops, Distributor::Shop) %>
+              <%= link_to "店面", admin_distributor_shops_path(distributor) %>
+            <% end %>
+          </td>
+          <td>
+            <% if can?(:update, distributor) || can?(:edit_owned_distributor, distributor) %>
+              <%= link_to '修改', edit_admin_distributor_path(distributor) %>
+            <% end %>
+          </td>
+          <% if can? :decofirm, :distributors %>
+              <td><%= link_to '绑定装修公司', decofirm_admin_distributor_path(distributor) %></td>
+          <% end %>
+          <% if can? :account_setting, :distributors %>
+              <td><%= link_to '经销商用户配置', show_settings_admin_distributor_path(distributor) %></td>
+          <% end %>
+          <% if distributor.class_name == "Distributor::HuiYuan" %>
+            <% if can? :impressions, :distributors %>
+                <td><%= link_to '印象管理', impressions_admin_distributor_path(distributor) %></td>
+            <% end %>
+          <% else %>
+            <td>&nbsp;</td>
+          <% end %>
+        </tr>
+    <% end %>
+  </table>
+  <% unless @distributors.empty? -%>
+      <%= will_paginate @distributors, :class => "digg_pagination" -%>
+  <% end -%>
+
+</div>

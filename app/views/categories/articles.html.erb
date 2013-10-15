@@ -1,0 +1,61 @@
+<%= render :partial => 'shared/layouts/header' %>
+<div class="b_width960 clearfix margin10 margin_top10">
+  <div class="b_index_left f_l">
+    <h3>知名品牌快搜</h3>
+    <ul>
+
+      <%@tags.each do |tag|%>
+      <li><%= link_to tag.TAGNAME, show_pinlei_path(:tagurl => tag.TAGURL) %></li>
+      <%end%>
+
+    </ul>
+  </div>
+  <div class="b_index_center f_l">
+    <h3>最新消息</h3>
+    <div class="b_index_c_text clearfix">
+     <ul class="b_news_list">
+     <% hejia_promotion_items(API_PROMOTION_MAPPING['首页']['最新消息'], :attributes => ['title','url','publish-time'],:limit => 5).each do |item| %>
+        <li><span><%=item['publish-time']%></span><a href="<%=item['url']%>" target="_blank"><%=item['title']%></a></li>
+      <% end %>
+      </ul>
+    </div>
+            <div class="pagination clearfix">
+                                <span class="disabled prev_page">« 上一页</span><span class="b_p_current">1</span>
+                                <a href="http://z.51hejia.com/gs-244265/2" rel="next">2</a>
+                                <a href="http://z.51hejia.com/gs-244265/3">3</a>
+                                <a href="http://z.51hejia.com/gs-244265/4">4</a>
+                                <a href="http://z.51hejia.com/gs-244265/5">5</a>
+                                <a href="http://z.51hejia.com/gs-244265/6">6</a>
+                                <a href="http://z.51hejia.com/gs-244265/7">7</a>
+                                <a href="http://z.51hejia.com/gs-244265/2" rel="next">下一页 »</a>
+                                <span>到第<input  type="text"/>页</span>
+           </div>
+  </div>
+  <div class="b_index_right f_r">
+    <h3>重点品牌展示</h3>
+    <div class="b_index_r_text">
+      <ul class="b_index_r_ul01">
+        <li>
+          <% hejia_promotion_items(API_PROMOTION_MAPPING['首页']['重点品牌展示'], :attributes => ['url','image-url','title'],:limit => 6).each do |item| %>
+          <a href="item['url']" target="_blank"><img src="<%=item['image-url']%>"/></a>
+          <% end %>
+        </li>
+        <li class="b_index_r_more"><a href="#" target="_blank">>>更多</a></li>
+      </ul>
+      <ul class="b_index_r_ul02">
+         <% hejia_promotion_items(API_PROMOTION_MAPPING['首页']['重点品牌展示'], :attributes => ['url','image-url','title'],:limit => 6).each do |item| %>
+            <li></li><a href="<%=item['url']%>" target="_blank"><img src="<%=item['image-url']%>" /></a></li>
+          <% end %>
+      </ul>
+    </div>
+    <div class="b_ad03"><img src="http://js.51hejia.com/img/images/brand/ad04.jpg" /></div>
+    <h3>热门品牌关键字</h3>
+         <div class="b_index_r_text b_index_key">
+         <% hejia_promotion_items(API_PROMOTION_MAPPING['首页']['热门品牌关键字'], :limit => 4).each do |item| %>
+            <a href="<%=item['url']%>" target="_blank"><%=item['title']%></a>
+       <% end %>
+             </div>
+
+  </div>
+</div>
+<%= render :partial => 'shared/layouts/footer' %>

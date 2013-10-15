@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons
+END
+update_ningbo_coupons_date.rake
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/update_ningbo_coupons_date.rake
+END
+coupon2_add_to_resque.rake
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/coupon2_add_to_resque.rake
+END
+coupon_spread_position.rake
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/coupon_spread_position.rake
+END
+resque_coupon.rake
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/resque_coupon.rake
+END
+clear_coupon_redis_data.rake
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/clear_coupon_redis_data.rake
+END
+init_tag_code.rake
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/init_tag_code.rake
+END
+update_coupon_usage.rake
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/update_coupon_usage.rake
+END
+hejia_printing.rake
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/hejia_printing.rake
+END
+synthesis_brand_industry_name.rake
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/synthesis_brand_industry_name.rake
+END
+mail_remind_issue_number.rake
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/mail_remind_issue_number.rake
+END
+init_production_category_code.rake
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/init_production_category_code.rake
+END
+coupon_daily_jobs.rake
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/coupon_daily_jobs.rake
+END
+init_coupon_image_generate.rake
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/init_coupon_image_generate.rake
+END
+update_coupon_commission.rake
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/update_coupon_commission.rake
+END
+coupon_imagen_properties_validate.rake
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/coupon_imagen_properties_validate.rake
+END
+update_coupon_status.rake
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/update_coupon_status.rake
+END
+rspec.rake
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/rspec.rake
+END
+init_coupon_print_properties.rake
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/init_coupon_print_properties.rake
+END
+update_coupon_downloads.rake
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/94/51hejia/repos/brands/release/lib/tasks/coupons/update_coupon_downloads.rake
+END

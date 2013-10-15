@@ -1,0 +1,102 @@
+<div class="b_width138 f_l margin10">
+  <div class="detail_left">
+    <div class="logo margin5">
+      <%if @brand_logo %><%=get_brand_logo(@brand, @brand_detail, @brand_logo, 140) %><%end%>
+    </div>
+    <div class="menu">
+      <script language="javascript" src="http://js.51hejia.com/js/b_menu.js?1"></script>
+      <div class="menu_top">产品分类</div>
+      <ul id="menu">
+        <% unless @p_category_id %>
+          <%if @production_category %>
+            <%@production_category.each do |category| -%>
+              <li class="item">
+                <%=link_to  truncate_u(category.name,6,""), pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink,:category => category.id, :trailing_slash => true), :class => "title close", :onclick => "javascript:showsubmenu(2)", :name =>category.id %>
+             <!--	<ul id="opt_<%=category.id%>" class="optiton">
+                <%if category.productions %>
+                  <%category.productions.first(5).each do |prod| -%>
+                    <%if prod.brand_id.to_i == @brand.id.to_i %>
+                                                                                                <li>
+                                                                                                        <p><%= link_to truncate_u(prod.name,7,""), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => prod.id), :class => "sc_menu off", :target => "_blank" %></p>
+                                                                                                </li>
+                                                                                                    <ul id="tt1"  style="display:none;" class="list"></ul>
+                    <%end%>
+                  <%end%>
+                <%end%>
+                                                                     </ul> -->
+              </li>
+            <%end%>
+          <%end%>
+        <% else %>
+          <li class="item">
+            <%=link_to  truncate_u(@category.name,6,""), second_category_productions_path(:subdomain => false,:category_id =>@category.id, :permalink => @brand.permalink, :trailing_slash => true), :class => "title close", :onclick => "javascript:showsubmenu(2)", :name =>@category.id %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="b_width532 f_l">
+  <div class="list_right">
+    <div class="title_box">
+      <p><strong><%if @category %><% unless @p_category_id %><%= link_to "全部", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink, :trailing_slash => true) %><% else %><%= @tag.TAGNAME %><% end %>  >> <%=@category.name %><%else%>全部<%end%></strong></p>
+      <span><p>排序：</p>
+        <%
+        newest_opt, earlies_opt = {:id => 'is_new'}, {:id => 'is_old'}
+        (params[:order] == 'asc' ? earlies_opt : newest_opt).update :class => 'in'
+
+      %>
+
+        <% unless @p_category_id %>
+          <%=link_to "最新", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink, :category => params[:category], :trailing_slash => true),  newest_opt %>
+          <%=link_to "最早", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink, :category => params[:category], :order => "asc", :trailing_slash => true), earlies_opt %>
+        <% else %>
+          <%=link_to "最新", second_category_productions_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink, :trailing_slash => true),  newest_opt %>
+          <%=link_to "最早", second_category_productions_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink, :order => "asc", :trailing_slash => true), earlies_opt %>
+        <% end %>
+
+      </span>
+      <span><p>共有<strong><%=@productions.total_entries%></strong>张图片</p></span>
+    </div>
+    <div class="content_box">
+      <div class="inbox">
+        <%if @productions && @productions.size > 0%>
+          <ul class="clearfix">
+            <%@productions.each do |production|%>
+              <% unless @p_category_id %>
+                <li style="<% if @brand.name_zh == '林内' %>height: 165px;<% end %>">
+                  <%= link_to  show_production_master_picture(production), pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => production.id), :alt => production.name %>
+                  <p>
+                    <%= link_to_with_title production.name, pinpai_production_path(:subdomain => false, :permalink => @brand.permalink,:id => production.id), :truncate => 12 %>
+                  </p>
+                  <% if @brand.name_zh == "林内" %>
+                    <p>
+                      <%= production.model %>
+                    </p>
+                  <% end %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to  show_production_master_picture(production), second_category_production_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink,:id => production.id), :alt => production.name %>
+                  <p>
+                    <%= link_to_with_title production.name, second_category_production_path(:subdomain => false,:category_url=>params[:category_url], :permalink => @brand.permalink,:id => production.id), :truncate => 12 %>
+                  </p>
+                </li>
+              <% end %>
+            <%end%>
+          </ul>
+          <div class="pagination margin10">
+            <div class="pagination">
+              <%= paginate_content = will_paginate @productions, :previous_label => "上一页", :next_label => "下一页" %>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javscript">
+    	function searchsort(vl){
+    		alert(vl);
+    	}
+</script>

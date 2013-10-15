@@ -1,0 +1,3 @@
+module Dianping::ConstructionPhotosHelper
+
+end

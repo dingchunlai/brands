@@ -1,0 +1,60 @@
+<link type="text/css" rel="stylesheet" href="http://js.51hejia.com/css/2010/brandstyle.css"></link>
+<div class="b_width960 clearfix">
+  <h1 class="b_logo f_l">
+    <a href="http://b.51hejia.com/" target="_blank">
+      <img src="http://img2.51hejia.com/img/brandimg/brandimg_new201110_logo.jpg" alt="和家网品牌库" /></a>
+  </h1>
+  <div class="b_201110new_find f_r">
+    <ul>
+      <li>
+        <form action="http://p.51hejia.com/search" method="post" target="_blank">
+          <select name="search_type*">
+            <option value="1">搜索产品</option>
+            <option value="2">搜索品牌</option>
+          </select>
+          <input type="text"  title="请输入关键词" onfocus="if(this.value=='请输入关键词') this.value='';" onblur="if(this.value=='')this.value='请输入关键词';" value="请输入关键词" name="query" />
+          <input type="submit" name="commit" value="搜 索" class="b_search_btn" />
+        </form>
+      </li>
+      <li class="new_find_hot">
+        <font color="#ff0000">推荐：</font>
+        <% hejia_promotion_items(54893).first(5).each do |item| %>
+          <a href="<%= item['url'] %>" target="_blank"><%= item.title %></a>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="b_width960">
+  <div class="b_search">
+    <div id="header_menu" class="b_201110new_nav">
+      <a href="http://diban.51hejia.com/" target="_blank">地板</a><span>|</span>
+      <a href="http://weiyu.51hejia.com/" target="_blank">卫浴洁具</a><span>|</span>
+      <a href="http://www.51hejia.com/cizhuan/" target="_blank">瓷砖</a><span>|</span>
+      <a href="http://youqituliao.51hejia.com/" target="_blank">油漆涂料</a><span>|</span>
+      <a href="http://chugui.51hejia.com/" target="_blank">橱柜</a><span>|</span>
+      <a href="http://chufangdianqi.51hejia.com/" target="_blank">厨房电器</a><span>|</span>
+      <a href="http://www.51hejia.com/zhaomingpindao/" target="_blank">灯具</a><span>|</span>
+      <a href="http://www.51hejia.com/jiadian/" target="_blank">家电</a><span>|</span>
+      <a href="http://www.51hejia.com/jiajuchanpin/" target="_blank">家具</a><span>|</span>
+      <a href="http://www.51hejia.com/buyi/" target="_blank">布艺</a><span>|</span>
+      <a href="http://www.51hejia.com/kongtiao/" target="_blank">中央空调</a><span>|</span>
+      <a href="http://www.51hejia.com/cainuan/" target="_blank">采暖</a><span>|</span>
+      <a href="http://www.51hejia.com/shuichuli/" target="_blank">水处理</a>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  var channel = "<%= @channel %>"
+  var myNav = document.getElementById("header_menu").getElementsByTagName("a");
+  for(var i=0;i<myNav.length;i++){
+    var link = myNav[i].getAttribute("href");
+    if(link.indexOf(channel) != -1){
+      myNav[i].className="hover"
+    }
+  }
+
+
+</script>

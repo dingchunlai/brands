@@ -1,0 +1,58 @@
+<div class="toolbar">
+  <ul class="horizontal">
+    <li class="last"><%= link_to '添加品牌', new_admin_brand_path %></li>
+  </ul>
+  <div class="clear"></div>
+</div>
+<%= show_flash_message %>
+<div class="search">
+  <% form_tag admin_brands_path, :method => :get do %>
+    <div>
+      品牌名称：<%= text_field_tag :name_zh, params[:name_zh], :size => 10 %>　
+      所属品类：<%= select_tag :tagid, options_for_select([["全部",0]].concat(Tag.all_categories.map{|r| [r.TAGNAME, r.TAGID.to_i]}), params[:tagid].to_i) %>　
+      创建时间：<%= text_field_tag :created_start, @created_start, :size => 6 %> -
+<%= text_field_tag :created_end, @created_end, :size => 6 %>　
+      <%= submit_tag '搜索' %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate_content = will_paginate @brands %>
+
+<table width="780">
+  <caption>品牌列表　共搜索到 <b><%=@brands.total_entries%></b> 条品牌记录</caption>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>创建时间</th>
+      <th>最后更新</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @brands.each do |brand| %>
+      <tr>
+        <td><%= brand.name_zh %></td>
+        <td><%= brand.created_at.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+        <td><%= brand.updated_at.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+        <td>
+          <ul class="horizontal">
+            <li><%= link_to '编辑', edit_admin_brand_path(brand) %></li>
+            <li><%if brand.tagged_brands && brand.tagged_brands.size > 0 %><%= link_to '编辑详细信息', detail_admin_brand_path(brand) %><%else %><span style="color:red;">请选关联品类</span><%end%></li>
+            <li><%= link_to '资料管理', admin_brand_documents_path(brand) %></li>
+            <li><%if brand.tagged_brands && brand.tagged_brands.size > 0 %><%= link_to '参数数据设置', rating_admin_brand_path(brand) %><%else %><span style="color:red;">请选关联品类</span><%end%></li>
+            <li>
+            <% if brand.is_hidden %>
+              <%= link_to '上线', display_admin_brand_path(brand), :method => :post %>
+            <% else %>
+              <%= link_to '下线', hide_admin_brand_path(brand), :method => :post %>
+            <% end %>
+            </li>
+            <li class="last"><%= link_to '删除', admin_brand_path(brand), :confirm => "确定删除“#{brand.name_zh}”吗？", :method => :delete %></li>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate_content %>

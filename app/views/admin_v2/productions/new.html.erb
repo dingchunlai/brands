@@ -1,0 +1,132 @@
+<% is_new_record = @production.new_record? %>
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> 
+  <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %> <% end %> 
+    > <%= link_to "产品列表", admin_brand_productions_path(@brand, :tag_id => @tag.TAGID) %> > <%= is_new_record ? "新建产品页面" : "编辑产品页面" %>
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<%= show_flash_message %>
+<% form_for @production, :url => (is_new_record && admin_brand_productions_path || admin_brand_production_path(@brand, @production)), :html => {:method => (is_new_record && :post || :put)}  do |f| %>
+  <%= hidden_field_tag :brand_id, @brand.id %><%= hidden_field_tag :tag_id, @tag.TAGID %>
+  <fieldset>
+    <legend><%= is_new_record ? "新建产品" : "编辑产品" %></legend>
+    <table>
+     <tr>
+        <td>所属种类:</td>
+        <td><%= f.select :category_id, production_category_select_collection, {:include_blank => '-- 请选择 --' }, 'data-ajax-url' => attrs_category_path(':id:') %></td>
+      </tr>
+      <tr>
+        <td>所属系列:</td>
+        <% if @production.brand %>
+          <% if @production.brand.production_series.blank? %>
+            <td><%= f.select :series_id, [['-- 没有可选系列 --', '']] %></td>
+          <% else %>
+            <td><%= f.select(:series_id, @production.brand.production_series.map { |s| [s.name, s.id] }, :include_blank => '-- 请选择 --') %></td>
+          <% end %>
+        <% else %>
+          <td><%= f.select :series_id, [['-- 请先选择品牌 --', '']] %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>产品名称:</td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td>产品型号:</td>
+        <td><%= f.text_field :model %></td>
+      </tr>
+      <tr>
+        <td>产品描述:</td>
+        <td><%= f.text_area :description, :class => 'mceEditor' %></td>
+      </tr>
+      <tr>
+        <td>技术参数:</td>
+        <td>
+          <table id="property_area">
+            <tbody>
+              <tr>
+                <% if @production.category %>
+                  <% if @production.category.attrs.blank? %>
+                    <td colspan="2">-- 没有参数可用 --</td>
+                  <% else %>
+                    <% @production.category.attrs.each do |attribute| %>
+                      <tr>
+                        <th><%= attribute.name %></th>
+                        <%
+                          value =
+                            if property = @production.properties.detect { |p| p.attribute_id == attribute.id }
+                              property.value
+                            else
+                              ''
+                            end
+                        %>
+                        <td><%= text_field_tag("properties[#{attribute.id}]", value, :id => "properties_#{attribute.id}")%></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <td colspan="2">-- 请先选择产品种类 --</td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= submit_tag '保存' %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
+
+<%= render :partial => 'shared/enable_tinymce' %>
+
+<script type="text/javascript">
+  (function() {
+   // 处理产品种类发生变化之后的情况
+    function handleProductionCategoryChange() {
+      $('#production_category_id').change(function(event) {
+        event.preventDefault();
+        var id = $(this).val();
+        if(!id || id == '') {
+          updatePropertyEditArea([]);
+          return false;
+        }
+        var url = $(this).attr('data-ajax-url').replace(':id:', id);
+        $.getJSON(url, function(data, textStatus) {
+          if(textStatus == 'success') {
+            updatePropertyEditArea(data);
+          } else {
+            alert('读取技术参数出错！');
+          }
+        });
+        return false;
+      });
+    }
+
+    // 更新技术参数编辑区
+    function updatePropertyEditArea(attributes) {
+      var dom = $('#property_area tbody').empty();
+      $.each(attributes, function(_, attribute) {
+        var tr = $('<tr />');
+        $('<th />').text(attribute.name).appendTo(tr);
+        $('<input type="text" name="properties[' + attribute.id + ']" id="properties_' + attribute.id + '" />').appendTo(
+          $('<td />').appendTo(tr)
+        );
+        tr.appendTo(dom);
+      })
+      if(!attributes || attributes.length < 1) {
+        $('<td />').attr('colspan', '2').text('-- 没有参数可用 --').appendTo(
+          $('<tr />').appendTo(dom)
+        );
+      }
+    }
+
+    $(function() {
+      handleProductionCategoryChange();
+    });
+  })();
+</script>

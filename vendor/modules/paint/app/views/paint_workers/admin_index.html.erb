@@ -1,0 +1,84 @@
+<% title "【油漆工】个人主页——#{@paint_worker.USERBBSNAME}-和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_1 %>
+<% description PAINT_DESCRIPTION_1 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "#{@paint_worker.USERBBSNAME}的主页", :location_end => nil }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_web_l f_l">
+  	<%= render :partial => '/shared/front_admin_left'%>
+  </div>
+  <div class="yg_web_r f_r">
+    <div class="yg_web_rbox margin10">
+      <div><%=render :partial => '/shared/front_admin_top', :locals => { :top_name => "个人信息" }%></div>
+      <div class="yg_web_rtxt01">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="90"><span>姓名：</span></td>
+            <td><%= @paint_worker.USERBBSNAME %></td>
+            <td width="60"><span>性别：</span></td>
+            <td><%= Painter::GENDER.index(@paint_worker.painter.gender) %></td>
+            <td width="90">&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><span>身份证号码：</span></td>
+            <td><%= @paint_worker.painter.id_number %></td>
+            <td><span>手机：</span></td>
+            <td><%= @paint_worker.USERBBSMOBELTELEPHONE %></td>
+            <td><span>电子邮箱：</span></td>
+            <td><%= @paint_worker.USERBBSEMAIL %></td>
+          </tr>
+          <tr>
+            <td><span>礼品寄送地址：</span></td>
+            <td><%= @paint_worker.painter.address %></td>
+            <td><span>邮编：</span></td>
+            <td><%= @paint_worker.painter.zip_code %></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="yg_web_rbox yg_web_rboxhack margin10">
+      <script type="text/javascript">
+$(function(){
+	$(".yg_web_rtxt02box:gt(0)").hide();
+	$(".yg_web_rtab01 li:first").addClass("yg_web_rtab01cur");
+	$(".yg_web_rtab01 li").mouseover(
+		function(){
+			$(this).addClass("yg_web_rtab01cur")
+				.siblings().removeClass("yg_web_rtab01cur");
+			$(".yg_web_rtxt02box").eq($(this).index())
+				.siblings().hide().end().show();
+					}
+						)
+			}
+)
+</script>
+      <div class="yg_web_rtab01">
+        <ul class="clearfix">
+          <li class="yg_web_rtab01cur">会员信息</li>
+          <li>个人评分等级</li>
+          <li>培训证书</li>
+        </ul>
+      </div>
+      <div class="yg_web_rtxt02">
+        <div class="yg_web_rtxt02box"> <span><strong>会员用户名：</strong><%= @paint_worker.USERNAME %></span> <span><strong>入会省份：</strong><%= Province.name_for_code(@paint_worker.painter.province) %></span> </div>
+        <div class="yg_web_rtxt02box"> <span><strong>服务分：</strong><%= @paint_worker.painter.service_score %></span> <span><strong>技术分：</strong><%= @paint_worker.painter.skill_score %></span> <span><strong>已完成单数：</strong><%= @paint_worker.cases_amount %></span> </div>
+        <div class="yg_web_rtxt02box"> <span><strong>证书等级：</strong><%= Painter::GRADE.index(@paint_worker.painter.grade)%></span>
+          <table width="100%" border="1" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>职业道德：<%= @paint_worker.painter.moral_audit %></td>
+              <td>理论考核（70分及格）：<%= @paint_worker.painter.theory_audit %></td>
+              <td>实操考核：<%= @paint_worker.painter.operating_audit %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="yg_web_rbox yg_web_rboxhack02">
+		<%=render :partial => 'cases'%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

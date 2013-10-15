@@ -1,0 +1,121 @@
+<% title "【油漆工艺图片】_图片详情_和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_5 %>
+<% description PAINT_DESCRIPTION_5 %>
+<!--content_code-->
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='#{pictures_path}' target='_self' title='油漆工艺图片'>油漆工艺图片</a>", :location_end => "图片详情" }%>
+<!--content_code_end-->
+<!--content_code-->
+
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="gypic_tit">
+      <h2><%= hexie_dls(@picture.NAME) %></h2>
+      </div>
+    <script type="text/javascript">
+jQuery(function($){
+  $(document).ready(function(){
+		$("#slider li:not(:first)").hide();
+		$("#next").click(function(){
+			$("#slider li:visible").next().fadeIn("8000");
+			$("#slider li:visible").prev().hide();
+			button_show()
+			});
+		$("#prev").click(function(){
+			$("#slider li:visible").prev().fadeIn("8000");
+			$("#slider li:visible").next().hide();
+			button_show()
+			});
+			function button_show(){
+				if($("#slider li:first").css("display") == "list-item"){
+				$("#prev").hide();
+				}else{
+					$("#prev").show();
+				}
+				if($("#slider li:last").css("display") == "list-item"){
+					$("#next").hide();
+				}else{
+					$("#next").show();
+				}
+			};
+			button_show()
+	});
+	
+
+  $(function() {
+    $('.small_pic').click(function() {
+	  $(this).addClass("active")
+				.siblings().removeClass("active");
+	  $('#big_' + $(this).attr('id').split('_')[1]).fadeIn("8000")
+	  			.siblings().hide().end().show();
+	});
+  });
+  
+
+  $.fn.hFlick = function(options) {
+    $(this).each(function() {
+      var pageCount = Math.ceil($(this).find('li').size() / options.size);
+      var width = $(this).find('.v_content').width();
+
+      function flick() {
+        var goNext = $(this).hasClass('next');
+        var list = $(this).parent().next().find('.v_content_list');
+        if(!list.is(':animated')) {
+          var left;
+          if(goNext)
+            if(list.position().left <= -(width * (pageCount - 1))) left = 0; else left = '-=' + width;
+          else
+            if(list.position().left >= 0) left = -(width * (pageCount - 1)); else left = '+=' + width;
+          list.animate({'left': left}, 'slow');
+        }
+      }
+
+      $(this).find('.next,.prev').click(flick);
+    });
+  };
+
+  $('.v_show').hFlick({size: 5});
+});
+
+</script>
+    <div class="gypic_cont" style="cursor:default;">
+      <div class="gypic_contpic">
+        <div class="gypic_contimg">
+          <ul id="slider">
+          	<% @photos.each_with_index do |photo,index| %>
+            	<li id="big_<%= index + 1 %>"><img src="<%= photo.get_photo_url %>" /></li>
+			<% end %>
+          </ul>
+        </div>
+        <div class="gypic_conttxt"><p><%= @picture.INTRODUCE %></p></div>
+      </div>
+      <div id="prev" class="gypic_contbtn_l"></div>
+
+      <div id="next" class="gypic_contbtn_r"></div>
+    </div>
+    <div class="gypic_contlist v_show">
+      <div class="gypic_contlistbtn"><span class="prev"></span> <span class="next"></span></div>
+      <div class="gypic_contlistpic v_content">
+        <div class="gypic_contlistbox v_content_list">
+          <ul>
+          	<% @pictures.each do |picture|%>
+            	<li id="small_1" class="small_pic">
+            		<a href="<%= picture_path(picture.ID) %>" target="_self" title="<%= hexie_dls(picture.NAME) %>"><img src="<%=get_img_url picture.ID%>" alt="<%= hexie_dls(picture.NAME) %>" /></a>
+				</li>
+			<% end %>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+      	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+    	<%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

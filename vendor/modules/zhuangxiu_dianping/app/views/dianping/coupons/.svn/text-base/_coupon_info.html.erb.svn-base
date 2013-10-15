@@ -1,0 +1,74 @@
+      <% 
+        distributor, shop = @coupon.distributor, @coupon.distributor_shop
+        coupons = distributor.coupons.valid
+        coupon_ids = coupons.map &:id 
+        coupon_id_index = coupon_ids.index(@coupon.id)
+        coupons_size = coupon_ids.size 
+        last_coupon_id = coupon_ids.last
+        next_coupon_id = 
+          (coupons_size - 1) == coupon_id_index ? coupon_ids.first : coupon_ids[coupon_id_index.to_i]
+      %>
+      <div class="zxdp2011_diyq_contbox" style="display: <%= params[:action] == 'coupon' ? 'block' : 'none' %>;">
+        <div class="diyq_conttit clearfix">
+          <h2><%= @coupon.brand_industry_name %></h2>
+        </div>
+        <div class="diyq_contbox1">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <% 
+              coupons.each_with_index do |coupon, index| 
+            %>
+            <tr>
+              <td width="420"><span><%= index + 1 %>.<%= coupon.title %>，砍价后也能试用</span></td>
+              <td align="right">总发行<%= coupon.total_issue_number %>张 当前可用<%= coupon.virtual_existing_number %>张</td>
+              <td width="65" align="center" class="diyq_listbtn"><a href="javascript:void(0);" data-id="<%= coupon.id %>" data-title="<%= coupon.title %>">短信下载</a></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="diyq_contbox2">
+          <p><%= coupons.index(@coupon).to_i + 1 %>.<%= @coupon.title %></p>
+          <p>总发行<%= @coupon.total_issue_number %>张 当前可用<%= @coupon.virtual_existing_number %>张</p>
+          <p>有效期限：<%= @coupon.activity_began_at("%Y年%m月%d日") %>——<%= @coupon.activity_end_at("%Y年%m月%d日") %></p>
+          <% if coupons_size > 1 %>
+          <p class="next">
+            <% if last_coupon_id == @coupon.id %>
+              <input type="image" src="http://img3.51hejia.com/img/diyongquan/diyq_contlbtn2.gif" value="下一张" coupon-id="<%= next_coupon_id %>" />
+            <% else %>
+              <input type="image" src="http://img3.51hejia.com/img/diyongquan/diyq_contlbtn.gif" value="下一张" coupon-id="<%= next_coupon_id %>" />
+            <% end %>
+            共<strong><%= coupons_size %></strong>张</p>
+          <% end %>
+        </div>
+        <div class="diyq_contbox3"><img src="http://img3.51hejia.com/img/zxdpimg/diyq_phone2.gif" />
+          <div class="coupon"><img src="<%= "http://assets5.image.51hejia.com/#{@coupon.show_image_url}" %>" /></div>
+          <p>以下内容将通过手机短信的形式，发送到您指定的手机：</p>
+          <div class="sms"><%= @coupon.sms_msg %></div>
+          <div class="down diyq_listbtn"><a href="javascript:void(0);" data-id="<%= @coupon.id %>" data-title="<%= @coupon.title %>">短信下载</a></div>
+        </div>
+        <div class="diyq_contbox4"> <strong>使用说明</strong>
+          <%= @coupon.usage %>
+        </div>
+        <div class="diyq_contbox5 clearfix">
+          <div class="info f_l"> <strong>商家信息</strong>
+            <p>名称： <%= distributor.title %></p>
+            <p>地址：<%= shop.address %></p>
+            <p>联系方式：<%= shop.telphone %></p>
+            <p>经营范围：<%= @coupon.production_categories.first(2).collect{|p| p.short_name + " "} %></p>
+          </div>
+          <div class="map f_r">
+            <% 
+              if shop &&  shop.googlemap_image_url
+              image_domain = cloud_fs_domain('image')
+              image_url = image_domain.concat shop.googlemap_image_url
+            %>
+                <img src="<%= cloud_fs_domain("image") %><%= image_url %>" width="180" height="100"/>
+            <% end %>
+          </div>
+          <div class="djq_contblink f_l clearfix" style="width: 450px;">
+            <table width="450" border="0" cellspacing="0" cellpadding="0">
+              <%= render :partial => "shared/shared_connection" %>
+            </table>
+          </div>
+        </div>
+      </div>
+

@@ -1,0 +1,67 @@
+<%= include_jquery_easy_validator %>
+<%= top_bar :title => '设置行业信息',
+            :button => ['返回', admin_print_records_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['打印列表', admin_print_records_path],
+              ['行业设置页面']
+            ]
+%>
+
+<div class="select-bar" >
+  <span style="margin-left: 50px; center;font-size: 15px;color: #461B7E"> 印刷月份信息
+  <%= PrintRecord.human_attribute_name("month") %> : <%= @print_record.month.strftime('%Y年%m月') %> 
+  <%= PrintRecord.human_attribute_name("city") %> : <%= @print_record.city_obj && @print_record.city_obj.name || '请先关联城市' %> 
+  <%= PrintRecord.human_attribute_name("amount") %> : <%= @print_record.amount %></span> 
+</div>
+
+<% form_for :tag_amount, :url => tag_admin_print_record_path(@print_record) do |f| %>
+  <%= f.hidden_field :print_record_id, :value => @print_record.id  %>
+ <%= f.error_messages  %>
+ <div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">关联行业</th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= f.label :tag_id %></strong></td>
+      <td class="last"><%= f.select :tag_id, Industry.all_categories.map{ |t| [t.TAGNAME, t.TAGID] }.unshift(['请选择','']), {}, :reg => '^\w+$', :tip => "必须选择一个行业" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= f.label :amount %></strong></td>
+      <td class="last"><%= f.text_field :amount, :reg => '^[1-9]\d*$', :tip => '必填请输入一个数字' %></td>
+    </tr>
+    <tr>
+      <td class="first"></td>
+      <td class="last"><%= submit_tag '保存' %></td>
+    </tr>
+ </table>
+</div>   
+<% end %>
+<% unless @print_record.tag_amounts.blank? %>
+ <div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="3">已关联行业</th>
+    </tr>
+    <% @print_record.tag_amounts.each do |tag_amount| %>
+    <tr class="bg">
+      <td><%= Industry.find_by_TAGID(tag_amount.tag_id) && Industry.find_by_TAGID(tag_amount.tag_id).TAGNAME || '---' %></td>
+      <td><%= tag_amount.amount %></td>
+      <td><% if can? :destroy_tag, @print_record %><%= link_to "删除", destroy_tag_admin_print_record_path(@print_record, :tag_amount_id => tag_amount.id), :confirm => 'Are you sure! ' %><% end %></td>
+    </tr>
+  <% end %>
+    <tr>
+      <td>&nbsp;</td><td>&nbsp;</td>
+      <td style="width: 50px;"><% if can? :print, @print_record %><%= button_to "打印", preview_admin_print_record_path(@print_record) %><% end %></td>
+    </tr>
+ 
+  </table>
+ </div>   
+<% end %>
+
+

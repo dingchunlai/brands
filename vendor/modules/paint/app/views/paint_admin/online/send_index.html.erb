@@ -1,0 +1,93 @@
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function(){
+  	$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+	$(".worker_table tr:odd").addClass("odd");
+	$(".worker_table tr:even").addClass("even");
+	$("#select_status").change(function(){
+		$("#send_form").submit();
+	});
+	$(".update_remark").click(function(){
+		var this_button = $(this)
+		var this_remark = $(this).parent().siblings(".td_remark").children(".remark");
+		$(this).attr("disabled", "disabled");
+		$(this).val("修改中...");
+		$.post("/paint_admin/online/update_send_remark",
+			{id : this_remark.attr("this_id"), remark : this_remark.val()},
+			function(data){
+				this_button.removeAttr("disabled");
+				this_button.val("修改");
+			},'json');
+	});
+	$('#select_all').click(function() {
+	   $('.check_box').attr("checked",$(this).attr("checked")); 
+	 });
+  });
+</script>
+<style type="text/css">
+	.worker_table td{height:30px;line-height:30px;padding:0 4px;}
+	.worker_table .odd{background:#fff;}
+	.worker_table .even{background:#dedede;}
+</style>
+<%= render :partial => "sub_menu"%>
+<div class="top-bar">
+    <h1>在线派遣</h1>
+	<div class="breadcrumbs">在线申请/ 在线派遣</div>
+</div>
+<%= show_flash_message%>
+<div>
+	<div class="select-bar">
+	<form id="send_form" method="get" action="/paint_admin/online/send_index">
+	状态：<select id="select_status" name="status">
+			<option value="" <%= "selected='selected'" if @status.blank? %> >全部</option>
+			<option value="0" <%= "selected='selected'" if !@status.blank? && @status.to_i == 0 %> >未备注</option>
+			<option value="1" <%= "selected='selected'" if @status.to_i == 1 %> >已备注</option>
+		</select>
+		申请时间：<input type="text" class="datepicker" size="10"  name="start_date" value="<%=@start_date%>">
+		到：<input type="text" class="datepicker" size="10"  name="end_date" value="<%=@end_date%>">
+		期望时间：<input type="text" class="datepicker" size="10"  name="hope_start_date" value="<%=@hope_start_date%>">
+		到：<input type="text" class="datepicker" size="10"  name="hope_end_date" value="<%=@hope_end_date%>">
+		<input type="submit" value="检索">
+	</form>
+	</div>
+	<div class="clearfix">
+		<% form_tag "/paint_admin/online/send_destroy",:method => "post" do%>
+		<table width="850" class="worker_table" align="center">
+			<tr>
+				<td><input type="checkbox" id="select_all"></td>
+				<td>省份</td>
+				<td>城市</td>
+				<td>姓名</td>
+				<td>电话</td>
+				<td>房型</td>
+				<td>类型</td>
+				<td>面积</td>
+				<td>电子邮件</td>
+				<td>期望油工</td>
+				<td>期望时间</td>
+				<td>备注</td>
+				<td>修改</td>
+			</tr>
+			<% @sends.each do |s| %> 
+			<tr>
+				<td><input type="checkbox" name="send_ids[]" class="check_box" value="<%= s.id %>"></td>
+				<td><%= Province.name_for_code(s.province) %></td>
+				<td><%= City.name_for_code(s.city) %></td>
+				<td><%= s.people %></td>
+				<td><%= s.phone %></td>
+				<td><%= PaintSend::ROOM.index(s.room.to_i) %></td>
+				<td><%= s.send_type %></td>
+				<td><%= s.area %></td>
+				<td><%= truncate(s.email, :length => 25, :omission => '') %></td>
+				<td><%= s.paint_worker_name %></td>
+				<td><%= s.hope_date.strftime("%Y年%m月") unless s.hope_date.nil? %></td>
+				<td class="td_remark"><input type="text" value="<%= s.remark %>" this_id="<%= s.id %>" class="remark" size="10"></td>
+				<td><input type="button" class="update_remark" value="修改"></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= submit_tag "删除" , :confirm => '确定删除'%>
+		<% end %>
+		<%= will_paginate @sends , :class => 'digg_pagination'%>
+	</div>
+</div>

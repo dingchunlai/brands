@@ -1,0 +1,49 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release/vendor/gems
+http://svn.51hejia.com:8081
+
+
+
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+fastercsv-1.5.3
+dir
+
+redis-namespace-0.10.0
+dir
+
+rack-rewrite-1.0.2
+dir
+
+subdomain-fu-0.5.4
+dir
+
+rack-cache-1.0
+dir
+
+hoptoad_notifier-2.4.2
+dir
+
+dalli-1.0.0
+dir
+

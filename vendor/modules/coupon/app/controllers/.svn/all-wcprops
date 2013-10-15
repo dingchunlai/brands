@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers
+END
+coupon_downloads_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/coupon_downloads_controller.rb
+END
+distributors_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/distributors_controller.rb
+END
+coupons_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/coupons_controller.rb
+END
+sessions_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/sessions_controller.rb
+END
+coupon_remarks_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/coupon_remarks_controller.rb
+END
+offer_coupons_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/offer_coupons_controller.rb
+END
+complaints_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/complaints_controller.rb
+END
+coupon_application_controller_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/coupon_application_controller_controller.rb
+END
+coupon_thematices_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/coupon/app/controllers/coupon_thematices_controller.rb
+END

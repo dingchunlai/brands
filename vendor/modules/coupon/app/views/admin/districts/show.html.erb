@@ -1,0 +1,37 @@
+<%= top_bar :title => '地区管理页',
+            :button => ['编辑该地区', edit_admin_district_path(@district)],
+            :breadcrumbs => [
+              ['Homepage', coupon_admin_index_path],
+              ['Districts', admin_districts_path(:city_id => @district.city_id)]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">地区信息</th>
+    </tr>
+    <tr class="bg">
+	<td class="first"><strong><%= District.human_attribute_name("name") %></strong></td>
+<td class="last"><%= @district.name %></td>
+</tr>
+<tr>
+	<td class="first"><strong><%= District.human_attribute_name("pinyin") %></strong></td>
+<td class="last"><%= @district.pinyin %></td>
+</tr>
+<tr class="bg">
+	<td class="first"><strong><%= District.human_attribute_name("code_name") %></strong></td>
+<td class="last"><%= @district.code_name %></td>
+</tr>
+<tr>
+	<td class="first"><strong><%= District.human_attribute_name("city_id") %></strong></td>
+<td class="last"><%= link_to @district.city.name, admin_city_path(@district.city_id) %></td>
+</tr>
+<tr class="bg">
+	<td class="first"><strong><%= District.human_attribute_name("business_zones_count") %></strong></td>
+<td class="last"><%= @district.business_zones_count %></td>
+</tr>
+
+  </table>
+</div>

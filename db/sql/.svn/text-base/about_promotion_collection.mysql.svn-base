@@ -1,0 +1,73 @@
+CREATE TABLE `sales_promotion_events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL COMMENT '活动地点',
+  `location_latlng` char(35) DEFAULT NULL,
+  `organizer` varchar(255) DEFAULT NULL COMMENT '组织者',
+  `subject` varchar(255) DEFAULT NULL COMMENT '主题',
+  `short_subject` varchar(50) DEFAULT NULL COMMENT '短标题',
+  `city` varchar(50) DEFAULT NULL,
+  `html_keywords` varchar(255) DEFAULT NULL,
+  `html_description` varchar(512) DEFAULT NULL,
+  `content` text COMMENT '内容',
+  `image_url` varchar(255) DEFAULT NULL,
+  `contacts` varchar(255) DEFAULT NULL COMMENT '系人联',
+  `address` varchar(255) DEFAULT NULL COMMENT '联系地址',
+  `phone_numbers` varchar(255) DEFAULT NULL COMMENT '联系电话',
+  `begins_at` datetime DEFAULT NULL COMMENT '开始时间',
+  `ends_at` datetime DEFAULT NULL COMMENT '结束时间',
+  `published_at` datetime DEFAULT NULL COMMENT '发布时间',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `brands_sales_promotion_events` (
+  `brand_id` int(11) NOT NULL,
+  `sales_promotion_event_id` int(11) NOT NULL,
+  KEY `sales_promotion_event_id` (`sales_promotion_event_id`),
+  KEY `brand_id` (`brand_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `sales_promotion_events_tags` (
+  `tag_id` int(11) NOT NULL,
+  `sales_promotion_event_id` int(11) NOT NULL,
+  KEY `sales_promotion_event_id` (`sales_promotion_event_id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `promotion_collections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `code` varchar(255) DEFAULT NULL COMMENT '代号',
+  `item_type` varchar(255) DEFAULT NULL COMMENT '推广条目类别',
+  `size` int(11) DEFAULT NULL COMMENT '显示多少条记录',
+  `remark` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `promotion_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `promotion_collection_id` int(11) DEFAULT NULL,
+  `resource_id` int(11) DEFAULT NULL COMMENT '条目所对应的资源对象的id',
+  `priority` int(11) DEFAULT NULL COMMENT '优先级，越小越优先',
+  `published_at` datetime DEFAULT NULL COMMENT '布发时间',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `general_resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

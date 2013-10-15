@@ -1,0 +1,21 @@
+<% 
+  glory_size = @glory_certificates.size
+  if glory_size > 0 
+%>
+  <div class="zxdp2010_cur margin10">
+    <h3>荣誉证书</h3>
+    <% if glory_size > 9 %>
+    <div class="zxdp2010_more rongyzs_btn"><a href="javascript:void(0);" target="_self">[查看更多证书]</a></div>
+    <% end -%>
+    <div class="zxdp2010_txt zxdp2010_rongyzs">
+      <ul class="clearfix light_box_pictures">
+      <% @glory_certificates.each do |glory_certificate|%>
+        <li style="padding:0 3px">
+        <%= link_to image_tag(glory_certificate.picture.url("90x70"),:size => "90x70"),glory_certificate.picture.url, :title => truncate_u(glory_certificate.description,16)%>
+        <%=  truncate_u(glory_certificate.description, 16) %>
+        </li>
+      <% end -%>
+      </ul>
+    </div>
+  </div>
+<% end -%>

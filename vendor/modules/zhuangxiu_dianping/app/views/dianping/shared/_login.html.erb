@@ -1,0 +1,18 @@
+<% this_width = div_width.nil? ? 670 : div_width %>
+<form action="" id="login_form" name="login_form" >
+  <table width="<%=this_width%>" border="0" cellspacing="0" cellpadding="0">
+  	<tr><td colspan="5"></td></tr>
+    <tr>
+      <td width="25%">用户名：
+        <input type="text" id="user_name" name="user_name" size="8"  /></td>
+      <td width="25%">密码：
+        <input name="password" id="password" type="password" size="8" /></td>
+      <td width="14%"><input name="self_login" id="self_login" type="checkbox" value="0" />
+        自动登录</td>
+      <td width="14%"><input name="login_submit" id="login_submit" type="submit" value="登录" class="gsl_wyly_btn" /></td>
+      <td width="22%" align="right"><a href="http://member.51hejia.com/member/reg?forward=<%= request.request_uri %>" target="_blank">我要注册</a><a href="http://member.51hejia.com/member/get_password" target="_blank">忘记密码</a></td>
+    </tr>
+  </table>
+</form>
+
+

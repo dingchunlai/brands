@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Untitled Document</title>
+	</head>
+	<body>
+		<table border="1">
+			<tr style="background:#666">
+				<td>案例标题</td>
+				<td>油漆工</td>
+				<td>被装修者姓名</td>
+				<td>被装修者电话</td>
+				<td>被装修者地址</td>
+				<td>省份</td>
+				<td>城市</td>
+				<td>房型</td>
+				<td>装修类型</td>
+				<td>装修面积</td>
+				<td>墙面工艺</td>
+				<td>木漆工艺</td>
+				<td>木器漆</td>
+				<td>乳胶漆</td>
+				<td>技术分</td>
+				<td>服务分</td>
+				<td>精华案例</td>
+				<td>创建时间</td>
+				<td>最后修改时间</td>
+			</tr>
+			<% @cases.each do |c| %>
+			<tr>	
+				<td><%= c.title %></td>
+				<td><%= c.paint_worker.USERBBSNAME unless c.paint_worker.nil? %></td>
+				<td><%= c.customer_name %></td>
+				<td><%= c.customer_tel %></td>
+				<td><%= c.customer_address %></td>
+				<td><%= Province.name_for_code(c.province) %></td>
+				<td><%= City.name_for_code(c.city) %></td>
+				<td><%= PaintCase::ROOM.index(c.room) %></td>
+				<td><%= c.renovation ? "重涂" : "新装修" %></td>
+				<td><%= c.area %></td>
+				<td><%= PaintCase::WALL_TECHNOLOGY.index(c.wall_technology) %></td>
+				<td><%= PaintCase::WOOD_PAINT_TECHNOLOGY.index(c.wood_paint_technology) %></td>
+				<td><%= PaintCase::WOOD_PAINT.index(c.wood_paint) %></td>
+				<td><%= c.emulsion_paint  %></td>
+				<td><%= c.skill_score %></td>
+				<td><%= c.service_score %></td>
+				<td><%= c.essence ? "是" : "否" %></td>
+				<td><%= c.created_at.strftime("%Y-%m-%d") %></td>
+				<td><%= c.updated_at.strftime("%Y-%m-%d") %></td>
+			</tr>
+			<% end %>
+		</table>	
+	</body>
+</html>

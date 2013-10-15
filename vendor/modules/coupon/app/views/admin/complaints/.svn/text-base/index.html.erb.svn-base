@@ -1,0 +1,186 @@
+<%= top_bar :title => '抵用券投诉管理',
+            :button => ['新增投诉', new_admin_complaint_path],
+            :breadcrumbs => [
+                    ['Homepage', coupon_admin_index_path],
+                    ['Complaints', admin_complaints_path]
+            ]
+%>
+<div class="select-bar">
+  <% form_for "", :url => admin_complaints_path, :html => {:method => :get} do |f| %>
+      显示
+      <%# no hidden_filed_tag to prevent coupon_id[]  %>
+      <input type="hidden" name="coupon_id" value="<%= params[:coupon_id] %>"/>
+      <%= select_tag "cnt", options_for_select((1..30).to_a.collect { |i| [i, i] }, params[:cnt].to_i) %>
+      <%= select_tag "unit", options_for_select(%w( 天:1 星期:7 月:30 年:365 ).collect { |u| [u.split(":")[0], u.split(":")[1]] }, params[:unit]) %>
+      之内的投诉
+      <input type="submit" value="查找"/>
+  <% end %>
+</div>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first">编号</th>
+      <th>内容</th>
+      <th>被投诉抵用券</th>
+      <th>投诉是否成立</th>
+      <th class="last" colspan="3">操作</th>
+    </tr>
+    <% @complaints.each_with_index do |complaint, index| %>
+        <tr<%= (index % 2 == 0) ? '' : ' class="bg"' -%>>
+          <td height="25"><%= complaint.id %></td>
+          <td width="80"><div style="text-align:center; width:75px;white-space:nowrap;word-break:keep-all;overflow:hidden;text-overflow:ellipsis;"><%= h complaint.body %></div></td>
+          <td>
+            <% unless complaint.coupon.nil? %>
+                <%
+                   coupon_name = ""
+                   if (complaint.coupon.deleted == true)
+                %>
+                    <%= "<strike>相关抵用券不存在</strike>" %>
+                <%
+                   else
+                       coupon_name = complaint.coupon.title
+                %>
+                    <%= link_to(complaint.coupon.title, edit_admin_coupon_path(complaint.coupon_id)) %>
+                <% end %>
+            <% end %></td>
+          <td><span id="confirm_status<%= complaint.id %>"><%= if complaint.is_valid.nil?;
+              "<font color=red>未处理</font>";
+          elsif complaint.is_valid?;
+              "<font color=blue>是</font>";
+          else
+              ; "<font color=gray>否</font>";
+          end %></span></td>
+          <td>
+            <% if can? :udpate, complaint %>
+                <%= link_to "编辑", edit_admin_complaint_path(complaint) %>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+          <!--<td><%#= link_to "删除", admin_complaint_path(complaint), :confirm => '确认删除?', :method => :delete %></td>-->
+          <td>
+            <% if can? :confirm, complaint %>
+                <span id="confirm_link<%= complaint.id %>"><%= (complaint.is_valid == false) ? "--" : link_to("#{complaint.is_valid.nil? ? '确认投诉' : '撤消投诉'}", '#', :id => complaint.id, :data => coupon_name.to_s) %></span>
+            <% else %>
+                &nbsp;
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+  <div style="display:none">
+    <div id="colorbox_item">
+      确认投诉：
+      <hr/>
+      <br/>
+      对[ <strong><span id="c_coupon_name"></span></strong> ]抵用券的投诉：<br/>
+      投诉人姓名：<span id="c_name"></span><br/>
+      投诉人电话：<span id="c_telhpone"></span><br/>
+      <hr style='width:80%'/>
+      <br/>
+      投诉人邮件：<span id="c_email"></span><br/>
+      <hr style='width:80%'/>
+      <br/>
+      投诉人地址：<span id="c_address"></span><br/>
+      <hr style='width:80%'/>
+      <br/>
+      投诉内容：<br/><span id="c_body"></span><br/>
+      <br/>备注：<br/><span id="c_description"></span>
+      <hr style='width:80%'/>
+      <br/>
+      <div style='align:center'>
+        <input type="hidden" id="c_id" value="0"/>
+        <input type='button' value='成立!' id="c_establish" data="true"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='驳回!' id="c_establish" data="false"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='取消' onclick='$.fn.colorbox.close();return;'/>
+      </div>
+    </div>
+  </div>
+  <% unless @complaints.empty? -%>
+      <%= will_paginate @complaints, :class => "digg_pagination" -%>
+  <% end -%>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("a[href='#']").click(function() {
+            $.ajax({
+                url: "/admin/complaints/" + $(this).attr("id") + "?rand=" + Math.random(),
+                type: "GET",
+                dataType: 'json',
+                beforeSend: function(){
+                  $("#c_coupon_name").text('');
+                  $("#c_name").text('');
+                  $("#c_telhpone").text('');
+                  $("#c_email").text('');
+                  $("#c_address").text('');
+                  $("#c_body").text('');
+                  $("#c_description").text('');
+                  $("#c_id").attr("value",'');
+                  $("#colorbox_item input[type=button]").attr("disabled", true);
+                },
+                error: function(request) {
+                    alert('获取数据失败');
+                },
+                success: function(info) {
+                    if (info == null)
+                    {
+                        alert('信息无效');
+                     }
+                    else
+                    {
+                        var link = $("#" + info.id);
+                        $("#c_coupon_name").text(link.attr("data"));
+                        $("#c_name").text(info.name);
+                        $("#c_telhpone").text(info.telphone);
+                        $("#c_email").text(info.email);
+                        $("#c_address").text(info.address);
+                        $("#c_body").text(info.body);
+                        $("#c_description").text(info.description);
+                        $("#c_id").attr("value", info.id);
+                        $("#colorbox_item input[type=button]").attr("disabled", false);
+                    }
+                }
+            });
+        });
+
+        $("a[href='#']").colorbox({transition:"none", opacity: 0, width:"50%", height: "80%", inline:true, href:"#colorbox_item"});
+
+        $("input[type='button'][id='c_establish']").click(function() {
+           var status = $(this).attr("data");
+           var id = $("#c_id").attr("value");
+           if (id != "0"){
+            $.ajax({
+                url: "<%=admin_complaints_path%>/" + id + "/confirm?status=" + status + "&rand=" + Math.random(),
+                type: "GET",
+                dataType: 'html',
+                error: function(request) {
+                    alert('更新失败!');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        if (status=="true")
+                        {
+                            $("#confirm_status" + id).html("<strong><font color=blue>是</font></strong>");
+                            $("#" + id).text("撤消投诉");
+                        }
+                        else
+                        {
+                            $("#confirm_status" + id).html("<strike><font color=gray>否</font></strike>");
+                            $("#confirm_link" + id).html("--");
+                        }
+                        $.fn.colorbox.close();
+                    }
+                    else
+                    {
+                        alert(data);
+                    }
+                }
+            });
+           }
+         });
+    });
+</script>

@@ -1,0 +1,229 @@
+<style type="text/css">
+    .yqg_add {
+        padding: 10px;
+    }
+
+    .yqg_add td {
+        padding: 5px;
+    }
+
+    .yqg_add em {
+        font-style: normal;
+        display: block;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .yqg_add ul {
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #f60;
+    }
+
+    .yqg_add li {
+        list-style: none;
+        padding: 4px 0;
+    }
+</style>
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/jquery/plugins/validate/1.5.5/messages_cn.js" type="text/javascript"></script>
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<% javascript 'paint/avatar.js' %>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            onkeyup:false
+        });
+        jQuery.validator.addMethod("id_number", function (value, element) {
+            return this.optional(element) || value.length <= 18 && (/^\d{15}$|(\d{17}(?:\d|x|X)$)/.test(value));
+        }, "请输入正确的身份证号码");
+        jQuery.validator.addMethod("phone_size", function (value, element) {
+            return this.optional(element) || value.length == 11;
+        }, "请输入11位的手机号码");
+/*
+        $("#paint_form").validate({
+            rules:{
+                user_phone:{
+                    required:true,
+                    remote:{
+                        url:"/sessions/validate_phone"
+                    }
+                }
+            },
+            messages:{
+                user_phone:{remote:"手机号码已存在"}
+            }
+        });
+ */
+        $("#datepicker").datepicker({ dateFormat:'yy-mm-dd' });
+        $("#t_province").change(function () {
+            if ($("#t_province").val().length == 0) {
+                $("#t_city").empty();
+                $("<option value=''>请选择</option>").appendTo("#t_city");
+            } else {
+                $.getJSON("/public/get_city_json", {province:$("#t_province").val()}, function (data) {
+                    $("#t_city").empty();
+                    $("<option value=''>请选择</option>").appendTo("#t_city");
+                    $.each(data, function (i) {
+                        $("<option value='" + data[i][0] + "'>" + data[i][1] + "</option>").appendTo("#t_city");
+                    });
+                });
+            }
+        });
+    });
+</script>
+<style type="text/css">
+    label.error {
+        background: url("http://js.51hejia.com/img/icons/alert.gif") no-repeat scroll left 4px transparent;
+        color: red;
+        float: none;
+        padding-left: 1.5em;
+        vertical-align: middle;
+        padding-top: 5px;
+    }
+</style>
+<div class="yqg_add">
+  <% form_for @paint_worker, :url => (@paint_worker.id.nil? ? paint_admin_paint_workers_path : paint_admin_paint_worker_path),
+              :html => {:id => 'paint_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'), :multipart => true} do |f| %>
+      <%= f.error_messages %>
+      <% is_other = info_is_other(@paint_worker) %>
+      <% city_value= @paint_worker.id.nil? ? '' : @paint_worker.painter.city %>
+      <% province_value = @paint_worker.id.nil? ? '' : @paint_worker.painter.province %>
+      <em>以下信息为必填项</em>
+      <table>
+      	<tr>
+  			<td>
+  				用户名
+  			</td>
+  			<td><%= f.text_field :USERNAME, :size => 20, :class => "required" %></td>
+  			<td></td>
+  			<td></td>
+  		</tr>
+        <tr>
+          <td>姓名</td>
+          <td><%= f.text_field :USERBBSNAME, :size => 20, :class => "required" %></td>
+          <td>性别</td>
+          <td>
+            <% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+                <%= painter_fields.select :gender, Painter::GENDER.sort { |x, y| x[1] <=> y[1] } %>
+            <% end %></td>
+        </tr>
+        <tr>
+          <% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+              <td>身份证号码</td>
+              <td><%= painter_fields.text_field :id_number, :class => "required id_number" %></td>
+              <td>籍贯</td>
+              <td><%= painter_fields.text_field :birthplace, :size => 10, :class => "required" %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td>入会地区</td>
+          <td>
+            省份<select name="paint_worker[painter_attributes][province]" id="t_province" class='required'>
+            <option value="">请选择</option>
+            <% Province.get_province_jinshuazi.each do |k, v| %>
+                <option value="<%= v %>" <%= 'selected' if province_value == v %> ><%= k %></option>
+            <% end %>
+          </select>
+            城市<select name="paint_worker[painter_attributes][city]" id="t_city" class='required'>
+            <option value="">请选择</option>
+            <% unless province_value.blank? %>
+                <% City.get_cities_for_province_jinshuazi(province_value).each do |k, v| %>
+                    <option value="<%= k %>" <%= 'selected' if city_value == k %> ><%= v %></option>
+                <% end %>
+            <% end %>
+          </select>
+          </td>
+          <td>手机</td>
+          <td>
+            <%= f.text_field :USERBBSMOBELTELEPHONE, :size => 20, :class => "required number phone_size" %>
+          </td>
+        </tr>
+        <tr>
+          <td>电子邮箱</td>
+          <td><%= f.text_field :USERBBSEMAIL, :size => 20, :class => "email" %></td>
+          <td>等级</td>
+          <% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+              <td><%= painter_fields.select :grade, Painter::GRADE.sort { |x, y| x[1] <=> y[1] } %></td>
+              </tr>
+
+              <tr>
+                <td>礼品寄送地址</td>
+                <td><%= painter_fields.text_field :address, :class => "required" %></td>
+                <td>邮编</td>
+                <td><%= painter_fields.text_field :zip_code, :size => 10, :class => "required number" %></td>
+              </tr>
+              <tr>
+                <td>会员卡号</td>
+                <td><%= painter_fields.text_field :member_code, :size => 20, :class => "required" %></td>
+                <td>适合品牌</td>
+                <td>
+                  <%= painter_fields.select :brand, Painter::BRAND.sort %>
+                </td>
+              </tr>
+          <% end %>
+          </table>
+      <em>以下信息为选填项</em>
+      <ul>
+        <li>上传头像</li>
+        <% f.fields_for :painter, f.object.painter || Painter.new do |painter_fields| %>
+            <li>
+              <img id="image_thumb" width="110" height="110" alt="头像预览"/>
+              <span id="main_image_upload_button"></span>
+              <%= painter_fields.text_field :avatar_file_name, :style => "display:none;" %>
+            </li>
+            <li>从事油漆工年限：<%= painter_fields.text_field :job_year, :size => 5, :class => "number" %>年</li>
+            <li>隶属经销商：<%= painter_fields.text_field :dealers %></li>
+            <li>经销商电话：<%= painter_fields.text_field :dealers_phone %></li>
+            <li>经销商邮箱：<%= painter_fields.text_field :dealers_email %></li>
+            <li>培训日期：<%= painter_fields.text_field :train_date, :id => "datepicker", :size => "10" %></li>
+            <li>文化成度：
+              <% Painter::EDUCATION.each do |e| %>
+                  <%= painter_fields.radio_button(:education, e) %><%= e %>
+              <% end %>
+              <%= painter_fields.radio_button(:education, "其它", :checked => is_other[:education][:result]) %>
+              其它<input type="text" name="education_other" value="<%= is_other[:education][:this_value] %>">
+            </li>
+            <li>已获得阿克苏证书：<%= painter_fields.select :certificate, Painter::CERTIFICATES.sort { |x, y| x[1] <=> y[1] } %>
+              证书编号：<%= painter_fields.text_field :certificate_number %>
+            </li>
+            <li>职业道德：<%= painter_fields.text_field :moral_audit, :size => 5 %>
+              理论考核：<%= painter_fields.text_field :theory_audit, :size => 5, :class => "number" %>
+              实操考核：<%= painter_fields.text_field :operating_audit, :size => 5, :class => "number" %></li>
+            <li>您是否做墙面特殊效果：<%= painter_fields.radio_button(:effect, 1) %>是<%= painter_fields.radio_button(:effect, 0) %>
+              否
+            </li>
+            <li>您是否试用过喷枪：<%= painter_fields.radio_button(:spray_gun, 1) %>
+              是<%= painter_fields.radio_button(:spray_gun, 0) %>否
+            </li>
+            <li>您好否做过点睛/底擦色<%= painter_fields.radio_button(:brush, 1) %>是<%= painter_fields.radio_button(:brush, 0) %>
+              否
+            </li>
+            <li>您目前的职业：
+              <% Painter::JOBS.each do |j| %>
+                  <%= painter_fields.radio_button(:job, j) %><%= j %>
+                  <% end %><%= painter_fields.radio_button(:job, "其它", :checked => is_other[:job][:result]) %>
+              其它(请注明<input type="text" name="job_other" value="<%= is_other[:job][:this_value] %>">)
+            </li>
+            <li>您好是如何知道俱乐部信息的：</li>
+            <li>
+              <% Painter::KNOW_HERE.each do |k| %>
+                  <%= painter_fields.radio_button(:know_here, k) %><%= k %>
+              <% end %>
+              <%= painter_fields.radio_button(:know_here, "其它", :checked => is_other[:know_here][:result]) %>
+              其它(请注明<input type="text" name="know_here_other" value="<%= is_other[:know_here][:this_value] %>">)
+            </li>
+        <% end %>
+        <li>您目前经常试用的木器漆产品是(可多选)</li>
+        <li>
+          <% Painter::TRIAL_PRODUCTS.each do |v| %>
+              <%= check_box_tag "paint_worker[painter_attributes][trial_products][]", v, (@paint_worker.id.nil? ? false : is_trial(v, @paint_worker.painter.trial_products)) %><%= v %>
+          <% end %>
+          其它(请注明<input type="text" name="trial_products_other" value="<%= is_trial_other(@paint_worker) %>">)
+        </li>
+      </ul>
+      <input type="reset" value="重置"><%= f.submit "确认提交" %>
+  <% end %>
+</div>

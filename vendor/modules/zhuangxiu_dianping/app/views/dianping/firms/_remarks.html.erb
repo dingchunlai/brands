@@ -1,0 +1,6 @@
+<div id="remarks" class="zxdp2010_dianp clear">
+  <h3><%= @firm.name_zh%>点评<span>（共 <label><%= @remarks_user_count%></label> 人  <label><%= @firm.remark_only_count%></label> 条）</span> <a href="#st" name ="st"></a></h3>
+  <div class="zxdp2010_dianpcont clearfix" id="remarks">
+    <%= render :partial => 'remarks_list' %>
+  </div>
+</div>

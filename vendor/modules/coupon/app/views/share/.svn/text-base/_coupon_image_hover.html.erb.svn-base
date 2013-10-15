@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    $(function() {
+
+        $(".diyq_listimg").live("mouseover", function() {
+            if (!$(".diyq_coupon").is(":animated")) {
+                $("#pop_img").attr("src", "<%= cloud_fs_domain('image')%>" + $(this).attr("data-img"));
+                $(".diyq_coupon").show();
+            }
+        });
+        
+        $(".diyq_listimg").live("mouseout", function() {
+            $(".diyq_coupon").hide();
+        });
+
+        $(".diyq_coupon").mouseover(function() {
+            if (!$(".diyq_coupon").is(":animated")) {
+                $(".diyq_coupon").show();
+            }
+        });
+        $(".diyq_coupon").mouseout(function() {
+            $(".diyq_coupon").hide();
+        });
+    });
+</script>
+<div class="diyq_coupon"><img src="javascript:void();" id="pop_img"/></div>

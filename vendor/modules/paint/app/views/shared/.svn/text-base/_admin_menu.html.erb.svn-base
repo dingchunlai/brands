@@ -1,0 +1,14 @@
+<ul id="top-navigation" >
+	<li><a href="#" <%= active_top_menu "home"%>>管理首页</a></li>
+	<% if can? :manage, :paint_admins %><li><a href="/paint_admin/paint_admins" <%= active_top_menu "paint_admins"%>>帐户管理</a></li><% end %>
+	<% if can? :read, :paint_workers %><li><a href="/paint_admin/paint_workers" <%= active_top_menu "paint_workers"%>>油漆工管理</a></li><% end %>
+	<% if can? :read, :paint_cases %><li><a href="/paint_admin/paint_cases" <%= active_top_menu "paint_cases"%>>案例管理</a></li><% end %>
+	<li><a href="#">在线申请</a></li>
+	<% if can? :read, :contacts %><li><a href="/paint_admin/contacts" <%= active_top_menu "contacts"%>>联络列表</a></li><% end %>
+	<% if can? :manage, :mail %><li><a href="/paint_admin/mail" <%= active_top_menu "mail"%>>基本设置</a></li><% end %>
+	<% if can? :read, :paint_log %><li><a href="/paint_admin/log" <%= active_top_menu "paint_log"%>>系统日志</a></li><% end %>
+	<div id="logout" style="float:right">
+		<a href="/paint_admin/logout">退出</a>
+	</div>
+</ul>
+

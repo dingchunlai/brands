@@ -1,0 +1,76 @@
+<% unless @tag.blank? %>
+  <div class="page_navigate page_padding">
+    <%= yield :menu %>
+    <br />
+    <% 
+      all_brands = Brand.of_tag(@tag.TAGID, true)
+      used_brands = Brand.of_tag(@tag.TAGID, false)
+    %>
+    <table>
+      <tr>
+        <td style="width: 80px;">品类：</td>
+        <td><%= @tag.TAGNAME %></td>
+      </tr>
+      <tr>
+        <td>简称：</td>
+        <td><%= @tag.short_name %></td>
+      </tr>
+      <tr>
+        <td>状态：</td>
+        <td><%= @tag.status_zh %> (<%= link_to (@tag.enabled? ? '停用' : '启用'), admin_tag_path(@tag), :method => :put %>)</td>
+      </tr>
+      <tr>
+        <td>URL：</td>
+        <td><%= @tag.TAGURL %></td>
+      </tr>
+      <tr>
+        <td>论坛版块数：</td>
+        <td>
+          <%if @tag.status_zh == "已停用"%>
+            <span style="color:#BFBFB9;">------</span>
+          <%elsif @tag.bbs_tag.nil?%>
+            <span style="color:#BFBFB9;">未开通</span> <%=link_to '[开通]', admin_tag_path(@tag)+"?create_bbs=1", :method => :put %>
+          <%else%>
+            <b style="color:blue;"><%= BbsTag.count("id", :conditions =>["brand_tag_id = ?", @tag.TAGID]) - 1 %></b>
+            <%= link_to "[维护]", tag_brands_admin_tag_path(@tag) %>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td>拥有品牌：</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan=2>
+          <table>
+            <tr>
+              <td colspan=2>
+              <fieldset>
+                <legend>已上线</legend>
+              <ul class="horizontal">
+                <% used_brands.each do |brand| %>
+                  <li><%= link_to brand.name_zh, manage_admin_brand_path(brand, :tag_id => @tag) %>(<%= link_to "禁用", hide_admin_brand_path(brand), :method => :post %>)</li>
+                <% end  %>
+              </ul>
+              </fieldset>
+              </td>
+            </tr>
+            <tr>
+              <td colspan=2>
+              <fieldset>
+                <legend>未上线</legend>
+                <ul class="horizontal">
+                  <% (all_brands - used_brands).each do |brand| %>
+                    <li><%= link_to brand.name_zh, manage_admin_brand_path(brand, :tag_id => @tag) %>(<%= link_to "启用", display_admin_brand_path(brand), :method => :post %>)</li>
+                  <% end  %>
+                </ul>
+              </td>
+              </fieldset>
+            </tr>
+            </table>
+        </td>
+      </tr>
+    </table>
+    <br />
+  </div>
+<% end %>

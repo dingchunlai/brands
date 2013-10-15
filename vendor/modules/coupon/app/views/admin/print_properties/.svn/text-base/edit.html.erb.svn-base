@@ -1,0 +1,82 @@
+<%=include_jquery_easy_validator%>
+<%= top_bar :title => '打印记录编辑页',
+            :button => ['打印列表', admin_print_records_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['打印列表', admin_print_records_path],
+              ['编辑信息']
+            ]
+%>
+
+<%=flash[:notice] && "<div style='padding: 15px; color:blue; font-size: 22px'>#{flash[:notice]}</div>"%>
+<%=flash[:alert] && "<div style='padding: 15px; color:red; font-size: 22px'>#{flash[:alert]}</div>"%>
+<% form_for('print_properties' , :url => admin_print_properties_path) do |f| %>
+  <div class="table">
+    <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+    <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+    <table class="listing form" cellpadding="0" cellspacing="0">
+      <tr>
+        <th class="full" colspan="2">打印属性编辑</th>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172" valign="top"><strong><%= f.label "城市" %></strong></td>
+        <td class="last"><%= f.select :city_id, City.find(:all).collect { |item| [item.name, item.id.to_s] }, :selected => params[:city_id], :include_blank => '请选择', :class => "text" %>
+        <% if params[:city_id].to_s.empty? %>
+          <font color=red>请需要编辑打印属性的选择城市</font>
+        <% end %><input type="text" id="txt_city" name="txt_city" /><input type="button" id="btn_fetch_city" value="定位城市"/>
+        </td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172" valign="top"><strong><%= f.label "行业色值列表" %></strong></td>
+        <td class="last"><%= f.text_area :industry_color, :class => "text", :value => @industry_color , :reg => '^\S|\s*$', :tip => "不能为空", :rows => 5 %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172" valign="top"><strong><%= f.label "地区色值列表" %></strong></td>
+        <td class="last"><%= f.text_area :area_color, :class => "text", :value => @area_color , :reg => '^\S|\s*$', :tip => "不能为空", :rows => 5 %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172" valign="top"><strong><%= f.label "行业列表" %></strong></td>
+        <td class="last"><%= f.text_area :industries, :class => "text", :value => @industries , :reg => '^\S|\s*$', :tip => "不能为空", :rows => 5 %></td>
+      </tr>
+      <tr class="bg">
+        <td class="first" width="172" valign="top"><strong><%= f.label "页脚标注" %></strong></td>
+        <td class="last"><%= f.text_area :footer, :class => "text", :value => @footer , :reg => '^\S|\s*$', :tip => "不能为空", :rows => 5 %></td>
+      </tr>
+      <% if can? :create, :print_properties %>
+      <tr>
+        <td colspan="2"><%= f.submit '提交' %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+     $('#print_properties_city_id').change(function(){
+         location.href='<%= edit_admin_print_properties_path %>?city_id=' + $(this).val();
+     });
+
+    $("#btn_fetch_city").click(function() {
+          if ($("#txt_city").val() == "") {
+              alert('请填写品牌!');
+              $("#txt_city").focus();
+          } else {
+              var got = false;
+              $("#print_properties_city_id").css("background-color", "green");
+              $("#print_properties_city_id").children().each(function(i) {
+                  if ($(this).text() == $("#txt_city").val()) {
+                      got = true;
+                      $("#txt_city").attr("value", '');
+                      $("#print_properties_city_id").attr("selectedIndex", $(this).attr("index"));
+                      $("#print_properties_city_id").trigger('change');
+                  }
+              });
+              $("#print_properties_city_id").css("background-color", "");
+              if (!got) {
+                  alert('请填写正确的品牌名称');
+                  $("#txt_city").focus();
+              }
+          }
+      });
+  });
+</script>

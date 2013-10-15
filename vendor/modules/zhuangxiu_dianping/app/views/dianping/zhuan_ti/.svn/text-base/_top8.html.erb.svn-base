@@ -1,0 +1,7 @@
+<ul>
+<% @firms_top_8.each do |f| %>
+    <li>
+      <div><span class="f_l"><a href="http://z.shanghai.51hejia.com/<%= f.id %>" target="_blank" title="<%= f.name_abbr %>"><%= f.name_abbr %><% if f.is_promoted %>&nbsp;<img src="http://js.51hejia.com/img/zxdpimg/zxdp2011_icon1.gif"/><% end %></a></span><span class="right_div4_span"><%= format("%.1f",f.praise) %></span></div>
+    </li>
+<% end %>
+</ul>

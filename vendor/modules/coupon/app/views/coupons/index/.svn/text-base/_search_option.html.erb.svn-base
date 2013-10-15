@@ -1,0 +1,39 @@
+<%if options%>
+  <tr>
+    <td width="40" valign="top"><%=name%>：</td>
+    <td <%="colspan='2'" unless options.length > limit%> id="<%=id%>_options" width="600" class="clearfix <%='djq_dgsx' if id=='district_id'%>">
+      <%options.each do |r|%>
+        <%if id=='shop_id'%>
+          <%=link_to MarketShop.id_to_name(r[1], true), query_coupon_index(id, r[1])%>
+        <%else%>
+          <%=link_to r[0], query_coupon_index(id, r[1])%>
+        <%end%>
+      <%end%>
+    </td>
+    <%if options.length > limit%>
+    <td>
+      <a href="javascript://" id="<%=id%>_more" class="djq_showmorebg01">更多</a>
+      
+      <script type="text/javascript">
+      $(function(){
+        var <%=id%> = $("#<%=id%>_options a:gt(20)");
+        <%=id%>.hide();
+        var <%=id+'2'%> = $("#<%=id%>_more");
+        <%=id+'2'%>.click(function(){
+            if(<%=id%>.is(":visible")){
+                <%=id%>.hide();
+                <%=id+'2'%>.addClass("djq_showmorebg01").removeClass("djq_showmorebg02").text("更多");
+            }else{
+                <%=id%>.show();
+                <%=id+'2'%>.addClass("djq_showmorebg02").removeClass("djq_showmorebg01").text("收起");
+            }
+            return false;
+        });
+      });
+      </script>
+
+    </td>
+    <%end%>
+  </tr>
+  
+<%end%>

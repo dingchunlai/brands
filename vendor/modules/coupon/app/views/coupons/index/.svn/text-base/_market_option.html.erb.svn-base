@@ -1,0 +1,58 @@
+<%if market_options%>
+  <%market_id = 'market_id'%>
+  <tr>
+    <td width="40" valign="top"><%=name%>：</td>
+    <td <%="colspan='2'" unless market_options.length > limit%> id="<%=market_id%>_options" class="clearfix">
+
+      <%shops = []%>
+
+      <%market_options.each do |m|%>
+
+        <%if m[1].length == 1%>
+          <%#如果只有一家卖场分店，提取出来放在后面单独显示。%>
+          <%shops << m[1][0]%>
+        <%else%>
+          <%#如果有一家以上卖场分店，直接按卖场名分组显示。%>
+          <div class="djq_tgmaic"><a class="lv1_shop" href="javascript://"><%=Market.id_to_name(m[0])%></a>
+            <ul class="djq_tgmaiclist">
+              <%m[1].each do |shop|%>
+                <li><%=link_to shop.name, query_coupon_index('shop_id', shop.id)%></li>
+              <%end%>
+            </ul>
+          </div>
+        <%end%>
+        
+      <%end%>
+
+      <%shops.each do |shop|%>
+        <%=link_to shop.name, query_coupon_index('shop_id', shop.id), :class => "lv1_shop"%>
+      <%end%>
+      
+    </td>
+
+    <%if market_options.length > limit%>
+    <td>
+      <a href="javascript://" id="<%=market_id%>_more" class="djq_showmorebg01">更多</a>
+
+      <script type="text/javascript">
+      $(function(){
+        var <%=market_id%> = $("#<%=market_id%>_options a.lv1_shop:gt(<%=limit%>)");
+        <%=market_id%>.hide();
+        var <%=market_id+'2'%> = $("#<%=market_id%>_more");
+        <%=market_id+'2'%>.click(function(){
+            if(<%=market_id%>.is(":visible")){
+                <%=market_id%>.hide();
+                <%=market_id+'2'%>.addClass("djq_showmorebg01").removeClass("djq_showmorebg02").text("更多");
+            }else{
+                <%=market_id%>.show();
+                <%=market_id+'2'%>.addClass("djq_showmorebg02").removeClass("djq_showmorebg01").text("收起");
+            }
+            return false;
+        });
+      });
+      </script>
+      
+    </td>
+    <%end%>
+  </tr>
+<%end%>

@@ -1,0 +1,243 @@
+<%
+set_brand_page_meta_data @tag.TAGURL, @brand.permalink
+content_for :html_head do
+%>
+  <link type="text/css" media="screen" rel="stylesheet" href="/bubbles/jquery.bubbles.css" />
+  <link type="text/css" media="screen" rel="stylesheet" href="http://js.51hejia.com/colorbox/exp1/colorbox.css" />
+  <%= stylesheet_link_tag jquery_resource(:plugin => 'bubbles', :version => '1.0.0', :resource => :css) %>
+<% end %>
+
+<% content_for :html_body_end do %>
+  <script type="text/javascript" src="http://js.51hejia.com/js/jquery.colorbox-min.js"></script>
+  <%= javascript_include_tag 'brand_rating' %>
+  <script type="text/javascript">
+    $(  function(){
+      $('.noclick').click(function(event) { event.preventDefault(); return false; });
+
+      $('#vote_post').submit(function(event){
+        event.preventDefault();
+        $.post($('#vote_post').attr('action'), $('#vote_post').serialize(), function(date){
+          var num = parseInt($(date['type']).html());
+          if(parseInt(date['is_success'])){
+            num = num + 1;
+          }
+          $(date['type']).html(num);
+          alert(date['message']);
+        }, 'json');
+      });
+    });
+  </script>
+  <%= javascript_include_tag jquery_resource(:plugin => 'bubbles', :version => '1.0.0') %>
+  <script type="text/javascript">
+    jQuery(function($) {
+      $('.bubble_box').bubbles();
+    });
+  </script>
+<% end %>
+
+<% content_for :banner_ad do %>
+  <%= adspace("#{@brand_index_page_adspace}-页头广告1", "", '<div class="clearfix"></div>') if @brand_index_page_adspace %>
+<% end %>
+<%= render :partial => 'shared/layouts/header' %>
+<div class="width960 clearfix">
+  <div class="b_pln_daoh">
+    <span>目前共有<em><%= @brand.pv(@tag.TAGID) %></em>人关注  上月共有<em><%= @brand.last_month_pv(@tag.TAGID) %></em>人关注</span>
+    <%= link_to "和家网首页", "http://www.51hejia.com", :target => "_blank" %>>
+    <%= link_to "品牌库", "http://b.51hejia.com", :target => "_blank" %>>
+    <%= link_to "品牌专区", show_pinlei_path(:subdomian => false), :target => "_blank" %>> <%= @brand.name_zh %>
+  </div>
+</div>
+<div class="width960 b_pln_bg clearfix margin10">
+  <div class="b_pln_menu  margin10">
+    <%= link_to "品牌首页", show_pinpai_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'show' ? 'b_pln_menua02' : 'b_pln_menua01')%>
+    <%= link_to "品牌信息", pinpai_info_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'info' ? 'b_pln_menua02' : 'b_pln_menua01') %>
+    <%= link_to "导购测评", pinpai_articles_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'articles' ? 'b_pln_menua02' : 'b_pln_menua01') %>
+    <%= link_to "产品信息", pinpai_productions_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'productions' || controller.action_name == 'production' ? 'b_pln_menua02' : 'b_pln_menua01') %>
+    <%= link_to "资料下载", pinpai_documents_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'documents' ?  'b_pln_menua02' : 'b_pln_menua01') %>
+    <%= link_to "品牌点评", pinpai_comments_path(:subdomain => false, :permalink => @brand.permalink), :class => (controller.action_name == 'comments' || controller.action_name == 'show_comment' ?  'b_pln_menua02' : 'b_pln_menua01') %>
+    <%
+    bbs_tag = BbsTag.with_tag_brand(@tagged_brand.tag_id, @tagged_brand.brand_id).first
+    unless bbs_tag.blank?
+    %>
+      <%= link_to "品牌论坛", "http://bbs.51hejia.com/forums/#{bbs_tag.id}", :target => "_blank", :class => "b_pln_menua01" %>
+    <% end %>
+    <span><label><%= @tag.TAGNAME %></label> 品牌关注榜第<em><%= @brand.last_month_rank(@tag.TAGID) %></em>名</span>
+  </div>
+  <div class="b_pln_left f_l">
+    <%=yield%>
+  </div>
+  <div class="b_pln_side f_r">
+    <div class="b_pln_sidety margin10">
+<%# 品牌口碑信息部分 %>
+      <h3><%= @brand.name_zh %>品牌口碑</h3>
+      <%= render :partial => "layouts/brands/brand_rating" %>
+    </div>
+    <div class="b_pln_sidety margin10">
+      <h3><%= @brand.name_zh %><%= @tag.TAGNAME %>网友常见反馈</h3>
+      <div class="b_pln_sidetxt b_pln_sidetxt02">
+        <div class="bubble_box b_pln_sidefkwt">
+          <%
+          questions = @tagged_brand.random_tags(12)
+          questions.first(10).each do |tag|
+          %>
+            <div><%= link_to tag, pinpai_show_comment_path(:permalink => @brand.permalink, :tag => tag), :target => '_blank', :title => tag %></div>
+          <% end %>
+        </div>
+        <div class="b_pln_wtmore">
+          <strong>更多热点问题：</strong>
+          <% questions.last(2).each do |tag| %>
+            <%= link_to tag, pinpai_show_comment_path(:permalink => @brand.permalink, :tag => tag), :target => '_blank', :title => tag %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%if @brand.part_render_type('宽幅广告1') == 1%>
+      <div class="ad margin10">
+        <%= adspace("品牌库-#{@brand.name_zh}-品牌首页-宽幅1", '<img alt="广告" src="http://youqituliao.51hejia.com/pictures/0000/0802/系列场景图.jpg?1269246913" width="270" height="85" />') %>
+      </div>
+    <%end%>
+
+    <%if @brand.part_render_type('热门标签') == 1%>
+      <div class="b_pln_sidety margin10">
+        <h3>热门标签</h3>
+        <div class="b_pln_sidetxt b_pln_sidetxt03">
+          <%
+          tags = find_promotion_item(@promotion_page, @tag, @brand, "热门标签")
+          top_tags = (tags && tags.size > 0) ? tags : promotion_items("品牌库:品牌页:#{@tag.TAGURL}:通用热门标签")
+          top_tags.each do |item|
+          %>
+            <%= link_to item.title, item.url, :target => "_blank", :class => (rand > 0.5 ? "b_pln_sidetxt03qd" : nil) %>
+          <% end %>
+        </div>
+      </div>
+    <%end%>
+
+    <%if @brand.part_render_type('购买意向') == 1%>
+      <div class="b_pln_sidety margin10">
+        <h3>购买意向</h3>
+        <div class="b_pln_sidetxt b_pln_sidetxt04">
+          <% form_for :vote, :url => vote_path(:permalink => @brand.permalink), :html => {:method => :post, :id => 'vote_post'} do |f| %>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <% ['计划购买', '强烈购买', '有点兴趣', '随便看看', '没有兴趣'].each_with_index do |text, index| %>
+                <tr>
+                  <td width="60"><input name="poll" type="radio" value="<%= TaggedBrand.vote_items[index.to_i] %>" /></td>
+                  <td><span><%= text %>（<label id="<%= TaggedBrand.vote_items[index.to_i] %>" ><%= @tagged_brand.vote_count_for(TaggedBrand.vote_items[index.to_i]) %></label>票）</span>
+                    <div class="b_pln_sideblt f_l" style="width:<%= @tagged_brand.style_width(TaggedBrand.vote_items[index.to_i]) %>px;"></div></td>
+                </tr>
+              <% end %>
+              <tr>
+                <td colspan="2"><%= submit_tag "提 交",  :class => "b_pln_sidetxt04btn" %></td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    <%end%>
+
+    <%if @brand.part_render_type('宽幅广告2') == 1%>
+      <div class="ad margin10"><img alt="广告" src="http://youqituliao.51hejia.com/pictures/0000/0802/系列场景图.jpg?1269246913" width="270" height="85" /></div>
+    <%end%>
+
+    <div class="b_pln_sidety margin10">
+      <h3><%= @brand.name_zh %><%= @tag.TAGNAME %>优惠促销活动</h3>
+      <div class="b_pln_sidetxt b_pln_sidetxt05">
+        <ul>
+          <% find_promotion_item(@promotion_page, @tag, @brand, "优惠促销活动").each do |item| %>
+            <li><%= link_to item.title, item.url, :target => "_blank" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="b_pln_sidety margin10">
+      <h3><%= @brand.name_zh %><%= @tag.TAGNAME %>测评导购</h3>
+      <div class="b_pln_sidetxt b_pln_sidetxt05">
+        <ul>
+          <% find_promotion_item(@promotion_page, @tag, @brand, "测评导购").each do |item| %>
+            <li><%= link_to item.title, item.url, :target => "_blank" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(function(){
+        $(".b_pln_sidecont div:gt(0)").hide();
+        $(".b_pln_sidetab li:first").addClass("b_pln_sideactive");
+        $(".b_pln_sidetab li").mouseover(
+        function(){
+          $(this).addClass("b_pln_sideactive")
+          .siblings().removeClass("b_pln_sideactive");
+          $(".b_pln_sidecont div").eq($(this).index())
+          .siblings().hide().end().show();
+        }
+      )
+      }
+    )
+    </script>
+    <div class="b_pln_sidety margin10">
+      <h3><%= @brand.name_zh %><%= @tag.TAGNAME %>哪里去买</h3>
+      <div class="b_pln_sidemore"></div>
+      <div class="b_pln_sidetxt b_pln_sidetxt06">
+        <ul class="b_pln_sidetab clearfix">
+          <li>全国</li>
+          <% @tagged_brand.agencies_cities.first(3).each do |tag| %>
+            <li><%= City.name_for_code(tag) %></li>
+          <% end %>
+        </ul>
+        <div class="b_pln_sidecont">
+          <% unless @tagged_brand.agencies.blank? %>
+            <div>
+              <ul>
+                <% @tagged_brand.agencies.first(4).each do |agency| %>
+                  <li>
+                    <span>经&nbsp;销&nbsp;商：
+                      <% if agency.title.strip == "上海鸣润冷气设备工程有限公司" %>
+                        <%= link_to agency.title, "http://mingrunlengqi.51hejia.com/", :target => '_blank' %>
+                      <% else %>
+                        <%= link_to agency.title, "#n", :target => '_blank' %>
+                      <% end %>
+                    </span>
+                    <address>
+                      <label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+                      <%= agency.address  %>
+                    </address>
+                    <span>联系电话：<em><%= agency.telephone  %></em></span></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <% @tagged_brand.agencies_cities.first(3).each do |tag| %>
+            <div>
+              <ul>
+                <% Agency.tagged_brand_and_city(@tagged_brand.id, tag, 4).each do |agency| %>
+                  <li>
+                    <span>
+                      经&nbsp;销&nbsp;商：
+                      <% if agency.title.strip == "上海鸣润冷气设备工程有限公司" %>
+                        <%= link_to agency.title, "http://mingrunlengqi.51hejia.com/", :target => '_blank' %>
+                      <% else %>
+                        <%= link_to agency.title, "#n", :target => '_blank' %>
+                      <% end %>
+                    </span>
+                    <address>
+                      <label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+                      <%= agency.address  %>
+                    </address>
+                    <span>联系电话：<em><%= agency.telephone  %></em></span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if flash[:notice] %>
+  <div id="notice_info" style="display:none">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<%= render :partial => 'shared/layouts/footer' %>
+

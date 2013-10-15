@@ -1,0 +1,8 @@
+<%= top_bar :title => "#{Coupon.human_name}管理",
+  :button => ["#{Coupon.human_name}列表", distributor_user_coupons_path],
+  :breadcrumbs => [
+  ['首页', distributor_user_index_path],
+  ["#{Coupon.human_name}管理", distributor_user_coupons_path]
+]
+%>
+<%= render :partial => 'form' %>

@@ -1,0 +1,16 @@
+    <div class="tag_cloud zxdp2010_yxcont" id="deco_impression_cloud_pop" style="text-align:center;height: <%= DecoImpression.find(@firm.id).size * 10 %>px">
+      <% DecoImpression.charts(@firm.id, 1000).each do |e|%>
+        <% unless BadWord.find("bad_words", e[:name]) %>
+          <div>
+          <% unless e[:name].blank? %>
+          <% if e[:name].to_s.mb_chars.length > 5 %>
+            <span><%= link_to h(e[:name]), save_deco_impression_path(:id => @firm.id), :class => 'impression', :title => '得票数'.concat(e[:score].to_s).concat(' 支持率').concat(e[:percent].to_s).concat(' 我要投票') %></span> 
+          <% else %>
+            <%= link_to h(e[:name]), save_deco_impression_path(:id => @firm.id), :class => 'impression', :title => '得票数'.concat(e[:score].to_s).concat(' 支持率').concat(e[:percent].to_s).concat(' 我要投票') %> 
+          <% end %>
+          <% end %>
+          </div>
+        <% end %>
+      <%end%>
+    </div>
+

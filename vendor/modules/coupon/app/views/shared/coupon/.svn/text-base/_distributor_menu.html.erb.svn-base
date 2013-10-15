@@ -1,0 +1,15 @@
+<!-- 抵用券经销商后台顶部导航菜单 -->
+<ul id="top-navigation" >
+  <li><a href="<%= distributor_user_index_path %>" <%= active_top_menu("dashboards") %> >首页</a></li>
+  <li><a href="<%= distributor_user_coupons_path %>" <%= active_top_menu("coupons") %> >现金券管理</a></li>
+  <li><a href="<%= distributor_user_shops_path %>" <%= active_top_menu("shops") %> >门店管理</a></li>
+  <% if @current_distributor.class_name == "Distributor::HuiYuan" %>
+  <li><a href="<%= distributor_user_hy_images_path %>" <%= active_top_menu("hy_images") %> >图片管理</a></li>
+  <li><a href="<%= distributor_user_cases_path %>" <%= active_top_menu("cases") %> >案例管理</a></li>
+  <li><a href="<%= distributor_user_activities_path %>" <%= active_top_menu("activities") %> >活动管理</a></li>
+  <% end %>
+  <li><a href="<%= changepwd_distributor_user_dashboards_path %>" <%= active_top_menu("index") %> >修改密码</a></li>
+  <div id="logout" style="float:right">
+    <%= link_to "退出", distributor_user_logout_path%>
+  </div>
+</ul>

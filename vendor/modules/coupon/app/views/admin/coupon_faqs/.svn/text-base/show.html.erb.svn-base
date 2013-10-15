@@ -1,0 +1,32 @@
+<%= top_bar :title => 'Q&A查看页面',
+            :button => ['Q&A列表', admin_coupon_faqs_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['Q&A列表', admin_coupon_faqs_path],
+              ['查看页面']
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">Q&A信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponFaq.human_attribute_name("faq_group_id") %></strong></td>
+      <td class="last"><%= @coupon_faq.faq_group && @coupon_faq.faq_group.name || link_to("绑定分组", edit_admin_coupon_faq_path(@coupon_faq)) %></td>
+    </tr>
+     <tr class="bg">
+      <td class="first"><strong><%= CouponFaq.human_attribute_name("question") %></strong></td>
+      <td class="last"><%= @coupon_faq.question %></td>
+    </tr>
+ 
+   <tr>
+      <td class="first"><strong><%= CouponFaq.human_attribute_name("answer") %></strong></td>
+      <td class="last"><%= @coupon_faq.answer %></td>
+    </tr>
+  </table>
+</div>
+<br />
+<%=  link_to "返回列表页", admin_coupon_faqs_path %>

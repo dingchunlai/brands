@@ -1,0 +1,109 @@
+<%= top_bar :title => 'Q&A分组管理',
+            :button => ['Q&A列表', admin_coupon_faqs_path],
+            :breadcrumbs => [
+              ['首页', coupon_admin_index_path],
+              ['Q&A列表', admin_coupon_faqs_path],
+              ['Q&A分组管理']
+            ]
+%>
+
+<div style="text-align:center">
+  <label info="message" style="color: red">正在提交数据, 请等待....</label>
+  <%= show_flash_message %>
+</div>
+
+<% if @faq_groups && @faq_groups.size > 0 %>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">分类信息</th>
+    </tr>
+    <% @faq_groups.each do |group| %>
+    <tr class="bg">
+      <td class="first" width="50%"><span id="show_<%= group.id %>" current_show='coupon_faq'><%= group.name %></span></td>
+      <td class="last" style="text-align:center"><span id="edit_<%= group.id %>" current_edit="faq_group"><%= link_to "编辑", '#N' %></span> | <%= link_to "删除", delete_group_admin_coupon_faqs_path(:id => group.id), :comfirm => "您确认要删除吗？" %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<% end %>
+<div class="table">
+<% form_tag create_group_admin_coupon_faqs_path do %>
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left" />
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right" />
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">添加分类</th>
+    </tr>
+    <tr class="bg">
+      <td class="first" width="172"><strong>分类名称</strong></td>
+      <td class="last">
+        <div>
+          <input type="button" value="添加分类" id="add-attribute" />
+        </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= submit_tag '提交' %></td>
+    </tr>
+  </table>
+<% end %>
+</div>
+
+
+<script type="text/javascript">
+  (function() {
+    function enableAttributeAdding() {
+      $('#add-attribute').click(function() {
+        var index = $(this).parent().siblings().length;
+        $('<input type="text" name="attributes[' + index + ']" id="attributes_' + index + '" />').appendTo($('<div />').insertBefore($(this).parent()));
+      });
+    }
+
+    function save_change(id){
+      $('#save_' + id).click(function(){
+        $.ajax({
+          type: 'POST',
+          url: "/admin/coupon_faqs/update_group",
+          data: "id="+id+"&name="+$('#name_' + id).val(),
+          dataType: 'json',
+          beforeSend: function(){
+            $('label[info=message]').show();
+          },
+          success: function(data){
+            $('#show_' + data.id).html(data.name);
+            $('#edit_' + data.id).html($('<a />').text('编辑').attr('href', '#n'));
+            $('#edit_' + data.id + ' a').click(function(){
+              var dom = $(this).parent();
+              var id = dom.attr("id").split('_')[1];
+              $('#show_' + id).html($('<input />').attr('id', 'name_' + id).attr('type', 'text').attr('value', $('#show_' + id).html()));
+              $('#edit_' + id).html($('<a />').text('保存').attr('id', 'save_' + id).attr('href', '#n'));
+              save_change(id);
+            });
+            $('label[info=message]').hide();
+          },
+          error: function(){
+            $('label[info=message]').hide();
+            alert('系统错误，请与管理员联系! ');
+          }
+        }); 
+      });
+    }
+
+    $(function() {
+      enableAttributeAdding();
+      $('label[info=message]').hide();
+
+      $('span[current_edit=faq_group] a').click(function(){
+          var dom = $(this).parent();
+          var id = dom.attr("id").split('_')[1];
+          $('#show_' + id).html($('<input />').attr('id', 'name_' + id).attr('type', 'text').attr('value', $('#show_' + id).html()));
+          $('#edit_' + id).html($('<a />').text('保存').attr('id', 'save_' + id).attr('href', '#n'));
+          save_change(id);
+      }); 
+    });
+
+  })();
+</script>

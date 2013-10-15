@@ -1,0 +1,44 @@
+<% cache "dianping:city_shouye:right_visitor:#{@user_city_code.to_i}:index", :expires_in => 5.minutes do %>
+
+<h3>和家专访</h3><span class="f_r zxdp2010_cur_more"><a target="_blank" href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/interview">更多</a></span>
+<div class="zxdp2010_zhuanfang">
+<% if [12117,12306].include? @user_city_code.to_i %>
+      <div class="zxdp2010_zhuanfang_list">
+        <% visitor_api = hejia_promotion_items(NEW_DIANPING_HOME_API[TAGURLS[@user_city_code.to_i]]['和家专访'],:select =>'title,url,description,image_url,price_ago,price_now,person_style',:limit =>4) %>
+        <% visitor_api.each_with_index do |visitor,i| %>
+            <dl>
+              <dt style="display:<%= (i == 0) ? 'none' : 'block' %>">·<%= visitor.title %></dt>
+              <dd style="display:<%= (i == 0) ? 'block' : 'none' %>">
+                <div class="zxdp2010_zhuanfang_img"><a target="_blank" href="<%= visitor.url %>"><img src="http://d.51hejia.com/api<%= visitor.image_url %>" width="78px" height="105px"></a>
+                  <ul><% designer = CaseDesigner.find_by_ID(visitor.person_style) %>
+                    <li><strong><a target="_blank" href="<%= visitor.url %>" title="<%= visitor.title %>"><%= truncate_for_zh(visitor.title,20) %></a></strong></li>
+
+                    <li>姓名：<a target="_blank" href="http://z.<%= TAGURLS[@user_city_code.to_i] %>.51hejia.com/designers/<%= designer.ID if designer%>"><%= designer.DESNAME if designer && designer.DESNAME%></a></li>
+                    <li>公司：<a target="_blank" href="<%= visitor.price_now %>"><%= visitor.price_ago %></a></li>
+
+                    <li><%= truncate_for_zh(visitor.description,40) %></li>
+                  </ul>
+                </div>
+              </dd>
+            </dl>
+        <% end %>
+      </div>
+
+<% else %>
+    <ul class="list2 list2_bok">
+      <% visitor_api = hejia_promotion_items(NEW_DIANPING_HOME_API[TAGURLS[@user_city_code.to_i]]['和家专访'],:select =>'title,url,description,image_url,price_ago,price_now',:limit =>2) %>
+      <% visitor_api.each do |va| %>
+          <li class="clearfix">
+            <div class="tit f_l"><a href="<%= va.url %>" target="_blank"><img src="http://d.51hejia.com/api<%= va.image_url %>" width="72" height="105"></a><a href="<%= va.url %>" target="_blank"><%= truncate_for_zh(va.title,12) %></a></div>
+            <div class="txt f_r">
+              <p><%= truncate_for_zh(va.description,80) %></p>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+
+<% end %>
+
+</div>
+
+<% end %>

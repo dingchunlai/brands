@@ -1,0 +1,3 @@
+<% content_for :sub_menu do %>
+	<% if can? :manage, :export_xls %><li><a href="/paint_admin/export">数据导出</a></li><% end %>
+<% end -%>

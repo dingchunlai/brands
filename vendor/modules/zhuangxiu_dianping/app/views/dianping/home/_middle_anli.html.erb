@@ -1,0 +1,31 @@
+<% cache "dianping:middle:zhuangxiuanli:#{@user_city_code}:#{controller.controller_name}", :expires_in => 5.minutes  do %>
+<h3>
+<label>这些案例能够为您带来灵感</label>
+</h3>
+<div class="zxdp2010_anli clearfix margin10">
+<ul>
+  <% @anlies.each do |anli| %>
+  <%
+      anlitag = {}
+      anli.tags.each do |tag|
+        anlitag[tag.TAGFATHERID] = tag.TAGNAME
+      end
+  %>
+  <li>
+    <div class="zxdp2010_anli_list"><%= link_to image_tag(anli.master_picture_url,:alt =>anli.NAME,:size =>"160x120"),case_path(anli),:target =>'_blank' %>
+      <ul>
+        <li>
+          <h1><%= link_to truncate_for_zh(anli.NAME,21),case_path(anli),:target =>'_blank',:title =>anli.NAME %></h1>
+        </li>
+        <li>装修公司：<%= link_to anli.deco_firm.name_abbr,firm_path(anli.deco_firm),:target =>'_blank' if anli.deco_firm %></li>
+        <li>设 计 师：<%= link_to anli.designer.DESNAME,designer_path(anli.designer),:target =>'_blank' if anli.designer %></li>
+        <li>风    格：<%= link_to anlitag[4348],search_cases_for_options(:style => DecoFirm::STYLES.invert[anlitag[4348]]),:target =>'_blank' if anlitag[4348] %></li>
+        <li>有 <span><%= anli.VIEWCOUNT %></span> 名 网友阅读过 </li>
+        <li>有 <span><%= anli.remarks_count %></span> 名 网友评论 </li>
+      </ul>
+    </div>
+  </li>
+  <% end %>
+</ul>
+</div>
+<% end %>

@@ -1,0 +1,143 @@
+<%= render :partial => 'articles/detail/share_to' %>
+<% if @city_id == 11910 %>
+  <% cache "articles:#{@channel}:bottom:#{@city_id}:#{@id}",:expires_in =>5.minutes do %>
+    <%= render :partial =>'articles/detail/firm_info' %>
+  <% end %>
+<% end %>
+<div class="tuijian clearfix">
+  <h2><a href="http://<%=@article.subdomain%>.51hejia.com" target="_blank"><%= @article.sort_name %> 相关文章推荐</a></h2>
+  <ul class="text_list">
+    <% Article.articles(6, @article.SECONDCATEGORY, 'hot', @article.FIRSTCATEGORY).each do |a| %>
+      <li><a href="<%= a.detail_url %>" target="_blank" title="<%= a.title %>"><%= truncate_u(a.title, 18) %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="cont_tjbox_n01 tuijian">
+
+  <h2><a href="http://<%=@article.subdomain%>.51hejia.com" target="_blank"><%= @article.sort_name %> 相关专题推荐</a></h2>
+
+  <%zhuanti = hejia_promotion_items(55231, :attributes => ['title','url','image_url'], :limit => 8)%>
+  <div class="cont_tjbox_n01tages">
+    <%=zhuanti[0..3].map{ |r| "<a href=\"#{r['url']}\" target=\"_blank\" title=\"#{r['title']}\">#{r['title']}</a>" }.join(' | ')%>
+  </div>
+
+  <ul class="clearfix">
+    <%=zhuanti[4..7].map{ |r| "<li><a href=\"#{r['url']}\" target=\"_blank\">
+  <img src=\"#{api_img_url_for(r['image_url'])}\" alt=\"#{r['title']}\" /></a>
+  <a href=\"#{r['url']}\" target=\"_blank\" class=\"cont_tjbox_n01a\">#{r['title']}</a></li>" }.join('')%>
+  </ul>
+</div>
+
+<div class="cont_tjbox_n02">
+  <a href="http://d.51hejia.com" target="_blank" title="返回装修首页" class="f_l">返回装修首页</a>
+  <a href="http://www.51hejia.com" target="_blank" title="返回网站首页" class="f_r">返回网站首页</a>
+</div>
+
+<%= render :partial => 'articles/detail/pinglun', :locals => {:article_id => @article.id} %>
+
+<div class="box1 clearfix">
+  <% results = hejia_promotion_items(54212, :attributes => ['title','url','image_url'], :limit => 21) %>
+  <h2>本周精彩推荐</h2>
+  <ul class="list1">
+    <% if results[0] %>
+      <%= promotion_image_tag results[0] %>
+    <% end %>
+    <% if results[8] %>
+      <% 3.upto(8) do |i| %>
+        <li><a href="<%= results[i]["url"] %>" target="_blank" title="<%= results[i]["title"] %>"><%= truncate_u(results[i]["title"], 16) %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul class="list1 list2">
+    <% if results[1] %>
+      <%= promotion_image_tag results[1] %>
+    <% end %>
+    <% if results[14] %>
+      <% 9.upto(14) do |i| %>
+        <li><a href="<%= results[i]["url"] %>" target="_blank" title="<%= results[i]["title"] %>"><%= truncate_u(results[i]["title"], 15) %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul class="list1 list3">
+    <% if results[2] %>
+      <%= promotion_image_tag results[2] %>
+    <% end %>
+    <% if results[20] %>
+      <% 15.upto(20) do |i| %>
+        <li><a href="<%= results[i]["url"] %>" target="_blank" title="<%= results[i]["title"] %>"><%= truncate_u(results[i]["title"], 15) %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<div class="cont_tjbox_n03 box1 clearfix">
+  <h2>家装美图</h2>
+  <div class="cont_tjbox_n03tages">
+
+    <%=hejia_promotion_items(55236, :attributes => ['title','url'], :limit => 9).map{ |r| "<a href=\"#{r['url']}\" target=\"_blank\" title=\"#{r['title']}\">#{r['title']}</a>" }.join(' | ')%>
+              　　<a href="http://tuku.51hejia.com/zhuanqu" target="_blank" title="图库专区">更多>></a>
+  </div>
+
+  <ul class="list4">
+    <%hejia_promotion_items(55235, :attributes => ['title','url','image_url'], :limit => 6).each do |api|%>
+      <li> <a href="<%=api['url']%>" target="_blank"><img src="<%= api_img_url_for(api['image_url'])%>" alt="<%=api['title']%>"/></a>
+        <p><a href="<%=api['url']%>" target="_blank"><%=api['title']%></a></p>
+      </li>
+    <%end%>
+  </ul>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $(".cont_tjbox_n04cont div:gt(0)").hide();
+    $("#cont_tjbox_n04tab span:first").addClass("active");
+    $("#cont_tjbox_n04tab span").mouseover(
+    function(){
+      $(this).addClass("active")
+      .siblings().removeClass("active");
+      $(".cont_tjbox_n04cont div").eq($(this).index())
+      .siblings().hide().end().show();
+    }
+  )
+  }
+)
+</script>
+<div class="cont_tjbox_n04 f2_bottom">
+  <div id="cont_tjbox_n04tab" class="clearfix"> <span>装修问吧</span> <span>装修论坛</span> <span>热点点评</span> </div>
+  <div class="cont_tjbox_n04cont">
+    <div>
+      <% AskZhidaoTopic.recent_topics(2).each do |topic| %>
+        <h4><a href="<%= topic.url %>" target="_blank"><%= topic.title(25) %></a></h4>
+        <p><%= ul(topic.description, 72) %> [<%= link_to '详情', topic.url, :target => '_blank' %>] </p>
+      <% end %>
+    </div>
+
+    <div>
+      <%BbsTopic.recent_topics(2).each do |topic|%>
+        <h4><a href="<%=topic.url%>" target="_blank"><%=topic.title(25)%></a></h4>
+        <p><%=ul(topic.description, 72)%> [<%=link_to '详情', topic.url, :target => '_blank'%>] </p>
+      <%end%>
+
+    </div>
+    <div>
+      <%HejiaIndex.new_diaries(2, 1).each do |index|%>
+        <h4><a href="<%=index.url%>" target="_blank"><%=index.title%></a></h4>
+        <p><%=ul(index.resume, 72)%> [<%=link_to '详情', index.url, :target => '_blank'%>] </p>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+<div class="cont_tjbox_n05 f2_bottom">
+  <h2>热点专区</h2>
+  <div class="cont_tjbox_n03tages"><a href="http://d.51hejia.com/zq/" target="_blank" title="装修资讯专区">更多>></a></div>
+  <ul>
+    <%hejia_promotion_items(55233, :attributes => ['title','url','entity_created_at'], :limit => 8).each do |api|%>
+      <li>
+        <span><%=api['entity_created_at'] && api['entity_created_at'].strftime("%m-%d")%></span>
+        <a href="<%=api['url']%>" target="_blank" title="<%=api['title']%>"><%=api['title']%></a>
+      </li>
+    <%end%>
+  </ul>
+</div>

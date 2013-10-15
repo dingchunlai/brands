@@ -1,0 +1,40 @@
+<table width="190" cellspacing="0" cellpadding="0" border="0">
+  <tbody>
+    <tr>
+      <td>
+        <label class="b_text_score f_r"><span></span></label>
+        <h5></h5>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<%
+rating_max = [paint_rating.good, paint_rating.soso, paint_rating.bad].max
+good_persent, soso_persent, bad_persent =
+  if rating_max < 100
+  [paint_rating.good, paint_rating.soso, paint_rating.bad]
+else
+  [paint_rating.good, paint_rating.soso, paint_rating.bad].map { |n|
+    (100.0 * n / rating_max).round
+  }
+end
+%>
+<table width="190" cellspacing="0" cellpadding="0" border="0">
+  <tbody>
+    <tr>
+      <td valign="bottom" height="107" align="center"><span class="b_cylinder_g" style="height:<%= good_persent %>px;"></span></td>
+      <td valign="bottom" height="107" align="center"><span class="b_cylinder_n" style="height:<%= soso_persent %>px;"></span></td>
+      <td valign="bottom" height="107" align="center"><span class="b_cylinder_b" style="height:<%= bad_persent %>px;"></span></td>
+    </tr>
+    <tr>
+      <td height="24" align="center" id="good_rate_count"><%= paint_rating.good %>票</td>
+      <td height="24" align="center" id="soso_rate_count"><%= paint_rating.soso %>票</td>
+      <td height="24" align="center" id="bad_rate_count"><%= paint_rating.bad %>票</td>
+    </tr>
+  </tbody>
+</table>
+<div class="yg_koubbtn">
+  <% [['选 择', 'good'], ['不选择', 'soso'], ['会考虑', 'bad']].each do |text, item| %>
+    <%= button_to_remote text, :url => paint_rating_path(:item => item, :subdomain => false) %>
+  <% end %>
+</div>

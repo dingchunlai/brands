@@ -1,0 +1,65 @@
+<% cache "dianping:menu:#{@user_city_code}:#{controller.controller_name}", :expires_in => 5.minutes  do %>
+  <div class="width960" style="overflow:hidden">
+    <div class="zxdp2011_header clearfix">
+      <div class="zxdp2011_logo f_l"><a href="http://www.51hejia.com" target="_self"><img src="http://img2.51hejia.com/img/zxdpimg/zxdp2011-logo.jpg" height="50" /></a></div>
+      <script type="text/javascript" src="http://js.51hejia.com/js/chrome.js"></script>
+      <div class="f_l" style="margin-top:23px;"> <span id="city2">
+          <label><a rel="dropmenu2">[<%= CITIES[@user_city_code.to_i]%><small>&#9660;</small>]</a></label>
+          <div id="dropmenu2" class="zxdp2011_citydiv"><a href="http://z.shanghai.51hejia.com/" target="_blank" >上海</a><a href="http://z.suzhou.51hejia.com/" target="_blank" >苏州</a><a href="http://z.wuxi.51hejia.com/" target="_blank" >无锡</a><a href="http://z.ningbo.51hejia.com/" target="_blank" >宁波</a><a href="http://z.hangzhou.51hejia.com/" target="_blank" >杭州</a></div>
+          <script type="text/javascript">cssdropdown.startchrome("city2")</script>
+        </span> </div>
+      <div class="zxdp2011_num f_r"> <span><%= DecorationDiary.published.count(:select => "distinct user_id") %></span> 位网友点评
+        发表 <span><%= DecorationDiary.published.count %></span> 个装修日记 </div>
+      <div class="zxdp2011_submenu clear">
+        <ul class="f_l" id="zxdp2011_submenu">
+          <%= firm_sub_1_link "#{ CITIES[@user_city_code.to_i]}首页", "/", "home" %>
+          <%= firm_sub_1_link "装修公司列表", firms_url(:trailing_slash => "/"), "firms" %>
+          <% if @user_city_code.to_i == 12117 %><li class=""><a href="http://z.<%= TAGURLS[@user_city_code.to_i]%>.51hejia.com/companies-4000-0/" target="_self">设计工作室</a></li><% end %>
+          <%= firm_sub_1_link "装修日记", decoration_diaries_url(:trailing_slash => "/"),'decoration_diaries' %>
+          <%= firm_sub_1_link "案例图片", cases_url(:trailing_slash => "/"),'cases' %>
+          <%= firm_sub_1_link "促销优惠", coupons_url(:trailing_slash => "/"), "coupons" %>
+  <%#= firm_sub_1_link "免费参观工地", building_sites_url(:trailing_slash => "/"), "factories" %>
+          <% if [11910,12117,12301].include? @user_city_code.to_i %><%= firm_sub_1_link "口碑排行", top_url, "top" %><% end %>
+        </ul>
+        <div class="zxdp2011_search f_r">
+          <table width="400" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <% if @user_city_code.to_i == 11910 %>
+                <td align="right">热搜公司：
+                  <%
+                  hejia_promotion_items(ZHUANGXIU_DIANPING_INDEX_PROMOTED[TAGURLS[@user_city_code.to_i]]['热搜'], :attributes => ['title','url'],:limit => 4).each do |item|
+                  %>
+                    <%= link_to item.title, item.url, :target => '_blank', :title => item.title %>
+                  <%
+                  end
+                %>
+                </td>
+              <% else %>
+                <td align="right">热搜公司：</td>
+                <td width="160">
+                  <div style="width:160px;overflow:hidden;">
+                    <div id="cont_m_5">
+                      <%
+                      hejia_promotion_items(ZHUANGXIU_DIANPING_INDEX_PROMOTED[TAGURLS[@user_city_code.to_i]]['热搜'], :attributes => ['title','url']).each do |item|
+                      %>
+                        <%= link_to item.title, item.url, :target => '_blank', :title => item.title %>
+                      <%
+                      end
+                    %>
+                    </div>
+                  </div>
+                </td>
+              <% end %>
+              <td align="center"><form action="<%= firms_path %>" method="get">
+                  <input name="keyword" type="text" size="10" />
+                  <input name="提交" type="submit" value=" " class="zxdp2011_searchbtn" />
+                </form></td>
+            </tr>
+          </table>
+          <script type="text/javascript" src="http://js2.51hejia.com/js/txt_auto.js"></script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--header_code_end-->
+<% end -%>

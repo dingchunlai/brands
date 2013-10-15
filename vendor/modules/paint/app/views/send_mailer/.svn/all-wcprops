@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer
+END
+paint_workers.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/paint_workers.html.erb
+END
+sent.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/sent.html.erb
+END
+training.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/training.html.erb
+END
+edm_for_month_in_9_10_11.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/edm_for_month_in_9_10_11.html.erb
+END
+audit_paint_cases_mail.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/audit_paint_cases_mail.html.erb
+END
+paiqian.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/94/51hejia/repos/brands/release/vendor/modules/paint/app/views/send_mailer/paiqian.html.erb
+END

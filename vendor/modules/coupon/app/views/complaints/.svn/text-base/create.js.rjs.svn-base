@@ -1,0 +1,7 @@
+if @complaint.errors.empty?
+  page[:new_complaint].reset
+  page << "alert('您的投诉已提交,点确定返回!');"
+  page << "location.href='#{coupon_show_path(@complaint.coupon)}';"
+else
+  page.replace_html :error_message, @complaint.errors.full_messages.join("<br />")
+end

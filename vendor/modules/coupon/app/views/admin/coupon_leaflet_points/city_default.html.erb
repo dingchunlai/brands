@@ -1,0 +1,92 @@
+<%= top_bar :title       => '抵用券领取点管理页',
+            :button      => ['城市默认领取点信息', city_default_admin_coupon_leaflet_points_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['城市默认领取点信息', city_default_admin_coupon_leaflet_points_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="first last">
+        <%= select_tag :city_id, options_for_select(City.find(:all).collect { |item| [item.name, item.id.to_s] }.unshift(['请选择', '']), params[:city_id].to_s) %>
+        输入<input type="text" name="txt_city" id="txt_city"/><input type="button" id="btn_city" value="定位城市"/>
+      </th>
+    </tr>
+    <% form_for 'city_default', :url => city_default_admin_coupon_leaflet_points_path(:city_id => params[:city_id]) do |f| %>
+        <tr>
+          <td>
+            <table class="listing form" cellpadding="0" cellspacing="0">
+              <tr>
+                <th class="full" colspan="2"><%= @city.name %>默认抵用券领取点</th>
+              </tr>
+              <tr class="bg">
+                <td class="first" width="172"><strong><%= CouponLeafletPoint.human_attribute_name("name") %></strong>
+                </td>
+                <td class="last"><%= f.text_field :name, :value => @point_info["name"].to_s, :class => "text" %></td>
+              </tr>
+              <tr>
+                <td class="first" width="172"><strong><%= CouponLeafletPoint.human_attribute_name("address") %></strong>
+                </td>
+                <td class="last"><%= f.text_field :address, :value => @point_info["address"].to_s, :class => "text", :reg => '^\S+$', :tip => "必须*" %>
+                  *
+                </td>
+              </tr>
+              <tr class="bg">
+                <td class="first" width="172">
+                  <strong><%= CouponLeafletPoint.human_attribute_name("telephone") %></strong></td>
+                <td class="last"><%= f.text_field :telephone, :value => @point_info["telephone"].to_s, :class => "text" %></td>
+              </tr>
+              <tr>
+                <td class="first" width="172">
+                  <strong><%= CouponLeafletPoint.human_attribute_name("shop_name") %></strong></td>
+                <td class="last"><%= f.text_field :shop_name, :value => @point_info["shop_name"].to_s, :class => "text" %></td>
+              </tr>
+              <tr class="bg">
+                <td class="first" width="172"><strong><%= CouponLeafletPoint.human_attribute_name("linkman") %></strong>
+                </td>
+                <td class="last"><%= f.text_field :linkman, :value => @point_info["linkman"].to_s, :class => "text" %></td>
+              </tr>
+              <tr>
+                <td colspan="2"><%= f.submit '保存' %></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#city_id").change(function() {
+            if (!$(this).val() == "") {
+                location.href = '?city_id=' + $(this).val();
+            }
+        });
+        $("input[type=button][id^='btn_']").click(function() {
+            var flag = $(this).attr("id").replace('btn_', '');
+            if ($("#txt_" + flag).val() == "") {
+                alert('请填写' + $(this).val().replace('定位', '') + '!');
+                $("#txt_" + flag).focus();
+            } else {
+                var got = false;
+                $("#" + flag + "_id").css("background-color", "green");
+                $("#" + flag + "_id").children().each(function(i) {
+                    if ($(this).text() == $("#txt_" + flag).val()) {
+                        got = true;
+                        $("#txt_" + flag).attr("value", '');
+                        $("#" + flag + "_id").attr("selectedIndex", $(this).attr("index"));
+                        $("#" + flag + "_id").trigger('change');
+                    }
+                });
+                $("#" + flag + "_id").css("background-color", "");
+                if (!got) {
+                    alert('请填写正确的' + $(this).val().replace('定位', ''));
+                    $("#txt_" + flag).focus();
+                }
+            }
+        });
+    });
+</script>

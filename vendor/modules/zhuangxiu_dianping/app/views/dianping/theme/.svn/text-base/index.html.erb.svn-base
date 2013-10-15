@@ -1,0 +1,32 @@
+<% city_name = CITIES[@user_city_code.to_i]%>
+<% @title =  "#{city_name}装修点评,#{city_name}装修公司点评,#{city_name}装修公司排名-和家网装修公司列表"%>
+<% @description = "点评#{city_name}所有装修公司,各种装修案例,装修风格,装修效果图,真实反应装修公司综合水平。"%>
+<% @keywords = "#{city_name}装修点评,装修公司点评,装潢公司点评,家装公司点评,装饰公司点评,设计公司点评,装修公司排名,装潢公司排名,家装公司排名,装饰公司点评,设计公司排名"%>
+<% stylesheet jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => :css) %>
+<% javascript jquery_resource(:plugin => 'fancybox', :version => '1.3.1', :resource => "jquery.fancybox.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "jquery.validate.min.js") %>
+<% javascript jquery_resource(:plugin => 'validate', :version => '1.5.5', :resource => "messages_cn.js") %>
+<% location "资讯/专题"%>
+<!--content_code-->
+<div class="width960">
+<div class="width960 clearfix margin10">
+  <div class="zxdp2010_l f_l">
+    <div class="zxdp2010_sousuo02">
+     <%= render :partial => "/dianping/home/top_search", :locals => {:has_district => false} %>
+    </div>
+    <div class="zxdp2010_comlist list_r_li list_ztlist">
+      	<ul>
+				<% @themes.each do |theme| %>
+					 <li>
+						<span><%= theme.created_at.nil? ? "" : theme.created_at.strftime("%Y-%m-%d")%></span>
+						<%= new_title_name(@city_name,theme.publish_column_id.to_i) %>
+						<a href="<%=theme.url%>" target="_blank" title="装修点评"><%= theme.title %></a>
+					</li>
+				<% end %>
+				</ul>
+      <%= will_paginate @themes %>
+			</div>
+  </div>
+   <%= render :partial => "/dianping/shared/list_side" %>
+</div>
+<!--end_content_code-->

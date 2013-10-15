@@ -1,0 +1,61 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】我要订阅_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<div class="width960">
+  <div class="djq_location">
+    您当前的位置：<%=link_to "#{Coupon.human_name}首页", coupon_index_path, :target => '_blank'%> > <span>订阅<%= Coupon.human_name %></span>
+  </div>
+</div>
+
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_dingyue">
+
+    <%=  @noticle && "<div style='margin: 10px 0 10px 170px; font-size:15px; color: blue;'>操作提示：#{@noticle}</div>" %>
+
+    <div class="djq_dingyuebox01">
+      <div class="djq_dingyuediv01">每周热门<%= Coupon.human_name %>早知道。</div>
+      <div class="djq_dingyuediv02">现在订阅，马上来体验把<%= Coupon.human_name %>装进口袋的快乐吧！</div>
+      <div class="djq_dingyuediv03"><a href="<%= coupon_index_path %>" target="_blank">查看所有<%= Coupon.human_name %>>></a></div>
+      <div class="djq_dingyuediv04">
+        <%form_for CouponSubscribe.new, :method => :post do |f|%>
+          <h3>现在就订阅<%= Coupon.human_name %></h3>
+          <p>邮箱：
+            <%=f.text_field :email, :size => nil %>
+          </p>
+          <p>城市：
+            <%=f.select :city_id, City.select_options  %>
+          </p>
+          <p>
+            行业：
+            <%=f.select :tag_id, Tag.select_options %>
+          </p>
+          <div class="djq_dingyuebtn">
+            <input name="" type="submit" value="" />
+          </div>
+        <%end%>
+      </div>
+    </div>
+    <div class="djq_dingyuebox02">
+      <h3>超优惠<%= Coupon.human_name %>　免费下不停！</h3>
+      <ul class="clearfix">
+        <% Coupon.most_discounted(@city.id, 6).each do |coupon| %>
+          <li>
+            <a href="<%= coupon_show_path(coupon) %>" target="_blank"><%= image_tag(coupon_image_url(coupon.image_url), :alt => coupon.title)  %></a>
+            <p><a href="<%= coupon_show_path(coupon) %>" target="_blank"><%=coupon.title%></a></p>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->
+<script type="text/javascript">
+  $('#new_coupon_subscribe').submit(function(){
+    var email = $.trim($('#coupon_subscribe_email').val());
+    $('#coupon_subscribe_email').val(email);
+    if (email==''){
+      alert('请正确填写邮箱地址！')
+      return false;
+    }
+  })
+</script>

@@ -1,0 +1,431 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/!svn/ver/702/51hejia/repos/brands/release/app/models
+END
+zx_designer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/320/51hejia/repos/brands/release/app/models/zx_designer.rb
+END
+promotion_page.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/models/promotion_page.rb
+END
+publish_column.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/models/publish_column.rb
+END
+production_category.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_category.rb
+END
+general_resource.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/app/models/general_resource.rb
+END
+province.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/province.rb
+END
+production.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production.rb
+END
+production_property.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_property.rb
+END
+validate_image.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/702/51hejia/repos/brands/release/app/models/validate_image.rb
+END
+zhuanqu_kw.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/app/models/zhuanqu_kw.rb
+END
+production_series.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_series.rb
+END
+complain.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/complain.rb
+END
+hejia_user_bbs.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/702/51hejia/repos/brands/release/app/models/hejia_user_bbs.rb
+END
+html_metadata.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/app/models/html_metadata.rb
+END
+zhuanqu_info.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/zhuanqu_info.rb
+END
+franchisee.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/app/models/franchisee.rb
+END
+question.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/question.rb
+END
+zx_shop_visit.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/265/51hejia/repos/brands/release/app/models/zx_shop_visit.rb
+END
+pinlei_pindao.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/app/models/pinlei_pindao.rb
+END
+ask_zhidao_topic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/app/models/ask_zhidao_topic.rb
+END
+tag.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/534/51hejia/repos/brands/release/app/models/tag.rb
+END
+article_content.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/app/models/article_content.rb
+END
+brand.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/572/51hejia/repos/brands/release/app/models/brand.rb
+END
+brand_rating.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/brand_rating.rb
+END
+hejia_article_link.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/94/51hejia/repos/brands/release/app/models/hejia_article_link.rb
+END
+promotion_collection.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/app/models/promotion_collection.rb
+END
+dianxing.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/dianxing.rb
+END
+zhuanqu_sort.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/zhuanqu_sort.rb
+END
+promotion_item.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/models/promotion_item.rb
+END
+agency.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/94/51hejia/repos/brands/release/app/models/agency.rb
+END
+tag_page.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/tag_page.rb
+END
+city.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/94/51hejia/repos/brands/release/app/models/city.rb
+END
+promotion_page_part.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/models/promotion_page_part.rb
+END
+production_attribute.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_attribute.rb
+END
+product_picture.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/app/models/product_picture.rb
+END
+hejia_index_keyword.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/94/51hejia/repos/brands/release/app/models/hejia_index_keyword.rb
+END
+role_ability.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/role_ability.rb
+END
+document.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/document.rb
+END
+ask_blog_topic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/models/ask_blog_topic.rb
+END
+paint_keyword.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/206/51hejia/repos/brands/release/app/models/paint_keyword.rb
+END
+article.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/488/51hejia/repos/brands/release/app/models/article.rb
+END
+my_link_renderer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/94/51hejia/repos/brands/release/app/models/my_link_renderer.rb
+END
+radmin_role.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/94/51hejia/repos/brands/release/app/models/radmin_role.rb
+END
+votable.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/app/models/votable.rb
+END
+zx_trend.rb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/265/51hejia/repos/brands/release/app/models/zx_trend.rb
+END
+tagged_brand_page.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/94/51hejia/repos/brands/release/app/models/tagged_brand_page.rb
+END
+bbs_tag.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/app/models/bbs_tag.rb
+END
+comment.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/94/51hejia/repos/brands/release/app/models/comment.rb
+END
+index_page.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/app/models/index_page.rb
+END
+production_promotion_info.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_promotion_info.rb
+END
+production_combination.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/app/models/production_combination.rb
+END
+brand_picture.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/94/51hejia/repos/brands/release/app/models/brand_picture.rb
+END
+paint_keyword_article.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/206/51hejia/repos/brands/release/app/models/paint_keyword_article.rb
+END
+impression.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/94/51hejia/repos/brands/release/app/models/impression.rb
+END
+hejia_zhaobiao.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/94/51hejia/repos/brands/release/app/models/hejia_zhaobiao.rb
+END
+answer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/94/51hejia/repos/brands/release/app/models/answer.rb
+END
+publish_content.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/94/51hejia/repos/brands/release/app/models/publish_content.rb
+END
+tagged_brand.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/tagged_brand.rb
+END
+zx_merchant_buy.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/265/51hejia/repos/brands/release/app/models/zx_merchant_buy.rb
+END
+photo_photo.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/94/51hejia/repos/brands/release/app/models/photo_photo.rb
+END
+bbs_topic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/94/51hejia/repos/brands/release/app/models/bbs_topic.rb
+END
+article_promotion_info.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/94/51hejia/repos/brands/release/app/models/article_promotion_info.rb
+END
+publish_content_keyword.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/94/51hejia/repos/brands/release/app/models/publish_content_keyword.rb
+END
+zx_ad.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/320/51hejia/repos/brands/release/app/models/zx_ad.rb
+END
+brand_detail.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/94/51hejia/repos/brands/release/app/models/brand_detail.rb
+END
+radmin_user.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/94/51hejia/repos/brands/release/app/models/radmin_user.rb
+END
+brands_production_category.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/94/51hejia/repos/brands/release/app/models/brands_production_category.rb
+END
+relation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/94/51hejia/repos/brands/release/app/models/relation.rb
+END
+sales_promotion_event.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/388/51hejia/repos/brands/release/app/models/sales_promotion_event.rb
+END
+fdata.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/94/51hejia/repos/brands/release/app/models/fdata.rb
+END
+ip_add.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/94/51hejia/repos/brands/release/app/models/ip_add.rb
+END

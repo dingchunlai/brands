@@ -1,0 +1,95 @@
+<% javascript 'paint/uploadify.js',
+'paint/front_case.js'
+ %>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<script src="http://js.51hejia.com/js/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="http://member.51hejia.com/javascripts/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://member.51hejia.com/javascripts/jquery.livequery.js" type="text/javascript"></script>
+<link rel="stylesheet" href=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script src=" http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/i18n/jquery-ui-i18n.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<% stylesheet 'paint/paint_case.css','paint/paint_case_admin.css'%>
+<script>
+$(document).ready(function(){
+		$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+</script>
+<div class="yg_web_anlifb"> 
+	<h4>以下内容均为必填内容。</h4> 
+	<% form_for @paint_case, :html =>{:method => :post , :id=>'item_form', 'data-uploadurl' => cloud_fs_upload_path('image'), 'data-assetsurl' => cloud_fs_domain('image'), :multipart=> true} do |f| %> 
+	<ul> 
+		<li>
+			省份<select name="paint_case[province]" id="t_province" class='required'>
+				<option value="">请选择</option>
+				<% Province.get_province_douleshi.each do |k,v| %>
+					<option value="<%= v %>" <%= 'selected' if @paint_case.province == v %> ><%= k %></option>
+				<% end %>
+			</select>
+			城市<select name="paint_case[city]" id="t_city" class='required'>
+				<option value="">请选择</option>
+				<% unless @paint_case.city.blank?%>
+				<% City.get_cities_for_province_douleshi(@paint_case.province).each do |k,v| %>
+					<option value="<%= k %>" <%= 'selected' if @paint_case.city == k %> ><%= v %></option>
+				<% end %>
+				<% end %>
+				</select>
+		</li>
+	    <li>
+	    	房主：<%= f.text_field :customer_name ,:size => 3 %>
+			房主电话：<%= f.text_field :customer_tel ,:size => 11 %>
+		</li>
+		<li>工程施工地址: <%= f.text_field :customer_address %></li>
+		   <li>
+					<span>装修类型: 
+					<% PaintCase::RENOVATION.each do |v| %>
+					<%= f.radio_button :renovation,v %><%= v%>
+					<% end %>
+					<%= f.radio_button :renovation,"其它",:checked => renovation_is_other(@paint_case)[:result]%>其它(请注明):<input type="text" size="15" name="other_renovation" value="<%= renovation_is_other(@paint_case)[:this_value]%>" >
+					</span>
+				</li>
+			<li><span>服务单号码:<%= f.text_field :server_number ,:size => 20 %></span><span>施工时间:<%= f.text_field :start_date,:size => 12,:class => "datepicker" %></span></li>
+	    <li>
+			<span>房型：<%= f.select :room  ,options_for_select( PaintCase::ROOM.sort{|x,y| x[1] <=> y[1]}) %></span>
+			<span>装修面积：<%= f.text_field :area ,:size=>3 %>平米</span> </li> 
+			<li>
+			<span>使用油漆型号：乳胶漆：<%= f.text_field :emulsion_paint %></span> </li> 
+			<li style="width:500px;line-height:24px;" class="clearfix">
+					<div class="f_l">木器漆:</div><div class="f_l"><% PaintCase::WOOD_PAINT.each do |k|%>
+						<%=check_box_tag "paint_case[wood_paint][]", k ,is_wood_paint(k,@paint_case) %><%= k%><br/>
+					<% end %>&nbsp;
+					其它(请注明)<input type="text" name="other_wood_paint" value="<%= is_other_wood_paint(@paint_case) %>"></div>
+			</li>
+	    <li>
+	    	<span>使用特殊工艺：墙面工艺：<%= f.select :wall_technology  ,options_for_select( PaintCase::WALL_TECHNOLOGY ) %></span>
+			<span>木漆工艺：<%= f.select :wood_paint_technology  ,options_for_select( PaintCase::WOOD_PAINT_TECHNOLOGY) %></span>
+		</li> 
+	  	<li><div class="yg_web_anlitit"><strong>案例标题：</strong><%= f.text_field :title %></div></li>
+		<div class="yg_web_anlitxt"> 
+		<%= f.text_area :content ,:id=>"content_editor" ,:style=>"width:650px;height:300px" %>
+		<script type="text/javascript">
+		//<![CDATA[
+		CKEDITOR.replace('paint_case[content]', { 
+			height: '300px',width: '680px'
+	   	});
+			//]]>
+			CKEDITOR.instances.content_editor.insertHtml($("content_editor").val());
+		</script>
+	  </div>
+	  <li>
+		  <div class="scrj_tjtp clearfix">
+			<span  id="swfupload_button" ></span>
+			<span>提示：添加的图片可复选批量上传； 图片最佳尺寸500px*375px(长宽比4：3)； 单图大小不能超过200K</span>
+		  </div>
+	  </li>
+	  <li><div><%#= render :partial => '/shared/upload_img'%></div></li>
+	  <li id="save_time_tip"></li>
+	<li class="clearfix" style="float:left;">
+		<%= hidden_field_tag :id ,  @paint_case.id ,:id=>"id" %>
+		<%= f.hidden_field :paint_worker_id , :value => @paint_worker.id %>
+		<%= f.submit "保存为草稿" ,:class=>"bt2" ,:id=>"save_draft" ,:style=>"float:none;margin:5px 0;cursor:pointer;"  %>
+		<%= f.submit "正式发表" ,:class=>"bt2" ,:style=>"float:none;margin:5px 0;cursor:pointer;" %>
+	</li>
+	  </ul> 
+	<% end %>
+</div> 

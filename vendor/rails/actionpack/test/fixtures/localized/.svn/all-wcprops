@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/localized
+END
+hello_world.en.html
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/localized/hello_world.en.html
+END
+hello_world.de.html
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/94/51hejia/repos/brands/release/vendor/rails/actionpack/test/fixtures/localized/hello_world.de.html
+END

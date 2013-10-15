@@ -1,0 +1,45 @@
+<% content_for :navigation do  %>
+  <span>当前位置：</span>
+  <%= link_to "首页", admin_index_index_path %> <% unless @tag.blank? %> > <%= link_to @tag.TAGNAME, manage_admin_tag_path(@tag) %> <% end %>
+  <% unless @brand.blank? %> > <%= link_to @brand.name_zh, manage_admin_brand_path(@brand) %><% end %> > <%= link_to "评论列表页", admin_brand_comments_path(@brand, :tag_id => @tag.TAGID) %> >  新建评论页面 
+<% end %>
+<%= render :partial => "shared/brands/brand" %>
+
+<div>
+  <%= show_flash_message %>
+  <%= link_to "返回列表页", admin_brand_comments_path(@brand, :tag_id => @tag.TAGID) %>
+  <fieldset>
+    <legend>新建评论页面</legend>
+    <% form_for @comment, :url => admin_brand_comments_path, :html => {:id => 'form_comment', :method => :post} do |f| %>
+      <table>
+        <tr><td>标题：</td><td><%= f.text_field :title, :size => 80 %></td><td>字数应该在 4-50之内</td></tr>
+        <tr><td>内容：</td><td><%= text_area :comment, :body, :size => "80*30" %></td><td>字数在1000之内</td></tr>
+        <tr><td>评价：</td><td><%= select_tag "[comment][remark]", "<option value='0'>很差</option><option value='1'>差</option><option value='2'>一般</option><option value='3'>满意</option><option value='4'>很满意</option>" %></td><tr>
+        <tr><td>标签：</td><td><div><input type='button' value="添加标签" id='add_tags' /></div></td><td>每一个标签字数应该在5个以内</td></tr>
+        <%= hidden_field_tag "[comment][user_id]", @user && @user.USERBBSID || '' %>
+        <%= hidden_field_tag "[comment][user_name]", @user && @user.USERNAME || '' %>
+        <%= hidden_field_tag "[comment][tagged_brand_id]", @tagged_brand.id %>
+        <%= hidden_field_tag :tag_id, @tag.TAGID %>
+        <tr><td></td><td><%= submit_tag "保存" %></td></tr>
+      </table>
+    <% end %>
+  </fieldset>
+</div>
+<script type="text/javascript">
+  $('#add_tags').click(function(){
+    var index = $(this).parent().siblings().length;
+    $('<input type="text" name="[tags][' + index + ']" id="tags_' + index + '" />').appendTo($('<div />').insertBefore($(this).parent()));
+  });
+  $(function(){
+      $('#form_comment').submit(function(event){
+        if($('#comment_title').val().length < 5 || $('#comment_title').val().length > 50){
+          alert("标题的字数必须在4 - 50之内!");
+          return false;
+        }
+        if($('#comment_body').val().length <= 0){
+          alert("请输入内容!");
+          return false;
+        }
+      });
+    });
+</script>

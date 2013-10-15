@@ -1,0 +1,6 @@
+<div class="width960">
+  <div class="yg_location">
+  	您当前的位置：<a href="<%= root_path %>" target="_self" title="油漆涂料施工">油漆涂料施工</a>&nbsp;&gt;&nbsp;<%= location %> 
+	<% unless location_end.nil? %>&nbsp;&gt;&nbsp;<span><%= location_end %></span><% end %>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<%= top_bar :title       => '抵用券领取点管理页',
+            :button      => ['创建抵用券领取点', new_admin_coupon_leaflet_point_path],
+            :breadcrumbs => [
+                    ['首页', coupon_admin_index_path],
+                    ['抵用券领取点列表', admin_coupon_leaflet_points_path]
+            ]
+%>
+<div class="table">
+  <img src="/stylesheets/pretty_admin/img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+  <img src="/stylesheets/pretty_admin/img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+  <table class="listing form" cellpadding="0" cellspacing="0">
+    <tr>
+      <th class="full" colspan="2">抵用券领取点信息</th>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("name") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.name %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("address") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.address %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("telephone") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.telephone %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("shop_name") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.shop_name %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("linkman") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.linkman %></td>
+    </tr>
+    <tr>
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("city_id") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.city && @coupon_leaflet_point.city.name || "--" %></td>
+    </tr>
+    <tr class="bg">
+      <td class="first"><strong><%= CouponLeafletPoint.human_attribute_name("district_id") %></strong></td>
+      <td class="last"><%= @coupon_leaflet_point.district && @coupon_leaflet_point.district.name || "--" %></td>
+    </tr>
+    <!--<tr>-->
+      <!--<td class="first"><strong><%#= CouponLeafletPoint.human_attribute_name("activity_begin_at") %></strong></td>-->
+      <!--<td class="last"><%#= @coupon_leaflet_point.activity_begin_at %></td>-->
+    <!--</tr>-->
+    <!--<tr class="bg">-->
+      <!--<td class="first"><strong><%#= CouponLeafletPoint.human_attribute_name("activity_end_at") %></strong></td>-->
+      <!--<td class="last"><%#= @coupon_leaflet_point.activity_end_at %></td>-->
+    <!--</tr>-->
+    <tr class="bg">
+      <td class="first last" colspan="2"><%= link_to '编辑', edit_admin_coupon_leaflet_point_path(@coupon_leaflet_point) %></td>
+    </tr>
+  </table>
+</div>

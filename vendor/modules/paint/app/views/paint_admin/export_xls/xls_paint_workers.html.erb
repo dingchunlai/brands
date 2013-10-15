@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Untitled Document</title>
+	</head>
+	<body>
+		<table border="1">
+			<tr>
+				<td>用户名</td>
+				<td>会员卡号</td>
+				<td>姓名</td>
+				<td>性别</td>
+				<td>身份证号码</td>
+				<td>籍贯</td>
+				<td>省份</td>
+				<td>城市</td>
+				<td>邮编</td>
+				<td>手机</td>
+				<td>电子邮箱</td>
+				<td>等级</td>
+				<td>礼品寄送地址</td>
+				<td>工作年限</td>
+				<td>隶属经销商</td>
+				<td>经销商电话</td>
+				<td>经销商邮箱</td>
+				<td>培训日期</td>
+				<td>文化成度</td>
+				<td>阿克苏证书等级</td>
+				<td>证书编号</td>
+				<td>是否做过墙面特殊效果</td>
+				<td>是否试用过喷枪</td>
+				<td>是否做过点睛/底擦色</td>
+				<td>目前职业</td>
+				<td>如何知道俱乐部信息</td>
+				<td>目前经常试用的木器漆产品</td>
+				<td>创建时间</td>
+			</tr>
+			<% @paint_workers.each do |worker|%>
+			<tr>
+				<td><%= worker.USERNAME %></td>
+				<td><%= worker.painter.member_code %></td>
+				<td><%= worker.USERBBSNAME %></td>
+				<td><%= Painter::GENDER.index(worker.painter.gender) %></td>
+				<td><%= "#{worker.painter.id_number}'" %></td>
+				<td><%= worker.painter.birthplace %></td>
+				<td><%= Province.name_for_code(worker.painter.province) %></td>
+				<td><%= City.name_for_code(worker.painter.city) %></td>
+				<td><%= worker.painter.zip_code %></td>
+				<td><%= worker.USERBBSMOBELTELEPHONE %></td>
+				<td><%= worker.USERBBSEMAIL %></td>
+				<td><%= Painter::GRADE.index(worker.painter.grade) %></td>
+				<td><%= worker.painter.address %></td>
+				<td><%= worker.painter.job_year %></td>
+				<td><%= worker.painter.dealers %></td>
+				<td><%= worker.painter.dealers_phone %></td>
+				<td><%= worker.painter.dealers_email %></td>
+				<td><%= worker.painter.train_date.strftime("%Y-%m-%d") unless worker.painter.train_date.nil? %></td>
+				<td><%= worker.painter.education %></td>
+				<td><%= Painter::CERTIFICATES.index(worker.painter.certificate) %></td>
+				<td><%= worker.painter.certificate_number %></td>
+				<td><%= worker.painter.effect.to_i == 1 ? "是" : "否" %></td>
+				<td><%= worker.painter.spray_gun.to_i == 1 ? "是" : "否" %></td>
+				<td><%= worker.painter.brush.to_i == 1 ? "是" : "否" %></td>
+				<td><%= worker.painter.job %></td>
+				<td><%= worker.painter.know_here %></td>
+				<td><%= YAML.load(worker.painter.trial_products) unless worker.painter.trial_products.nil?  %></td>
+				<td><%= worker.painter.created_at.strftime("%Y-%m-%d") %></td>
+			</tr>
+			<% end %>
+		</table>
+	</body>
+</html>

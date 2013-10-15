@@ -1,0 +1,12 @@
+<div class=list_r_li>
+  <ul>
+    <% @firms.each do |firm,index| %>
+      <% if @promotes_ids.size > 0 && @promotes_ids.include?(firm.id.to_s) %>
+        <%= render :partial => 'firm_summary', :locals => {:firm => firm, :index => index, :promoted => true} %>
+      <% else %>
+        <%= render :partial => 'firm_summary', :locals => {:firm => firm, :index => index, :promoted => false} %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<div class="clearfix"><%= will_paginate @firms %></div>

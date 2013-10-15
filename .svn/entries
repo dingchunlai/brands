@@ -1,0 +1,95 @@
+10
+
+dir
+790
+http://svn.51hejia.com:8081/51hejia/repos/brands/release
+http://svn.51hejia.com:8081
+
+
+
+2013-10-15T07:03:38.648737Z
+790
+dingchunlai
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+vendor
+dir
+
+public
+dir
+
+test
+dir
+
+app
+dir
+
+tmp
+dir
+
+log
+dir
+
+Rakefile
+file
+
+
+
+
+2012-11-12T03:54:25.109793Z
+91ac971b6fee8fe3814918676ee07be8
+2012-10-18T03:05:15.018355Z
+94
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4548
+
+script
+dir
+
+config
+dir
+
+db
+dir
+
+doc
+dir
+
+lib
+dir
+

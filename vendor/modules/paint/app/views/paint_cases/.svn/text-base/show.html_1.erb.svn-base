@@ -1,0 +1,53 @@
+<% title "【油漆工案例】_#{@paint_case.title}_案例详情-和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_3 %>
+<% description PAINT_DESCRIPTION_3 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/cases' target='_self' title='油漆工案例' >油漆工案例</a>", :location_end => "案例详情" }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_cont_tit yg_jdalposi">
+      <h2><%= @paint_case.title %></h2>
+      <span>油漆工：<%= @paint_case.paint_worker.USERBBSNAME unless @paint_case.paint_worker.nil? %>&nbsp;&nbsp;&nbsp;<%= @paint_case.created_at.strftime("%Y-%m-%d") %></span>
+      <div class="yg_cont_jdal"><p>省份：<%= Province.name_for_code(@paint_case.province) %> 城市：<%= City.name_for_code(@paint_case.city) %> 
+	  	房型：<%= PaintCase::ROOM.index(@paint_case.room) %> 装修面积：<%=@paint_case.area %>平方米<br/>
+	  	使用油漆型号：<%= @paint_case.emulsion_paint %>-<%=YAML.load(@paint_case.wood_paint).join("-") if @paint_case.wood_paint %>
+		使用特殊工艺：<%= PaintCase::WOOD_PAINT_TECHNOLOGY.index(@paint_case.wood_paint_technology)%>-<%= PaintCase::WALL_TECHNOLOGY.index(@paint_case.wall_technology)%></p></div>
+      <script type="text/javascript">
+		jQuery(function($){
+			$(".yg_jdalimg_big").hide();
+			$(".yg_jdalimg_small").mouseover(
+				function(){
+					$(".yg_jdalimg_big").show();
+						}
+										)
+			$(".yg_jdalimg_big").mouseover(
+				function(){
+					$(".yg_jdalimg_big").show();
+						}
+										)
+			$(".yg_jdalimg_big").mouseout(
+				function(){
+					$(".yg_jdalimg_big").hide();
+						}
+										)
+						});
+	  </script>
+        <div class="yg_jdalimg_small"><%= image_tag get_avatar_img(@paint_case.paint_worker.painter.avatar_file_name) %></div>
+        <div class="yg_jdalimg_big"><%= image_tag get_avatar_img(@paint_case.paint_worker.painter.avatar_file_name) %><a href="<%=get_paint_worker_url(@paint_case.paint_worker)%>" target="_blank" title="查看此油工"></a></div>
+        <%if @paint_case.essence %><div class="yg_jdalicon"></div><% end %>
+    </div>
+    <div class="yg_cont_txt"><%= @paint_case.content %>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10"><%= render :partial => "/shared/right_top_img"%></div>
+    <div class="yg_current">
+     	<%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+         <%= render :partial => "/shared/paint_top10"%>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content_code_end-->

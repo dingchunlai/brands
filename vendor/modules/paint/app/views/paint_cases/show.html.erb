@@ -1,0 +1,422 @@
+<% title "【油漆工案例】_#{@paint_case.title}_案例详情-和家网油漆施工频道" %>
+<% keywords PAINT_KEYWORDS_3 %>
+<% description PAINT_DESCRIPTION_3 %>
+<%= render :partial => '/shared/top_location', :locals => { :location => "<a href='/cases' target='_self' title='油漆工案例' >油漆工案例</a>", :location_end => "案例详情" }%>
+<!--content_code-->
+<div class="width960 margin10 clearfix">
+  <div class="yg_p1_l f_l">
+    <div class="yg_cont_tit yg_jdalposi">
+      <h2><%= @paint_case.title %></h2>
+      <% unless @paint_case.paint_worker.nil? %>
+        <span>油漆工：<%= @paint_case.paint_worker.USERBBSNAME %>&nbsp;&nbsp;&nbsp;<%= @paint_case.created_at.strftime("%Y-%m-%d") %></span>
+        <div class="yg_cont_jdal">
+          <p>
+            师傅姓名：<strong><%= @paint_case.paint_worker.USERBBSNAME %></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <% unless @paint_case.paint_worker.painter.nil? %>
+              证书编号：<strong><%= @paint_case.paint_worker.painter.certificate_number %></strong><br />
+              派发专卖店：<strong><%= @paint_case.paint_worker.painter.store %></strong>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+      <script type="text/javascript">
+        jQuery(function($){
+          $(".yg_jdalimg_big").hide();
+          $(".yg_jdalimg_small").mouseover(function(){
+            $(".yg_jdalimg_big").show();
+          })
+          $(".yg_jdalimg_big").mouseover(function(){
+            $(".yg_jdalimg_big").show();
+          })
+          $(".yg_jdalimg_big").mouseout(function(){
+            $(".yg_jdalimg_big").hide();
+          })
+        });
+      </script>
+      <div class="yg_jdalimg_small"><%= image_tag get_avatar_img(@paint_case.paint_worker.painter.avatar_file_name) %></div>
+      <div class="yg_jdalimg_big"><%= image_tag get_avatar_img(@paint_case.paint_worker.painter.avatar_file_name) %><a href="<%= get_paint_worker_url(@paint_case.paint_worker) %>" target="_blank" title="查看此油工"></a></div>
+    </div>
+    <div class="yg_cont_txt clearfix">
+      <% unless @paint_case.paint_case_pictures.blank? %>
+        <ul class="pic_small light_box_pictures">
+          <% @paint_case.paint_case_pictures.each do |paint_case_picture| %>
+            <li>
+              <%= link_to(image_tag(paint_case_picture.picture.url), paint_case_picture.picture.url, :title => paint_case_picture.name) unless paint_case_picture.picture.blank? %>
+            </li>
+          <% end %>
+          <% (4 - @paint_case.paint_case_pictures.count).times do %>
+            <li>
+              <%= image_tag("/images/jinshuazi-julebu.jpg") %>
+              <%#= link_to(image_tag("/images/jinshuazi-julebu.jpg"), "/images/jinshuazi-julebu.jpg", :title => "金刷子-俱乐部") %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <div class="yg_cont_list clearfix">
+        <table cellspacing="0" cellpadding="0" border="0" width="620">
+          <caption>
+            <span>工程</span>
+          </caption>
+          <tbody>
+            <tr>
+              <th align="left" width="150" style="*padding-top:10px;">城市</th>
+              <td style="*padding-top:10px;"><%= Province.name_for_code(@paint_case.province) %> <%= City.name_for_code(@paint_case.city) %></td>
+            </tr>
+            <% if @paint_case.construction_sdate and @paint_case.construction_edate %>
+              <tr>
+                <th align="left">实际施工期限</th>
+                <td>
+                  <%= @paint_case.construction_sdate.year %>年<%= @paint_case.construction_sdate.month %>月<%= @paint_case.construction_sdate.day %>日
+                  至
+                  <%= @paint_case.construction_edate %>年<%= @paint_case.construction_edate.month %>月<%= @paint_case.construction_edate.day %>日
+                </td>
+              </tr>
+            <% end %>
+            <% unless @paint_case.renovation_description.blank? %>
+              <tr>
+                <th align="left">施工性质</th>
+                <td>
+                  <%= @paint_case.renovation_description %>
+                </td>
+              </tr>
+            <% end %>
+            <% unless PaintCase::ROOM.index(@paint_case.room).blank? %>
+              <tr>
+                <th align="left">房型</th>
+                <td><%= PaintCase::ROOM.index(@paint_case.room) %></td>
+              </tr>
+            <% end %>
+            <% unless @paint_case.area.blank? %>
+              <tr>
+                <th align="left">面积</th>
+                <td><%= @paint_case.area %>㎡</td>
+              </tr>
+            <% end %>
+            <% if @paint_case.is_show_environmental_params %>
+              <tr>
+                <th align="left" valign="top">施工环境参数</th>
+                <td>
+                  <% unless @paint_case.temperature.blank? %>
+                    温度：<%= @paint_case.temperature %>度<br />
+                  <% end %>
+                  <% unless @paint_case.humidity.blank? %>
+                    湿度：<%= @paint_case.humidity %>度<br />
+                  <% end %>
+                  <% unless @paint_case.is_dust.blank? %>
+                    施工环境是否有灰尘：<%= @paint_case.is_dust == true ? "是" : "否" %><br />
+                  <% end %>
+                  <% unless @paint_case.product_mix.blank? %>
+                    产品配比：主漆（基漆）= <%= @paint_case.product_mix %>；
+                  <% end %>
+                  <% unless @paint_case.diluent.blank? %>
+                    稀释剂（清漆）= <%= @paint_case.diluent %>；
+                  <% end %>
+                  <% unless @paint_case.curing_agent.blank? %>
+                    固化剂 = <%= @paint_case.curing_agent %>；<br />
+                  <% end %>
+                  <% unless @paint_case.is_clean.blank? %>
+                    底材状况：表面<%= "不" if @paint_case.is_clean == false %>光洁；
+                  <% end %>
+                  <%= @paint_case.low_material_description %>
+                </td>
+              </tr>
+            <% end %>
+            <% unless @paint_case.product_specifications.blank? %>
+              <tr>
+                <th align="left" valign="top" style="padding-top:25px;">产品概述</th>
+                <td style="padding-top:25px;">
+                  <table cellspacing="0" cellpadding="0" border="0" align="left" width="100%">
+                    <thead>
+                      <tr>
+                        <th align="left" width="340">板材类型</th>
+                        <th align="left" width="70">规格</th>
+                        <th align="left">数量</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @paint_case.product_specifications.each do |ps| %>
+                        <tr>
+                          <td width="340"><%= ps.name %></td>
+                          <td width="70"><%= ps.specification %></td>
+                          <td><%= ps.number %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            <% end %>
+            <% if @paint_case.is_show_emulsion_paint %>
+              <tr>
+                <th align="left" valign="top" style="padding-top:20px;">乳胶漆施工规格</th>
+                <td style="padding-top:20px;">
+                  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th align="center" width="27">刷漆</th>
+                        <th align="center" width="87">喷涂</th>
+                        <th align="center" width="61">无气喷涂</th>
+                        <th align="center" width="147">是否调色/色彩描述</th>
+                        <th align="center">喷涂物品名称面积（㎡）</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td align="center"><%= @paint_case.emulsion_paint_s1 == "1" ? "√" : "—" %></td>
+                        <td align="center"><%= @paint_case.emulsion_paint_s2 == "1" ? "√" : "—" %></td>
+                        <td align="center"><%= @paint_case.emulsion_paint_s3 == "1" ? "√" : "—" %></td>
+                        <td align="center"><%= @paint_case.emulsion_paint_description %></td>
+                        <td align="center"><%= @paint_case.emulsion_paint_area %>㎡</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            <% end %>
+            <% unless @paint_case.wood_construction_specifications.blank? %>
+              <tr>
+                <th align="left" valign="top" style="padding-top:20px;">木器漆施工规格</th>
+                <td style="padding-top:20px;">
+                  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th align="center" width="60">板材类型</th>
+                        <th align="center">涂装风格</th>
+                        <th align="center">清漆</th>
+                        <th align="center">色漆</th>
+                        <th align="center">是否调色</th>
+                        <th align="center">色彩描述</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @paint_case.wood_construction_specifications.each do |wcs| %>
+                        <tr>
+                          <td align="center"><%= wcs.paint_type %></td>
+                          <td align="center"><%= wcs.paint_style %></td>
+                          <td align="center"><%= wcs.paint_c1 == 1 ? "√" : "—" %></td>
+                          <td align="center"><%= wcs.paint_c2 == 1 ? "√" : "—" %></td>
+                          <td align="center"><%= wcs.is_palette == true ? "√" : "—" %></td>
+                          <td align="center"><%= wcs.description %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <% if @paint_case.is_show_emulsion_paint_v or @paint_case.is_show_wood_mixing_paint or @paint_case.is_show_wood_varnish_paint or @paint_case.is_show_service %>
+        <div class="yg_cont_list1 clearfix">
+          <table cellspacing="0" cellpadding="0" border="0" align="left" width="100%">
+            <caption>
+              <span>验收</span>
+            </caption>
+            <thead>
+              <tr>
+                <th width="150" style="*padding-top:5px;">&nbsp;</th>
+                <th align="left" width="300" style="*padding-top:10px;">项目</th>
+                <th align="left" width="100" style="*padding-top:10px;">满意度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @paint_case.is_show_emulsion_paint_v %>
+                <tr>
+                  <th align="left" width="150" valign="top" class="pt15">乳胶漆验收</th>
+                  <td width="450" colspan="2">
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tbody>
+                        <% unless @paint_case.emulsion_paint_v1.blank? %>
+                          <tr>
+                            <td width="350" style="*padding-top:10px;">墙面、顶面调整</td>
+                            <td style="*padding-top:10px;"><%= PaintCase.vsting(@paint_case.emulsion_paint_v1) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.emulsion_paint_v2.blank? %>
+                          <tr>
+                            <td>无掉粉、起皮、漏涂</td>
+                            <td><%= PaintCase.vsting(@paint_case.emulsion_paint_v2) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.emulsion_paint_v3.blank? %>
+                          <tr>
+                            <td>无色差、泛减、泛色、刷痕、滚痕不明显</td>
+                            <td><%= PaintCase.vsting(@paint_case.emulsion_paint_v3) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.emulsion_paint_v4.blank? %>
+                          <tr>
+                            <td>无流挂、起皮</td>
+                            <td><%= PaintCase.vsting(@paint_case.emulsion_paint_v4) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.emulsion_paint_v5.blank? %>
+                          <tr>
+                            <td>无透底</td>
+                            <td><%= PaintCase.vsting(@paint_case.emulsion_paint_v5) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.emulsion_paint_v6.blank? %>
+                          <tr>
+                            <td>清洁度</td>
+                            <td><%= PaintCase.vsting(@paint_case.emulsion_paint_v6) %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @paint_case.is_show_wood_mixing_paint %>
+                <tr>
+                  <th align="left" width="150" valign="top" class="pt15">木质表面混色油漆验收</th>
+                  <td width="450" colspan="2">
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tbody>
+                        <% unless @paint_case.wood_mixing_paint_v1.blank? %>
+                          <tr>
+                            <td width="350" style="*padding-top:10px;">漆膜效果手感（平整、光滑、无颗粒、无挡手感）</td>
+                            <td style="*padding-top:10px;"><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v1) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v2.blank? %>
+                          <tr>
+                            <td>丰满度（丰满、颜色均匀）</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v2) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v3.blank? %>
+                          <tr>
+                            <td>颜色均匀度（颜色均匀、针眼颜色不明显）</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v3) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v4.blank? %>
+                          <tr>
+                            <td>光泽均匀度（均匀、色泽一致、无刷纹痕迹）</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v4) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v5.blank? %>
+                          <tr>
+                            <td>无流挂、透底、桔皮、脱层、针眼、气泡</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v5) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v6.blank? %>
+                          <tr>
+                            <td>装饰线、分色线平直</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v6) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v7.blank? %>
+                          <tr>
+                            <td>木器相邻的五金件、玻璃及墙壁洁净，无污染现象</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v7) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_mixing_paint_v8.blank? %>
+                          <tr>
+                            <td>实色开放效果目测和触感达到要求</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_mixing_paint_v8) %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @paint_case.is_show_wood_varnish_paint %>
+                <tr>
+                  <th align="left" width="150" valign="top" class="pt15">木质表面清漆验收</th>
+                  <td width="450" colspan="2">
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tbody>
+                        <% unless @paint_case.wood_varnish_paint_v1.blank? %>
+                          <tr>
+                            <td width="350" style="*padding-top:10px;">全封闭效果漆膜平整、光滑</td>
+                            <td style="*padding-top:10px;"><%= PaintCase.vsting(@paint_case.wood_varnish_paint_v1) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_varnish_paint_v2.blank? %>
+                          <tr>
+                            <td>针眼颜色1米目测达到要求</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_varnish_paint_v2) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_varnish_paint_v3.blank? %>
+                          <tr>
+                            <td>无漏刷、刷痕、桔皮、流挂、针眼、气泡</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_varnish_paint_v3) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_varnish_paint_v4.blank? %>
+                          <tr>
+                            <td>光泽均匀一致</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_varnish_paint_v4) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.wood_varnish_paint_v5.blank? %>
+                          <tr>
+                            <td>不污染与木器相邻的五金件、墙面、玻璃、地面等</td>
+                            <td><%= PaintCase.vsting(@paint_case.wood_varnish_paint_v5) %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @paint_case.is_show_service %>
+                <tr>
+                  <th align="left" width="150" valign="top" class="pt15">服务质量验收</th>
+                  <td width="450" colspan="2">
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tbody>
+                        <% unless @paint_case.service_v1.blank? %>
+                          <tr>
+                            <td width="350" style="*padding-top:10px;">服务态度</td>
+                            <td style="*padding-top:10px;"><%= PaintCase.vsting(@paint_case.service_v1) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.service_v2.blank? %>
+                          <tr>
+                            <td>服务速度</td>
+                            <td><%= PaintCase.vsting(@paint_case.service_v2) %></td>
+                          </tr>
+                        <% end %>
+                        <% unless @paint_case.service_v3.blank? %>
+                          <tr>
+                            <td>解决问题</td>
+                            <td><%= PaintCase.vsting(@paint_case.service_v3) %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="yg_p1_r f_r">
+    <div class="yg_p1_rad margin10">
+      <%= render :partial => "/shared/right_top_img"%>
+    </div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/help"%>
+    </div>
+    <div class="yg_current">
+      <%= render :partial => "/shared/paint_top10"%>
+    </div>
+  </div>
+</div>
+
+<!--弹出框代码-->
+<link href="http://js3.51hejia.com/css/jquery.lightbox-0.5.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="/javascripts/jquery.lightbox-0.5.min.js" type="text/javascript"></script>
+<script src="http://js1.51hejia.com/js/df/firms/show.js" type="text/javascript"></script>

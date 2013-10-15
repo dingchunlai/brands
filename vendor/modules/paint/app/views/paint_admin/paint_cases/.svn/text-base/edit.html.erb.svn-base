@@ -1,0 +1,18 @@
+<!--script src="/javascripts/js/jquery-1.6.2.js" type="text/javascript"></script-->
+<%= render :partial => "sub_menu"%>
+
+<style type="text/css" media="screen">
+  .scrj_piclist{
+    display:none;
+  }
+</style>
+<div class="top-bar">
+  <h1>案例管理</h1>
+  <div class="breadcrumbs">案例管理 / 修改案例</div>
+</div>
+<div id="new_case">
+  <%= render :partial => 'form' %>
+</div>
+<script type="text/javascript">
+  jQuery('#pictures').sortable({update:function(){jQuery.ajax({data:jQuery(this).sortable('serialize',{key:'pictures[]'}) + '&authenticity_token=' + encodeURIComponent('aT9swxWsb3kFGMn7EP0TYSKr2tVabZE3/Nar7yODqQ8='), dataType:'script', type:'post', url:'/paint_admin/paint_cases/pictures_sort'})}})
+</script>

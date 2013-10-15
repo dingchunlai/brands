@@ -1,0 +1,126 @@
+<%= render :partial => "dianping/shared/firm_factory_pop" %>
+
+<% cache "dianping:side:#{controller.controller_name}:#{@user_city_code}", :expires_in => 5.minutes  do %>
+
+  <div class="zxdp2010_r f_r">
+    <% if controller.controller_name == "decoration_diaries"%>
+      <div class="margin10">
+        <%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-宽幅1" %>
+      </div>
+      <div class="zxdp2010_txtlinks margin10">
+        <ul class="box1">
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链1" %></li>
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链2" %></li>
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链3" %></li>
+        </ul>
+      </div>
+      <%= render :partial => '/dianping/shared/yuyue' %>
+    <% else %>
+      <div class="zxdp2010_cur margin10">
+        <h3>精华日记排行榜</h3>
+        <div class="zxdp2010_txt zxdp2010_kbtop">
+          <ul>
+            <li class="clearfix"><span class="zxdp2010_kbspan09">名称</span><span class="zxdp2010_kbspan10">浏览次数</span></li>
+            <% DecorationDiary.top_good_diaries(@user_city_code).each do |diary|%>
+              <li class="clearfix"><span class="zxdp2010_kbspan11" style="width:170px">
+                  <%= link_to truncate_u(diary.title,15),diary.url, :target=>"_blank" %></span>
+                <span class="zxdp2010_kbspan12" style="text-align:center"><%= diary[:pv]%></span>
+              </li>
+            <% end -%>
+          </ul>
+        </div>
+      </div>
+      <div class="margin10">
+        <%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-宽幅1" %>
+      </div>
+      <div class="zxdp2010_txtlinks margin10">
+        <ul class="box1">
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链1" %></li>
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链2" %></li>
+          <li><%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-文字链3" %></li>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if controller.controller_name != "decoration_diaries" %>
+      <div class="zxdp2010_cur margin10">
+        <h3>促销活动</h3>
+        <div class="zxdp2010_more">
+          <a href="#" target="_blank"></a>
+          <%= link_to "更多&gt;&gt;", coupons_url(:trailing_slash => "/"), :target=>"_blank"%>
+        </div>
+        <div class="zxdp2010_txt zxdp2010_kbtop">
+          <ul>
+            <% DecoEvent.latest_events(@user_city_code).each do |event|%>
+              <li>
+                <%= link_to "[#{CITIES[@user_city_code.to_i]}] #{event.title}",two_coupon_urls(@user_city_code,event),:target =>"_blank" %>
+                <%= link_to event.title, two_coupon_urls(@user_city_code,event),:target =>"_blank" %>
+              </li>
+            <% end -%>
+          </ul>
+        </div>
+      </div>
+      <% if controller.controller_name != "factories" %>
+        <div class="zxdp2010_cur margin10">
+          <h3>在建工地</h3>
+          <div class="zxdp2010_more"><!--<a href="#" target="_blank">更多&gt;&gt;</a>--></div>
+          <div class="zxdp2010_txt zxdp2010_kbtop">
+            <ul>
+              <li class="clearfix"><span class="zxdp2010_kbspan13">所属区域</span><span class="zxdp2010_kbspan14">楼盘名称</span><span class="zxdp2010_kbspan15">预约</span></li>
+              <% CaseFactoryCompany.latest_factories(@user_city_code).each do |factory|%>
+                <li class="clearfix">
+                  <span class="zxdp2010_kbspan16"><%= factory.tagc.TAGNAME %></span>
+                  <span class="zxdp2010_kbspan17"><%= factory.NAME %></span>
+                  <span class="zxdp2010_kbspan18">
+                    <%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id),:class => "fancy_box" %>
+                  </span>
+                </li>
+              <% end -%>
+            </ul>
+          </div>
+        </div>
+      <% end -%>
+    <% else %>
+      <% if controller.controller_name != "factories" %>
+        <div class="zxdp2010_cur margin10">
+          <h3>在建工地</h3>
+          <div class="zxdp2010_more"><!--<a href="#" target="_blank">更多&gt;&gt;</a>--></div>
+          <div class="zxdp2010_txt zxdp2010_kbtop">
+            <ul>
+              <li class="clearfix"><span class="zxdp2010_kbspan13">所属公司</span><span class="zxdp2010_kbspan14">楼盘名称</span><span class="zxdp2010_kbspan15">预约</span></li>
+              <% CaseFactoryCompany.latest_factories(@user_city_code).each do |factory|%>
+                <li class="clearfix">
+                  <span class="zxdp2010_kbspan16"><%= factory.deco_firm.name_abbr %></span>
+                  <span class="zxdp2010_kbspan17"><%= factory.NAME %></span>
+                  <span class="zxdp2010_kbspan18">
+                    <%= link_to "预约", new_dianping_deco_register_path(:event_id=>factory.id),:class => "fancy_box" %>
+                  </span>
+                </li>
+              <% end -%>
+            </ul>
+          </div>
+        </div>
+      <% end -%>
+      <div class="zxdp2010_cur margin10">
+        <h3>促销活动</h3>
+        <div class="zxdp2010_more">
+          <a href="#" target="_blank"></a>
+          <%= link_to "更多&gt;&gt;", coupons_url(:trailing_slash => "/"), :target=>"_blank"%>
+        </div>
+        <div class="zxdp2010_txt zxdp2010_kbtop">
+          <ul>
+            <% DecoEvent.latest_events(@user_city_code).each do |event|%>
+              <li>
+                <%#= link_to "[#{CITIES[@user_city_code.to_i]}] #{event.title}",event.url,:target =>"_blank" %>
+                <%= link_to event.title,two_coupon_urls(@user_city_code,event),:target =>"_blank" %>
+                <%= link_to event.title,two_coupon_urls(@user_city_code,event),:target =>"_blank" %>
+              </li>
+            <% end -%>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <%= adspace "#{CITIES[@user_city_code.to_i]}站-公用侧栏-日记列表页-宽幅2" %>
+  </div>
+<% end -%>

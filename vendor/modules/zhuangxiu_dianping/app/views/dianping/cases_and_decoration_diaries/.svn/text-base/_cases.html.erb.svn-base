@@ -1,0 +1,25 @@
+<% c = HejiaCase.find_by_ID(case_id)%>
+<% unless c.nil? %>
+	<li>
+		<div class="zxdp2010_sjslistimg f_l"><%= link_to image_tag(c.master_picture_url,:alt=>c.NAME), c.url, :target => "_blank" %></div>
+		<div class="zxdp2010_sjlnlisttxt zxdp2011_rijilist zxdp2011_rijilistnew f_r">
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		    <tr>
+		      <td colspan="2"><h4><%= link_to truncate_u(c.NAME,12), c.url, :target => "_blank",:class=>"case_title"%><img alt="Best" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon1.gif" /> <img alt="Best" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon2.gif" /> <img alt="Best" src="http://js.51hejia.com/img/zxdpimg/zxdp2011_rjicon3.gif" /></h4></td>
+
+		    </tr>
+		    <tr>
+		      <td colspan="2" valign="top"><p><%=h c.INTRODUCE%></p></td>
+		    </tr>
+		    <tr>
+		      <td colspan="2" valign="top">
+						<span class="f_r">发表：<%= c.CREATEDATE.strftime("%Y-%m-%d")%></span>
+						<em>关键词：
+						<a href="#" target="_blank">现代简约</a> <a href="#" target="_blank">三房</a> <a href="#" target="_blank">5万</a>
+						</em>
+					</td>
+		    </tr>
+		  </table>
+		</div>
+	</li>
+<% end %>

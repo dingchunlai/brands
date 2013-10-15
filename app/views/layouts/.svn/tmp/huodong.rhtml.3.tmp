@@ -1,0 +1,34 @@
+<%content_for :html_head do%>
+  <link href="http://js.51hejia.com/css/2010/brandstyle.css?201007160933" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    (function() {
+      var ra = document.createElement('script'); ra.type = 'text/javascript'; ra.async = true;
+      ra.src = 'http://js.51hejia.com/ra.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ra, s);
+    })();
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ga);
+    })();
+  </script>
+<%end%>
+<%#在公共头中添加 相关活动页面的导航菜单%>
+<% content_for :huodong_navigation do  %>
+  <div class="b_dhss f_l">
+    <%= link_to "和家网首页", root_url(:subdomain => "www"), :target => "_blank", :title => "和家网首页" %>>
+    <%= link_to "品牌中心", root_url(:subdomain => "b"), :title => "品牌中心", :target => "_blank" %>><span><%= @end_page_name %></span> 
+  </div>
+<% end %>
+
+<%= render :partial => 'shared/layouts/header', :locals => { :without_search_bar => true } %>
+  <div class="b_width960 clearfix">
+    <div class="b_hdcsmenu clearfix">
+      <%= link_to "品牌中心", root_url(:subdomain => "b")  %>
+      <%= link_to "活动促销", huodong_index_url(:subdomain => "www")+"/", :class => (controller.action_name == "index" ? "b_hdcsmenu_cur" : nil) %>
+      <%= link_to "厂商直销", zhixiao_url(:subdomain => "b")+"/", :class => (controller.action_name == "zhixiao" ? "b_hdcsmenu_cur" : nil) %>
+      <%= link_to "招商加盟", zhaoshang_url(:subdomain => "b")+"/", :class => (controller.action_name == "zhaoshang" ? "b_hdcsmenu_cur" : nil) %>
+    </div>
+  </div>
+  <%=yield%>
+<%= render :partial => 'shared/layouts/footer'%>

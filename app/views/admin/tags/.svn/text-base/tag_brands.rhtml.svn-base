@@ -1,0 +1,67 @@
+<%= show_flash_message %>
+
+<div style="padding: 0 0 15px 15px;">
+  <a href="/admin/tags">品类管理</a> >
+  <%=@tag.TAGNAME%> > 品牌列表
+
+</div>
+
+<div>
+
+  <table width="600" border="1">
+    <tr>
+      <th>品牌编号</th>
+      <th>品牌名称</th>
+      <th>论坛板块</th>
+    </tr>
+    <tr>
+        <td>---</td>
+        <td><%=@tag.TAGNAME%></td>
+        <td>
+            <span><a href="http://bbs.51hejia.com/forums/<%=@tag.bbs_tag_id%>" target="_blank" style="color:#008A00;">已开通</a></span>　
+            <span disabled>关闭</span>　
+            <a href="<%=tag_brands_admin_tag_path(@tag_id)+"?bbs_tag_id=#{@tag.bbs_tag_id}"%>">编辑SEO</a>
+        </td>
+      </tr>
+    <%@brands.each do |brand|%>
+      <%bbs_tag = brand.bbs_tag(@tag_id)%>
+      <tr>
+        <td><%=brand.id%></td>
+        <td><%=brand.name_zh%></td>
+        <td>
+          <%if bbs_tag.nil?%>
+            <span style="color:#BFBFB9;">未开通</span>　
+            <a href="<%=create_bbs_admin_brand_path(brand)+"?tag_id=#{@tag_id}"%>">开通</a>
+          <%else%>
+            <span><a href="http://bbs.51hejia.com/forums/<%= bbs_tag.id %>" target="_blank" style="color:#008A00;">已开通</a></span>　
+            <a href="<%=close_bbs_admin_brand_path(brand)+"?tag_id=#{@tag_id}"%>">关闭</a>　
+            <a href="<%=tag_brands_admin_tag_path(@tag_id)+"?bbs_tag_id=#{bbs_tag.id}"%>">编辑SEO</a>
+          <%end%>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+
+<%unless @bbs_tag.nil?%>
+  <div style="line-height: 50px;">
+    <%form_tag bbs_tag_save_admin_tag_path(@tag_id) do%>
+      HTML_TITLE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%=text_field_tag "bbs_tag[html_title]", @bbs_tag.html_title, :style=>"width:300px;"%><br />
+      HTML_KEYWORDS:&nbsp;&nbsp;&nbsp; <%=text_field_tag "bbs_tag[html_keywords]", @bbs_tag.html_keywords, :style=>"width:300px;"%><br />
+      HTML_DESCRIPTION: <%=text_area_tag "bbs_tag[html_description]", @bbs_tag.html_description, :style=>"width:300px;height:80px;"%><br />
+      <%=hidden_field_tag :bbs_tag_id, @bbs_tag.id%>
+      <%=submit_tag "保 存", :style => "margin-left: 120px;"%>
+    <%end%>
+  </div>
+<%end%>
+
+<style type="text/css">
+  td {
+    text-align: center;
+    width: 100px;
+    padding: 5px;
+  }
+  th {
+    padding: 6px;
+  }
+</style>

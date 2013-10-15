@@ -1,0 +1,15 @@
+<% if [12117, 12301].include?(@user_city_code.to_i) %>
+	<h3><span style="float:left;padding-left:10px;">本地资讯</span><a href="/theme" target="_blank" style="float:right;padding-right:10px;color:#333;font-weight:normal;">更多&gt;&gt;</a></h3>
+<% else %>
+	<h3>本地资讯</h3>
+<% end %>
+<div style="overflow: hidden; width:139px; height: 110px;margin:5px 0;">
+	<div id="ScrollMe" style="overflow: hidden; height: 110px;">
+		<ul>
+			<% hejia_promotion_items(ZHUANGXIU_DIANPING_INDEX_PROMOTED[TAGURLS[@user_city_code.to_i]]['本地资讯'], :attributes => ['title','url','image_url'],:limit => 10).each do |information| %>
+  			<li>· <a href="<%= information.url %>" target="_blank"><%= truncate(information.title, :length => 10 ,:omission => '') %></a></li>
+  		<% end %>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">new srcMarquee("ScrollMe",0,1,139,110,30,5000,0,110)</script>

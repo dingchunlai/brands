@@ -1,0 +1,133 @@
+<%set_page_meta_data '活动', '首页'%>
+<%content_for :html_head do%>
+  <script type="text/javascript">
+    $(function(){
+      $(".b_hds_l a:gt(0)").hide();
+      $(".b_hds_r li:first").addClass("b_hds_show");
+      $(".b_hds_r li").mouseover(function(){
+        $(this).addClass("b_hds_show")
+        .siblings().removeClass("b_hds_show");
+        $(".b_hds_l a").eq($(this).index())
+        .siblings().hide().end().show();
+      })
+    })
+  </script>
+<%end%>
+
+<div class="b_width960 margin10 margin_top10">
+  <div class="b_hd_slide clearfix">
+    <div class="b_hds_l f_l">
+      <%PromotionCollection.published_items_for("活动:首页:焦点图")[0..2].each do |item|%>
+        <a href="<%=item.resource.promotion(:url)%>" target="_blank"><img alt="<%=item.resource.promotion(:title)%>" border="0" height="260" src="<%=cloud_fs_url_for(item.resource.image_url)%>" width="314" /></a>
+      <%end%>
+    </div>
+    <div class="b_hds_r f_r">
+      <ul>
+        <%PromotionCollection.published_items_for("活动:首页:焦点图")[0..2].each do |item|%>
+          <li>
+            <div class="b_hds_rimg">
+              <a href="<%=item.resource.promotion(:url)%>" target="_blank">
+                <img alt="<%=item.resource.promotion(:title)%>" border="0" height="260" src="<%=cloud_fs_url_for(item.resource.image_url, :thumbnail => '76')%>" width="314" />
+              </a>
+            </div>
+            <h3><a href="<%=item.resource.promotion(:url)%>" target="_blank"><%=ul(item.resource.promotion(:title),12,0,"")%></a></h3>
+            <p><%=ul(item.resource.promotion(:description),38)%><span>[<a href="<%=item.resource.promotion(:url)%>" target="_blank">查看详情</a>]</span></p>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="b_width960 margin10">
+  <div class="b_hd_search">
+    <h3>活动筛选<span>活动总数：<em><%=SalesPromotionEvent.all_events_counter%></em> 正在进行的活动：<em><%=SalesPromotionEvent.underway_events_counter%></em></span></h3>
+    <div class="b_hd_stxt"><form action="" method="get">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="80">产品：</td>
+            <td>
+              <%@used_tags.each do |tag|%>
+                <a href="<%=huodong_list_path("_"+tag.TAGURL)%>/" target="_blank"><%=tag.TAGNAME%></a><% if tag.TAGNAME == '家具' %><br /><% end %>
+              <%end%>
+              <a href="<%=huodong_list_path%>/" target="_blank">全部>></a>
+            </td>
+
+          </tr>
+          <tr>
+            <td width="80" valign="top">城市：</td>
+            <td>
+              <%SalesPromotionEvent.has_events_cities(13).each do |c|%>
+                <a href="<%=huodong_list_path(c.city)%>/" target="_blank"><%=City.name_for_code(c.city)%>(<%=c.count%>)</a>
+              <%end%>
+              <a href="<%=huodong_list_path%>/" target="_blank">全部>></a>
+            </td>
+          </tr>
+          <tr>
+            <td width="80">装修活动：</td>
+            <td>
+              <%=link_to '上海', 'http://z.shanghai.51hejia.com/coupon', :target => '_blank'%>
+              <%=link_to '无锡', 'http://z.wuxi.51hejia.com/coupon', :target => '_blank'%>
+              <%=link_to '苏州', 'http://z.suzhou.51hejia.com/coupon', :target => '_blank'%>
+              <%=link_to '杭州', 'http://z.hangzhou.51hejia.com/coupon', :target => '_blank'%>
+              <%=link_to '宁波', 'http://z.ningbo.51hejia.com/coupon', :target => '_blank'%>
+            </td>
+
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="b_width960 margin10">
+  <div class="b_hd_zxhd">
+    <h3>最新活动</h3>
+    <div class="b_hd_zxtxt">
+      <ul class="clearfix">
+        <%PromotionCollection.published_items_for("活动:首页:最新活动").each do |item|%>
+          <li><a href="<%=item.url%>" target="_blank"><img alt="<%=item.title%>" border="0" height="260" src="<%=item.image(150)%>" width="314" /></a>
+            <a href="<%=item.url%>" target="_blank"><%=item.title%></a></li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="http://js1.51hejia.com/js/2010/tab.js"></script>
+<div class="b_width960 margin10">
+  <div class="b_hd_cplx">
+    <h3>热点活动</h3>
+    <ul class="b_hd_cplxtab">
+      <li id="b_hdcp_but1" class="b_hdcp_tabbg1" onMouseover="show_tab('b_hdcp_c','b_hdcp_but','b_hdcp_tabbg',10,1)"><strong>全部</strong></li>
+      <%1.upto(@used_tags.length) do |i|%>
+        <li id="b_hdcp_but<%=i+1%>" class="b_hdcp_tabbg2" onMouseover="show_tab('b_hdcp_c','b_hdcp_but','b_hdcp_tabbg',10,<%=i+1%>)"><strong><%=@used_tags[i-1].TAGNAME%></strong></li>
+      <%end%>
+    </ul>
+    <div class="b_hd_cptxt">
+      <ul class="clearfix"  id="b_hdcp_c1">
+        <div style="text-align: right;padding-right: 15px;"><%= link_to "更多>>", "http://www.51hejia.com/huodong/list", :target => "_blank" %></div>
+        <%line = 0%>
+        <%SalesPromotionEvent.get_events(32).each do |event|%>
+          <%line += 1%>
+          <li <%="style='margin-bottom:15px;'" if line == 15 || line == 16 %> >
+            <!-- <span><a href="#" title="[家具]" target="_blank">[家具]</a></span> -->
+            <%=event.short_begins_at%>
+            <a href="<%=event.url%>" title="<%=event.subject%>" target="_blank"><%=event.subject%></a>
+          </li>
+        <%end%>
+      </ul>
+      <%1.upto(@used_tags.length) do |i|%>
+        <% sp_event = SalesPromotionEvent.get_events(32, @used_tags[i-1].TAGID) %>
+        <ul class="clearfix"  id="b_hdcp_c<%=i+1%>">
+          <% if sp_event.length > 0 %><div style="text-align: right;padding-right: 15px;"><%= link_to "更多>>", "http://www.51hejia.com/huodong/list/_#{@used_tags[i-1].TAGURL}", :target => "_blank" %></div><% end %>
+          <%line = 0%>
+          <% sp_event.each do |event| %>
+            <%line += 1%>
+            <li <%="style='margin-bottom:15px;'" if line == 15 || line == 16 %> >
+              <%=event.short_begins_at%>
+              <a href="<%=event.url%>" title="<%=event.subject%>" target="_blank"><%=event.subject%></a>
+            </li>
+          <%end%>
+        </ul>
+      <%end%>
+    </div>
+  </div>
+</div>

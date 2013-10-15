@@ -1,0 +1,16 @@
+<% diary_first = @api_article[2]%>
+<%@diaries = hejia_promotion_items(PAINT_HOME_DIARIES, :attributes => ['title','url'],:limit => 6) %>
+<h3>网友装修故事推荐</h3>
+<div class="yg_more"></div>
+<div class="yg_gstj_txt clearfix">
+<div class="yg_gstjimg f_l"><a href="<%= diary_first.url %>" target="_blank" title="<%=diary_first.title%>"><img src="<%=get_api_img_url(diary_first.image_url)%>" /></a></div>
+<div class="yg_gstjtxt f_r">
+  <h4><a href="<%= diary_first.url %>" target="_blank" title="<%=diary_first.title%>"><%=diary_first.title%></a></h4>
+  <p><%= truncate(diary_first.description, :length => 130, :omission => '')%><a href="<%= diary_first.url %>" target="_blank">【详细】</a></p>
+  <ul class="clearfix">
+  	<% @diaries.each do |diary|%>
+    	<li>·<a href="<%= diary.url %>" target="_blank" title="<%=diary.title%>"><%=diary.title%></a></li>
+  	<% end %>
+  </ul>
+</div>
+</div>

@@ -1,0 +1,68 @@
+<% content_for :html_head do%>
+  <% set_coupon_page_meta_data "【无条件现金抵用券】#{@coupon.title}打印_和家网装修省钱狂频道", "优惠券,抵用券,代金券,折扣券,装修,建材,装修省钱狂,无条件现金抵用券" , "使用和家网无条件现金抵用券，立即无条件抵用现金。一券在手，集优惠券、代金券、折扣券全部功能，装修省钱，尽在和家网装修省钱狂频道！"  %>
+<% end %>
+<div class="width960">
+  <div class="djq_location">您当前的位置：<%= link_to "#{Coupon.human_name}首页" %> > <span><%= link_to @coupon.title, coupon_show_path(@coupon) %> > 打印页面 </span></div>
+</div>
+<div class="width960 margin10 clearfix">
+  <div class="djq_tigong djq_yulan">
+    <div class="djq_yulan_top djq_dayinhack"><div class="djq_dayinbox01"><span><strong>打印预览：</strong>图为打印在A4（297mm*210mm）纸上的实际效果</span><a href="#" target="_blank" title="确认并打印" class="djq_dayinbtn" onclick="coupon_print();"></a><input type="hidden" id="coupon_id" value="<%= @coupon.id %>" /></div></div>
+    <div class="djq_yulan_middle">
+    	<div class="djq_dayinbox02"><img src="<%= cloud_fs_domain("image") %><%= @coupon.image_url %>"/>
+        <div>
+          <span style="color:#f60;font-size:14px;line-height:30px;">使用说明:</span>
+          <%= @coupon.usage %>
+        </div>
+
+        </div>
+        <div class="djq_dayinbox03">
+            <div class="djq_dayinbox03map">
+                <div id="google_map" class="google_map">
+                  <% 
+                    shop = @coupon.distributor_shop 
+                    if shop &&  shop.googlemap_image_url
+                    image_domain = cloud_fs_domain('image')
+                    image_url = image_domain.concat shop.googlemap_image_url
+                  %>
+                      <img src="<%= cloud_fs_domain("image") %><%= image_url %>"/>
+                    
+                  <% else %>
+                    <%= shop.address %>
+                  <% end %>
+                </div>
+                <p>提醒：地图标注仅供参考，具体情况以实际道路标识信息为准</p>
+            </div>
+            <div class="djq_dayinbox03info">
+                <h4><%= h @coupon.title %></h4>
+                <address>地址: <%= @coupon.distributor_shop && @coupon.distributor_shop.address || '暂无地址信息' %></address>
+                <p>电话：<%= @coupon.distributor_shop && @coupon.distributor_shop.telphone || '暂无联系方式' %></p>
+            </div>
+        </div>
+    </div>
+    <div class="djq_yulan_bottom"><div class="djq_dayinbox04"><span><strong>打印预览：</strong>图为打印在A4（297mm*210mm）纸上的实际效果</span></div></div>
+  </div>
+</div>
+<!--content_code_end-->
+<script type="text/javascript">
+  function coupon_print(){
+    $.ajax(
+        {
+          type: 'POST',
+          url: '/coupon/print_count?id='+$('#coupon_id').val(),
+          dataType: 'json',
+          success: function(data){
+            if(data['success'] == '1'){
+              prnhtml = $('.djq_yulan_middle').html();
+              window.document.body.innerHTML=prnhtml;
+              window.print();
+            }else{
+              alert("暂时不支持下载打印信息");
+            }
+          },
+          error: function(){
+            alert('由于网路出现问题，请稍候尝试　！');
+          }
+        }
+    );
+ }
+</script>

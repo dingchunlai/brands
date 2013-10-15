@@ -1,0 +1,58 @@
+<div class="gsl_wyly" id="remarks_div">
+  <div class="gsl_wyly_tit">
+    <h3>网友评论</h3>
+    <span><a href="#" target="_self" title="返回顶部">返回顶部</a></span>
+    <span><a href="#pinglun" class="tianjia_pinglun" target="_self" title="添加评论">添加评论</a></span>
+  </div>
+  <div id="remarks">
+    <%= render :partial => @remarks %>
+  </div>
+  <% unless @remarks.empty? %>
+      <div class="pagination clear">
+        <%= will_paginate @remarks, :class => "pagination", :previous_label => "上一页", :next_label => "下一页" -%>
+      </div>
+  <% end %>
+</div>
+<a name="pinglun"></a>
+<div class="gsl_wyly_lyk clear">
+  <h3 class="pinglunbiaoti">我要添加评论</h3>
+  <input type="hidden" id="cookie_id" value="<%= current_user.USERBBSID if user_logged_in? && current_user %>"/>
+
+  <div id="login">
+    <% unless current_user %>
+        <a class="the_login_dialog" style="display:block;padding:20px 0 0 20px;" >友情提示：您还未登陆，请<span style="font-weight: bold; color: blue; cursor: pointer;">点击此处登陆</span>后发表评论，谢谢！</a>
+    <% end %>
+  </div>
+  <hr/>
+  <div>
+    <% form_for @remark, :url => coupon_remarks_path, :html => {:id => "remark_form_0", :class => 'remark_form'} do |f| %>
+        <%= f.error_messages %>
+        <div style="color:red;font-weight:bold;margin-left: 10px;" id="error_message_for_comment"><%= flash[:notice] %></div>
+        <%= f.hidden_field :resource_type %>
+        <%= f.hidden_field :resource_id %>
+        <input type="hidden" id="remark_id" name="remark_id" value="0"/>
+        <table width="670" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="gsl_wyly_qy"><%= f.text_area :content, :style => 'height: 120px' %>
+            </td>
+          </tr>
+        </table>
+        <div id="simple_remark">
+          <div style="text-align:center;margin-bottom:10px;">
+            <%= f.submit "确认提交", :id => "submit_comment", :class => "gsl_wyly_btn" %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+      //弹出登录框
+    $(".the_login_dialog").click((function(){
+      $('.the_login_dialog').colorbox({
+        href: '/sessions/pop_login',
+        width: 700,
+        height: 330,
+        scrolling: false,
+        opacity: 0.2      });
+    }));
+</script>
